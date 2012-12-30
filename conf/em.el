@@ -92,3 +92,7 @@
   (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
     (when file
       (find-file file))))
+
+;; tramp
+(require 'tramp)
+(setq tramp-default-method "ssh")
