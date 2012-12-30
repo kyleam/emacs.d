@@ -5,7 +5,7 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; to customize font
-(setq default-frame-alist '((font . "Source Code Pro-9")))
+(setq default-frame-alist '((font . "Droid Sans Mono-9")))
 
 (setq browse-url-browser-function 'browse-url-generic
           browse-url-generic-program "google-chrome")
