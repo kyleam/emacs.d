@@ -12,6 +12,7 @@
                         undo-tree
                         org
                         ess
+			lua-mode
                         )
   "Default packages")
 
