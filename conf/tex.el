@@ -9,8 +9,8 @@
 
 ;; for viewing in-frame
 ;;http://www.sigmafield.org/2009/10/03/using-doc-view-with-auto-revert-to-view-latex-pdf-output-in-emacs/
-;(setq TeX-PDF-mode t)
-;(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+                                        ;(setq TeX-PDF-mode t)
+                                        ;(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
 ;; reftex
 ;; mostly from http://www.kieranhealy.org/esk/starter-kit-latex.html

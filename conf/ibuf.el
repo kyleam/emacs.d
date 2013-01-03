@@ -34,13 +34,13 @@
                      (name . "\*info\*")
                      (name . "^\\*Completions\\*$"))))))
 
-    (add-hook 'ibuffer-mode-hook
-              '(lambda ()
-                 (ibuffer-auto-mode 1) ; keep buffer list up-to-date
-                 (ibuffer-switch-to-saved-filter-groups "home")))
+(add-hook 'ibuffer-mode-hook
+          '(lambda ()
+             (ibuffer-auto-mode 1) ; keep buffer list up-to-date
+             (ibuffer-switch-to-saved-filter-groups "home")))
 
-    ;; do not prompt to delete unmodified buffers
-    (setq ibuffer-expert t)
+;; do not prompt to delete unmodified buffers
+(setq ibuffer-expert t)
 
-    ;; don't show empty filter groups
-    (setq ibuffer-show-empty-filter-groups nil)
+;; don't show empty filter groups
+(setq ibuffer-show-empty-filter-groups nil)

@@ -14,11 +14,11 @@
 (add-hook 'ess-mode-hook (lambda ()
                            (setq ess-indent-level 4)))
 
-;(require 'dired+)
+;;(require 'dired+)
 
 ;; shell scripts
 (add-hook 'sh-mode-hook (lambda ()
-                             (setq sh-basic-offset 4)))
+                          (setq sh-basic-offset 4)))
 
 ;; set location of custom.el
 (setq custom-file "~/.emacs.d/custom.el")
@@ -34,7 +34,7 @@
 
 ;; splash screen
 (setq inhibit-splash-screen t
-            initial-scratch-message nil)
+      initial-scratch-message nil)
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -48,7 +48,7 @@
 
 (setq-default indicate-empty-lines t)
 (when (not indicate-empty-lines)
-    (toggle-indicate-empty-lines))
+  (toggle-indicate-empty-lines))
 
 
 (setq echo-keystrokes 0.1
@@ -58,9 +58,9 @@
 
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
-            `((".*" . ,temporary-file-directory)))
+      `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-            `((".*" ,temporary-file-directory t)))
+      `((".*" ,temporary-file-directory t)))
 
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
@@ -85,7 +85,7 @@
       recentf-max-saved-items 200
       recentf-max-menu-items 15)
 (recentf-mode t)
-; from prelude
+;; from prelude
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)

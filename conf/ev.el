@@ -18,7 +18,7 @@
   (interactive)
   (save-buffer)
   (kill-this-buffer)
-)
+  )
 
 (defun my-back-one-window ()
   "Go back one windo"
@@ -37,7 +37,7 @@
 (define-key evil-normal-state-map ",a" 'org-archive-subtree)
 
 (fset 'comment-this-line ;; this depends on evil bindings
-   "0v$,c")
+      "0v$,c")
 (define-key evil-normal-state-map ",c" 'comment-this-line)
 
 ;; for simult keys
