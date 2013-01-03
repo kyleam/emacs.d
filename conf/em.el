@@ -27,8 +27,8 @@
 ;; make whitespace-mode use just basic coloring
 ;; http://ergoemacs.org/emacs/whitespace-mode.html
 (setq whitespace-style (quote
-			(spaces tabs newline space-mark
-				tab-mark newline-mark)))
+                        (spaces tabs newline space-mark
+                                tab-mark newline-mark)))
 ;; y or n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -96,3 +96,11 @@
 ;; tramp
 (require 'tramp)
 (setq tramp-default-method "ssh")
+
+;; whitespace cleanup
+(defun cleanup-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max))
+  (delete-trailing-whitespace)
+  (set-buffer-file-coding-system 'utf-8))
+(add-hook 'before-save-hook 'cleanup-buffer)
