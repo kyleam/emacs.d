@@ -74,6 +74,7 @@
 ;; ido mode
 (ido-mode t)
 (setq ido-enable-prefix nil
+      ido-everywhere t
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
