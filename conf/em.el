@@ -96,11 +96,3 @@
 ;; tramp
 (require 'tramp)
 (setq tramp-default-method "ssh")
-
-;; whitespace cleanup
-(defun cleanup-buffer ()
-  (interactive)
-  (untabify (point-min) (point-max))
-  (delete-trailing-whitespace)
-  (set-buffer-file-coding-system 'utf-8))
-(add-hook 'before-save-hook 'cleanup-buffer)

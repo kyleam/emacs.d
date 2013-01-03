@@ -4,6 +4,7 @@
 (add-to-list 'load-path "~/.emacs.d/conf")
 (load "pkg.el")
 (load "em.el")
+(load "util.el")
 (load "ev.el")
 (load "om.el")
 (load "ibuf.el")
