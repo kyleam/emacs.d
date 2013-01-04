@@ -7,6 +7,10 @@
 ;; to customize font
 (setq default-frame-alist '((font . "Droid Sans Mono-9")))
 
+(require 'font-lock)
+(global-font-lock-mode t)
+(add-to-list 'auto-mode-alist '("\\.*rc$" . conf-unix-mode))
+
 (setq browse-url-browser-function 'browse-url-generic
           browse-url-generic-program "google-chrome")
 ;; ess
