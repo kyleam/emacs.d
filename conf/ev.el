@@ -54,3 +54,4 @@
 ;; instead of alt-x
 (key-chord-define-global ",x" 'execute-extended-command)
 (key-chord-define-global ",f" 'find-file)
+(key-chord-define-global ",g" 'indent-relative)
