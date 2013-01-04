@@ -10,7 +10,7 @@
 (setq browse-url-browser-function 'browse-url-generic
           browse-url-generic-program "google-chrome")
 ;; ess
-(require 'ess-site)
+;; (require 'ess-site)
 (add-hook 'ess-mode-hook (lambda ()
                            (setq ess-indent-level 4)))
 
