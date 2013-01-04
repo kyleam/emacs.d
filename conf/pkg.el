@@ -13,6 +13,7 @@
                         org
                         ess
                         lua-mode
+			haskell-mode
                         )
   "Default packages")
 
