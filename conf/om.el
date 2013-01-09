@@ -150,7 +150,3 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-;; ditaa giving error
-;; could not find elpa/contrib/scripts/ditaa.jar
-(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
