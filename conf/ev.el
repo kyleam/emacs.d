@@ -40,10 +40,6 @@
       "0v$,c")
 (define-key evil-normal-state-map ",c" 'comment-this-line)
 
-;; for simult keys
-;; evil mode uses undo-tree
-;; again, adopted from here: http://permalink.gmane.org/gmane.emacs.vim-emulation/1135
-(add-to-list 'load-path "~/.emacs-packages/key-chord")
 (require 'key-chord)
 (key-chord-mode 1)
 

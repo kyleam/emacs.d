@@ -10,6 +10,7 @@
 (defvar kyle-packages '(
                         evil
                         undo-tree
+                        key-chord
                         org
                         ess
                         lua-mode
