@@ -1,4 +1,3 @@
-;; pkg.el
 ;; http://www.aaronbedra.com/emacs.d/
 
 (require 'package)
@@ -7,7 +6,7 @@
 (package-initialize)
 
 (require 'cl)
-(defvar kyle-packages '(
+(defvar km/packages '(
                         evil
                         undo-tree
                         key-chord
@@ -18,15 +17,15 @@
                         )
   "Default packages")
 
-(defun kyle-packages-installed-p ()
-  (loop for pkg in kyle-packages
+(defun km/packages-installed-p ()
+  (loop for pkg in km/packages
         when (not (package-installed-p pkg)) do (return nil)
         finally (return t)))
 
-(unless (kyle-packages-installed-p)
+(unless (km/packages-installed-p)
   (message "%s" "Refreshing package database...")
   (package-refresh-contents)
-  (dolist (pkg kyle-packages)
+  (dolist (pkg km/packages)
     (when (not (package-installed-p pkg))
       (message "installing %s" pkg)
       (package-install pkg))))

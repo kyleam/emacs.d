@@ -1,5 +1,3 @@
-;; tex.el
-
 ;;; add path for pdflatex
 (getenv "PATH")
 (setenv "PATH"
@@ -29,7 +27,7 @@
 
 ;; commented out the rest of it because something was causing it to
 ;; prompt for master file in org mode
-(defun org-mode-reftex-setup ()
+(defun km/org-mode-reftex-setup ()
   (load-library "reftex")
   ;; (and (buffer-file-name)
   ;;      (file-exists-p (buffer-file-name))
@@ -37,7 +35,7 @@
   (define-key org-mode-map (kbd "C-c [") 'reftex-citation)
   )
 
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+(add-hook 'org-mode-hook 'km/org-mode-reftex-setup)
 
 (setq reftex-default-bibliography
       (quote

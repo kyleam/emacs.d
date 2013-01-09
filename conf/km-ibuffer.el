@@ -1,7 +1,9 @@
-;; ibuf.el
-;; configuration for ibuffer
+;; replace buffer-menu with ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 ;; modified from http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
 ;; and here http://www.elliotglaysher.org/emacs/
+
 (setq ibuffer-saved-filter-groups
       '(("home"
          ("emacs-config" (or (filename . ".emacs.d")

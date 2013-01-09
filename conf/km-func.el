@@ -1,15 +1,13 @@
-;; util.el -- utility functions
-
 ;; http://whattheemacsd.com/
 ;; whitespace cleanup
-(defun cleanup-buffer ()
+(defun km/cleanup-buffer ()
   (interactive)
   (untabify (point-min) (point-max))
   (delete-trailing-whitespace)
   (set-buffer-file-coding-system 'utf-8))
-(add-hook 'before-save-hook 'cleanup-buffer)
+(add-hook 'before-save-hook 'km/cleanup-buffer)
 
-(defun rename-current-buffer-file ()
+(defun km/rename-current-buffer-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
   (let ((name (buffer-name))
@@ -26,4 +24,4 @@
           (message "File '%s' successfully renamed to '%s'"
                    name (file-name-nondirectory new-name)))))))
 
-(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
+(global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)

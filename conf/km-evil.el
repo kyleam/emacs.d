@@ -1,5 +1,3 @@
-;; ev.org - evil mode configuration
-
 ;; evil mode uses undo-tree
 (require 'undo-tree)
 
@@ -13,7 +11,7 @@
 (define-key evil-motion-state-map "H" 'evil-scroll-up)
 (define-key evil-motion-state-map "L" 'evil-scroll-down)
 
-(defun save-and-kill-buffer ()
+(defun km/save-and-kill-buffer ()
   "Save current buffer and then kill it"
   (interactive)
   (save-buffer)
@@ -24,7 +22,7 @@
 
 (define-key evil-normal-state-map ",w" 'save-buffer)
 (define-key evil-normal-state-map ",q" 'kill-buffer)
-(define-key evil-normal-state-map ",d" 'save-and-kill-buffer)
+(define-key evil-normal-state-map ",d" 'km/save-and-kill-buffer)
 (define-key evil-normal-state-map "Q" 'fill-paragraph)
 
 (evil-define-key 'visual emacs-lisp-mode-map
@@ -40,7 +38,7 @@
 (require 'key-chord)
 (key-chord-mode 1)
 
-(key-chord-define-global ",r" 'recentf-ido-find-file)
+(key-chord-define-global ",r" 'km/recentf-ido-find-file)
 (key-chord-define-global ",t" 'org-capture)
 ;; instead of alt-x
 (key-chord-define-global ",x" 'execute-extended-command)
@@ -49,7 +47,7 @@
 (key-chord-define-global ",b" 'ido-switch-buffer)
 
 ;; org bindings
-(defun always-insert-item ()
+(defun km/always-insert-item ()
   (interactive)
   (if (not (org-in-item-p))
       (insert "\n- ")
@@ -77,7 +75,7 @@
   "o"           (lambda ()
                  (interactive)
                  (end-of-line)
-                 (always-insert-item)
+                 (km/always-insert-item)
                  (evil-append nil))
 (kbd "M-j") 'org-shiftleft
   (kbd "M-k") 'org-shiftright

@@ -1,6 +1,3 @@
-;;; om.el - org mode config
-;; created 24 Nov 2011
-
 ;;;; org-mode
 (setq org-log-done t)
 (setq org-todo-keywords
@@ -108,11 +105,11 @@
 
 ;;;; Refile settings
 ;; Exclude DONE state tasks from refile targets
-(defun bh/verify-refile-target ()
+(defun km/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-target-verify-function 'bh/verify-refile-target)
+(setq org-refile-target-verify-function 'km/verify-refile-target)
 
 ;; set up babel languages
 (org-babel-do-load-languages
