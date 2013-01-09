@@ -13,8 +13,6 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 (setq org-log-done t)
-(defun prelude-org-mode-defaults ()
-  (electric-indent-mode -1))
 
 ;; allow for file to end in txt
 (add-to-list 'auto-mode-alist '("\\.org.txt$" . org-mode))
@@ -88,51 +86,6 @@
                                          (plain-list-item . auto))))
 (setq org-cycle-separator-lines 1)
 
-;; for evil setup
-;; put here because wasn't loading when in evil config file
-(eval-after-load "org"
-  '(progn
-     (defun always-insert-item ()
-       (interactive)
-       (if (not (org-in-item-p))
-           (insert "\n- ")
-         (org-insert-item)))
-
-     (evil-define-key 'normal org-mode-map "O" (lambda ()
-                                                 (interactive)
-                                                 (end-of-line)
-                                                 (org-insert-heading t)
-                                                 (evil-append nil)
-                                                 ))
-
-     (evil-define-key 'normal org-mode-map "o" (lambda ()
-                                                 (interactive)
-                                                 (end-of-line)
-                                                 (always-insert-item)
-                                                 (evil-append nil)
-                                                 ))
-                                        ; mark a TODO item as DONE
-                                        ; s - status
-     (evil-define-key 'normal org-mode-map ",s" 'org-todo)
-                                        ;change bullet style
-     (evil-define-key 'normal org-mode-map "-" 'org-cycle-list-bullet)
-     ;; (evil-define-key 'normal org-mode-map "L" 'org-shiftright)
-     ;; (evil-define-key 'normal org-mode-map "H" 'org-shiftleft)
-     ;; (evil-define-key 'normal org-mode-map "K" 'org-shiftup)
-     ;; (evil-define-key 'normal org-mode-map "J" 'org-shiftdown)
-     (evil-define-key 'normal org-mode-map (kbd "M-l") 'org-metaright)
-     (evil-define-key 'normal org-mode-map (kbd "M-h") 'org-metaleft)
-     (evil-define-key 'normal org-mode-map (kbd "M-k") 'org-metaup)
-     (evil-define-key 'normal org-mode-map (kbd "M-j") 'org-metadown)
-     (evil-define-key 'normal org-mode-map (kbd "M-L") 'org-shiftmetaright)
-     (evil-define-key 'normal org-mode-map (kbd "M-H") 'org-shiftmetaleft)
-     (evil-define-key 'normal org-mode-map (kbd "M-K") 'org-shiftmetaup)
-     (evil-define-key 'normal org-mode-map (kbd "M-J") 'org-shiftmetadown)
-
-     ;; ;;; org agenda -- leave in emacs mode but add j & k
-     ;;      (define-key org-agenda-mode-map "j" 'evil-next-line)
-     ;;      (define-key org-agenda-mode-map "k" 'evil-previous-line))
-     ))
 
 ;; from http://doc.norang.ca/org-mode.html
 (setq org-refile-targets (quote ((nil :maxlevel . 5)
