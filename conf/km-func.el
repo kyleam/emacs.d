@@ -25,3 +25,23 @@
                    name (file-name-nondirectory new-name)))))))
 
 (global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
+
+(defun km/shebang (&optional lang)
+  (interactive "s\language (default python):")
+  (if (= (length lang) 0)
+      (setq lang "python"))
+  (insert "#!/usr/bin/env " lang "\n"))
+(global-set-key (kbd "C-c s") 'km/shebang)
+
+(defun km/insert-random-string (&optional strlen)
+  "Insert a random string (default length: 5)"
+  (interactive)
+  (unless strlen
+    (setq strlen 5))
+  (let (mycharset (ii 0) )
+    (setq mycharset ["a" "b" "c" "d" "e" "f" "g" "h" "i"
+                     "j" "k" "l" "m" "n" "o" "p" "q" "r"
+                     "s" "t" "u" "v" "w" "x" "y" "z"])
+    (while (< ii strlen)
+      (insert (elt mycharset (random (length mycharset))))
+      (setq ii (1+ ii)))))
