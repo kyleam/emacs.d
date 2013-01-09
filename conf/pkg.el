@@ -14,7 +14,7 @@
                         org
                         ess
                         lua-mode
-			haskell-mode
+                        haskell-mode
                         )
   "Default packages")
 

@@ -10,4 +10,5 @@
 (load "ibuf.el")
 (load "kb.el")
 (load "tex.el")
+(load "hs.el")
 (message ":: Init complete")
