@@ -18,7 +18,6 @@
   (kill-this-buffer)
   )
 
-(define-key evil-insert-state-map "jf" 'evil-normal-state)
 
 (define-key evil-normal-state-map ",w" 'save-buffer)
 (define-key evil-normal-state-map ",q" 'kill-buffer)
@@ -45,6 +44,10 @@
 (key-chord-define-global ",f" 'find-file)
 (key-chord-define-global ",g" 'indent-relative)
 (key-chord-define-global ",b" 'ido-switch-buffer)
+;; cannot map this to insert mode because it jams up the first letter
+;; switch from jf because often pressing j to go up/down, so probably
+;; best not to have it have to consider whether it is a chord each time
+(key-chord-define-global ";a" 'evil-normal-state)
 
 ;; org bindings
 (defun km/always-insert-item ()
