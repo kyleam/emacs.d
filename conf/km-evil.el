@@ -29,6 +29,9 @@
 (evil-define-key 'visual lisp-interaction-mode-map
   ",e" 'eval-region)
 
+(evil-define-key 'normal mail-mode-map ",q" 'server-edit)
+(evil-define-key 'normal mail-mode-map ",d" 'server-edit)
+
 (define-key evil-visual-state-map ",c" 'comment-or-uncomment-region)
 (fset 'comment-this-line ;; this depends on evil bindings
       "0v$,c")

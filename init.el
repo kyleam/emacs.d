@@ -12,6 +12,7 @@
 (load "km-evil.el")
 (load "km-ibuffer.el")
 (load "km-ido.el")
+(load "km-mail.el")
 (load "km-python.el")
 (load "km-haskell.el")
 (load "km-tex.el")
