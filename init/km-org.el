@@ -3,7 +3,7 @@
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "|" "DONE" "NA")))
 
-                                        ;(setq org-agenda-files (list "~/notes/tasks.org"))
+;; (setq org-agenda-files (list "~/notes/tasks.org"))
 
 ;; next 6 lines merged from prelude-org
 (global-set-key "\C-cl" 'org-store-link)
