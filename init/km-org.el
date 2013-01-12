@@ -147,3 +147,9 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(defun km/open-main-orgfile ()
+  (interactive)
+  (find-file org-default-notes-file))
+
+(global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
