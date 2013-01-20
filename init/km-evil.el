@@ -8,6 +8,12 @@
 ;; red box in emacs mode
 (setq evil-emacs-state-cursor '("red" box))
 
+
+(loop for (mode . state) in '((dired-mode  . emacs)
+                              (org-agenda-mode . emacs)
+                              (ibuffer-mode . emacs))
+      do (evil-set-initial-state mode state))
+
 (define-key evil-motion-state-map "H" 'evil-scroll-up)
 (define-key evil-motion-state-map "L" 'evil-scroll-down)
 
