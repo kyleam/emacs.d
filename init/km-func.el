@@ -45,3 +45,9 @@
     (while (< ii strlen)
       (insert (elt mycharset (random (length mycharset))))
       (setq ii (1+ ii)))))
+
+(defun km/insert-date ()
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
+
+(global-set-key (kbd "C-c d") 'km/insert-date)
