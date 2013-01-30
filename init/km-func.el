@@ -51,3 +51,7 @@
   (insert (format-time-string "%Y-%m-%d")))
 
 (global-set-key (kbd "C-c d") 'km/insert-date)
+
+(defun km/start-ess ()
+  (interactive)
+  (require 'ess-site))
