@@ -26,3 +26,5 @@
 (setq x-select-enable-clipboard t)
 
 (blink-cursor-mode -1)
+
+(put 'narrow-to-region 'disabled nil)
