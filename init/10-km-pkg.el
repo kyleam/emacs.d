@@ -14,6 +14,7 @@
                         ess
                         lua-mode
                         haskell-mode
+                        markdown-mode
                         )
   "Default packages")
 

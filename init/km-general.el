@@ -20,3 +20,8 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 ;;(require 'dired+)
+
+(setq auto-mode-alist
+      (cons '("\\.md$" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist
+      (cons '("\\.markdown$" . markdown-mode) auto-mode-alist))
