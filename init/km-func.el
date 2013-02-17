@@ -1,8 +1,10 @@
 ;; http://whattheemacsd.com/
 ;; whitespace cleanup
+
 (defun km/cleanup-buffer ()
   (interactive)
-  (untabify (point-min) (point-max))
+  (unless (equal major-mode 'makefile-gmake-mode)
+    (untabify (point-min) (point-max)))
   (delete-trailing-whitespace)
   (set-buffer-file-coding-system 'utf-8))
 (add-hook 'before-save-hook 'km/cleanup-buffer)
