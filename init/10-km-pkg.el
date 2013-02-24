@@ -15,6 +15,7 @@
                         lua-mode
                         haskell-mode
                         markdown-mode
+                        less-css-mode
                         )
   "Default packages")
 
