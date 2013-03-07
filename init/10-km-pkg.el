@@ -16,6 +16,7 @@
                         haskell-mode
                         markdown-mode
                         less-css-mode
+                        auctex
                         )
   "Default packages")
 
