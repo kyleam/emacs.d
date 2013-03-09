@@ -17,6 +17,7 @@
                         markdown-mode
                         less-css-mode
                         auctex
+                        magit
                         )
   "Default packages")
 
