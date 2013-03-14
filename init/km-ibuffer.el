@@ -31,6 +31,7 @@
          ("dirs" (or (mode . dired-mode)
                      (name . "^\\*tramp")))
          ("terminal" (name . "^\\*ansi-term\\*$"))
+         ("magit" (or (name . "^\\*magit")))
          ("help" (or (name . "\*Help\*")
                      (name . "\*Apropos\*")
                      (name . "\*info\*")

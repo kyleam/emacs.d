@@ -52,7 +52,7 @@
 ;; instead of alt-x
 (key-chord-define-global ",x" 'execute-extended-command)
 (key-chord-define-global ",f" 'find-file)
-(key-chord-define-global ",g" 'indent-relative)
+(key-chord-define-global ",g" 'magit-status)
 (key-chord-define-global ",b" 'ido-switch-buffer)
 ;; cannot map this to insert mode because it jams up the first letter
 ;; switch from jf because often pressing j to go up/down, so probably
