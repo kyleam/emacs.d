@@ -16,7 +16,7 @@
 (setq tramp-default-method "ssh")
 
 (setq browse-url-browser-function 'browse-url-generic
-          browse-url-generic-program "google-chrome")
+          browse-url-generic-program "chromium")
 
 (put 'dired-find-alternate-file 'disabled nil)
 ;;(require 'dired+)
