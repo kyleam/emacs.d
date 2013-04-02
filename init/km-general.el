@@ -28,3 +28,7 @@
 
 (setq x-select-enable-clipboard t)
 (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+
+;; make scripts executable at save
+(add-hook 'after-save-hook
+  'executable-make-buffer-file-executable-if-script-p)
