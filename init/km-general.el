@@ -25,6 +25,8 @@
       (cons '("\\.md$" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("\\.markdown$" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist
+      (cons '("\\.zsh$" . shell-script-mode) auto-mode-alist))
 
 (setq x-select-enable-clipboard t)
 (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
