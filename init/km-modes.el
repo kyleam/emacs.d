@@ -11,8 +11,7 @@
                    )
   "Auto mode mappings")
 
-(defun km/add-mode (mode)
-  (setq auto-mode-alist
-        (cons mode auto-mode-alist)))
-
-(mapcar 'km/add-mode km/modes)
+(mapcar
+ (lambda (mode) (setq auto-mode-alist
+                      (cons mode auto-mode-alist)))
+ km/modes)
