@@ -1,5 +1,3 @@
-(add-to-list 'auto-mode-alist '("/mutt" . mail-mode))
-
 (defun km/mail-position ()
   "Move cursor to first blank line
 and position cursor between two blank lines"

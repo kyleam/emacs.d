@@ -8,7 +8,6 @@
 ;; red box in emacs mode
 (setq evil-emacs-state-cursor '("red" box))
 
-
 (loop for (mode . state) in '((dired-mode  . emacs)
                               (org-agenda-mode . emacs)
                               (ibuffer-mode . emacs))
@@ -23,7 +22,6 @@
   (save-buffer)
   (kill-this-buffer)
   )
-
 
 (define-key evil-normal-state-map ",w" 'save-buffer)
 (define-key evil-normal-state-map ",q" 'kill-buffer)

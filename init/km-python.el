@@ -2,11 +2,6 @@
   (interactive)
   (insert "sys.exit()"))
 
-(defun km/python-random-assignment ()
-  (interactive)
-  (km/insert-random-string 10)
-  (insert " = None"))
-
 (defun km/python-shebang ()
   (interactive)
   (km/shebang "python"))
@@ -18,8 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
-from colors import brew, fgry, bgry"
-          )
+from colors import brew, fgry, bgry")
 
 (defun km/python-insert-analysis-imports ()
   "Common imports for analysis scripts"
@@ -27,7 +21,6 @@ from colors import brew, fgry, bgry"
   (insert km/python-analysis-imports))
 
 (defun km/python-hook ()
-  (local-set-key (kbd "C-c p r") 'km/python-random-assignment)
   (local-set-key (kbd "C-c p e") 'km/python-sysexit)
   (local-set-key (kbd "C-c p s") 'km/python-shebang)
   (local-set-key (kbd "C-c p a") 'km/python-insert-analysis-imports))
