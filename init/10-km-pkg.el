@@ -18,6 +18,7 @@
                         less-css-mode
                         auctex
                         magit
+                        smex
                         )
   "Default packages")
 

@@ -48,7 +48,7 @@
 (key-chord-define-global ",r" 'km/recentf-ido-find-file)
 (key-chord-define-global ",t" 'org-capture)
 ;; instead of alt-x
-(key-chord-define-global ",x" 'execute-extended-command)
+(key-chord-define-global ",x" 'smex)
 (key-chord-define-global ",f" 'find-file)
 (key-chord-define-global ",g" 'magit-status)
 (key-chord-define-global ",b" 'ido-switch-buffer)
