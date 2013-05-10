@@ -110,3 +110,7 @@
   (find-file org-default-notes-file))
 
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
+
+;; by default this has started inserting uppercase for me. keep lower
+(add-to-list 'org-structure-template-alist
+             '("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>"))
