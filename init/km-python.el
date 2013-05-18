@@ -7,11 +7,10 @@
   (km/shebang "python"))
 
 (defconst km/python-analysis-imports
-  "import sys
-import numpy as np
+  "import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
+from matplotlib import ticker
 
 from colors import brew, fgry, bgry")
 
