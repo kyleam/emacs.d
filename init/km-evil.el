@@ -24,7 +24,7 @@
   )
 
 (define-key evil-normal-state-map ",w" 'save-buffer)
-(define-key evil-normal-state-map ",q" 'kill-buffer)
+(define-key evil-normal-state-map ",q" 'kill-this-buffer)
 (define-key evil-normal-state-map ",d" 'km/save-and-kill-buffer)
 (define-key evil-normal-state-map "Q" 'fill-paragraph)
 
