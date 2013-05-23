@@ -52,9 +52,6 @@
 (key-chord-define-global ",f" 'find-file)
 (key-chord-define-global ",g" 'magit-status)
 (key-chord-define-global ",b" 'ido-switch-buffer)
-;; cannot map this to insert mode because it jams up the first letter
-;; switch from jf because often pressing j to go up/down, so probably
-;; best not to have it have to consider whether it is a chord each time
 (key-chord-define-global ";a" 'evil-normal-state)
 
 ;; org bindings
