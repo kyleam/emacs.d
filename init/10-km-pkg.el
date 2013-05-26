@@ -34,3 +34,5 @@
     (when (not (package-installed-p pkg))
       (message "installing %s" pkg)
       (package-install pkg))))
+
+(add-to-list 'load-path "~/.emacs.d/vendor/")
