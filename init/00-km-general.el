@@ -76,3 +76,6 @@
 (blink-cursor-mode -1)
 
 (put 'narrow-to-region 'disabled nil)
+
+(define-key prog-mode-map (kbd "RET") 'newline-and-indent)
+(define-key prog-mode-map (kbd "C-j") 'newline)
