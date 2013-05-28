@@ -1,8 +1,5 @@
 (setq default-frame-alist '((font . "Droid Sans Mono-9")))
 
-(require 'font-lock)
-(global-font-lock-mode t)
-
 (setq inhibit-splash-screen t
       initial-scratch-message nil)
 
