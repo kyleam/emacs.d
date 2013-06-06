@@ -59,7 +59,8 @@
               (lambda nil
                 (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
                                           (quote regexp) "\n]+>")))
-             (org-agenda-overriding-header "Unscheduled TODO entries: ")))))))
+             (org-agenda-overriding-header "Unscheduled TODO entries: ")))
+           ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))))
 
 (defvar km/org-additional-notes-files '("~/notes/backburner.org")
   "non-agenda files that should be available for refiling")
