@@ -11,32 +11,28 @@
 
 ;; set up capture
 (setq org-capture-templates
-      '(("c" "cal" entry (file+headline "~/notes/calendar.org" "misc")
-         "* %?")
-        ("t" "Todo" entry (file+headline "~/notes/tasks.org" "To file")
-         "* TODO %?")
-        ("m" "mail todo" entry (file+headline "~/notes/tasks.org" "mail")
-         "* TODO %?\nSource: %u, %c\n%i")
-        ("d" "mail date" entry (file+headline "~/notes/calendar.org" "mail")
-         "* %?\nSource: %u, %c\n%i")))
-
-;; for mutt capture
-(require 'org-protocol)
-;; ensure that emacsclient will show just the note to be edited when invoked
-;; from Mutt, and that it will shut down emacsclient once finished;
-;; fallback to legacy behavior when not invoked via org-protocol.
-(add-hook 'org-capture-mode-hook 'delete-other-windows)
-(setq my-org-protocol-flag nil)
-(defadvice org-capture-finalize (after delete-frame-at-end activate)
-  "Delete frame at capture finalization"
-  (progn (if my-org-protocol-flag (delete-frame))
-         (setq my-org-protocol-flag nil)))
-(defadvice org-capture-kill (after delete-frame-at-end activate)
-  "Delete frame at capture abort"
-  (progn (if my-org-protocol-flag (delete-frame))
-         (setq my-org-protocol-flag nil)))
-(defadvice org-protocol-capture (before set-org-protocol-flag activate)
-  (setq my-org-protocol-flag t))
+      '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%i")
+        ("d" "date" entry (file+headline "~/notes/calendar.org" "Inbox")
+         "* %?\n%i")
+        ("m" "misc" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i")
+        ("b" "backburner" entry (file+headline "~/notes/backburner.org" "Inbox")
+         "* TODO %?\n%i")
+        ;; link counterparts
+        ("T" "task link" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%i\nLink: %a")
+        ("D" "date link" entry (file+headline "~/notes/calendar.org" "Inbox")
+         "* %?\n%i\nLink: %a")
+        ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i\nLink: %a")
+        ("B" "backburner link" entry (file+headline "~/notes/backburner.org" "Inbox")
+         "* %?\n%i\nLink: %a")
+        ;; clipboard
+        ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%x")
+        ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%x")))
 
 (custom-set-variables
  '(org-agenda-files (quote ("~/notes/calendar.org" "~/notes/tasks.org")))
