@@ -54,7 +54,7 @@
                 (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
              (org-agenda-ndays 1)
              (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-           ("u" alltodo ""
+           ("u" "Unschedule TODO entries" alltodo ""
             ((org-agenda-skip-function
               (lambda nil
                 (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
