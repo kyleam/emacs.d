@@ -61,6 +61,12 @@
                                           (quote regexp) "\n]+>")))
              (org-agenda-overriding-header "Unscheduled TODO entries: ")))))))
 
+(defvar km/org-additional-notes-files '("~/notes/backburner.org")
+  "non-agenda files that should be available for refiling")
+
+(defvar km/org-refiling-targets
+  (append km/org-additional-notes-files org-agenda-files))
+
 ;; other customization in prelude's org module
 
 ;; have font colors in code blocks
@@ -75,8 +81,8 @@
 
 
 ;; from http://doc.norang.ca/org-mode.html
-(setq org-refile-targets (quote ((nil :maxlevel . 5)
-                                 (org-agenda-files :maxlevel . 5))))
+(setq org-refile-targets (quote ((nil :maxlevel . 3)
+                                 (km/org-refiling-targets :maxlevel . 2))))
 
 ;; Stop using paths for refile targets - we file directly with IDO
 (setq org-refile-use-outline-path nil)
