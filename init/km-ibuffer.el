@@ -42,6 +42,8 @@
                      (mode . gnus-group-mode)
                      (mode . gnus-summary-mode)
                      (mode . gnus-article-mode)
+                     (mode . notmuch-search-mode)
+                     (mode . notmuch-show-mode)
                      (name . "^\\*Mail sync\\*$")
                      (name . "^\\*Gnus sync\\*$")
                      (name . "^\\.newsrc-dribble")))
