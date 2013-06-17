@@ -3,3 +3,4 @@ cache
 elpa
 bookmarks
 vendor
+init/untracked.el
