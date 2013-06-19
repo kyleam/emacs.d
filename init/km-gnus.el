@@ -82,6 +82,23 @@
       '(gnus-thread-sort-by-number
         gnus-thread-sort-by-most-recent-date))
 
+(defun km/follow-gnus-link ()
+  "Follow link at bottom of gnus message"
+  (interactive)
+  ;; next 3 lines from gnus-sum.el guns-summary-widget-forward
+  (gnus-summary-select-article)
+  (gnus-configure-windows 'article)
+  (select-window (gnus-get-buffer-window gnus-article-buffer))
+
+  (end-of-buffer)
+  (search-backward "Link")
+  (widget-button-press (point)))
+
+(define-key gnus-summary-mode-map
+  (kbd "C-c j") 'km/follow-gnus-link)
+(define-key gnus-article-mode-map
+  (kbd "C-c j") 'km/follow-gnus-link)
+
 (require 'notmuch)
 (require 'org-gnus)
 
