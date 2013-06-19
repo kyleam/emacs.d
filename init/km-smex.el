@@ -2,6 +2,6 @@
 (require 'smex)
 (smex-initialize)
 ;; smex bound in km-evil.ex (,x)
-(global-set-key (kbd "M-x") 'smex-major-mode-commands)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; old M-x
-(global-set-key (kbd "M-X") 'execute-extended-command)
+(global-set-key (kbd "M-x") 'execute-extended-command)
