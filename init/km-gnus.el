@@ -39,8 +39,7 @@
 (setq gnus-gcc-mark-as-read t)
 
 (setq message-citation-line-function 'message-insert-formatted-citation-line)
-(setq message-citation-line-format "%N:")
-;; (setq message-citation-line-format "On %a, %b %d %Y, %f wrote:\n")
+(setq message-citation-line-format "On %D %R, %N wrote:")
 
 (setq message-kill-buffer-on-exit t)
 
