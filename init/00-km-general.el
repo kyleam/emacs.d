@@ -68,8 +68,8 @@
                         (spaces tabs newline space-mark
                                 tab-mark newline-mark)))
 
-(delete-selection-mode t) ;; write over selected text
-(transient-mark-mode t)
+(transient-mark-mode -1)
+
 ;; share clipboard with system
 (setq x-select-enable-clipboard t)
 
