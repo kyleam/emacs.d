@@ -7,7 +7,6 @@
 
 (require 'cl)
 (defvar km/packages '(
-                        evil
                         undo-tree
                         key-chord
                         org

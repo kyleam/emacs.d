@@ -57,3 +57,9 @@ user."
     (find-file file)))
 
 (global-set-key (kbd "C-x F") 'km/find-file-as-root)
+
+(defun km/save-and-kill-buffer ()
+  "Save current buffer and then kill it"
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer))
