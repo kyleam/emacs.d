@@ -63,3 +63,13 @@ user."
   (interactive)
   (save-buffer)
   (kill-this-buffer))
+
+(defun km/toggle-line-or-region-comment ()
+  "Comment/uncomment the current line or region"
+    (interactive)
+    (let (beg end)
+        (if (region-active-p)
+            (setq beg (region-beginning) end (region-end))
+          (setq beg (line-beginning-position) end (line-end-position)))
+        (comment-or-uncomment-region beg end))
+    (forward-line))

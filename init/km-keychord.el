@@ -15,3 +15,5 @@
 (key-chord-define-global ",e" 'eval-region)
 
 (key-chord-define-global ",w" 'km/sync-mail)
+
+(key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
