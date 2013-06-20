@@ -21,6 +21,7 @@
                         smex
                         paredit
                         yasnippet
+                        wrap-region
                         )
   "Default packages")
 
