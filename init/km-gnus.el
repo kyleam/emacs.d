@@ -82,8 +82,8 @@
       '(gnus-thread-sort-by-number
         gnus-thread-sort-by-most-recent-date))
 
-(defun km/follow-gnus-link ()
-  "Follow link at bottom of gnus message"
+(defun km/follow-gwene-link ()
+  "Follow link at bottom of gwene message"
   (interactive)
   ;; next 3 lines from gnus-sum.el guns-summary-widget-forward
   (gnus-summary-select-article)
@@ -95,9 +95,9 @@
   (widget-button-press (point)))
 
 (define-key gnus-summary-mode-map
-  (kbd "C-c j") 'km/follow-gnus-link)
+  (kbd "C-c j") 'km/follow-gwene-link)
 (define-key gnus-article-mode-map
-  (kbd "C-c j") 'km/follow-gnus-link)
+  (kbd "C-c j") 'km/follow-gwene-link)
 
 (require 'notmuch)
 (require 'org-gnus)
