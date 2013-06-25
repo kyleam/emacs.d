@@ -79,3 +79,5 @@
 
 (define-key prog-mode-map (kbd "RET") 'newline-and-indent)
 (define-key prog-mode-map (kbd "C-j") 'newline)
+
+(setq ispell-program-name "aspell")
