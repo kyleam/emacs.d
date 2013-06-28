@@ -2,8 +2,6 @@
 ;; I prefer having them together
 
 (defvar km/modes '(
-                   ("\\.md$" . markdown-mode)
-                   ("\\.markdown$" . markdown-mode)
                    ("\\.zsh$" . shell-script-mode)
                    ("\\.*rc$" . conf-unix-mode)
                    ("\\.org.txt$" . org-mode)
