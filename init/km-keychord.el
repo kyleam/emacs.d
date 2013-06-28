@@ -13,3 +13,5 @@
 (key-chord-define-global ",q" 'kill-this-buffer)
 (key-chord-define-global ",d" 'km/save-and-kill-buffer)
 (key-chord-define-global ",e" 'eval-region)
+
+(key-chord-define-global ",w" 'km/sync-mail)
