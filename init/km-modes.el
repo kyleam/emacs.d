@@ -5,7 +5,6 @@
                    ("\\.zsh$" . shell-script-mode)
                    ("\\.*rc$" . conf-unix-mode)
                    ("\\.org.txt$" . org-mode)
-                   ("/mutt" . mail-mode)
                    ("PKGBUILD" . shell-script-mode)
                    )
   "Auto mode mappings")
