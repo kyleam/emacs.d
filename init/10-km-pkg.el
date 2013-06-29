@@ -20,6 +20,7 @@
                         magit
                         smex
                         paredit
+                        yasnippet
                         )
   "Default packages")
 
