@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# name: numpy definition
+# key: defn
+# --
+def ${1:name}($2):
+    """$3
+    $0${2:$
+    (let* ((indent
+        (concat "\n" (make-string (current-column) 32)))
+           (args
+        (mapconcat
+         '(lambda (x)
+            (if (not (string= (nth 0 x) ""))
+                (concat "  " (nth 0 x) " : ")))
+         (mapcar
+          '(lambda (x)
+             (mapcar
+              '(lambda (x)
+                 (replace-regexp-in-string "[[:blank:]]*$" ""
+                                           (replace-regexp-in-string "^[[:blank:]]*" "" x)))
+              x))
+          (mapcar '(lambda (x) (split-string x "="))
+                  (split-string text ",")))
+         indent)))
+      (mapconcat
+       'identity
+       (list "" "Parameters" "----------" args)
+       indent))
+    }
+
+    Returns
+    -------
+
+    """
