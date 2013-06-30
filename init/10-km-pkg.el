@@ -19,6 +19,7 @@
                         auctex
                         magit
                         smex
+                        paredit
                         )
   "Default packages")
 
