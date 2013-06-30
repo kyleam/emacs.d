@@ -21,6 +21,7 @@
                         paredit
                         yasnippet
                         wrap-region
+                        ace-jump-mode
                         )
   "Default packages")
 
