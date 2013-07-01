@@ -55,7 +55,9 @@
 (setq gnus-visible-headers
       '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent"))
 
-(add-hook 'message-send-hook 'ispell-message)
+(add-hook 'message-mode-hook
+          '(lambda ()
+             (flyspell-mode 1)))
 
 (setq gnus-confirm-mail-reply-to-news t)
 
