@@ -73,3 +73,43 @@ user."
           (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end))
     (forward-line))
+
+;; kill functions
+
+(defun km/kill-string-at-point ()
+  (interactive)
+  (let ((string-start (nth 8 (syntax-ppss))))
+    (goto-char string-start)
+    (kill-sexp)))
+
+(defun km/kill-thing-at-point (thing killthing killarg)
+  "Go to the beginning of THING and call KILLTHING with
+KILLARG."
+  (goto-char (beginning-of-thing thing))
+  (funcall killthing killarg))
+
+(defun km/kill-sentence-at-point (arg)
+  (interactive "P")
+  (km/kill-thing-at-point 'sentence 'kill-sentence arg))
+
+(defun km/kill-word-at-point (arg)
+  (interactive "P")
+  (km/kill-thing-at-point 'word 'kill-word arg))
+
+(defun km/kill-paragraph-at-point (arg)
+  (interactive "P")
+  (km/kill-thing-at-point 'paragraph 'kill-paragraph arg))
+
+(defun km/kill-line-at-point (arg)
+  (interactive "P")
+  (km/kill-thing-at-point 'line 'kill-line arg))
+
+(defun km/kill-sexp-at-point (arg)
+  (interactive "P")
+  (km/kill-thing-at-point 'sexp 'kill-sexp arg))
+
+(global-set-key (kbd "C-c k s") 'km/kill-string-at-point)
+(global-set-key (kbd "C-c k .") 'km/kill-sentence-at-point)
+(global-set-key (kbd "C-c k w") 'km/kill-word-at-point)
+(global-set-key (kbd "C-c k p") 'km/kill-paragraph-at-point)
+(global-set-key (kbd "C-c k l") 'km/kill-line-at-point)
