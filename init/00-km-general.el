@@ -83,3 +83,5 @@
 (setq ispell-program-name "aspell")
 
 (global-set-key (kbd "M-/") 'hippie-expand)
+
+(setq sentence-end-double-space nil)
