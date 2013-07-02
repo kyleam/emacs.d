@@ -3,10 +3,6 @@
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "|" "DONE" "NA")))
 
-;; next 6 lines merged from prelude-org
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
 (setq org-log-done t)
 
 ;; set up capture
@@ -112,6 +108,9 @@
   (interactive)
   (find-file org-default-notes-file))
 
+(global-set-key (kbd "C-c o l") 'org-store-link)
+(global-set-key (kbd "C-c o a") 'org-agenda)
+(global-set-key (kbd "C-c o b") 'org-iswitchb)
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
 
 ;; by default this has started inserting uppercase for me. keep lower
