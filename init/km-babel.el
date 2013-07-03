@@ -1,13 +1,13 @@
 ;; set up babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '( (perl . t)
-    (sh . t)
-    (python . t)
-    (R . t)
-    (emacs-lisp . t)
-    (latex . t)
-    ))
+ '((perl . t)
+   (sh . t)
+   (python . t)
+   (R . t)
+   (emacs-lisp . t)
+   (latex . t)))
+
 ;; don't ask for confirmation before running code
 (setq org-confirm-babel-evaluate nil)
 
@@ -16,11 +16,10 @@
 ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
 (setq org-export-latex-listings 'minted)
 (setq org-export-latex-custom-lang-environments
-      '(
-        (R "rcode")
+      '((R "rcode")
         (sh "shcode")
-        (python "pythoncode")
-        ))
+        (python "pythoncode")))
+
 ;; (setq org-export-latex-minted-options
 ;;       '(("frame" "lines")
 ;;         ("fontsize" "\\scriptsize")

@@ -5,8 +5,7 @@
                    ("\\.zsh$" . shell-script-mode)
                    ("\\.*rc$" . conf-unix-mode)
                    ("\\.org.txt$" . org-mode)
-                   ("PKGBUILD" . shell-script-mode)
-                   )
+                   ("PKGBUILD" . shell-script-mode))
   "Auto mode mappings")
 
 (mapcar
