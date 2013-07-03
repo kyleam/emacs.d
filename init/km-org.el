@@ -121,3 +121,10 @@
 ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
 ;; to C-,)
 (define-key org-mode-map (kbd "C-'") nil)
+
+(define-key org-mode-map (kbd "C-c o j") 'org-metadown)
+(define-key org-mode-map (kbd "C-c o k") 'org-metaup)
+(define-key org-mode-map (kbd "C-c o h") 'org-metaleft)
+(define-key org-mode-map (kbd "C-c o H") 'org-shiftmetaleft)
+(define-key org-mode-map (kbd "C-c o l") 'org-metaright)
+(define-key org-mode-map (kbd "C-c o L") 'org-shiftmetaright)
