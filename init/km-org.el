@@ -113,10 +113,6 @@
 (global-set-key (kbd "C-c o b") 'org-iswitchb)
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
 
-;; by default this has started inserting uppercase for me. keep lower
-(add-to-list 'org-structure-template-alist
-             '("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>"))
-
 ;; don't let `org-cycle-agenda-files' binding override custom
 ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
 ;; to C-,)
