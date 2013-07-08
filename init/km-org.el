@@ -113,6 +113,17 @@
 (global-set-key (kbd "C-c o b") 'org-iswitchb)
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
 
+(defvar km/additional-org-templates
+  '(("t" "#+TITLE: " "")
+    ("d" "#+DATE: " "")
+    ("o" "#+OPTIONS: " "")
+    ("p" "#+PROPERTY: " "")))
+
+(mapcar
+ (lambda (template)
+   (add-to-list 'org-structure-template-alist template))
+ km/additional-org-templates)
+
 ;; don't let `org-cycle-agenda-files' binding override custom
 ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
 ;; to C-,)
