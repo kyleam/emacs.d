@@ -20,7 +20,8 @@
                       paredit
                       yasnippet
                       wrap-region
-                      ace-jump-mode)
+                      ace-jump-mode
+                      htmlize)
   "Default packages")
 
 (defun km/packages-installed-p ()
