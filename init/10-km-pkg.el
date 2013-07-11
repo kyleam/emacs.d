@@ -21,7 +21,8 @@
                       yasnippet
                       wrap-region
                       ace-jump-mode
-                      htmlize)
+                      htmlize
+                      git-commit-mode)
   "Default packages")
 
 (defun km/packages-installed-p ()
