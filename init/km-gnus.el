@@ -136,3 +136,5 @@
 (add-hook 'gnus-group-mode-hook 'km/notmuch-shortcut)
 
 (setq notmuch-fcc-dirs nil)
+
+(setq footnote-section-tag "")
