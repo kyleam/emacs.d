@@ -14,8 +14,6 @@
 (key-chord-define-global ",d" 'km/save-and-kill-buffer)
 (key-chord-define-global ",e" 'eval-region)
 
-(key-chord-define-global ",w" 'km/sync-mail)
-
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
 (key-chord-define-global ",a" 'ace-jump-mode)
