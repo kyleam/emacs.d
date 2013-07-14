@@ -12,7 +12,10 @@
 (key-chord-define-global ",s" 'save-buffer)
 (key-chord-define-global ",q" 'kill-this-buffer)
 (key-chord-define-global ",d" 'km/save-and-kill-buffer)
-(key-chord-define-global ",e" 'eval-region)
+(key-chord-define-global ",e" '(lambda ()
+                                 (interactive)
+                                 (save-buffer)
+                                 (server-edit)))
 
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
