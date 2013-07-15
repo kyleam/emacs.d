@@ -1,5 +1,4 @@
 ;;; add path for pdflatex
-(getenv "PATH")
 (setenv "PATH"
         (concat
          "/usr/texbin" ":"
