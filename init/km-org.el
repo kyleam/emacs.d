@@ -137,3 +137,5 @@
 (define-key org-mode-map (kbd "C-c o L") 'org-shiftmetaright)
 
 (setq org-use-speed-commands t)
+
+(setq org-catch-invisible-edits  'error)
