@@ -135,3 +135,5 @@
 (define-key org-mode-map (kbd "C-c o H") 'org-shiftmetaleft)
 (define-key org-mode-map (kbd "C-c o l") 'org-metaright)
 (define-key org-mode-map (kbd "C-c o L") 'org-shiftmetaright)
+
+(setq org-use-speed-commands t)
