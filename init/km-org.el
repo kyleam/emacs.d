@@ -77,26 +77,17 @@
 (setq org-cycle-separator-lines 1)
 
 
+
+;;;; Refile settings
+
 ;; from http://doc.norang.ca/org-mode.html
 (setq org-refile-targets (quote ((nil :maxlevel . 3)
                                  (km/org-refiling-targets :maxlevel . 2))))
 
-;; Stop using paths for refile targets - we file directly with IDO
-(setq org-refile-use-outline-path nil)
-
-;; Targets complete directly with IDO
+;; use IDO for refiling
 (setq org-outline-path-complete-in-steps nil)
-
-;; Allow refile to create parent tasks with confirmation
-(setq org-refile-allow-creating-parent-nodes (quote confirm))
-
-;; Use IDO for both buffer and file completion and ido-everywhere to t
 (setq org-completion-use-ido t)
-(setq ido-everywhere t)
-(setq ido-max-directory-size 100000)
-(ido-mode (quote both))
 
-;;;; Refile settings
 ;; Exclude DONE state tasks from refile targets
 (defun km/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"

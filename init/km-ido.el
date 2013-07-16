@@ -7,6 +7,8 @@
       ido-max-prospects 10
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist")
 
+(setq ido-max-directory-size 100000)
+
 ;; recent files
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
       recentf-max-saved-items 200
