@@ -3,8 +3,6 @@
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "|" "DONE" "NA")))
 
-(setq org-log-done t)
-
 ;; set up capture
 (setq org-capture-templates
       '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
