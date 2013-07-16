@@ -113,3 +113,12 @@ KILLARG."
 (global-set-key (kbd "C-c k w") 'km/kill-word-at-point)
 (global-set-key (kbd "C-c k p") 'km/kill-paragraph-at-point)
 (global-set-key (kbd "C-c k l") 'km/kill-line-at-point)
+
+(defun km/join-next-line-with-space ()
+  "Join current line to the next line with a space in between"
+  (interactive)
+  (move-end-of-line 1)
+  (kill-line)
+  (just-one-space))
+
+(global-set-key (kbd "C-c k j") 'km/join-next-line-with-space)
