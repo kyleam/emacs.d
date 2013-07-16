@@ -121,6 +121,9 @@
         ("S" "#+setupfile: ?" "")
         ("n" "#+begin_note\n  ?\n#+end_note" "<note>\n?\n</note>")
         ("w" "#+begin_note\n  ?\n#+end_note" "<note>\n?\n</note>")
+        ("C" "#+caption: " "")
+        ("b" "#+label: " "")
+        ("r" "#+attr_latex: " "")
         ;; lower case versions of defaults
         ("s" "#+begin_src ?\n  \n#+end_src" "<src lang=\"?\">\n\n</src>")
         ("e" "#+begin_example\n  ?\n#+end_example" "<example>\n?\n</example>")
