@@ -10,3 +10,8 @@
 (global-unset-key (kbd "M-z"))
 
 (global-set-key (kbd "C-'") 'backward-kill-word)
+
+(global-set-key (kbd "C-c r s") 'query-replace)
+(global-set-key (kbd "C-c r S") 'replace-string)
+(global-set-key (kbd "C-c r r") 'query-replace-regexp)
+(global-set-key (kbd "C-c r R") 'replace-regexp)
