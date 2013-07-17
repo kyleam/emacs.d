@@ -62,17 +62,6 @@
 
 (setq gnus-confirm-mail-reply-to-news t)
 
-(gnus-define-keys gnus-summary-mode-map
-  "j" gnus-summary-next-unread-article
-  ";" gnus-summary-universal-argument  ;; mutt's tag
-  "e" gnus-summary-scroll-up)
-
-(gnus-define-keys gnus-group-mode-map
-  "e" gnus-topic-select-group)
-
-(gnus-define-keys gnus-article-mode-map
-  "e" shr-browse-url)
-
 (global-set-key (kbd "C-x m") 'gnus-group-mail)
 
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
