@@ -122,3 +122,11 @@ KILLARG."
   (just-one-space))
 
 (global-set-key (kbd "C-c k j") 'km/join-next-line-with-space)
+
+(defadvice recompile (around restore-windows)
+  "Prevent recompiling from spawning new windows"
+  (save-window-excursion
+    ad-do-it))
+(ad-activate 'recompile)
+
+(global-set-key (kbd "C-c g") 'recompile)
