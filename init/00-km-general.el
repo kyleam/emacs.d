@@ -77,9 +77,6 @@
 
 (put 'narrow-to-region 'disabled nil)
 
-(define-key prog-mode-map (kbd "RET") 'newline-and-indent)
-(define-key prog-mode-map (kbd "C-j") 'newline)
-
 (setq ispell-program-name "aspell")
 
 (global-set-key (kbd "M-/") 'hippie-expand)
