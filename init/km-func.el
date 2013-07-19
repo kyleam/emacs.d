@@ -33,13 +33,13 @@
   (if (= (length lang) 0)
       (setq lang "python"))
   (insert "#!/usr/bin/env " lang "\n"))
-(global-set-key (kbd "C-c s") 'km/shebang)
+(global-set-key (kbd "C-c i s") 'km/shebang)
 
 (defun km/insert-date ()
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(global-set-key (kbd "C-c d") 'km/insert-date)
+(global-set-key (kbd "C-c i d") 'km/insert-date)
 
 (defun km/start-ess ()
   (interactive)
