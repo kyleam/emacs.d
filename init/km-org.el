@@ -21,7 +21,7 @@
         ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
          "* %?\n%i\nLink: %a")
         ("B" "backburner link" entry (file+headline "~/notes/backburner.org" "Inbox")
-         "* %?\n%i\nLink: %a")
+         "* TODO %?\n%i\nLink: %a")
         ;; clipboard
         ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
          "* TODO %?\n%x")
