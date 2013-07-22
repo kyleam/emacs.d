@@ -145,3 +145,5 @@
 (setq org-use-speed-commands t)
 
 (setq org-catch-invisible-edits  'error)
+
+(add-hook 'message-mode-hook 'turn-on-orgstruct++)

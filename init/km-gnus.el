@@ -57,8 +57,7 @@
 
 (add-hook 'message-mode-hook
           '(lambda ()
-             (flyspell-mode 1)
-             (orgstruct-mode 1)))
+             (flyspell-mode 1)))
 
 (setq gnus-confirm-mail-reply-to-news t)
 
