@@ -61,8 +61,6 @@
 
 (setq gnus-confirm-mail-reply-to-news t)
 
-(global-set-key (kbd "C-x m") 'gnus-group-mail)
-
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
 
 (setq gnus-summary-line-format
