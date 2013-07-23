@@ -146,5 +146,9 @@
 
 (setq org-catch-invisible-edits  'error)
 
-(add-hook 'message-mode-hook 'turn-on-orgstruct++)
-(add-hook 'magit-log-edit-mode-hook 'turn-on-orgstruct++)
+(defun km/load-orgstruct ()
+  (turn-on-orgstruct++)
+  (turn-on-orgtbl))
+
+(add-hook 'message-mode-hook 'km/load-orgstruct)
+(add-hook 'magit-log-edit-mode-hook 'km/load-orgstruct)
