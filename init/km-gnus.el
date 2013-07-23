@@ -130,3 +130,20 @@
 (setq notmuch-fcc-dirs nil)
 
 (setq footnote-section-tag "")
+
+(defun km/gnus-other-frame-always-fetch (arg)
+  "Run `gnus-other-frame' and always fetch level ARG.
+The default behavior of `gnus-other-frame' is to fetch level ARG
+only if gnus is not yet started. Otherwise, it will just switch
+to a gnus frame. This function calls `gnus-other-frame', but
+fetches level ARG regardless of whether gnus was already running"
+  (interactive "P")
+  (let ((need-fetch (gnus-alive-p)))
+    (gnus-other-frame arg)
+    (when need-fetch
+      (gnus-group-get-new-news arg))))
+
+;; only check level one (mail)
+(global-set-key (kbd "C-c m") '(lambda ()
+                                 (interactive)
+                                 (km/gnus-other-frame-always-fetch 1)))
