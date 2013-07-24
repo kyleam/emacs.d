@@ -148,3 +148,37 @@ fetches level ARG regardless of whether gnus was already running"
 (global-set-key (kbd "C-x m") '(lambda ()
                                  (interactive)
                                  (km/gnus-other-frame-always-fetch 1)))
+
+;; modified from
+;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html
+(defun km/snip-mail-quote (beg end &optional quote-char no-number)
+  "Replace region lines with \"[n lines ...]\".
+
+The default QUOTE-CHAR is \">\". Text following the snipped lines
+is placed on a new line and the resulting paragraph is filled. If
+NO-NUMBER is non-nil, the number of lines is not added."
+  (interactive "r")
+  (let ((nlines (count-lines beg end))
+        (quote-char (or quote-char ">")))
+    (delete-region beg end)
+    (if no-number
+        (insert (format "[...]"))
+      (insert (format "[%d line%s ...]" nlines (if (= 1 nlines) "" "s"))))
+    (search-backward "[")
+    (unless (bolp)
+      (newline))
+    (search-forward "]")
+    (unless (eolp)
+      (newline)
+      (insert quote-char)
+      (just-one-space)
+      (fill-paragraph))))
+
+(define-key message-mode-map
+  (kbd "C-c m s") 'km/snip-mail-quote)
+
+;; without reporting the number of lines
+(define-key message-mode-map
+  (kbd "C-c m S") '(lambda (beg end)
+                     (interactive "r")
+                     (km/snip-mail-quote beg end nil t)))
