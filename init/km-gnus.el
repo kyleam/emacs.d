@@ -144,6 +144,7 @@ fetches level ARG regardless of whether gnus was already running"
       (gnus-group-get-new-news arg))))
 
 ;; only check level one (mail)
-(global-set-key (kbd "C-c m") '(lambda ()
+(global-unset-key (kbd "C-x m"))
+(global-set-key (kbd "C-x m") '(lambda ()
                                  (interactive)
                                  (km/gnus-other-frame-always-fetch 1)))
