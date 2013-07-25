@@ -113,6 +113,7 @@
         ("C" "#+caption: " "")
         ("b" "#+label: " "")
         ("r" "#+attr_latex: " "")
+        ("R" "#+attr_html: " "")
         ;; lower case versions of defaults
         ("s" "#+begin_src ?\n  \n#+end_src" "<src lang=\"?\">\n\n</src>")
         ("e" "#+begin_example\n  ?\n#+end_example" "<example>\n?\n</example>")
