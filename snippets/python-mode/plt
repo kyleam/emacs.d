@@ -1,8 +1,8 @@
 # name: matplotlib-related import
 # key: plt
 # --
-import matplotlib.pyplt as plt
-from matplotlib import tickers
+import matplotlib.pyplot as plt
+from matplotlib import ticker
 
 import pltaid
 $0
