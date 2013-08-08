@@ -6,8 +6,7 @@
 (package-initialize)
 
 (require 'cl)
-(defvar km/packages '(undo-tree
-                      key-chord
+(defvar km/packages '(key-chord
                       org
                       ess
                       lua-mode
