@@ -67,15 +67,6 @@
 ;; have font colors in code blocks
 (setq org-src-fontify-natively t)
 
-;; from http://doc.norang.ca/org-mode.html
-;; this should prevent blank lines from being inserted
-;; before headers
-(setq org-blank-before-new-entry (quote ((heading)
-                                         (plain-list-item . auto))))
-(setq org-cycle-separator-lines 1)
-
-
-
 ;;;; Refile settings
 
 ;; from http://doc.norang.ca/org-mode.html
