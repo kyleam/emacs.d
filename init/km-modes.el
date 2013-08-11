@@ -8,7 +8,7 @@
                    ("PKGBUILD" . shell-script-mode))
   "Auto mode mappings")
 
-(mapcar
+(mapc
  (lambda (mode) (setq auto-mode-alist
                       (cons mode auto-mode-alist)))
  km/modes)
