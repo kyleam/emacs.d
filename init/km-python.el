@@ -1,5 +1,6 @@
 ;; http://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc5
 (defun km/setup-ipython-shell ()
+  (interactive)
   (setq
    python-shell-interpreter "ipython"
    python-shell-interpreter-args ""
