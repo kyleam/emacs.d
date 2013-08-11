@@ -22,3 +22,6 @@
                                     (compile "py.test2"))))
 
 (add-hook 'python-mode-hook 'km/python-hook)
+
+(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
