@@ -56,7 +56,8 @@
              (org-agenda-overriding-header "Unscheduled TODO entries: ")))
            ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))))
 
-(defvar km/org-additional-notes-files '("~/notes/backburner.org")
+(defvar km/org-additional-notes-files '("~/notes/backburner.org"
+                                        "~/notes/misc.org")
   "non-agenda files that should be available for refiling")
 
 (defvar km/org-refiling-targets
