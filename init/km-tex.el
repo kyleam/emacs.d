@@ -1,3 +1,5 @@
+(require 'tex)
+
 ;;; add path for pdflatex
 (setenv "PATH"
         (concat
