@@ -1,4 +1,6 @@
 (require 'tex)
+(require 'reftex)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;;; add path for pdflatex
 (setenv "PATH"
