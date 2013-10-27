@@ -74,6 +74,19 @@ user."
       (comment-or-uncomment-region beg end))
     (forward-line))
 
+(defun km/todo-comment ()
+  "Add commented TODO"
+    (interactive)
+    (let (beg end)
+      (if (region-active-p)
+          (setq beg (region-beginning) end (region-end))
+        (setq beg (line-beginning-position) end (line-end-position)))
+      (unless (comment-only-p beg end)
+        (beginning-of-line)
+        (insert "TODO ")
+        (comment-region beg (+ end 5))
+        (forward-line))))
+
 ;; kill functions
 
 (defun km/kill-string-at-point ()
