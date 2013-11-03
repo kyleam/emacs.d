@@ -150,3 +150,11 @@
 (setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
         "nointegrals")
 (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
+
+(defadvice org-agenda-list (around org-agenda-fullscreen activate)
+  (window-configuration-to-register :org-agenda-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+(defadvice org-agenda-quit (around org-agenda-restore-screen activate)
+  ad-do-it
+  (jump-to-register :org-agenda-fullscreen))
