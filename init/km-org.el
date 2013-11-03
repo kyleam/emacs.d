@@ -158,3 +158,5 @@
 (defadvice org-agenda-quit (around org-agenda-restore-screen activate)
   ad-do-it
   (jump-to-register :org-agenda-fullscreen))
+
+(setq org-agenda-sticky t)
