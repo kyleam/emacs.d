@@ -18,6 +18,7 @@
                       lua-mode
                       magit
                       markdown-mode
+                      multiple-cursors
                       org
                       paredit
                       smex

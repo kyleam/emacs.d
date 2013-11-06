@@ -17,3 +17,10 @@
 (global-set-key (kbd "C-c r R") 'replace-regexp)
 
 (global-set-key (kbd "C-c c t") 'km/todo-comment)
+
+;; multiple cursors
+;; put under insert prefix
+(global-set-key (kbd "C-c i m l") 'mc/edit-lines)
+(global-set-key (kbd "C-c i m n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c i m p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c i m a") 'mc/mark-all-like-this)
