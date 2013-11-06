@@ -7,22 +7,22 @@
 (package-initialize)
 
 (require 'cl)
-(defvar km/packages '(key-chord
-                      org
-                      ess
-                      lua-mode
-                      haskell-mode
-                      markdown-mode
-                      less-css-mode
+(defvar km/packages '(ace-jump-mode
                       auctex
-                      magit
-                      smex
-                      paredit
-                      yasnippet
-                      wrap-region
-                      ace-jump-mode
+                      ess
+                      git-commit-mode
+                      haskell-mode
                       htmlize
-                      git-commit-mode)
+                      key-chord
+                      less-css-mode
+                      lua-mode
+                      magit
+                      markdown-mode
+                      org
+                      paredit
+                      smex
+                      wrap-region
+                      yasnippet)
   "Default packages")
 
 (defun km/packages-installed-p ()
