@@ -4,3 +4,4 @@ elpa
 bookmarks
 vendor
 init/untracked.el
+/.mc-lists.el
