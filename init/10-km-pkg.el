@@ -10,6 +10,7 @@
 (defvar km/packages '(ace-jump-mode
                       auctex
                       ess
+                      expand-region
                       git-commit-mode
                       haskell-mode
                       htmlize
