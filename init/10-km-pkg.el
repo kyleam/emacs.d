@@ -11,6 +11,7 @@
                       auctex
                       ess
                       expand-region
+                      git-annex
                       git-commit-mode
                       haskell-mode
                       htmlize
@@ -41,4 +42,3 @@
       (package-install pkg))))
 
 (add-to-list 'load-path "~/.emacs.d/vendor/")
-(require 'git-annex)
