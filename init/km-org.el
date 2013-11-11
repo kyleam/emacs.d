@@ -152,11 +152,15 @@
 (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
 
 (defadvice org-agenda-list (around org-agenda-fullscreen activate)
-  (window-configuration-to-register :org-agenda-fullscreen)
+  "Start agenda in fullscreen.
+
+After agenda loads, delete other windows.
+`org-agenda-restore-windows-after-quit' should non-nil to restore
+the previous window configuration. If `org-agenda-sticky' is
+non-nil, configurations with more than one window do not seem to
+be restored properly."
   ad-do-it
   (delete-other-windows))
-(defadvice org-agenda-quit (around org-agenda-restore-screen activate)
-  ad-do-it
-  (jump-to-register :org-agenda-fullscreen))
 
-(setq org-agenda-sticky t)
+(setq org-agenda-restore-windows-after-quit t)
+(setq org-agenda-sticky nil)
