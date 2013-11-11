@@ -144,7 +144,7 @@
   (turn-on-orgtbl))
 
 (add-hook 'message-mode-hook 'km/load-orgstruct)
-(add-hook 'magit-log-edit-mode-hook 'km/load-orgstruct)
+(add-hook 'git-commit-mode-hook 'km/load-orgstruct)
 
 ;; avoid conflict when amsmath is loaded
 (setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
