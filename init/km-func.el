@@ -1,12 +1,27 @@
 ;; http://whattheemacsd.com/
 ;; whitespace cleanup
 
+;; buffer-specific prevention modified from
+;; http://stackoverflow.com/questions/14913398/
+;; in-emacs-how-do-i-save-without-running-save-hooks
+(defvar km/prevent-cleanup nil
+  "If set, `km/cleanup-buffer' does not perform clean up on save")
+
+(defun km/toggle-prevent-cleanup ()
+  "Toggle state of `km/prevent-cleanup'"
+  (interactive)
+  (let ((state t))
+    (when km/prevent-cleanup
+        (setq state nil))
+    (set (make-local-variable 'km/prevent-cleanup) state)))
+
 (defun km/cleanup-buffer ()
   (interactive)
-  (unless (equal major-mode 'makefile-gmake-mode)
-    (untabify (point-min) (point-max)))
-  (delete-trailing-whitespace)
-  (set-buffer-file-coding-system 'utf-8))
+  (unless km/prevent-cleanup
+    (unless (equal major-mode 'makefile-gmake-mode)
+      (untabify (point-min) (point-max)))
+    (delete-trailing-whitespace)
+    (set-buffer-file-coding-system 'utf-8)))
 (add-hook 'before-save-hook 'km/cleanup-buffer)
 
 (defun km/rename-current-buffer-file ()
