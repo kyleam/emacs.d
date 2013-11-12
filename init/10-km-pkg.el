@@ -9,6 +9,7 @@
 (require 'cl)
 (defvar km/packages '(ace-jump-mode
                       auctex
+                      dash
                       ess
                       expand-region
                       git-annex
