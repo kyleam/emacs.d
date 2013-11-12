@@ -10,6 +10,9 @@
       gnus-kill-files-directory "~/.gnus.d/scores"
       gnus-cache-directory "~/.gnus.d/cache")
 
+(setq gnus-startup-file (nnheader-concat gnus-home-directory "newsrc"))
+(setq gnus-init-file (nnheader-concat gnus-home-directory "gnus"))
+
 (setq gnus-save-newsrc-file nil
       gnus-read-newsrc-file nil)
 
