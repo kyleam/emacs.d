@@ -16,6 +16,8 @@
 (setq gnus-save-newsrc-file nil
       gnus-read-newsrc-file nil)
 
+(require 'gnus)
+
 (defun km/sync-mail ()
   (interactive)
   (let ((bufname (get-buffer-create "*Mail sync*")))
@@ -38,6 +40,11 @@
 
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       sendmail-program "/usr/bin/msmtp")
+
+;; Disable CC: to self in wide replies and stuff
+(setq message-dont-reply-to-names gnus-ignored-from-addresses)
+
+(setq message-sendmail-envelope-from 'header)
 
 (setq gnus-gcc-mark-as-read t)
 
@@ -185,3 +192,14 @@ NO-NUMBER is non-nil, the number of lines is not added."
   (kbd "C-c m S") '(lambda (beg end)
                      (interactive "r")
                      (km/snip-mail-quote beg end nil t)))
+
+(gnus-define-keys gnus-summary-mode-map
+  "j" gnus-summary-next-unread-article
+  ";" gnus-summary-universal-argument  ;; mutt's tag
+  "e" gnus-summary-scroll-up)
+
+(gnus-define-keys gnus-group-mode-map
+  "e" gnus-topic-select-group)
+
+(gnus-define-keys gnus-article-mode-map
+  "e" shr-browse-url)
