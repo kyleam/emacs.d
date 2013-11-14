@@ -1,3 +1,5 @@
+(require 'gnus)
+
 ;; set up gnus directories before gnus is initialized
 (setq gnus-directory "~/.gnus.d"
       gnus-home-directory "~/.gnus.d"
@@ -15,8 +17,6 @@
 
 (setq gnus-save-newsrc-file nil
       gnus-read-newsrc-file nil)
-
-(require 'gnus)
 
 (defun km/sync-mail ()
   (interactive)
