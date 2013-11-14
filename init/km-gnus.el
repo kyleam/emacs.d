@@ -41,9 +41,6 @@
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       sendmail-program "/usr/bin/msmtp")
 
-;; Disable CC: to self in wide replies and stuff
-(setq message-dont-reply-to-names gnus-ignored-from-addresses)
-
 (setq message-sendmail-envelope-from 'header)
 
 (setq gnus-gcc-mark-as-read t)
