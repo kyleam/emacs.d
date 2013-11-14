@@ -172,13 +172,19 @@ NO-NUMBER is non-nil, the number of lines is not added."
                      (interactive "r")
                      (km/snip-mail-quote beg end nil t)))
 
-(gnus-define-keys gnus-summary-mode-map
-  "j" gnus-summary-next-unread-article
-  ";" gnus-summary-universal-argument  ;; mutt's tag
-  "e" gnus-summary-scroll-up)
+(add-hook 'gnus-summary-mode-hook
+          (lambda ()
+            (gnus-define-keys gnus-summary-mode-map
+              "j" gnus-summary-next-unread-article
+              ";" gnus-summary-universal-argument  ;; mutt's tag
+              "e" gnus-summary-scroll-up)))
 
-(gnus-define-keys gnus-group-mode-map
-  "e" gnus-topic-select-group)
+(add-hook 'gnus-group-mode-hook
+          (lambda ()
+            (gnus-define-keys gnus-group-mode-map
+              "e" gnus-topic-select-group)))
 
-(gnus-define-keys gnus-article-mode-map
-  "e" shr-browse-url)
+(add-hook 'gnus-article-mode-hook
+          (lambda ()
+            (gnus-define-keys gnus-article-mode-map
+              "e" shr-browse-url)))
