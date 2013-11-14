@@ -82,3 +82,6 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 (setq sentence-end-double-space nil)
+
+(add-hook 'dired-load-hook
+          (lambda () (load "dired-x")))
