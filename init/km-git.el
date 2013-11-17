@@ -1,3 +1,4 @@
+(require 'git-annex)
 (require 'magit)
 
 (defun km/magit-auto-commit ()
