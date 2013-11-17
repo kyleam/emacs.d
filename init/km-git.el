@@ -1,4 +1,7 @@
 (require 'git-annex)
+
+(setq git-annex-commit nil)
+
 (require 'magit)
 
 (defun km/magit-auto-commit ()
