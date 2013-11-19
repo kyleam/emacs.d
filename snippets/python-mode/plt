@@ -2,7 +2,6 @@
 # key: plt
 # --
 import matplotlib.pyplot as plt
-from matplotlib import ticker
 
 import pltaid
 $0
