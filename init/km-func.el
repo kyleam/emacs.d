@@ -178,3 +178,12 @@ KILLARG."
   (other-window 1))
 
 (global-set-key (kbd "C-c s") 'km/swap-windows)
+
+(defvar km/terminal "urxvt")
+
+(defun km/open-external-terminal ()
+  (interactive)
+  (let ((bufname (get-buffer-create "*External terminal*")))
+    (with-current-buffer bufname
+      (insert "Starting terminal"))
+    (start-process "ext-term" bufname km/terminal)))
