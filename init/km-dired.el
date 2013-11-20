@@ -2,3 +2,5 @@
 
 (add-hook 'dired-load-hook
           (lambda () (load "dired-x")))
+
+(setq dired-listing-switches "-alh")
