@@ -4,7 +4,7 @@
 (defvar km/modes '(("\\.zsh$" . shell-script-mode)
                    ("\\.*rc$" . conf-unix-mode)
                    ("\\.org.txt$" . org-mode)
-                   ("PKGBUILD" . shell-script-mode))
+                   ("PKGBUILD" . pkgbuild-mode))
   "Auto mode mappings")
 
 (mapc

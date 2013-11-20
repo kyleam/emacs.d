@@ -25,6 +25,7 @@
                       markdown-mode
                       multiple-cursors
                       paredit
+                      pkgbuild-mode
                       projectile
                       smex
                       wrap-region
