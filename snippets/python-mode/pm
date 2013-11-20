@@ -1,0 +1,16 @@
+# name: pymc
+# key: pm
+# expand-env: ((yas/indent-line 'fixed))
+# --
+import theano.tensor as tn
+import pymc as pm
+
+with pm.Model() as model:
+    $0
+
+if __name__ == '__main__':
+    with model:
+        start = {}
+        trace = pm.sample(1000,
+                          step=pm.NUTS(model.vars),
+                          start=start)
