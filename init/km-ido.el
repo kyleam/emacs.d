@@ -1,4 +1,6 @@
+(require 'flx-ido)
 (ido-mode t)
+
 (setq ido-enable-prefix nil
       ido-everywhere t
       ido-enable-flex-matching t
@@ -6,6 +8,10 @@
       ido-use-filename-at-point 'guess
       ido-max-prospects 10
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist")
+
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
 
 (setq ido-max-directory-size 100000)
 

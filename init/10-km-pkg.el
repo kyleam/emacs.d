@@ -12,6 +12,8 @@
                       dash
                       ess
                       expand-region
+                      flx
+                      flx-ido
                       git-annex
                       git-commit-mode
                       haskell-mode
