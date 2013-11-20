@@ -1,8 +1,7 @@
 ;; these could be kept alongside related topics, but for whatever reason
 ;; I prefer having them together
 
-(defvar km/modes '(
-                   ("\\.zsh$" . shell-script-mode)
+(defvar km/modes '(("\\.zsh$" . shell-script-mode)
                    ("\\.*rc$" . conf-unix-mode)
                    ("\\.org.txt$" . org-mode)
                    ("PKGBUILD" . shell-script-mode))
