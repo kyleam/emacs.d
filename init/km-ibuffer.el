@@ -50,7 +50,7 @@
                      (name . "^\\.newsrc-dribble")))
          ("help" (or (name . "^\\*Help\\*$")
                      (name . "^\\*Apropos\\*$")
-                     (name . "^\\*info\\*%")
+                     (name . "^\\*info\\*$")
                      (name . "^\\*Completions\\*"))))))
 
 (add-hook 'ibuffer-mode-hook
