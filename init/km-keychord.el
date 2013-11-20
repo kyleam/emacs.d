@@ -20,3 +20,4 @@
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
 (key-chord-define-global ",a" 'ace-jump-mode)
+(key-chord-define-global ",z" 'rgrep)
