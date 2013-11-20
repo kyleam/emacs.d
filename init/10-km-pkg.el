@@ -25,6 +25,7 @@
                       markdown-mode
                       multiple-cursors
                       paredit
+                      projectile
                       smex
                       wrap-region
                       yasnippet)
