@@ -25,3 +25,5 @@
 
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
+
+(setq python-fill-docstring-style 'pep-257-nn)
