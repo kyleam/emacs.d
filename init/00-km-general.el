@@ -53,13 +53,6 @@
 (setq-default fill-column 72)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; (require 'ess-site)
-(add-hook 'ess-mode-hook (lambda ()
-                           (setq ess-indent-level 4)))
-
-(add-hook 'sh-mode-hook (lambda ()
-                          (setq sh-basic-offset 4)))
-
 ;; make whitespace-mode use just basic coloring
 ;; http://ergoemacs.org/emacs/whitespace-mode.html
 (setq whitespace-style (quote
