@@ -1,8 +1,6 @@
 ;; keybindings that don't go with other topics
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
-(global-set-key (kbd "C-c i i") 'indent-relative)
-
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 
 ;; overrides `suspend-emacs' (which is also bound to C-x C-z)
@@ -11,18 +9,18 @@
 
 (global-set-key (kbd "C-'") 'backward-kill-word)
 
-(global-set-key (kbd "C-c r s") 'query-replace)
-(global-set-key (kbd "C-c r S") 'replace-string)
-(global-set-key (kbd "C-c r r") 'query-replace-regexp)
-(global-set-key (kbd "C-c r R") 'replace-regexp)
+(define-key replace-map "s" 'query-replace)
+(define-key replace-map "S" 'replace-string)
+(define-key replace-map "r" 'query-replace-regexp)
+(define-key replace-map "R" 'replace-regexp)
 
-(global-set-key (kbd "C-c c t") 'km/todo-comment)
+(define-key comment-map "t" 'km/todo-comment)
 
-;; multiple cursors
-;; put under insert prefix
-(global-set-key (kbd "C-c i m l") 'mc/edit-lines)
-(global-set-key (kbd "C-c i m n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c i m p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c i m a") 'mc/mark-all-like-this)
+(define-key insert-map "i" 'indent-relative)
+
+(define-key multiple-cursors-map "l" 'mc/edit-lines)
+(define-key multiple-cursors-map "n" 'mc/mark-next-like-this)
+(define-key multiple-cursors-map "p" 'mc/mark-previous-like-this)
+(define-key multiple-cursors-map "a" 'mc/mark-all-like-this)
 
 (global-set-key (kbd "C-;") 'er/expand-region)

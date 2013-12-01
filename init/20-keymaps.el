@@ -1,0 +1,16 @@
+(define-prefix-command 'replace-map)
+(global-set-key (kbd "C-c r") 'replace-map)
+
+(define-prefix-command 'kill-map)
+(global-set-key (kbd "C-c k") 'kill-map)
+
+(define-prefix-command 'comment-map)
+(global-set-key (kbd "C-c c") 'comment-map)
+
+(define-prefix-command 'insert-map)
+(global-set-key (kbd "C-c i") 'insert-map)
+
+;; multiple cursors
+;; put under insert prefix
+(define-prefix-command 'multiple-cursors-map)
+(define-key insert-map "m" 'multiple-cursors-map)

@@ -48,13 +48,13 @@
   (if (= (length lang) 0)
       (setq lang "python"))
   (insert "#!/usr/bin/env " lang "\n"))
-(global-set-key (kbd "C-c i s") 'km/shebang)
+(define-key insert-map "s" 'km/shebang)
 
 (defun km/insert-date ()
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
-(global-set-key (kbd "C-c i d") 'km/insert-date)
+(define-key insert-map "d" 'km/insert-date)
 
 (defun km/start-ess ()
   (interactive)
@@ -136,11 +136,11 @@ KILLARG."
   (interactive "P")
   (km/kill-thing-at-point 'sexp 'kill-sexp arg))
 
-(global-set-key (kbd "C-c k s") 'km/kill-string-at-point)
-(global-set-key (kbd "C-c k .") 'km/kill-sentence-at-point)
-(global-set-key (kbd "C-c k w") 'km/kill-word-at-point)
-(global-set-key (kbd "C-c k p") 'km/kill-paragraph-at-point)
-(global-set-key (kbd "C-c k l") 'km/kill-line-at-point)
+(define-key kill-map  "s" 'km/kill-string-at-point)
+(define-key kill-map  "." 'km/kill-sentence-at-point)
+(define-key kill-map  "w" 'km/kill-word-at-point)
+(define-key kill-map  "p" 'km/kill-paragraph-at-point)
+(define-key kill-map  "l" 'km/kill-line-at-point)
 
 (defun km/join-next-line-with-space ()
   "Join current line to the next line with a space in between"
@@ -149,7 +149,7 @@ KILLARG."
   (kill-line)
   (just-one-space))
 
-(global-set-key (kbd "C-c k j") 'km/join-next-line-with-space)
+(define-key kill-map  "j" 'km/join-next-line-with-space)
 
 (defadvice recompile (around restore-windows)
   "Prevent recompiling from spawning new windows"
