@@ -6,9 +6,11 @@
   (magit-status (projectile-project-root)))
 
 (defun km/projectile-switch-project-to-file ()
-  "I have set `projectile-switch-project-action' to
-  `km/projectile-magit-status'. This function gives access to the
-  of default `projectile-find-file'"
+  "Provide access to the of default `projectile-find-file'.
+
+I have set `projectile-switch-project-action' to
+`km/projectile-magit-status' but would still like quick access to
+`projectile-find-file'"
   (interactive)
   (let ((projectile-switch-project-action 'projectile-find-file))
     (projectile-switch-project)))
