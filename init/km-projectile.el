@@ -15,4 +15,5 @@ I have set `projectile-switch-project-action' to
   (let ((projectile-switch-project-action 'projectile-find-file))
     (projectile-switch-project)))
 
-(global-set-key (kbd "C-c p j")  'km/projectile-switch-project-to-file)
+(define-key projectile-mode-map (kbd "C-c p j")
+  'km/projectile-switch-project-to-file)
