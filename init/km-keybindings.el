@@ -24,3 +24,5 @@
 (define-key multiple-cursors-map "a" 'mc/mark-all-like-this)
 
 (global-set-key (kbd "C-;") 'er/expand-region)
+
+(define-key external-map "s" 'shell-command)

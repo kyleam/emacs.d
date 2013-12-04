@@ -14,3 +14,6 @@
 ;; put under insert prefix
 (define-prefix-command 'multiple-cursors-map)
 (define-key insert-map "m" 'multiple-cursors-map)
+
+(define-prefix-command 'external-map)
+(global-set-key (kbd "C-c x") 'external-map)

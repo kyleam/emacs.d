@@ -187,3 +187,5 @@ KILLARG."
     (with-current-buffer bufname
       (insert "Starting terminal"))
     (start-process "ext-term" bufname km/terminal)))
+
+(define-key external-map "t" 'km/open-external-terminal)
