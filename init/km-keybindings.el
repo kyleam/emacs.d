@@ -14,7 +14,7 @@
 (define-key replace-map "r" 'query-replace-regexp)
 (define-key replace-map "R" 'replace-regexp)
 
-(define-key comment-map "t" 'km/todo-comment)
+(define-key insert-map "t" 'km/todo-comment)
 
 (define-key insert-map "i" 'indent-relative)
 

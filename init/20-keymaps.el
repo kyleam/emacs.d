@@ -4,9 +4,6 @@
 (define-prefix-command 'kill-map)
 (global-set-key (kbd "C-c k") 'kill-map)
 
-(define-prefix-command 'comment-map)
-(global-set-key (kbd "C-c c") 'comment-map)
-
 (define-prefix-command 'insert-map)
 (global-set-key (kbd "C-c i") 'insert-map)
 
