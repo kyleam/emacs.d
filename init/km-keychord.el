@@ -21,3 +21,4 @@
 
 (key-chord-define-global ",a" 'ace-jump-mode)
 (key-chord-define-global ",z" 'rgrep)
+(key-chord-define-global ",v" 'view-mode)
