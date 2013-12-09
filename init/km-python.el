@@ -13,7 +13,21 @@
    python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
+(defun km/create-python-test-file (arg)
+  "Create a python test file from the name of the current file.
+Unless a prefix argument ARG is given, py.test is also imported."
+  (interactive "P")
+  (let* ((py-file (file-name-nondirectory buffer-file-name))
+         (test-file (concat "test_" py-file)))
+    (when (file-exists-p test-file)
+      (error "Test file %s already exists." test-file))
+    (with-current-buffer (find-file test-file)
+      (insert (format "import %s\n" (file-name-sans-extension py-file)))
+      (unless arg
+        (insert "import pytest\n")))))
+
 (defun km/python-hook ()
+  (local-set-key (kbd "C-c m c") 'km/create-python-test-file)
   (local-set-key (kbd "C-c m t") '(lambda ()
                                     (interactive)
                                     (compile "py.test")))
