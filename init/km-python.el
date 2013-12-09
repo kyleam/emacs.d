@@ -21,7 +21,7 @@ Unless a prefix argument ARG is given, py.test is also imported."
          (test-file (concat "test_" py-file)))
     (when (file-exists-p test-file)
       (error "Test file %s already exists." test-file))
-    (with-current-buffer (find-file test-file)
+    (with-current-buffer (find-file-other-window test-file)
       (insert (format "import %s\n" (file-name-sans-extension py-file)))
       (unless arg
         (insert "import pytest\n")))))
