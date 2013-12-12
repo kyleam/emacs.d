@@ -74,4 +74,5 @@
 
 (setq sentence-end-double-space nil)
 
-(define-key view-mode-map "l" 'recenter-top-bottom)
+(eval-after-load "view"
+  '(define-key view-mode-map "l" 'recenter-top-bottom))
