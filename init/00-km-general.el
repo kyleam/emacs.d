@@ -73,3 +73,5 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 (setq sentence-end-double-space nil)
+
+(define-key view-mode-map "l" 'recenter-top-bottom)
