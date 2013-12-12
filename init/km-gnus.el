@@ -21,6 +21,10 @@
 (defun km/sync-mail ()
   (interactive)
   (let ((bufname (get-buffer-create "*Mail sync*")))
+    (with-current-buffer bufname
+      (view-mode 1)
+      (goto-char (point-max)))
+    (display-buffer bufname)
     (start-process "mail sync" bufname km/sync-mail-cmd)))
 
 (defvar km/sync-mail-cmd "~/bin/sync-mail.sh"
