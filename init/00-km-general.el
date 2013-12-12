@@ -75,4 +75,6 @@
 (setq sentence-end-double-space nil)
 
 (eval-after-load "view"
-  '(define-key view-mode-map "l" 'recenter-top-bottom))
+  '(progn
+     (define-key view-mode-map "l" 'recenter-top-bottom)
+     (define-key view-mode-map "a" 'ace-jump-mode)))
