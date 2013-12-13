@@ -20,7 +20,8 @@
 
 (defun km/sync-mail ()
   (interactive)
-  (let ((bufname (get-buffer-create "*Mail sync*")))
+  (let ((bufname (get-buffer-create "*Mail sync*"))
+        (default-directory "~"))
     (with-current-buffer bufname
       (view-mode 1)
       (goto-char (point-max)))
