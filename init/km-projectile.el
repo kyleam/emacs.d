@@ -9,6 +9,11 @@
   "Open magit status for project."
   (km/projectile-magit-status))
 
+;; default binding is D
+(def-projectile-commander-method ?r
+  "Open project root in dired."
+  (projectile-dired))
+
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
 
