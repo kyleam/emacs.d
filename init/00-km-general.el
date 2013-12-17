@@ -79,5 +79,4 @@
      (define-key view-mode-map "l" 'recenter-top-bottom)
      (define-key view-mode-map "a" 'ace-jump-mode)))
 
-(setq shell-file-name "bash")
 (setq shell-command-switch "-ic")
