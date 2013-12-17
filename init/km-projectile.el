@@ -2,13 +2,6 @@
 
 (setq projectile-switch-project-action 'projectile-commander)
 
-(defun km/projectile-magit-status ()
-  (magit-status (projectile-project-root)))
-
-(def-projectile-commander-method ?v
-  "Open magit status for project."
-  (km/projectile-magit-status))
-
 ;; default binding is D
 (def-projectile-commander-method ?r
   "Open project root in dired."
