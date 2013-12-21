@@ -43,8 +43,7 @@
 (setq browse-url-browser-function 'browse-url-generic
           browse-url-generic-program "chromium")
 
-(setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq x-select-enable-primary t)
 
 ;; make scripts executable at save
 (add-hook 'after-save-hook
