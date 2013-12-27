@@ -193,3 +193,11 @@ NO-NUMBER is non-nil, the number of lines is not added."
           (lambda ()
             (gnus-define-keys gnus-article-mode-map
               "e" shr-browse-url)))
+
+(defadvice gnus (around gnus-fullscreen activate)
+  (window-configuration-to-register :gnus-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+(defadvice gnus-group-exit (around gnus-restore-screen activate)
+  ad-do-it
+  (jump-to-register :gnus-fullscreen))
