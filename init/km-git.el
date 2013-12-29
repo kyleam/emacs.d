@@ -14,12 +14,10 @@
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status (around magit-fullscreen activate)
-  (window-configuration-to-register :magit-fullscreen)
   ad-do-it
   (delete-other-windows))
-(defadvice magit-mode-quit-window (around magit-restore-screen activate)
-  ad-do-it
-  (jump-to-register :magit-fullscreen))
+
+(setq magit-restore-window-configuration t)
 
 ;; http://whattheemacsd.com/setup-magit.el-05.html
 (defun km/magit-just-amend ()
