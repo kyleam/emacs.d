@@ -19,3 +19,5 @@ I have set `projectile-switch-project-action' to
 
 (define-key projectile-mode-map (kbd "C-c p j")
   'km/projectile-switch-project-to-file)
+
+(setq projectile-use-git-grep t)
