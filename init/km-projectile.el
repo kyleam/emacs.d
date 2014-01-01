@@ -21,3 +21,21 @@ I have set `projectile-switch-project-action' to
   'km/projectile-switch-project-to-file)
 
 (setq projectile-use-git-grep t)
+
+(defun km/projectile-query-and-replace (from to &optional delimited)
+  "Peform query and replace on current project files.
+
+Core logic taken from `dired-do-query-replace-regexp', replacing
+the marked dired file list with the list from
+`projectile-current-project-files'."
+  (interactive
+   (let ((common
+          (query-replace-read-args
+           "Query replace regexp in project files" t t)))
+     (list (nth 0 common) (nth 1 common) (nth 2 common))))
+  (projectile-with-default-dir (projectile-project-root)
+    (tags-query-replace from to delimited
+                        '(projectile-current-project-files))))
+
+(define-key projectile-mode-map (kbd "C-c p q")
+  'km/projectile-query-and-replace)
