@@ -221,3 +221,17 @@ is non-nil, the region is copied with `x-select-text'."
   (interactive)
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
+
+;; http://www.emacswiki.org/emacs/ToggleWindowSplit
+(defun km/toggle-frame-split ()
+  "If the frame is split vertically, split it horizontally or vice versa.
+Assumes that the frame is only split into two."
+  (interactive)
+  (unless (= (length (window-list)) 2)
+    (error "Can only toggle a frame split in two"))
+  (let ((split-vertically-p (window-combined-p)))
+    (delete-window)
+    (if split-vertically-p
+        (split-window-horizontally)
+      (split-window-vertically))
+    (switch-to-buffer nil)))
