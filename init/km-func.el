@@ -223,7 +223,7 @@ is non-nil, the region is copied with `x-select-text'."
     (fill-paragraph nil)))
 
 ;; http://www.emacswiki.org/emacs/ToggleWindowSplit
-(defun km/toggle-frame-split ()
+(defun km/switch-frame-split ()
   "If the frame is split vertically, split it horizontally or vice versa.
 Assumes that the frame is only split into two."
   (interactive)
