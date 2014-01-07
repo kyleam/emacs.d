@@ -92,12 +92,7 @@
 (defun km/follow-gwene-link ()
   "Follow link at bottom of gwene message"
   (interactive)
-  ;; next 3 lines from gnus-sum.el guns-summary-widget-forward
-  (gnus-summary-select-article)
-  (gnus-configure-windows 'article)
-  (select-window (gnus-get-buffer-window gnus-article-buffer))
-
-  (goto-char (point-max))
+  (km/gnus-end-of-article-buffer)
   (search-backward "Link")
   (widget-button-press (point)))
 
@@ -105,6 +100,30 @@
   (kbd "C-c j") 'km/follow-gwene-link)
 (define-key gnus-article-mode-map
   (kbd "C-c j") 'km/follow-gwene-link)
+
+(require 'url-handlers)
+
+(defun km/gnus-open-github-patch ()
+  "Open patch from github email.
+
+The patch is downloaded to a temporary file and then opened in
+another window."
+  (interactive)
+  (km/gnus-end-of-article-buffer)
+  (search-backward "patch")
+  (let ((url (thing-at-point 'url))
+        (patch-file (make-temp-file "gnus-github-" nil ".patch")))
+    (url-copy-file url patch-file t)
+    (find-file-other-window patch-file)
+    (view-mode 1)))
+
+(defun km/gnus-end-of-article-buffer ()
+  "Move point to the end of the article buffer."
+  ;; next 3 lines from gnus-sum.el `gnus-summary-widget-forward'
+  (gnus-summary-select-article)
+  (gnus-configure-windows 'article)
+  (select-window (gnus-get-buffer-window gnus-article-buffer))
+  (goto-char (point-max)))
 
 (require 'notmuch)
 (require 'org-gnus)
