@@ -97,7 +97,7 @@
   (gnus-configure-windows 'article)
   (select-window (gnus-get-buffer-window gnus-article-buffer))
 
-  (end-of-buffer)
+  (goto-char (point-max))
   (search-backward "Link")
   (widget-button-press (point)))
 
