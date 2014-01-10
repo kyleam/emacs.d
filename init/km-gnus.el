@@ -112,9 +112,10 @@ another window."
   (km/gnus-end-of-article-buffer)
   (search-backward "patch")
   (let ((url (thing-at-point 'url))
-        (patch-file (make-temp-file "gnus-github-" nil ".patch")))
-    (url-copy-file url patch-file t)
-    (find-file-other-window patch-file)
+        (patch-buffer (get-buffer-create "*gnus-github-patch*")))
+    (switch-to-buffer-other-window patch-buffer)
+    (url-insert-file-contents url)
+    (diff-mode)
     (view-mode 1)))
 
 (defun km/gnus-end-of-article-buffer ()
