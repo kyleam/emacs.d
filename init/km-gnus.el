@@ -105,9 +105,7 @@
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
-
-The patch is downloaded to a temporary file and then opened in
-another window."
+A new buffer with the patch contents is opened in another window."
   (interactive)
   (km/gnus-end-of-article-buffer)
   (search-backward "patch")
