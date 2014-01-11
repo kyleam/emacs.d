@@ -120,7 +120,7 @@ another window."
 
 (defun km/gnus-end-of-article-buffer ()
   "Move point to the end of the article buffer."
-  ;; next 3 lines from gnus-sum.el `gnus-summary-widget-forward'
+  ;; The next 3 lines are from `gnus-summary-widget-forward'.
   (gnus-summary-select-article)
   (gnus-configure-windows 'article)
   (select-window (gnus-get-buffer-window gnus-article-buffer))
