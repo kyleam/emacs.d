@@ -110,7 +110,7 @@ A new buffer with the patch contents is opened in another window."
   (km/gnus-end-of-article-buffer)
   (search-backward "patch")
   (let ((url (thing-at-point 'url))
-        (patch-buffer (get-buffer-create "*gnus-github-patch*")))
+        (patch-buffer (generate-new-buffer "*gnus-github-patch*")))
     (switch-to-buffer-other-window patch-buffer)
     (url-insert-file-contents url)
     (diff-mode)
