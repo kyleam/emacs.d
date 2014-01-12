@@ -7,6 +7,10 @@
   "Open project root in dired."
   (projectile-dired))
 
+(def-projectile-commander-method ?c
+  "Run project compilation command."
+  (call-interactively 'projectile-compile-project))
+
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
 
