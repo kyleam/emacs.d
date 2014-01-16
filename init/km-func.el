@@ -183,10 +183,7 @@ KILLARG."
 
 (defun km/open-external-terminal ()
   (interactive)
-  (let ((bufname (get-buffer-create "*External terminal*")))
-    (with-current-buffer bufname
-      (insert "Starting terminal"))
-    (start-process "ext-term" bufname km/terminal)))
+  (start-process "ext-term" nil km/terminal))
 
 (define-key external-map "t" 'km/open-external-terminal)
 
