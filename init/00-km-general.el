@@ -79,3 +79,8 @@
      (define-key view-mode-map "a" 'ace-jump-mode)))
 
 (setq shell-command-switch "-ic")
+
+;; http://irreal.org/blog/?p=1536
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
+(global-set-key (kbd "M-z") 'zap-up-to-char)
