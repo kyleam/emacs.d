@@ -5,10 +5,10 @@
 (require 'magit)
 
 (defun km/magit-auto-commit ()
+  "Commit all changes with \"auto\" commit message.
+Useful for non-source code repos (e.g., Org mode note files)."
   (interactive)
-  (save-window-excursion
-    (magit-with-refresh
-      (shell-command "git --no-pager commit --all --message=auto"))))
+  (magit-run-git "commit" "--all" "--message=auto"))
 
 (define-key magit-status-mode-map (kbd "C-c C-u") 'km/magit-auto-commit)
 
