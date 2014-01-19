@@ -164,3 +164,5 @@ be restored properly."
 
 (setq org-agenda-restore-windows-after-quit t)
 (setq org-agenda-sticky nil)
+
+(setq org-goto-interface 'outline-path-completion)
