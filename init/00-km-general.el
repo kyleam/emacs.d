@@ -70,6 +70,11 @@
 (setq ispell-program-name "aspell")
 
 (global-set-key (kbd "M-/") 'hippie-expand)
+;; http://www.emacswiki.org/emacs/HippieExpand#toc9
+(defadvice he-substitute-string (after he-paredit-fix activate)
+  "Remove extra paren when expanding line in paredit."
+  (if (and paredit-mode (equal (substring str -1) ")"))
+      (progn (backward-delete-char 1) (forward-char))))
 
 (setq sentence-end-double-space nil)
 
