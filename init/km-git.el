@@ -10,7 +10,8 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
-(define-key magit-status-mode-map (kbd "C-c C-u") 'km/magit-auto-commit)
+(magit-key-mode-insert-action 'committing
+                              "u" "Auto commit" 'km/magit-auto-commit)
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status (around magit-fullscreen activate)
