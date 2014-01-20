@@ -23,6 +23,7 @@
                       lua-mode
                       magit
                       markdown-mode
+                      mocker
                       multiple-cursors
                       paredit
                       pkgbuild-mode
