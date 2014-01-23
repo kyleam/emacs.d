@@ -28,33 +28,34 @@
         ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
          "* %?\n%x")))
 
-(custom-set-variables
- '(org-agenda-files (quote ("~/notes/calendar.org" "~/notes/tasks.org")))
- '(org-default-notes-file "~/notes/tasks.org")
- '(org-agenda-ndays 7)
-;; '(org-deadline-warning-days 14)
- '(org-agenda-show-all-dates t)
- '(org-agenda-skip-deadline-if-done t)
- '(org-agenda-skip-scheduled-if-done t)
- '(org-agenda-start-on-weekday nil)
- '(org-reverse-note-order t)
- '(org-fast-tag-selection-single-key (quote expert))
- '(org-agenda-custom-commands
-   (quote (("d" todo "DONE" nil)
-           ("s" todo "STARTED" nil)
-           ("A" agenda ""
-            ((org-agenda-skip-function
-              (lambda nil
-                (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
-             (org-agenda-ndays 1)
-             (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-           ("u" "Unschedule TODO entries" alltodo ""
-            ((org-agenda-skip-function
-              (lambda nil
-                (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
-                                          (quote regexp) "\n]+>")))
-             (org-agenda-overriding-header "Unscheduled TODO entries: ")))
-           ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))))
+(setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org"))
+(setq org-default-notes-file "~/notes/tasks.org")
+
+(setq org-agenda-ndays 7)
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-start-on-weekday nil)
+(setq org-reverse-note-order t)
+(setq org-fast-tag-selection-single-key 'expert)
+
+(setq org-agenda-custom-commands
+      '(("d" todo "DONE" nil)
+        ("s" todo "STARTED" nil)
+        ("A" agenda ""
+         ((org-agenda-skip-function
+           (lambda nil
+             (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")))
+          (org-agenda-ndays 1)
+          (org-agenda-overriding-header "Today's Priority #A tasks: ")))
+        ("u" "Unschedule TODO entries" alltodo ""
+         ((org-agenda-skip-function
+           (lambda nil
+             (org-agenda-skip-entry-if 'scheduled 'deadline
+                                       'regexp "\n]+>")))
+          (org-agenda-overriding-header "Unscheduled TODO entries: ")))
+        ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))
+
 
 (defvar km/org-additional-notes-files '("~/notes/backburner.org"
                                         "~/notes/misc.org")
