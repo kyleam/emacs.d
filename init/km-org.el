@@ -31,7 +31,6 @@
 (setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org"))
 (setq org-default-notes-file "~/notes/tasks.org")
 
-(setq org-agenda-ndays 7)
 (setq org-agenda-show-all-dates t)
 (setq org-agenda-skip-deadline-if-done t)
 (setq org-agenda-skip-scheduled-if-done t)
