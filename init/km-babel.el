@@ -1,8 +1,7 @@
 ;; Set up babel languages.
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((perl . t)
-   (sh . t)
+ '((sh . t)
    (python . t)
    (R . t)
    (emacs-lisp . t)
