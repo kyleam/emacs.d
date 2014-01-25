@@ -1,3 +1,5 @@
+(setq org-modules '(org-bibtex org-gnus org-info))
+
 (setq org-log-done t)
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "|" "DONE" "NA")))
