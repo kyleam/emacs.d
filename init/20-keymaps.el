@@ -8,7 +8,7 @@
 (global-set-key (kbd "C-c i") 'insert-map)
 
 ;; multiple cursors
-;; put under insert prefix
+;; Put under insert prefix.
 (define-prefix-command 'multiple-cursors-map)
 (define-key insert-map "m" 'multiple-cursors-map)
 

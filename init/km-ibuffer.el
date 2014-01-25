@@ -1,8 +1,8 @@
-;; replace buffer-menu with ibuffer
+;; Replace buffer-menu with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; modified from http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
-;; and here http://www.elliotglaysher.org/emacs/
+;; Modified from http://martinowen.net/blog/2010/02/tips-for-emacs-ibuffer.html
+;; and here http://www.elliotglaysher.org/emacs/.
 
 (setq ibuffer-saved-filter-groups
       '(("home"
@@ -57,11 +57,11 @@
 
 (add-hook 'ibuffer-mode-hook
           '(lambda ()
-             (ibuffer-auto-mode 1) ; keep buffer list up-to-date
+             (ibuffer-auto-mode 1) ; Keep buffer list up-to-date.
              (ibuffer-switch-to-saved-filter-groups "home")))
 
-;; do not prompt to delete unmodified buffers
+;; Don't prompt to delete unmodified buffers.
 (setq ibuffer-expert t)
 
-;; don't show empty filter groups
+;; Don't show empty filter groups.
 (setq ibuffer-show-empty-filter-groups nil)

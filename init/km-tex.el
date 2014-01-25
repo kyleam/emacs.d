@@ -2,7 +2,7 @@
 (require 'reftex)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
-;;; add path for pdflatex
+;;; Add path for pdflatex.
 (setenv "PATH"
         (concat
          "/usr/texbin" ":"

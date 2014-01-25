@@ -10,18 +10,18 @@
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist")
 
 (flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
+;; Disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
 
 (setq ido-max-directory-size 100000)
 
-;; recent files
+;; Recent files
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
       recentf-max-saved-items 200
       recentf-max-menu-items 15)
 (recentf-mode t)
 
-;; from prelude
+;; From prelude
 (defun km/recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)

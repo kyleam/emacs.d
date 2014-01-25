@@ -18,25 +18,26 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; line info
+;; Line info
 (line-number-mode t)
 (column-number-mode t)
 (size-indication-mode t)
 
-;; set location of custom.el
+;; Set location of custom.el.
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; store all backup and autosave files in the tmp dir
+;; Store all backup and autosave files in tmp dir.
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; revert buffers automatically when underlying files are changed externally
+;; Revert buffers automatically when underlying files are changed
+;; externally.
 (global-auto-revert-mode t)
 
-;; tramp
+;; Tramp
 (require 'tramp)
 (setq tramp-default-method "ssh")
 
@@ -45,14 +46,14 @@
 
 (setq x-select-enable-primary t)
 
-;; make scripts executable at save
+;; Make scripts executable at save.
 (add-hook 'after-save-hook
   'executable-make-buffer-file-executable-if-script-p)
 
 (setq-default fill-column 72)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; make whitespace-mode use just basic coloring
+;; Make whitespace-mode use just basic coloring.
 ;; http://ergoemacs.org/emacs/whitespace-mode.html
 (setq whitespace-style (quote
                         (spaces tabs newline space-mark
@@ -60,7 +61,7 @@
 
 (transient-mark-mode -1)
 
-;; share clipboard with system
+;; Share clipboard with system.
 (setq x-select-enable-clipboard t)
 
 (blink-cursor-mode -1)

@@ -3,7 +3,7 @@
 
 (key-chord-define-global ",r" 'km/recentf-ido-find-file)
 (key-chord-define-global ",t" 'org-capture)
-;; instead of alt-x
+;; Instead of alt-x
 (key-chord-define-global ",x" 'smex)
 (key-chord-define-global ",f" 'find-file)
 (key-chord-define-global ",g" 'magit-status)

@@ -2,7 +2,7 @@
 
 (setq projectile-switch-project-action 'projectile-commander)
 
-;; default binding is D
+;; Default binding is D.
 (def-projectile-commander-method ?r
   "Open project root in dired."
   (projectile-dired))
@@ -16,7 +16,7 @@
 
 I have set `projectile-switch-project-action' to
 `projectile-commander' but would still like quick access to
-`projectile-find-file'"
+`projectile-find-file'."
   (interactive)
   (let ((projectile-switch-project-action 'projectile-find-file))
     (projectile-switch-project)))

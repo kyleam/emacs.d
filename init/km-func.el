@@ -1,11 +1,11 @@
 ;; http://whattheemacsd.com/
 ;; whitespace cleanup
 
-;; buffer-specific prevention modified from
+;; Buffer-specific prevention modified from
 ;; http://stackoverflow.com/questions/14913398/
-;; in-emacs-how-do-i-save-without-running-save-hooks
-(defvar km/prevent-cleanup nil
-  "If set, `km/cleanup-buffer' does not perform clean up on save")
+;; in-emacs-how-do-i-save-without-running-save-hooks.
+(defcustom km/prevent-cleanup nil
+  "If set, `km/cleanup-buffer' does not perform clean up on save.")
 
 (defun km/toggle-prevent-cleanup ()
   "Toggle state of `km/prevent-cleanup'"
@@ -102,7 +102,7 @@ user."
         (comment-region beg (+ end 5))
         (forward-line))))
 
-;; kill functions
+;; Kill functions
 
 (defun km/kill-string-at-point ()
   (interactive)
@@ -143,7 +143,7 @@ KILLARG."
 (define-key kill-map  "l" 'km/kill-line-at-point)
 
 (defun km/join-next-line-with-space ()
-  "Join current line to the next line with a space in between"
+  "Join current line to the next line with a space in between."
   (interactive)
   (move-end-of-line 1)
   (kill-line)
@@ -152,14 +152,14 @@ KILLARG."
 (define-key kill-map  "j" 'km/join-next-line-with-space)
 
 (defadvice recompile (around restore-windows)
-  "Prevent recompiling from spawning new windows"
+  "Prevent recompiling from spawning new windows."
   (save-window-excursion
     ad-do-it))
 (ad-activate 'recompile)
 
 (global-set-key (kbd "C-c g") 'recompile)
 
-;; from prelude
+;; From prelude
 (defun km/swap-windows ()
   "If you have 2 windows, it swaps them."
   (interactive)

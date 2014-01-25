@@ -1,10 +1,10 @@
-;; these could be kept alongside related topics, but for whatever reason
-;; I prefer having them together
+;; These could be kept alongside related topics, but for whatever reason
+;; I prefer having them together.
 
-(defvar km/modes '(("\\.zsh$" . shell-script-mode)
-                   ("\\.*rc$" . conf-unix-mode)
-                   ("\\.org.txt$" . org-mode)
-                   ("PKGBUILD" . pkgbuild-mode))
+(defcustom km/modes '(("\\.zsh$" . shell-script-mode)
+                      ("\\.*rc$" . conf-unix-mode)
+                      ("\\.org.txt$" . org-mode)
+                      ("PKGBUILD" . pkgbuild-mode))
   "Auto mode mappings")
 
 (mapc

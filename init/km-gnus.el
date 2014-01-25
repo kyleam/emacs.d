@@ -1,6 +1,6 @@
 (require 'gnus)
 
-;; set up gnus directories before gnus is initialized
+;; Set up gnus directories before gnus is initialized.
 (setq gnus-directory "~/.gnus.d"
       gnus-home-directory "~/.gnus.d"
       message-directory "~/.gnus.d/mail"
@@ -29,7 +29,7 @@
     (start-process "mail sync" bufname km/sync-mail-cmd)))
 
 (defvar km/sync-mail-cmd "~/bin/sync-mail.sh"
-  "Run sync mail script")
+  "Run sync mail script.")
 
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
@@ -55,12 +55,12 @@
 
 (setq message-kill-buffer-on-exit t)
 
-;; for rss too specific to add to gwene
+;; Use for rss too specific to add to gwene.
 (require 'nnrss)
 
 (setq gnus-group-list-inactive-groups nil)
 
-;; start in topic mode
+;; Start in topic mode.
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 (setq gnus-topic-display-empty-topics nil)
 
@@ -189,7 +189,7 @@ NO-NUMBER is non-nil, the number of lines is not added."
 (define-key message-mode-map
   (kbd "C-c m s") 'km/snip-mail-quote)
 
-;; without reporting the number of lines
+;; Without reporting the number of lines
 (define-key message-mode-map
   (kbd "C-c m S") '(lambda (beg end)
                      (interactive "r")
