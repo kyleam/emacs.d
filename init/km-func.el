@@ -4,7 +4,7 @@
 ;; Buffer-specific prevention modified from
 ;; http://stackoverflow.com/questions/14913398/
 ;; in-emacs-how-do-i-save-without-running-save-hooks.
-(defcustom km/prevent-cleanup nil
+(defvar km/prevent-cleanup nil
   "If set, `km/cleanup-buffer' does not perform clean up on save.")
 
 (defun km/toggle-prevent-cleanup ()

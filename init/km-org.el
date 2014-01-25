@@ -129,9 +129,9 @@ be restored properly."
 
 ;;; Refiling
 
-(defcustom km/org-refiling-targets
-   (append org-agenda-files '("~/notes/backburner.org" "~/notes/misc.org"))
-   "List of all refiling targets for agend, including non-agenda
+(defvar km/org-refiling-targets
+  (append org-agenda-files '("~/notes/backburner.org" "~/notes/misc.org"))
+  "List of refiling targets for agenda, including non-agenda
 files.")
 
 (setq org-refile-targets (quote ((nil :maxlevel . 3)

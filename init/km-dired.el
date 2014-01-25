@@ -8,7 +8,7 @@
 (setq dired-omit-files
       (concat dired-omit-files "\\|\\.git$\\|\\.gitignore$\\|__pycache__"))
 
-(defcustom km/latex-omit-extensions '(".aux"
+(defvar km/latex-omit-extensions '(".aux"
                                    ".fdb_latexmk"
                                    ".fls"
                                    ".log"
