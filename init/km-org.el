@@ -41,12 +41,6 @@
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
         ("s" todo "STARTED" nil)
-        ("A" agenda ""
-         ((org-agenda-skip-function
-           (lambda nil
-             (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")))
-          (org-agenda-ndays 1)
-          (org-agenda-overriding-header "Today's Priority #A tasks: ")))
         ("u" "Unschedule TODO entries" alltodo ""
          ((org-agenda-skip-function
            (lambda nil
