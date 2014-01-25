@@ -22,5 +22,4 @@ Useful for non-source code repos (e.g., Org mode note files)."
 
 (setq magit-default-tracking-name-function 'magit-default-tracking-name-branch-only)
 
-(setq magit-expand-staged-on-commit t)
 (setq magit-log-show-margin nil)
