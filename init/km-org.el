@@ -9,6 +9,7 @@
 (setq org-goto-interface 'outline-path-completion)
 (setq org-src-fontify-natively t)
 (setq org-special-ctrl-k t)
+(setq org-blank-before-new-entry t)
 
 (setq org-capture-templates
       '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
