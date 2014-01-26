@@ -145,13 +145,13 @@ A new buffer with the patch contents is opened in another window."
 
 ;; Modified from
 ;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html.
-(defun km/snip-mail-quote (beg end &optional quote-char no-number)
+(defun km/snip-mail-quote (beg end &optional no-number quote-char)
   "Replace region lines with \"[n lines ...]\".
-
-The default QUOTE-CHAR is \">\". Text following the snipped lines
-is placed on a new line and the resulting paragraph is filled. If
-NO-NUMBER is non-nil, the number of lines is not added."
-  (interactive "r")
+If NO-NUMBER is non-nil (or when called interactively with a
+prefix argument), the number of lines is not added. The default
+QUOTE-CHAR is \">\". Text following the snipped lines is placed
+on a new line and the resulting paragraph is filled."
+  (interactive "r\nP")
   (let ((nlines (count-lines beg end))
         (quote-char (or quote-char ">")))
     (delete-region beg end)
@@ -170,12 +170,6 @@ NO-NUMBER is non-nil, the number of lines is not added."
 
 (define-key message-mode-map
   (kbd "C-c m s") 'km/snip-mail-quote)
-
-;; Without reporting the number of lines
-(define-key message-mode-map
-  (kbd "C-c m S") '(lambda (beg end)
-                     (interactive "r")
-                     (km/snip-mail-quote beg end nil t)))
 
 (add-hook 'gnus-summary-mode-hook
           (lambda ()
