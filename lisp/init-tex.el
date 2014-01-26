@@ -1,7 +1,5 @@
 (require-package 'auctex)
 
-(require 'tex)
-(require 'reftex)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;;; Add path for pdflatex.
