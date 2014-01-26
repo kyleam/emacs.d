@@ -44,6 +44,7 @@
 
 (require 'init-gnus)
 
-(require 'init-untracked)
+(when (file-exists-p (expand-file-name "init-untracked.el" init-lisp-dir))
+  (require 'init-untracked))
 
 (server-start)
