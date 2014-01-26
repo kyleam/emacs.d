@@ -49,4 +49,6 @@
 (when (file-exists-p (expand-file-name "init-untracked.el" init-lisp-dir))
   (require 'init-untracked))
 
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
