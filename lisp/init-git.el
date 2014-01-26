@@ -24,6 +24,7 @@ Useful for non-source code repos (e.g., Org mode note files)."
 
 (setq magit-restore-window-configuration t
       magit-default-tracking-name-function 'magit-default-tracking-name-branch-only
+      magit-completing-read-function 'magit-ido-completing-read
       magit-log-show-margin nil)
 
 (provide 'init-git)
