@@ -145,3 +145,5 @@ files.")
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 (setq org-refile-target-verify-function 'km/verify-refile-target)
+
+(provide 'init-org)

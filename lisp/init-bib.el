@@ -10,3 +10,5 @@
 
 ;; Used by `bibtex-fill-entry'.
 (setq bibtex-align-at-equal-sign t)
+
+(provide 'init-bib)

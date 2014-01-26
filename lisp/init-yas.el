@@ -9,3 +9,5 @@
 (add-hook 'LaTeX-mode-hook
           '(lambda ()
              (yas-minor-mode)))
+
+(provide 'init-yas)

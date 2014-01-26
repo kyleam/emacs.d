@@ -5,3 +5,5 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; Old M-x
 (global-set-key (kbd "M-x") 'execute-extended-command)
+
+(provide 'init-smex)

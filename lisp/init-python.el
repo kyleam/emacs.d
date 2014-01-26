@@ -41,3 +41,5 @@ Unless a prefix argument ARG is given, py.test is also imported."
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
 (setq python-fill-docstring-style 'pep-257-nn)
+
+(provide 'init-python)

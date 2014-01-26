@@ -11,3 +11,5 @@
  (lambda (mode) (setq auto-mode-alist
                       (cons mode auto-mode-alist)))
  km/modes)
+
+(provide 'init-modes)

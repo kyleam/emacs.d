@@ -23,3 +23,5 @@
 (setq-default dired-omit-files-p t)
 
 (setq dired-listing-switches "-alh")
+
+(provide 'init-dired)

@@ -49,3 +49,5 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/")
 (add-to-list 'load-path "~/src/emacs/org-mode/lisp")
 (add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp" t)
+
+(provide 'init-pkg)

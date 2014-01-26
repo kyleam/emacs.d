@@ -65,3 +65,5 @@
 
 ;; Don't show empty filter groups.
 (setq ibuffer-show-empty-filter-groups nil)
+
+(provide 'init-ibuffer)

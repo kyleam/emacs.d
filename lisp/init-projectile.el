@@ -25,3 +25,5 @@ I have set `projectile-switch-project-action' to
   'km/projectile-switch-project-to-file)
 
 (setq projectile-use-git-grep t)
+
+(provide 'init-projectile)

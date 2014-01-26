@@ -232,3 +232,5 @@ Assumes that the frame is only split into two."
         (split-window-horizontally)
       (split-window-vertically))
     (switch-to-buffer nil)))
+
+(provide 'init-func)

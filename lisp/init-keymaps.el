@@ -14,3 +14,5 @@
 
 (define-prefix-command 'external-map)
 (global-set-key (kbd "C-c x") 'external-map)
+
+(provide 'init-keymaps)

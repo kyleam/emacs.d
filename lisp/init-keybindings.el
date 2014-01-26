@@ -26,3 +26,5 @@
 (global-set-key (kbd "C-;") 'er/expand-region)
 
 (define-key external-map "s" 'shell-command)
+
+(provide 'init-keybindings)

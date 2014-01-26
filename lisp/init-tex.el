@@ -16,3 +16,5 @@
 (setq reftex-default-bibliography
       (quote
        ("~/refs/refs.bib")))
+
+(provide 'init-tex)

@@ -219,3 +219,5 @@ NO-NUMBER is non-nil, the number of lines is not added."
 (defadvice gnus-group-exit (around gnus-restore-screen activate)
   ad-do-it
   (jump-to-register :gnus-fullscreen))
+
+(provide 'init-gnus)

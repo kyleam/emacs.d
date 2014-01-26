@@ -32,3 +32,5 @@
 (key-chord-define-global ";g" 'projectile-grep)
 (key-chord-define-global ";r" 'projectile-replace)
 (key-chord-define-global ";c" 'projectile-commander)
+
+(provide 'init-keychord)

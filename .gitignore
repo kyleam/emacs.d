@@ -3,7 +3,7 @@ cache
 elpa
 bookmarks
 vendor
-init/untracked.el
+/lisp/init-untracked.el
 /.mc-lists.el
 /projectile-bookmarks.eld
 /projectile.cache
