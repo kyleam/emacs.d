@@ -40,6 +40,8 @@
 (require 'init-ido)
 (require 'init-smex)
 
+(require 'init-external)
+
 (require 'init-yas)
 
 (require 'init-gnus)
