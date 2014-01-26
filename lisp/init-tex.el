@@ -1,3 +1,5 @@
+(require-package 'auctex)
+
 (require 'tex)
 (require 'reftex)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
@@ -13,8 +15,6 @@
 
 (add-hook 'org-mode-hook 'km/org-mode-reftex-setup)
 
-(setq reftex-default-bibliography
-      (quote
-       ("~/refs/refs.bib")))
+(setq reftex-default-bibliography '("~/refs/refs.bib"))
 
 (provide 'init-tex)

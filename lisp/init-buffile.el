@@ -1,3 +1,56 @@
+;;; Files and buffers
+
+(defun km/rename-current-buffer-file ()
+  "Rename current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (if (get-buffer new-name)
+            (error "A buffer named '%s' already exists!" new-name)
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)
+          (message "File '%s' successfully renamed to '%s'"
+                   name (file-name-nondirectory new-name)))))))
+
+(global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
+
+;; http://emacs-fu.blogspot.com/2013/03/editing-with-root-privileges-once-more.html
+(defun km/find-file-as-root ()
+  "`ido-find-file` that automatically edits the file with
+root-privileges (using tramp/sudo) if the file is not writable by
+user."
+  (interactive)
+  (let ((file (ido-read-file-name "Edit as root: ")))
+    (unless (file-writable-p file)
+      (setq file (concat "/sudo:root@localhost:" file)))
+    (find-file file)))
+
+(global-set-key (kbd "C-x F") 'km/find-file-as-root)
+
+(defun km/save-and-kill-buffer ()
+  "Save current buffer and then kill it"
+  (interactive)
+  (save-buffer)
+  (kill-this-buffer))
+
+(global-set-key (kbd "C-x K") 'kill-buffer-and-window)
+(key-chord-define-global ",f" 'find-file)
+
+(key-chord-define-global ",s" 'save-buffer)
+(key-chord-define-global ",q" 'kill-this-buffer)
+(key-chord-define-global ",d" 'km/save-and-kill-buffer)
+(key-chord-define-global ",e" '(lambda ()
+                                 (interactive)
+                                 (save-buffer)
+                                 (server-edit)))
+
+;;; Ibuffer
+
 ;; Replace buffer-menu with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -60,10 +113,10 @@
              (ibuffer-auto-mode 1) ; Keep buffer list up-to-date.
              (ibuffer-switch-to-saved-filter-groups "home")))
 
-;; Don't prompt to delete unmodified buffers.
-(setq ibuffer-expert t)
+(setq
+ ;; Don't prompt to delete unmodified buffers.
+ ibuffer-expert t
+ ;; Don't show empty filter groups.
+ ibuffer-show-empty-filter-groups nil)
 
-;; Don't show empty filter groups.
-(setq ibuffer-show-empty-filter-groups nil)
-
-(provide 'init-ibuffer)
+(provide 'init-buffile)

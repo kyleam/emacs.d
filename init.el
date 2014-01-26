@@ -1,31 +1,49 @@
 (defvar init-lisp-dir (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path init-lisp-dir)
+(add-to-list 'load-path (expand-file-name "vendor" user-emacs-directory))
 
+(require 'init-appearance)
+(require 'init-elpa)
 (require 'init-general)
-(require 'init-pkg)
-(require 'init-keymaps)
 
-(require 'init-babel)
-(require 'init-bib)
-(require 'init-dired)
-(require 'init-elisp)
-(require 'init-func)
-(require 'init-git)
-(require 'init-gnus)
-(require 'init-grep)
-(require 'init-haskell)
-(require 'init-ibuffer)
-(require 'init-ido)
-(require 'init-keybindings)
-(require 'init-keychord)
-(require 'init-modes)
-(require 'init-orgcontacts)
+(require-package 'dash)
+(require-package 'mocker)
+
 (require 'init-org)
-(require 'init-projectile)
+(require 'init-orgcontacts)
+(require 'init-babel)
+
+(require 'init-buffile)
+(require 'init-framewin)
+
+(require 'init-editing)
+
+(require 'init-text)
+(require 'init-elisp)
+(require 'init-shell)
+(require 'init-haskell)
 (require 'init-python)
-(require 'init-smex)
+(require-package 'ess)
+(require-package 'lua-mode)
+
 (require 'init-tex)
+(require 'init-bib)
+
+(require-package 'htmlize)
+(require-package 'less-css-mode)
+
+(require 'init-dired)
+(require 'init-git)
+(require 'init-projectile)
+(require 'init-grep)
+
+(require 'init-ido)
+(require 'init-smex)
+
 (require 'init-yas)
+
+(require 'init-gnus)
+
 (require 'init-untracked)
 
 (server-start)

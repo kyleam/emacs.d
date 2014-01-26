@@ -1,6 +1,7 @@
-(require 'yasnippet)
+(require-package 'yasnippet)
 
-(yas-reload-all)
+(eval-after-load 'yas
+    '(yas-reload-all))
 
 (add-hook 'prog-mode-hook
           '(lambda ()

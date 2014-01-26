@@ -12,4 +12,6 @@
 (defadvice grep-find (after hide-grep-header activate) (hide-grep-header))
 (defadvice vc-git-grep (after hide-grep-header activate) (hide-grep-header))
 
+(key-chord-define-global ",z" 'rgrep)
+
 (provide 'init-grep)

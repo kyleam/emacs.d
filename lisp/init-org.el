@@ -1,16 +1,15 @@
-(setq org-modules '(org-bibtex org-gnus org-info))
+(add-to-list 'load-path "~/src/emacs/org-mode/lisp")
 
-(setq org-log-done t)
-(setq org-todo-keywords
-      '((sequence "TODO" "STARTED" "|" "DONE" "NA")))
-(setq org-use-speed-commands t)
-(setq org-fast-tag-selection-single-key 'expert)
-(setq org-catch-invisible-edits  'error)
-(setq org-goto-interface 'outline-path-completion)
-(setq org-src-fontify-natively t)
-(setq org-special-ctrl-k t)
-(setq org-blank-before-new-entry '((heading . t)
-                                   (plain-list-item . auto)))
+(setq org-modules '(org-bibtex org-gnus org-info)
+      org-log-done t
+      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "NA"))
+      org-use-speed-commands t
+      org-fast-tag-selection-single-key 'expert
+      org-catch-invisible-edits  'error
+      org-goto-interface 'outline-path-completionp
+      org-src-fontify-natively t
+      org-special-ctrl-k t
+      org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
 (setq org-capture-templates
       '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
@@ -35,6 +34,7 @@
          "* TODO %?\n%x")
         ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
          "* %?\n%x")))
+(key-chord-define-global ",t" 'org-capture)
 
 (defun km/open-main-orgfile ()
   (interactive)
@@ -44,6 +44,7 @@
 (global-set-key (kbd "C-c o a") 'org-agenda)
 (global-set-key (kbd "C-c o b") 'org-iswitchb)
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
+(key-chord-define-global ",a" 'org-agenda)
 
 (setq org-structure-template-alist
       '(("p" "#+property: " "")
@@ -73,10 +74,18 @@
         ("i" "#+index: ?" "#+index: ?")
         ("I" "#+include: %file ?" "<include file=%file markup=\"?\">")))
 
-;; Don't let `org-cycle-agenda-files' binding override custom
-;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
-;; to C-,).
-(define-key org-mode-map (kbd "C-'") nil)
+(eval-after-load 'org
+  '(progn
+     ;; Don't let `org-cycle-agenda-files' binding override custom
+     ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
+     ;; to C-,).
+     (define-key org-mode-map (kbd "C-'") nil)
+     ;; Avoid conflict when amsmath is loaded.
+     (setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
+             "nointegrals")
+     (add-to-list 'org-latex-packages-alist '("" "amsmath" t))))
+
+(add-to-list 'auto-mode-alist '("\\.org.txt$" . org-mode))
 
 ;;; Org in other modes
 (defun km/load-orgstruct ()
@@ -86,10 +95,6 @@
 (add-hook 'message-mode-hook 'km/load-orgstruct)
 (add-hook 'git-commit-mode-hook 'km/load-orgstruct)
 
-;; Avoid conflict when amsmath is loaded.
-(setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
-        "nointegrals")
-(add-to-list 'org-latex-packages-alist '("" "amsmath" t))
 
 (defadvice org-agenda-list (around org-agenda-fullscreen activate)
   "Start agenda in fullscreen.
@@ -102,19 +107,18 @@ be restored properly."
   ad-do-it
   (delete-other-windows))
 
-(setq org-agenda-restore-windows-after-quit t)
-(setq org-agenda-sticky nil)
+(setq org-agenda-restore-windows-after-quit t
+      org-agenda-sticky nil)
 
 ;;; Agenda
 
-(setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org"))
-(setq org-default-notes-file "~/notes/tasks.org")
-
-(setq org-agenda-show-all-dates t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-start-on-weekday nil)
-(setq org-reverse-note-order t)
+(setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org")
+      org-default-notes-file "~/notes/tasks.org"
+      org-agenda-show-all-dates t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-start-on-weekday nil
+      org-reverse-note-order t)
 
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
@@ -134,16 +138,15 @@ be restored properly."
   "List of refiling targets for agenda, including non-agenda
 files.")
 
-(setq org-refile-targets (quote ((nil :maxlevel . 3)
-                                 (km/org-refiling-targets :maxlevel . 2))))
-
-;; Use ido for refiling.
-(setq org-outline-path-complete-in-steps nil)
-(setq org-completion-use-ido t)
-
 (defun km/verify-refile-target ()
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
-(setq org-refile-target-verify-function 'km/verify-refile-target)
+
+(setq org-refile-targets '((nil :maxlevel . 3)
+                           (km/org-refiling-targets :maxlevel . 2)))
+(setq org-refile-target-verify-function 'km/verify-refile-target
+      ;; Use ido for refiling.
+      org-outline-path-complete-in-steps nil
+      org-completion-use-ido t)
 
 (provide 'init-org)

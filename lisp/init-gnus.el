@@ -1,6 +1,5 @@
 (require 'gnus)
 
-;; Set up gnus directories before gnus is initialized.
 (setq gnus-directory "~/.gnus.d"
       gnus-home-directory "~/.gnus.d"
       message-directory "~/.gnus.d/mail"
@@ -10,12 +9,10 @@
       nnfolder-active-file "~/.gnus.d/mail/archive/active"
       gnus-article-save-directory "~/.gnus.d/saved"
       gnus-kill-files-directory "~/.gnus.d/scores"
-      gnus-cache-directory "~/.gnus.d/cache")
-
-(setq gnus-startup-file (nnheader-concat gnus-home-directory "newsrc"))
-(setq gnus-init-file (nnheader-concat gnus-home-directory "gnus"))
-
-(setq gnus-save-newsrc-file nil
+      gnus-cache-directory "~/.gnus.d/cache"
+      gnus-startup-file (nnheader-concat gnus-home-directory "newsrc")
+      gnus-init-file (nnheader-concat gnus-home-directory "gnus")
+      gnus-save-newsrc-file nil
       gnus-read-newsrc-file nil)
 
 (defun km/sync-mail ()
@@ -41,43 +38,33 @@
 
 (setq imap-shell-program "/usr/lib/dovecot/imap -c ~/.dovecotrc"
       gnus-select-method '(nnimap "dov" (nnimap-stream shell))
-      gnus-secondary-select-methods '((nntp "news.gmane.org")))
-
-(setq message-send-mail-function 'message-send-mail-with-sendmail
-      sendmail-program "/usr/bin/msmtp")
-
-(setq message-sendmail-envelope-from 'header)
-
-(setq gnus-gcc-mark-as-read t)
-
-(setq message-citation-line-function 'message-insert-formatted-citation-line)
-(setq message-citation-line-format "On %D %R, %N wrote:")
-
-(setq message-kill-buffer-on-exit t)
+      gnus-secondary-select-methods '((nntp "news.gmane.org"))
+      message-send-mail-function 'message-send-mail-with-sendmail
+      sendmail-program "/usr/bin/msmtp"
+      message-sendmail-envelope-from 'header
+      gnus-gcc-mark-as-read t
+      message-citation-line-function 'message-insert-formatted-citation-line
+      message-citation-line-format "On %D %R, %N wrote:"
+      message-kill-buffer-on-exit t
+      gnus-group-list-inactive-groups nil
+      gnus-topic-display-empty-topics nil
+      gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
+      gnus-confirm-mail-reply-to-news t
+      mm-discouraged-alternatives '("text/html" "text/richtext")
+      footnote-section-tag "")
 
 ;; Use for rss too specific to add to gwene.
 (require 'nnrss)
 
-(setq gnus-group-list-inactive-groups nil)
-
 ;; Start in topic mode.
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
-(setq gnus-topic-display-empty-topics nil)
-
-(setq gnus-visible-headers
-      '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent"))
 
 (add-hook 'message-mode-hook
           '(lambda ()
              (flyspell-mode 1)))
 
-(setq gnus-confirm-mail-reply-to-news t)
-
-(setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-
-(setq gnus-summary-line-format
-      "%U%R %&user-date;%-20= %-15,15f  %B %S \n")
-(setq gnus-sum-thread-tree-indent "  "
+(setq gnus-summary-line-format "%U%R %&user-date;%-20= %-15,15f  %B %S \n"
+      gnus-sum-thread-tree-indent "  "
       gnus-sum-thread-tree-root "."
       gnus-sum-thread-tree-false-root "o "
       gnus-sum-thread-tree-single-indent ""
@@ -86,8 +73,7 @@
       gnus-sum-thread-tree-single-leaf "`-> ")
 
 (setq gnus-thread-sort-functions
-      '(gnus-thread-sort-by-number
-        gnus-thread-sort-by-most-recent-date))
+      '(gnus-thread-sort-by-number gnus-thread-sort-by-most-recent-date))
 
 (defun km/follow-gwene-link ()
   "Follow link at bottom of gwene message"
@@ -159,10 +145,8 @@ A new buffer with the patch contents is opened in another window."
 
 (setq notmuch-fcc-dirs nil)
 
-(setq footnote-section-tag "")
-
-;; modified from
-;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html
+;; Modified from
+;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html.
 (defun km/snip-mail-quote (beg end &optional quote-char no-number)
   "Replace region lines with \"[n lines ...]\".
 

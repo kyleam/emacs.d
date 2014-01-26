@@ -20,8 +20,7 @@
 (setq dired-omit-extensions
       (append dired-omit-extensions km/latex-omit-extensions))
 
-(setq-default dired-omit-files-p t)
-
-(setq dired-listing-switches "-alh")
+(setq dired-omit-files-p t
+      dired-listing-switches "-alh")
 
 (provide 'init-dired)

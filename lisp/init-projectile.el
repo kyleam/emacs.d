@@ -1,6 +1,9 @@
+(require-package 'projectile)
+
 (projectile-global-mode)
 
-(setq projectile-switch-project-action 'projectile-commander)
+(setq projectile-switch-project-action 'projectile-commander
+      projectile-use-git-grep t)
 
 ;; Default binding is D.
 (def-projectile-commander-method ?r
@@ -24,6 +27,11 @@ I have set `projectile-switch-project-action' to
 (define-key projectile-mode-map (kbd "C-c p j")
   'km/projectile-switch-project-to-file)
 
-(setq projectile-use-git-grep t)
+(key-chord-define-global ";s" 'projectile-switch-project)
+(key-chord-define-global ";f" 'projectile-find-file)
+(key-chord-define-global ";d" 'projectile-find-dir)
+(key-chord-define-global ";g" 'projectile-grep)
+(key-chord-define-global ";r" 'projectile-replace)
+(key-chord-define-global ";c" 'projectile-commander)
 
 (provide 'init-projectile)

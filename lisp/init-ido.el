@@ -1,4 +1,6 @@
-(require 'flx-ido)
+(require-package 'flx)
+(require-package 'flx-ido)
+
 (ido-mode t)
 
 (setq ido-enable-prefix nil
@@ -7,13 +9,12 @@
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
       ido-max-prospects 10
-      ido-save-directory-list-file "~/.emacs.d/cache/ido.hist")
+      ido-save-directory-list-file "~/.emacs.d/cache/ido.hist"
+      ido-max-directory-size 100000)
 
 (flx-ido-mode 1)
 ;; Disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
-
-(setq ido-max-directory-size 100000)
 
 ;; Recent files
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
@@ -28,5 +29,8 @@
   (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
     (when file
       (find-file file))))
+
+(key-chord-define-global ",r" 'km/recentf-ido-find-file)
+(key-chord-define-global ",b" 'ido-switch-buffer)
 
 (provide 'init-ido)
