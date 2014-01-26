@@ -87,8 +87,6 @@
 (define-key gnus-article-mode-map
   (kbd "C-c j") 'km/follow-gwene-link)
 
-(require 'url-handlers)
-
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
 A new buffer with the patch contents is opened in another window."
