@@ -1,8 +1,6 @@
 (require-package 'flx)
 (require-package 'flx-ido)
 
-(ido-mode t)
-
 (setq ido-enable-prefix nil
       ido-everywhere t
       ido-enable-flex-matching t
@@ -12,9 +10,11 @@
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist"
       ido-max-directory-size 100000)
 
-(flx-ido-mode 1)
 ;; Disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
+
+(ido-mode 1)
+(flx-ido-mode 1)
 
 ;; Recent files
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
