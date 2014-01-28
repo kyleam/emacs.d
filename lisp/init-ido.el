@@ -13,6 +13,10 @@
 (setq ido-file-extensions-order
       '(".org" ".txt" ".md" ".rst" ".tex" ".py" ".el" ".hs"))
 
+(setq completion-ignored-extensions
+      (append '(".pdf" ".out" ".log" ".fls" ".fdb" ".fdb_latexmk")
+              completion-ignored-extensions))
+
 ;; Disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
 
