@@ -10,6 +10,9 @@
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist"
       ido-max-directory-size 100000)
 
+(setq ido-file-extensions-order
+      '(".org" ".txt" ".md" ".rst" ".tex" ".py" ".el" ".hs"))
+
 ;; Disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
 
