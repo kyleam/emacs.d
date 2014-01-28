@@ -9,4 +9,8 @@
 
 (setq bibtex-align-at-equal-sign t)  ; Used by `bibtex-fill-entry'.
 
+(eval-after-load 'bibtex
+  '(setq bibtex-entry-format
+         (append '(realign sort-fields) bibtex-entry-format)))
+
 (provide 'init-bib)
