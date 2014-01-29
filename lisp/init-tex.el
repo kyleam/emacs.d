@@ -37,8 +37,8 @@ not given, it is taken from the active region."
 
 (defun km/latex-narrow-to-paired-tag (&optional tag)
   "Narrow region to LaTeX tag.
-This is meant for paired, like \"\\begin{document}\". If TAG is
-not given, it is taken from the active region."
+This is meant for paired elements, like \"\\begin{document}\". If
+TAG is not given, it is taken from the active region."
   (interactive)
   (save-excursion
     (let* ((tag (or tag
