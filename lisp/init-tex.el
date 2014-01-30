@@ -13,7 +13,7 @@
 
 (add-hook 'org-mode-hook 'km/org-mode-reftex-setup)
 
-(setq reftex-default-bibliography '("~/refs/refs.bib"))
+(setq reftex-default-bibliography '("refs.bib"))
 
 (defun km/latex-narrow-to-single-tag (&optional tag)
   "Narrow region to LaTeX tag.
