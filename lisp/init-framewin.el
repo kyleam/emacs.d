@@ -34,4 +34,9 @@ Assumes that the frame is only split into two."
 
 (global-set-key (kbd "C-c s") 'km/swap-windows)
 
+(defadvice clone-indirect-buffer-other-window
+  (after clone-indirect-and-widen activate)
+  "Widen after cloning an indirect buffer."
+  (widen))
+
 (provide 'init-framewin)
