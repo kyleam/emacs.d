@@ -9,7 +9,6 @@
 
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)
-(global-unset-key (kbd "M-z"))
 
 (global-set-key (kbd "C-'") 'backward-kill-word)
 
