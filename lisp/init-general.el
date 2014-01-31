@@ -34,6 +34,7 @@
 (transient-mark-mode -1)
 
 (put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 ;; http://www.emacswiki.org/emacs/HippieExpand#toc9
