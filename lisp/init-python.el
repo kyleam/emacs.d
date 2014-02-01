@@ -25,14 +25,16 @@ Unless a prefix argument ARG is given, py.test is also imported."
       (unless arg
         (insert "import pytest\n")))))
 
+(defun km/pytest-compile (arg)
+  "Run pytest.
+If ARG, use pytest2 instead of pytest."
+  (interactive "P")
+  (let ((pytest (if arg "py.test2" "py.test")))
+    (compile pytest)))
+
 (defun km/python-hook ()
   (local-set-key (kbd "C-c m c") 'km/create-python-test-file)
-  (local-set-key (kbd "C-c m t") '(lambda ()
-                                    (interactive)
-                                    (compile "py.test")))
-  (local-set-key (kbd "C-c m T") '(lambda ()
-                                    (interactive)
-                                    (compile "py.test2"))))
+  (local-set-key (kbd "C-c m t") 'km/pytest-compile))
 
 (add-hook 'python-mode-hook 'km/python-hook)
 
