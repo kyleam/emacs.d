@@ -36,23 +36,6 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
-(global-set-key (kbd "M-/") 'hippie-expand)
-;; http://www.emacswiki.org/emacs/HippieExpand#toc9
-(defadvice he-substitute-string (after he-paredit-fix activate)
-  "Remove extra paren when expanding line in paredit."
-  (if (and paredit-mode (equal (substring str -1) ")"))
-      (progn (backward-delete-char 1) (forward-char))))
-
-(eval-after-load 'view
-  '(progn
-     (define-key view-mode-map "l" 'recenter-top-bottom)
-     (define-key view-mode-map "a" 'ace-jump-mode)))
-
-;; http://irreal.org/blog/?p=1536
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR.")
-(global-set-key (kbd "M-z") 'zap-up-to-char)
-
 (require-package 'key-chord)
 (key-chord-mode 1)
 

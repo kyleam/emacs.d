@@ -7,10 +7,26 @@
 (key-chord-define-global ";a" 'ace-jump-mode)
 (key-chord-define-global ",v" 'view-mode)
 
+(eval-after-load 'view
+  '(progn
+     (define-key view-mode-map "l" 'recenter-top-bottom)
+     (define-key view-mode-map "a" 'ace-jump-mode)))
+
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)
+;; http://irreal.org/blog/?p=1536
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
+(global-set-key (kbd "M-z") 'zap-up-to-char)
 
 (global-set-key (kbd "C-'") 'backward-kill-word)
+
+(global-set-key (kbd "M-/") 'hippie-expand)
+;; http://www.emacswiki.org/emacs/HippieExpand#toc9
+(defadvice he-substitute-string (after he-paredit-fix activate)
+  "Remove extra paren when expanding line in paredit."
+  (if (and paredit-mode (equal (substring str -1) ")"))
+      (progn (backward-delete-char 1) (forward-char))))
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun unfill-paragraph ()
