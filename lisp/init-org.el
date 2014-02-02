@@ -2,7 +2,7 @@
 
 (setq org-modules '(org-bibtex org-gnus org-info)
       org-log-done t
-      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "NA"))
+      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "NA(@)"))
       org-use-speed-commands t
       org-fast-tag-selection-single-key 'expert
       org-catch-invisible-edits  'error
