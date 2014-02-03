@@ -23,4 +23,7 @@
 (setq dired-omit-files-p t
       dired-listing-switches "-alh")
 
+(setq dired-guess-shell-alist-user
+        '(("\\.pdf\\'" "zathura")))
+
 (provide 'init-dired)
