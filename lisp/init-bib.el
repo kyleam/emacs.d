@@ -12,4 +12,45 @@
   '(setq bibtex-entry-format
          (append '(realign sort-fields) bibtex-entry-format)))
 
+(defvar km/bibtex-unimportant-title-words
+  '("a" "aboard" "about" "above" "absent" "across" "after" "against"
+    "along" "alongside" "amid" "amidst" "among" "amongst" "an" "and"
+    "around" "as" "aslant" "astride" "at" "athwart" "atop"
+    "barring" "before" "behind" "below" "beneath" "beside" "besides" "between"
+    "beyond" "but" "by" "despite" "down" "during" "except" "failing"
+    "following" "for" "from" "in" "inside" "into" "like"
+    "mid" "minus" "near" "next" "nor" "notwithstanding" "of" "off"
+    "on" "onto" "opposite" "or" "out" "outside" "over" "past"
+    "per" "plus" "regarding" "round" "save" "since" "so" "than"
+    "the" "through" "throughout" "till" "times" "to" "toward" "towards"
+    "under" "underneath" "unlike" "until" "up" "upon" "via" "vs."
+    "when" "with" "within" "without" "worth" "yet")
+  "Words to ignore when running `km/bibtex-use-title-case'.
+These are taken from
+http://lanecc.libguides.com/content.php?pid=38483&sid=295540 and
+have only been modified to remove duplicates. This means that
+there are some unlikely words in there, but you never know when
+the next article you read will have \"athwart\" in the title.")
+
+(defun km/bibtex-use-title-case ()
+  "Convert title of current BibTeX entry to title case.
+All words except those in `km/bibtex-unimportant-title-words' are
+capitalized."
+  (interactive)
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (goto-char (car (cdr (bibtex-search-forward-field "title" t))))
+    (while (not (looking-at "},"))
+      ;; Not using `forward-word' because I want to capture character
+      ;; before word. If "-" or "{", the word should not be capitalized.
+      (re-search-forward "\\(.\\)[a-z]+")
+      (let ((before-word (match-string-no-properties 1))
+            (word (thing-at-point 'word)))
+        (unless (or (member before-word '("-" "{"))
+                    (member word km/bibtex-unimportant-title-words))
+          (backward-word)
+          (capitalize-word 1))))))
+
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
+
 (provide 'init-bib)
