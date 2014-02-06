@@ -7,7 +7,9 @@
 (require 'init-general)
 
 (require-package 'dash)
+(require 'dash)
 (require-package 's)
+(require 's)
 (require-package 'mocker)
 
 (require 'init-org)
