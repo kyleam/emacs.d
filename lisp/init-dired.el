@@ -20,8 +20,8 @@
 (setq dired-omit-extensions
       (append dired-omit-extensions km/latex-omit-extensions))
 
-(setq dired-omit-files-p t
-      dired-listing-switches "-alh")
+(setq-default dired-omit-mode t)
+(setq dired-listing-switches "-alh")
 
 (setq dired-guess-shell-alist-user
         '(("\\.pdf\\'" "zathura")))
