@@ -1,3 +1,9 @@
+(autoload 'vc-git-grep "vc-git"
+  "Run git grep, searching for REGEXP in FILES in directory DIR.
+The search is limited to file names matching shell pattern FILES.
+FILES may use abbreviations defined in `grep-files-aliases', e.g.
+entering `ch' is equivalent to `*.[ch]'.")
+
 ;; http://stackoverflow.com/questions/16122801/
 ;; remove-header-information-from-rgrep-grep-output-in-emacs
 (defun hide-grep-header ()
