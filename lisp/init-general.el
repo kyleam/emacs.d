@@ -35,6 +35,7 @@
 
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 
 (require-package 'key-chord)
 (key-chord-mode 1)
