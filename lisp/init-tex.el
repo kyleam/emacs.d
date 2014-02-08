@@ -21,6 +21,7 @@ This is meant for single elements, like \"\\section\". If TAG is
 not given, it is taken from the active region."
   (interactive)
   (save-excursion
+    (widen)
     (let* ((tag (or tag
                 (buffer-substring-no-properties (mark) (point))))
            (tag (if (s-starts-with? "\\" tag)
@@ -41,6 +42,7 @@ This is meant for paired elements, like \"\\begin{document}\". If
 TAG is not given, it is taken from the active region."
   (interactive)
   (save-excursion
+    (widen)
     (let* ((tag (or tag
                 (buffer-substring-no-properties (mark) (point))))
            (beg (progn (end-of-line)
