@@ -9,7 +9,7 @@
       tramp-default-method "ssh"
       sentence-end-double-space nil
       browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium")
+      browse-url-generic-program "firefox")
 
 (setq-default indicate-empty-lines t)
 
