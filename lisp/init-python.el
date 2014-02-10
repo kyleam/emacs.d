@@ -33,8 +33,8 @@ If ARG, use pytest2 instead of pytest."
     (compile pytest)))
 
 (defun km/python-hook ()
-  (local-set-key (kbd "C-c m c") 'km/create-python-test-file)
-  (local-set-key (kbd "C-c m t") 'km/pytest-compile))
+  (local-set-key (kbd "C-c m t") 'km/create-python-test-file)
+  (local-set-key (kbd "C-c m c") 'km/pytest-compile))
 
 (add-hook 'python-mode-hook 'km/python-hook)
 
