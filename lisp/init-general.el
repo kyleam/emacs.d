@@ -40,4 +40,6 @@
 (require-package 'key-chord)
 (key-chord-mode 1)
 
+(global-set-key (kbd "C-h :") 'find-function)
+
 (provide 'init-general)
