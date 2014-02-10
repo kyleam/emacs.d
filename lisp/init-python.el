@@ -18,12 +18,12 @@ Unless a prefix argument ARG is given, py.test is also imported."
   (interactive "P")
   (let* ((py-file (file-name-nondirectory buffer-file-name))
          (test-file (concat "test_" py-file)))
-    (when (file-exists-p test-file)
-      (error "Test file %s already exists." test-file))
-    (with-current-buffer (find-file-other-window test-file)
-      (insert (format "import %s\n" (file-name-sans-extension py-file)))
-      (unless arg
-        (insert "import pytest\n")))))
+    (find-file-other-window test-file)
+    (unless (file-exists-p test-file)
+      (with-current-buffer
+          (insert (format "import %s\n" (file-name-sans-extension py-file)))
+        (unless arg
+          (insert "import pytest\n"))))))
 
 (defun km/pytest-compile (arg)
   "Run pytest.
