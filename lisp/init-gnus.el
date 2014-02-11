@@ -28,6 +28,8 @@
 (defvar km/sync-mail-cmd "~/bin/sync-mail.sh"
   "Run sync mail script.")
 
+(define-key external-map "m" 'km/sync-mail)
+
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
   (if (and (fboundp 'gnus-alive-p)
