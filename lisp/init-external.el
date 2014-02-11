@@ -1,16 +1,8 @@
-(define-prefix-command 'external-map)
-(global-set-key (kbd "C-c x") 'external-map)
-
 (defvar km/terminal "urxvt")
 
 (defun km/open-external-terminal ()
   (interactive)
   (start-process "ext-term" nil km/terminal))
-
-(define-key external-map "t" 'km/open-external-terminal)
-(define-key external-map "s" 'shell-command)
-
-(global-set-key (kbd "C-c c") 'compile)
 
 (defadvice recompile (around restore-windows activate)
   "Prevent recompiling from spawning new windows."
@@ -25,6 +17,13 @@ other window when an asynchronous command is run."
   ad-do-it
   (jump-to-register :before-shell-command))
 
+(define-prefix-command 'external-map)
+(global-set-key (kbd "C-c x") 'external-map)
+
+(define-key external-map "t" 'km/open-external-terminal)
+(define-key external-map "s" 'shell-command)
+
+(global-set-key (kbd "C-c c") 'compile)
 (global-set-key (kbd "C-c g") 'recompile)
 
 (provide 'init-external)
