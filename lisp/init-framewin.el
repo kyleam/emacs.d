@@ -19,12 +19,12 @@
   (other-window 1))
 
 ;; http://www.emacswiki.org/emacs/ToggleWindowSplit
-(defun km/switch-frame-split ()
-  "If the frame is split vertically, split it horizontally or vice versa.
-Assumes that the frame is only split into two."
+(defun km/switch-window-split ()
+  "If the window is split vertically, split it horizontally or vice versa.
+Assumes that the window is only split into two."
   (interactive)
   (unless (= (length (window-list)) 2)
-    (error "Can only toggle a frame split in two"))
+    (error "Can only toggle a window split in two"))
   (let ((split-vertically-p (window-combined-p)))
     (delete-window)
     (if split-vertically-p
