@@ -22,8 +22,10 @@ other window when an asynchronous command is run."
 
 (define-key external-map "t" 'km/open-external-terminal)
 (define-key external-map "s" 'shell-command)
+(define-key external-map "c" 'compile)
+(define-key external-map "g" 'recompile)
 
-(global-set-key (kbd "C-c c") 'compile)
+;; Give frequently-used recompile a shorter binding.
 (global-set-key (kbd "C-c g") 'recompile)
 
 (provide 'init-external)
