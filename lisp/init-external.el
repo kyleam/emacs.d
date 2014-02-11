@@ -17,6 +17,14 @@
   (save-window-excursion
     ad-do-it))
 
+(defadvice shell-command (around shell-command-restore-windows activate)
+  "Restore window configuraiton after shell-command.
+The hides the *Async Shell Command* buffer that is opened in the
+other window when an asynchronous command is run."
+  (window-configuration-to-register :before-shell-command)
+  ad-do-it
+  (jump-to-register :before-shell-command))
+
 (global-set-key (kbd "C-c g") 'recompile)
 
 (provide 'init-external)
