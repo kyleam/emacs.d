@@ -32,7 +32,11 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
-(global-set-key (kbd "C-c s") 'km/swap-windows)
+(define-prefix-command 'window-map)
+(global-set-key (kbd "C-c w") 'window-map)
+
+(define-key window-map "s" 'km/swap-windows)
+(define-key window-map "l" 'km/switch-window-split)
 
 (defadvice clone-indirect-buffer-other-window
   (after clone-indirect-and-widen activate)
