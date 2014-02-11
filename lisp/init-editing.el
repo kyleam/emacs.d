@@ -116,6 +116,8 @@
 (define-key insert-map "m" 'multiple-cursors-map)
 
 (define-key multiple-cursors-map "l" 'mc/edit-lines)
+(define-key multiple-cursors-map "b" 'mc/edit-beginnings-of-lines)
+(define-key multiple-cursors-map "e" 'mc/edit-ends-of-lines)
 (define-key multiple-cursors-map "n" 'mc/mark-next-like-this)
 (define-key multiple-cursors-map "p" 'mc/mark-previous-like-this)
 (define-key multiple-cursors-map "a" 'mc/mark-all-like-this)
