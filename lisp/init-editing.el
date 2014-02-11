@@ -113,7 +113,7 @@
 
 ;; Put multiple cursors map under insert prefix.
 (define-prefix-command 'multiple-cursors-map)
-(define-key insert-map "m" 'multiple-cursors-map)
+(global-set-key (kbd "C-c c") 'multiple-cursors-map)
 
 (define-key multiple-cursors-map "l" 'mc/edit-lines)
 (define-key multiple-cursors-map "b" 'mc/edit-beginnings-of-lines)
