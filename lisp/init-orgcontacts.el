@@ -1,8 +1,5 @@
 (add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp" t)
-
-(autoload 'org-contacts-template-name "org-contacts"
-  "Try to return the contact name for a template.
-If not found return RETURN-VALUE or something that would ask the user.")
+(require 'org-contacts)
 
 (setq org-contacts-files '("~/notes/contacts.org"))
 
