@@ -14,6 +14,10 @@
   "Run project compilation command."
   (call-interactively 'projectile-compile-project))
 
+(def-projectile-commander-method ?F
+  "Find project file in other window."
+  (call-interactively 'projectile-find-file-other-window))
+
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
 
