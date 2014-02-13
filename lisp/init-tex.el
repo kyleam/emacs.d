@@ -63,4 +63,17 @@ The point should be beyond \"\\section\"."
   (interactive)
   (km/latex-narrow-to-single-tag "section"))
 
+(defun km/latex-find-pdf ()
+  "Find the PDF file for the current LaTeX file."
+  (interactive)
+  (let ((pdf-file (concat (file-name-base (buffer-file-name))
+                          ".pdf")))
+    (unless (file-exists-p pdf-file)
+      (error "%s does not exist" pdf-file))
+    (start-process "tex-pdf" nil "xdg-open" pdf-file)))
+
+(add-hook 'LaTeX-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-c m p") 'km/latex-find-pdf)))
+
 (provide 'init-tex)
