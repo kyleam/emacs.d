@@ -42,4 +42,10 @@
 
 (global-set-key (kbd "C-h :") 'find-function)
 
+;; Avoid shift key for `backward-paragraph' and `forward-paragraph'.
+(global-unset-key (kbd "M-}"))
+(global-set-key (kbd "M-]") 'forward-paragraph)
+(global-unset-key (kbd "M-{"))
+(global-set-key (kbd "M-[") 'backward-paragraph)
+
 (provide 'init-general)
