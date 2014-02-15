@@ -2,7 +2,6 @@
 (require-package 'flx-ido)
 
 (setq ido-enable-prefix nil
-      ido-everywhere t
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
@@ -21,6 +20,7 @@
 (setq ido-use-faces nil)
 
 (ido-mode 1)
+(ido-everywhere 1)
 (flx-ido-mode 1)
 
 ;; Recent files
