@@ -31,6 +31,7 @@
 
 (require 'init-tex)
 (require 'init-bib)
+(require 'init-bog)
 
 (require-package 'htmlize)
 (require-package 'less-css-mode)
