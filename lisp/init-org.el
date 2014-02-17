@@ -80,6 +80,10 @@
      ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
      ;; to C-,).
      (define-key org-mode-map (kbd "C-'") nil)
+     ;; Rebind `org-insert-drawer' to so that `org-metadown' has the
+     ;; expected "C-c C-x" keybinding.
+     (define-key org-mode-map (kbd "C-c C-x d") 'org-metadown)
+     (define-key org-mode-map (kbd "C-c C-x w") 'org-insert-drawer)
      ;; Avoid conflict when amsmath is loaded.
      (setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
              "nointegrals")
