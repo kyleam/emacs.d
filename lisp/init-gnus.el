@@ -18,12 +18,15 @@
 (defun km/sync-mail ()
   (interactive)
   (let ((bufname (get-buffer-create "*Mail sync*"))
-        (default-directory "~"))
+        (default-directory "~")
+        (process "mail-sync"))
     (with-current-buffer bufname
       (view-mode 1)
       (goto-char (point-max)))
     (display-buffer bufname)
-    (start-process "mail sync" bufname km/sync-mail-cmd)))
+    (if (process-live-p process)
+        (message "Mail sync process is already running")
+        (start-process process bufname km/sync-mail-cmd))))
 
 (defvar km/sync-mail-cmd "~/bin/sync-mail.sh"
   "Run sync mail script.")
