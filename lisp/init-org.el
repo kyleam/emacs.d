@@ -91,6 +91,20 @@
 
 (add-to-list 'auto-mode-alist '("\\.org.txt$" . org-mode))
 
+(defadvice org-tree-to-indirect-buffer (before
+                                        org-keep-previous-indirect
+                                        (&optional arg)
+                                        activate)
+  "Retain previous indirect buffer from `org-tree-to-indirect-buffer'.
+By default, `org-tree-to-indirect-buffer' deletes the previous
+indirect buffer when making a new one to avoid accumulating
+buffers, which can be overriden by a C-u prefix. This advice
+reverses this behavior so that the prefix must be given in order
+to delete the previous indirect buffer. If the argument is a
+number, which has a different meaning, it is left untouched."
+  (unless (numberp arg)
+    (setq arg (not arg))))
+
 ;;; Org in other modes
 (defun km/load-orgstruct ()
   (turn-on-orgstruct++)
