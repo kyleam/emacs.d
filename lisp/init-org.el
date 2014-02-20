@@ -76,6 +76,8 @@
 
 (eval-after-load 'org
   '(progn
+     (define-key org-mode-map (kbd "C-c C-x B")
+       'km/org-tree-to-indirect-buffer-current-window)
      ;; Don't let `org-cycle-agenda-files' binding override custom
      ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
      ;; to C-,).
@@ -104,6 +106,14 @@ to delete the previous indirect buffer. If the argument is a
 number, which has a different meaning, it is left untouched."
   (unless (numberp arg)
     (setq arg (not arg))))
+
+(defun km/org-tree-to-indirect-buffer-current-window (&optional arg)
+  "Create indirect buffer and narrow to subtree in this window.
+Before running `org-tree-to-indirect-buffer',
+`org-indirect-buffer-display' is set to `current-window'."
+  (interactive "P")
+  (let ((org-indirect-buffer-display 'current-window))
+    (org-tree-to-indirect-buffer arg)))
 
 ;;; Org in other modes
 (defun km/load-orgstruct ()
