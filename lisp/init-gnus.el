@@ -28,7 +28,7 @@
         (message "Mail sync process is already running")
         (start-process process bufname km/sync-mail-cmd))))
 
-(defvar km/sync-mail-cmd "~/bin/sync-mail.sh"
+(defvar km/sync-mail-cmd "sync-mail.sh"
   "Run sync mail script.")
 
 (define-key external-map "m" 'km/sync-mail)
