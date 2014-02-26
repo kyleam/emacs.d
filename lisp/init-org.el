@@ -123,6 +123,7 @@ Before running `org-tree-to-indirect-buffer',
 (add-hook 'message-mode-hook 'km/load-orgstruct)
 (add-hook 'git-commit-mode-hook 'km/load-orgstruct)
 
+;;; Agenda
 
 (defadvice org-agenda-list (around org-agenda-fullscreen activate)
   "Start agenda in fullscreen.
@@ -137,8 +138,6 @@ be restored properly."
 
 (setq org-agenda-restore-windows-after-quit t
       org-agenda-sticky nil)
-
-;;; Agenda
 
 (setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org")
       org-default-notes-file "~/notes/tasks.org"
