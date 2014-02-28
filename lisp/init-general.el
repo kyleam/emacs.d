@@ -8,6 +8,7 @@
       whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark)
       tramp-default-method "ssh"
       sentence-end-double-space nil
+      enable-recursive-minibuffers t
       browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "firefox")
 
