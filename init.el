@@ -35,6 +35,7 @@
 
 (require-package 'htmlize)
 (require-package 'less-css-mode)
+(require-package 'yaml-mode)
 
 (require 'init-dired)
 (require 'init-git)
