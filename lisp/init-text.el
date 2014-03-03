@@ -2,7 +2,9 @@
 
 (setq-default fill-column 72)
 
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook '(lambda ()
+                             (abbrev-mode 1)
+                             turn-on-auto-fill))
 
 (defun km/export-wrapped-text (arg)
   "Export the text in current buffer as wrapped text.
