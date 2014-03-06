@@ -43,6 +43,9 @@
 
 (global-set-key (kbd "C-h :") 'find-function)
 
+;; Disable `suspend-frame' binding.
+(global-unset-key (kbd "C-x C-z"))
+
 ;; Avoid shift key for `backward-paragraph' and `forward-paragraph'.
 (global-unset-key (kbd "M-}"))
 (global-set-key (kbd "M-]") 'forward-paragraph)
