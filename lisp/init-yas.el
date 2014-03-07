@@ -6,4 +6,6 @@
 (add-hook 'prog-mode-hook 'yas-minor-mode)
 (add-hook 'LaTeX-mode-hook 'yas-minor-mode)
 
+(diminish 'yas-minor-mode)
+
 (provide 'init-yas)

@@ -2,8 +2,8 @@
 (add-to-list 'load-path init-lisp-dir)
 (add-to-list 'load-path (expand-file-name "vendor" user-emacs-directory))
 
-(require 'init-appearance)
 (require 'init-elpa)
+(require 'init-appearance)
 (require 'init-general)
 
 (require-package 'dash)

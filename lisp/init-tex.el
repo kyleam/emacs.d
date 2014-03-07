@@ -76,4 +76,7 @@ The point should be beyond \"\\section\"."
           '(lambda ()
              (local-set-key (kbd "C-c m p") 'km/latex-find-pdf)))
 
+(eval-after-load 'reftex
+    '(diminish 'reftex-mode "Rf"))
+
 (provide 'init-tex)

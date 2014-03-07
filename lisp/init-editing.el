@@ -10,7 +10,8 @@
 (eval-after-load 'view
   '(progn
      (define-key view-mode-map "l" 'recenter-top-bottom)
-     (define-key view-mode-map "a" 'ace-jump-mode)))
+     (define-key view-mode-map "a" 'ace-jump-mode)
+     (diminish 'view-mode "Vw")))
 
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)
