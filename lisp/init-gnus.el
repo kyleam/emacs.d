@@ -80,17 +80,17 @@
 (setq gnus-thread-sort-functions
       '(gnus-thread-sort-by-number gnus-thread-sort-by-most-recent-date))
 
-(defun km/follow-gwene-link ()
-  "Follow link at bottom of gwene message"
+(defun km/follow-last-message-link ()
+  "Follow link at bottom of message."
   (interactive)
   (km/gnus-end-of-article-buffer)
-  (search-backward "Link")
+  (widget-backward 1)
   (widget-button-press (point)))
 
 (define-key gnus-summary-mode-map
-  (kbd "C-c j") 'km/follow-gwene-link)
+  (kbd "C-c j") 'km/follow-last-message-link)
 (define-key gnus-article-mode-map
-  (kbd "C-c j") 'km/follow-gwene-link)
+  (kbd "C-c j") 'km/follow-last-message-link)
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
