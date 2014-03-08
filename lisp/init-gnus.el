@@ -236,6 +236,8 @@ on a new line and the resulting paragraph is filled."
             (bury-buffer)
           (bury-buffer buf))))))
 
+(setq gnus-agent-go-online t)
+
 (global-set-key (kbd "C-x m") 'km/gnus)
 
 (provide 'init-gnus)
