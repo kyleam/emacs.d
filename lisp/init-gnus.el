@@ -193,12 +193,49 @@ on a new line and the resulting paragraph is filled."
             (gnus-define-keys gnus-article-mode-map
               "e" shr-browse-url)))
 
-(defadvice gnus (around gnus-fullscreen activate)
-  (window-configuration-to-register :gnus-fullscreen)
-  ad-do-it
-  (delete-other-windows))
-(defadvice gnus-group-exit (around gnus-restore-screen activate)
-  ad-do-it
-  (jump-to-register :gnus-fullscreen))
+;; Modified from http://www.xsteve.at/prg/gnus/
+
+(defun km/gnus ()
+  "Start, select, or bury gnus."
+  (interactive)
+  (let ((bufname (buffer-name)))
+    (if (or (string-equal "*Group*" bufname)
+            (string-match "\*Summary" bufname)
+            (string-match "\*Article" bufname))
+        (km/bury-gnus)
+      (if (get-buffer "*Group*")
+          (km/unbury-gnus)
+        (gnus-unplugged)))))
+
+(defvar gnus-bury-window-configuration nil)
+
+(defun km/unbury-gnus ()
+  (let (dead-frame-p
+        (windows-saved-p
+         (and (boundp 'gnus-bury-window-configuration)
+              gnus-bury-window-configuration)))
+    (when windows-saved-p
+      (unless (set-window-configuration gnus-bury-window-configuration)
+        (setq dead-frame-p t)))
+    (when (or dead-frame-p (not windows-saved-p))
+      (switch-to-buffer "*Group*"))))
+
+(defun km/bury-gnus ()
+  (let ((buf nil)
+        (bufname nil))
+    (setq gnus-bury-window-configuration nil)
+    (dolist (buf (buffer-list))
+      (setq bufname (buffer-name buf))
+      (when (or (string-equal "*Group*" bufname)
+                (string-match "\*Summary" bufname)
+                (string-match "\*Article" bufname))
+        (unless gnus-bury-window-configuration
+          (setq gnus-bury-window-configuration (current-window-configuration)))
+        (delete-other-windows)
+        (if (eq (current-buffer) buf)
+            (bury-buffer)
+          (bury-buffer buf))))))
+
+(global-set-key (kbd "C-x m") 'km/gnus)
 
 (provide 'init-gnus)
