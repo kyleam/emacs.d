@@ -55,6 +55,7 @@
       gnus-topic-display-empty-topics nil
       gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
       gnus-confirm-mail-reply-to-news t
+      gnus-interactive-exit nil
       mm-discouraged-alternatives '("text/html" "text/richtext")
       footnote-section-tag "")
 
