@@ -78,9 +78,6 @@
       gnus-sum-thread-tree-vertical "| "
       gnus-sum-thread-tree-single-leaf "`-> ")
 
-(setq gnus-thread-sort-functions
-      '(gnus-thread-sort-by-number gnus-thread-sort-by-most-recent-date))
-
 (defun km/follow-last-message-link ()
   "Follow link at bottom of message."
   (interactive)
