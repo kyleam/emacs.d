@@ -26,7 +26,7 @@
     (display-buffer bufname)
     (if (process-live-p process)
         (message "Mail sync process is already running")
-        (start-process process bufname km/sync-mail-cmd))))
+      (start-process process bufname km/sync-mail-cmd))))
 
 (defvar km/sync-mail-cmd "sync-mail.sh"
   "Run sync mail script.")
