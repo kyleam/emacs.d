@@ -31,6 +31,7 @@
  footnote-section-tag ""
  ;; Threading
  gnus-thread-hide-subtree t
+ gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-number)
  gnus-summary-line-format "%U%R %&user-date;%-20= %-15,15f  %B %S \n"
  gnus-sum-thread-tree-indent "  "
  gnus-sum-thread-tree-root "."
