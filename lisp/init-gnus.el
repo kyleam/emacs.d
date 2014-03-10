@@ -2,19 +2,13 @@
 
 (setq
  ;; Locations
- gnus-directory "~/.gnus.d"
  gnus-home-directory "~/.gnus.d"
- message-directory "~/.gnus.d/mail"
- message-auto-save-directory "~/.gnus.d/drafts"
- nnml-directory "~/.gnus.d/nnml-mail"
- nnfolder-directory "~/.gnus.d/mail/archive"
- nnfolder-active-file "~/.gnus.d/mail/archive/active"
- gnus-article-save-directory "~/.gnus.d/saved"
- gnus-kill-files-directory "~/.gnus.d/scores"
- gnus-cache-directory "~/.gnus.d/cache"
+ gnus-directory gnus-home-directory
+ gnus-article-save-directory (expand-file-name "saved" gnus-directory)
+ gnus-kill-files-directory (expand-file-name "scores" gnus-directory)
  ;; Startup files
- gnus-startup-file (nnheader-concat gnus-home-directory "newsrc")
- gnus-init-file (nnheader-concat gnus-home-directory "gnus")
+ gnus-startup-file (expand-file-name "newsrc" gnus-home-directory)
+ gnus-init-file (expand-file-name "gnus" gnus-home-directory)
  gnus-save-newsrc-file nil
  gnus-read-newsrc-file nil
  ;; Select methods
