@@ -30,9 +30,4 @@ Useful for non-source code repos (e.g., Org mode note files)."
       magit-completing-read-function 'magit-ido-completing-read
       magit-log-show-margin nil)
 
-
-;; Don't use vc for git.
-(setq vc-handled-backends
-      (delete 'Git vc-handled-backends))
-
 (provide 'init-git)
