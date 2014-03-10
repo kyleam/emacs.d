@@ -30,4 +30,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
       magit-completing-read-function 'magit-ido-completing-read
       magit-log-show-margin nil)
 
+(setq vc-follow-symlinks t)
+
 (provide 'init-git)
