@@ -1,19 +1,54 @@
 (require 'gnus)
 
-(setq gnus-directory "~/.gnus.d"
-      gnus-home-directory "~/.gnus.d"
-      message-directory "~/.gnus.d/mail"
-      message-auto-save-directory "~/.gnus.d/drafts"
-      nnml-directory "~/.gnus.d/nnml-mail"
-      nnfolder-directory "~/.gnus.d/mail/archive"
-      nnfolder-active-file "~/.gnus.d/mail/archive/active"
-      gnus-article-save-directory "~/.gnus.d/saved"
-      gnus-kill-files-directory "~/.gnus.d/scores"
-      gnus-cache-directory "~/.gnus.d/cache"
-      gnus-startup-file (nnheader-concat gnus-home-directory "newsrc")
-      gnus-init-file (nnheader-concat gnus-home-directory "gnus")
-      gnus-save-newsrc-file nil
-      gnus-read-newsrc-file nil)
+(setq
+ ;; Locations
+ gnus-directory "~/.gnus.d"
+ gnus-home-directory "~/.gnus.d"
+ message-directory "~/.gnus.d/mail"
+ message-auto-save-directory "~/.gnus.d/drafts"
+ nnml-directory "~/.gnus.d/nnml-mail"
+ nnfolder-directory "~/.gnus.d/mail/archive"
+ nnfolder-active-file "~/.gnus.d/mail/archive/active"
+ gnus-article-save-directory "~/.gnus.d/saved"
+ gnus-kill-files-directory "~/.gnus.d/scores"
+ gnus-cache-directory "~/.gnus.d/cache"
+ ;; Startup files
+ gnus-startup-file (nnheader-concat gnus-home-directory "newsrc")
+ gnus-init-file (nnheader-concat gnus-home-directory "gnus")
+ gnus-save-newsrc-file nil
+ gnus-read-newsrc-file nil
+ ;; Select methods
+ imap-shell-program "/usr/lib/dovecot/imap -c ~/.dovecotrc"
+ gnus-select-method '(nnimap "dov" (nnimap-stream shell))
+ gnus-secondary-select-methods '((nntp "news.gmane.org"))
+ ;; Groups
+ gnus-topic-display-empty-topics nil
+ gnus-group-list-inactive-groups nil
+ ;; Messages
+ message-send-mail-function 'message-send-mail-with-sendmail
+ sendmail-program "/usr/bin/msmtp"
+ message-sendmail-envelope-from 'header
+ gnus-gcc-mark-as-read t
+ message-citation-line-function 'message-insert-formatted-citation-line
+ message-citation-line-format "On %D %R, %N wrote:"
+ message-kill-buffer-on-exit t
+ gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
+ gnus-confirm-mail-reply-to-news t
+ footnote-section-tag ""
+ ;; Threading
+ gnus-thread-hide-subtree t
+ gnus-summary-line-format "%U%R %&user-date;%-20= %-15,15f  %B %S \n"
+ gnus-sum-thread-tree-indent "  "
+ gnus-sum-thread-tree-root "."
+ gnus-sum-thread-tree-false-root "o "
+ gnus-sum-thread-tree-single-indent ""
+ gnus-sum-thread-tree-leaf-with-other "+-> "
+ gnus-sum-thread-tree-vertical "| "
+ gnus-sum-thread-tree-single-leaf "`-> "
+ ;; Miscellaneous
+ mm-discouraged-alternatives '("text/html" "text/richtext")
+ gnus-agent-go-online t
+ gnus-interactive-exit nil)
 
 (defun km/sync-mail ()
   (interactive)
@@ -41,25 +76,6 @@
         (gnus-group-exit))))
 (add-hook 'kill-emacs-hook 'gnus-grace-exit-before-kill-emacs)
 
-(setq imap-shell-program "/usr/lib/dovecot/imap -c ~/.dovecotrc"
-      gnus-select-method '(nnimap "dov" (nnimap-stream shell))
-      gnus-secondary-select-methods '((nntp "news.gmane.org"))
-      message-send-mail-function 'message-send-mail-with-sendmail
-      sendmail-program "/usr/bin/msmtp"
-      message-sendmail-envelope-from 'header
-      gnus-gcc-mark-as-read t
-      message-citation-line-function 'message-insert-formatted-citation-line
-      message-citation-line-format "On %D %R, %N wrote:"
-      message-kill-buffer-on-exit t
-      gnus-group-list-inactive-groups nil
-      gnus-topic-display-empty-topics nil
-      gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
-      gnus-confirm-mail-reply-to-news t
-      gnus-interactive-exit nil
-      gnus-thread-hide-subtree t
-      mm-discouraged-alternatives '("text/html" "text/richtext")
-      footnote-section-tag "")
-
 ;; Use for rss too specific to add to gwene.
 (require 'nnrss)
 
@@ -69,15 +85,6 @@
 (add-hook 'message-mode-hook
           '(lambda ()
              (flyspell-mode 1)))
-
-(setq gnus-summary-line-format "%U%R %&user-date;%-20= %-15,15f  %B %S \n"
-      gnus-sum-thread-tree-indent "  "
-      gnus-sum-thread-tree-root "."
-      gnus-sum-thread-tree-false-root "o "
-      gnus-sum-thread-tree-single-indent ""
-      gnus-sum-thread-tree-leaf-with-other "+-> "
-      gnus-sum-thread-tree-vertical "| "
-      gnus-sum-thread-tree-single-leaf "`-> ")
 
 (defun km/follow-last-message-link ()
   "Follow link at bottom of message."
@@ -234,8 +241,6 @@ on a new line and the resulting paragraph is filled."
         (if (eq (current-buffer) buf)
             (bury-buffer)
           (bury-buffer buf))))))
-
-(setq gnus-agent-go-online t)
 
 (global-set-key (kbd "C-x m") 'km/gnus)
 
