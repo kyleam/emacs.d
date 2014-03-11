@@ -40,9 +40,11 @@
  gnus-sum-thread-tree-leaf-with-other "+-> "
  gnus-sum-thread-tree-vertical "| "
  gnus-sum-thread-tree-single-leaf "`-> "
+ ;; Agent
+ gnus-agent-go-online t
+ gnus-agent-synchronize-flags t
  ;; Miscellaneous
  mm-discouraged-alternatives '("text/html" "text/richtext")
- gnus-agent-go-online t
  gnus-interactive-exit nil)
 
 (defun km/sync-mail ()
