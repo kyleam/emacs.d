@@ -249,4 +249,9 @@ read. Don't ask to confirm."
     (gnus-summary-catchup all t))
   (gnus-summary-next-group))
 
+;; From http://ivan.kanis.fr/ivan-gnus.el
+(defadvice gnus-summary-next-group (before km/gnus-next-group activate)
+  "Go to next group without selecting the first article."
+  (ad-set-arg 0 t))
+
 (provide 'init-gnus)
