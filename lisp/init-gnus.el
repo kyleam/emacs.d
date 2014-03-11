@@ -179,6 +179,7 @@ on a new line and the resulting paragraph is filled."
 (add-hook 'gnus-summary-mode-hook
           (lambda ()
             (gnus-define-keys gnus-summary-mode-map
+              "c" km/gnus-catchup-and-goto-next-group
               "j" gnus-summary-next-unread-article
               ";" gnus-summary-universal-argument  ;; mutt's tag
               "e" gnus-summary-scroll-up)))
@@ -237,5 +238,15 @@ on a new line and the resulting paragraph is filled."
           (bury-buffer buf))))))
 
 (global-set-key (kbd "C-x m") 'km/gnus)
+
+;; From http://ivan.kanis.fr/ivan-gnus.el
+(defun km/gnus-catchup-and-goto-next-group (&optional all)
+  "Mark all articles in this group as read and select the next group.
+If given a prefix, mark all articles, unread as well as ticked, as
+read. Don't ask to confirm."
+  (interactive "P")
+  (save-excursion
+    (gnus-summary-catchup all t))
+  (gnus-summary-next-group))
 
 (provide 'init-gnus)
