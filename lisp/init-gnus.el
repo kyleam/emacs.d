@@ -73,9 +73,6 @@
         (gnus-group-exit))))
 (add-hook 'kill-emacs-hook 'gnus-grace-exit-before-kill-emacs)
 
-;; Use for rss too specific to add to gwene.
-(require 'nnrss)
-
 ;; Start in topic mode.
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
