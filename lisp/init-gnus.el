@@ -44,6 +44,7 @@
  gnus-agent-go-online t
  gnus-agent-synchronize-flags t
  ;; Miscellaneous
+ gnus-auto-select-next 'quietly
  mm-discouraged-alternatives '("text/html" "text/richtext")
  gnus-interactive-exit nil)
 
