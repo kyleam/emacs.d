@@ -38,7 +38,7 @@ Assumes that the window is only split into two."
 (define-key window-map "s" 'km/swap-windows)
 (define-key window-map "l" 'km/switch-window-split)
 
-(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-o") 'scroll-other-window)
 
 (defadvice clone-indirect-buffer-other-window
   (after clone-indirect-and-widen activate)
