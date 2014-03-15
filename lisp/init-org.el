@@ -128,6 +128,10 @@ Before running `org-tree-to-indirect-buffer',
 (eval-after-load 'org-table
      '(diminish 'orgtbl-mode "Ot"))
 
+(add-hook 'next-error-hook '(lambda ()
+                              (when (eq major-mode 'org-mode)
+                                (org-show-context))))
+
 ;;; Agenda
 
 (defadvice org-agenda-list (around org-agenda-fullscreen activate)
