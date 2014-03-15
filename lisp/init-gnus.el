@@ -64,8 +64,6 @@
 (defvar km/sync-mail-cmd "sync-mail.sh"
   "Run sync mail script.")
 
-(define-key external-map "m" 'km/sync-mail)
-
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
   (if (and (fboundp 'gnus-alive-p)
@@ -238,8 +236,6 @@ on a new line and the resulting paragraph is filled."
             (bury-buffer)
           (bury-buffer buf))))))
 
-(global-set-key (kbd "C-x m") 'km/gnus-select-or-bury)
-
 ;; From http://ivan.kanis.fr/ivan-gnus.el
 (defun km/gnus-catchup-and-goto-next-group (&optional all)
   "Mark all articles in this group as read and select the next group.
@@ -254,5 +250,15 @@ read. Don't ask to confirm."
 (defadvice gnus-summary-next-group (before km/gnus-next-group activate)
   "Go to next group without selecting the first article."
   (ad-set-arg 0 t))
+
+(define-prefix-command 'mail-map)
+(global-set-key (kbd "C-x m") 'mail-map)
+
+(define-key mail-map "g" 'gnus)
+(define-key mail-map "b" 'km/gnus-select-or-bury)
+(define-key mail-map "p" 'gnus-plugged)
+(define-key mail-map "u" 'gnus-unplugged)
+(define-key mail-map "s" 'km/sync-mail)
+(define-key mail-map "n" 'notmuch-search)
 
 (provide 'init-gnus)
