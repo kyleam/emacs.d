@@ -123,8 +123,10 @@ Before running `org-tree-to-indirect-buffer',
 (add-hook 'message-mode-hook 'km/load-orgstruct)
 (add-hook 'git-commit-mode-hook 'km/load-orgstruct)
 
-(diminish 'orgtbl-mode "Ot")
-(diminish 'orgstruct-mode "Os")
+(eval-after-load 'org
+     '(diminish 'orgstruct-mode "Os"))
+(eval-after-load 'org-table
+     '(diminish 'orgtbl-mode "Ot"))
 
 ;;; Agenda
 
