@@ -123,6 +123,9 @@ Before running `org-tree-to-indirect-buffer',
 (add-hook 'message-mode-hook 'km/load-orgstruct)
 (add-hook 'git-commit-mode-hook 'km/load-orgstruct)
 
+(diminish 'orgtbl-mode "Ot")
+(diminish 'orgstruct-mode "Os")
+
 ;;; Agenda
 
 (defadvice org-agenda-list (around org-agenda-fullscreen activate)

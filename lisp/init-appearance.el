@@ -15,6 +15,7 @@
 (require-package 'diminish)
 (require 'diminish)
 (diminish 'abbrev-mode "Ab")
+(diminish 'flyspell-mode "Fy")
 ;; Other minor modes (paredit, view, yas, ...) are diminished where they
 ;; are setup.
 
