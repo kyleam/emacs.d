@@ -197,7 +197,7 @@ on a new line and the resulting paragraph is filled."
 
 ;; Modified from http://www.xsteve.at/prg/gnus/
 
-(defun km/gnus ()
+(defun km/gnus-select-or-bury ()
   "Start, select, or bury gnus."
   (interactive)
   (let ((bufname (buffer-name)))
@@ -238,7 +238,7 @@ on a new line and the resulting paragraph is filled."
             (bury-buffer)
           (bury-buffer buf))))))
 
-(global-set-key (kbd "C-x m") 'km/gnus)
+(global-set-key (kbd "C-x m") 'km/gnus-select-or-bury)
 
 ;; From http://ivan.kanis.fr/ivan-gnus.el
 (defun km/gnus-catchup-and-goto-next-group (&optional all)
