@@ -152,7 +152,6 @@ be restored properly."
 
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
-        ("s" todo "STARTED" nil)
         ("u" "Unschedule TODO entries" alltodo ""
          ((org-agenda-skip-function
            (lambda nil
