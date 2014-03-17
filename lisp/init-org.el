@@ -43,6 +43,7 @@
 (global-set-key (kbd "C-c o l") 'org-store-link)
 (global-set-key (kbd "C-c o a") 'org-agenda)
 (global-set-key (kbd "C-c o b") 'org-iswitchb)
+(global-set-key (kbd "C-c o s") 'org-save-all-org-buffers)
 (global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
 (key-chord-define-global ",a" 'org-agenda)
 
