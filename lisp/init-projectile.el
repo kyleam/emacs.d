@@ -19,6 +19,18 @@
   "Find project file in other window."
   (call-interactively 'projectile-find-file-other-window))
 
+(def-projectile-commander-method ?B
+  "Find project buffer in other window."
+  (call-interactively 'projectile-switch-to-buffer-other-window))
+
+(def-projectile-commander-method ?D
+  "Find a project directory in other window."
+  (call-interactively 'projectile-find-dir-other-window))
+
+(def-projectile-commander-method ?O
+  "Display a project buffer in other window."
+  (call-interactively 'projectile-display-buffer))
+
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
 
