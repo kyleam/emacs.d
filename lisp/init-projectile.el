@@ -3,6 +3,7 @@
 (projectile-global-mode)
 
 (setq projectile-switch-project-action 'projectile-commander
+      projectile-find-dir-includes-top-level t
       projectile-use-git-grep t)
 
 ;; Default binding is D.
