@@ -23,11 +23,14 @@
 (global-set-key (kbd "C-'") 'backward-kill-word)
 
 (global-set-key (kbd "M-/") 'hippie-expand)
-;; http://www.emacswiki.org/emacs/HippieExpand#toc9
-(defadvice he-substitute-string (after he-paredit-fix activate)
-  "Remove extra paren when expanding line in paredit."
-  (if (and paredit-mode (equal (substring str -1) ")"))
-      (progn (backward-delete-char 1) (forward-char))))
+(setq hippie-expand-try-functions-list '(try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun unfill-paragraph ()
