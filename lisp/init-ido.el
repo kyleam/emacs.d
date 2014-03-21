@@ -28,12 +28,6 @@
 (flx-ido-mode 1)
 (ido-ubiquitous-mode 1)
 
-;; Recent files
-(setq recentf-save-file "~/.emacs.d/cache/recentf"
-      recentf-max-saved-items 200
-      recentf-max-menu-items 15)
-(recentf-mode t)
-
 ;; From prelude
 (defun km/recentf-ido-find-file ()
   "Find a recent file using ido."

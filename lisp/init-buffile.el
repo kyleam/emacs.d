@@ -129,4 +129,10 @@ user."
  ;; Don't show empty filter groups.
  ibuffer-show-empty-filter-groups nil)
 
+;; Recent files
+(setq recentf-save-file "~/.emacs.d/cache/recentf"
+      recentf-max-saved-items 200
+      recentf-max-menu-items 15)
+(recentf-mode t)
+
 (provide 'init-buffile)
