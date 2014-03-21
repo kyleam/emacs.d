@@ -153,12 +153,11 @@
 (define-key kill-map  "p" 'km/kill-paragraph-at-point)
 (define-key kill-map  "l" 'km/kill-line-at-point)
 
+;; Taken from prelude-core.el.
 (defun km/join-next-line-with-space ()
   "Join current line to the next line with a space in between."
   (interactive)
-  (move-end-of-line 1)
-  (kill-line)
-  (just-one-space))
+  (delete-indentation 1))
 
 (define-key kill-map  "j" 'km/join-next-line-with-space)
 
