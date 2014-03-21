@@ -1,6 +1,7 @@
 (require-package 'flx)
 (require-package 'flx-ido)
 (require-package 'ido-vertical-mode)
+(require-package 'ido-ubiquitous)
 
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -24,8 +25,8 @@
 
 (ido-mode 1)
 (ido-vertical-mode 1)
-(ido-everywhere 1)
 (flx-ido-mode 1)
+(ido-ubiquitous-mode 1)
 
 ;; Recent files
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
