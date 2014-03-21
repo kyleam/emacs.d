@@ -135,31 +135,17 @@
     (goto-char string-start)
     (kill-sexp)))
 
-(defun km/kill-thing-at-point (thing killthing killarg)
-  "Go to the beginning of THING and call KILLTHING with
-KILLARG."
-  (goto-char (beginning-of-thing thing))
-  (funcall killthing killarg))
+(defmacro km/make-kill-thing-at-point (name thing kill-func)
+  `(defun ,(intern (concat "km/kill-" name "-at-point")) (arg)
+     (interactive "p")
+     (goto-char (beginning-of-thing ,thing))
+     (funcall ,kill-func arg)))
 
-(defun km/kill-sentence-at-point (arg)
-  (interactive "P")
-  (km/kill-thing-at-point 'sentence 'kill-sentence arg))
-
-(defun km/kill-word-at-point (arg)
-  (interactive "P")
-  (km/kill-thing-at-point 'word 'kill-word arg))
-
-(defun km/kill-paragraph-at-point (arg)
-  (interactive "P")
-  (km/kill-thing-at-point 'paragraph 'kill-paragraph arg))
-
-(defun km/kill-line-at-point (arg)
-  (interactive "P")
-  (km/kill-thing-at-point 'line 'kill-line arg))
-
-(defun km/kill-sexp-at-point (arg)
-  (interactive "P")
-  (km/kill-thing-at-point 'sexp 'kill-sexp arg))
+(km/make-kill-thing-at-point "word" 'word 'kill-word)
+(km/make-kill-thing-at-point "sentence" 'sentence 'kill-sentence)
+(km/make-kill-thing-at-point "paragraph" 'paragraph 'kill-paragraph)
+(km/make-kill-thing-at-point "line" 'line 'kill-line)
+(km/make-kill-thing-at-point "sexp" 'sexp 'kill-sexp)
 
 (define-key kill-map  "s" 'km/kill-string-at-point)
 (define-key kill-map  "." 'km/kill-sentence-at-point)
