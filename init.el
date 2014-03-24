@@ -20,6 +20,7 @@
 (require 'init-framewin)
 
 (require 'init-editing)
+(require-package 'boxquote)
 
 (require 'init-text)
 (require 'init-elisp)
