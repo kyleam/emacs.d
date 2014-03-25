@@ -13,11 +13,18 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
+(defun km/magit-push-all ()
+  "Push all branches."
+  (interactive)
+  (let ((remote (magit-read-remote "Remote")))
+    (magit-run-git-async "push" "-v" remote "--all")))
 
 (eval-after-load 'magit
   '(progn
      (magit-key-mode-insert-action 'committing
                                    "u" "Auto commit" 'km/magit-auto-commit)
+     (magit-key-mode-insert-action 'pushing
+                                   "a" "Push all" 'km/magit-push-all)
      (diminish 'magit-auto-revert-mode)))
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html
