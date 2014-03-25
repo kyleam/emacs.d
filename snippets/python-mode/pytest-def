@@ -3,5 +3,5 @@
 # key: td
 # group: testing
 # --
-def test_${1:name}($2):
+def test_${1:name}():
     $0
