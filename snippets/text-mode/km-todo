@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: kt
+# Copied over from text-mode/TODO.
+# --
+`(yas-with-comment " kTODO: ")`
