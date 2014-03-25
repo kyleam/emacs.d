@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: parameters header
+# key: ph
+# --
+Parameters
+----------
+$0

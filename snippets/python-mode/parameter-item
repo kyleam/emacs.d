@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: parameter item
+# key: par
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:param} : ${2:type}
+    $0

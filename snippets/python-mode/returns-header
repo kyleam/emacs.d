@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Returns header
+# key: rh
+# --
+Returns
+-------
+$0
