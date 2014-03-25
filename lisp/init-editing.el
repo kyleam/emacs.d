@@ -75,17 +75,6 @@
 (define-prefix-command 'insert-map)
 (global-set-key (kbd "C-c i") 'insert-map)
 
-(defun km/shebang (&optional lang)
-  (interactive "s\language (default python):")
-  (if (= (length lang) 0)
-      (setq lang "python"))
-  (insert "#!/usr/bin/env " lang "\n"))
-(define-key insert-map "s" 'km/shebang)
-
-(defun km/insert-date ()
-  (interactive)
-  (insert (format-time-string "%Y-%m-%d")))
-
 (defun km/toggle-line-or-region-comment ()
   "Comment/uncomment the current line or region"
     (interactive)
@@ -98,21 +87,6 @@
 
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
-(defun km/todo-comment ()
-  "Add commented TODO"
-    (interactive)
-    (let (beg end)
-      (if (region-active-p)
-          (setq beg (region-beginning) end (region-end))
-        (setq beg (line-beginning-position) end (line-end-position)))
-      (unless (comment-only-p beg end)
-        (beginning-of-line)
-        (insert "TODO ")
-        (comment-region beg (+ end 5))
-        (forward-line))))
-
-(define-key insert-map "d" 'km/insert-date)
-(define-key insert-map "t" 'km/todo-comment)
 (define-key insert-map "i" 'indent-relative)
 
 ;; Put multiple cursors map under insert prefix.
