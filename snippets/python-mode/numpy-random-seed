@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: numpy random seed
+# key: nrs
+# --
+np.random.seed(`(random most-positive-fixnum)`)
+$0

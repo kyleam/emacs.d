@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Python shebang
+# key: sb
+# --
+#!/usr/bin/env python${1:3}
+$0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pytest
+# key: pt
+# group: imports
+# --
+import pytest
+$0

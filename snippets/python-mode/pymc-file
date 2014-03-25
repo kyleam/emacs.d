@@ -1,8 +1,7 @@
-# name: pymc
-# key: pm
-# expand-env: ((yas/indent-line 'fixed))
+# -*- mode: snippet -*-
+# name: pymc file
+# key: pmf
 # --
-import theano.tensor as tn
 import pymc as pm
 
 with pm.Model() as model:

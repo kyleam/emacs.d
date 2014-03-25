@@ -1,6 +1,0 @@
-# -*- coding: utf-8 -*-
-# name: pytest test definition
-# key: deft
-# --
-def test_${1:name}($2):
-    $0

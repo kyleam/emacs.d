@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: dopt
+# group: imports
+# --
+from docopt import docopt
+$0

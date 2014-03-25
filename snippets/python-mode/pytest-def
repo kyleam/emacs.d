@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pytest def
+# key: td
+# group: testing
+# --
+def test_${1:name}($2):
+    $0

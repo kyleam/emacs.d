@@ -1,7 +1,0 @@
-# name: matplotlib-related import
-# key: plt
-# --
-import matplotlib.pyplot as plt
-
-import pltaid
-$0
