@@ -33,6 +33,8 @@ other window when an asynchronous command is run."
 (define-key external-map "c" 'compile)
 (define-key external-map "g" 'recompile)
 
+(define-key external-map "w" 'woman)
+
 ;; Give frequently-used recompile a shorter binding.
 (global-set-key (kbd "C-c g") 'recompile)
 
