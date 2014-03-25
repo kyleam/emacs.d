@@ -71,10 +71,6 @@
 (define-key replace-map "r" 'query-replace-regexp)
 (define-key replace-map "R" 'replace-regexp)
 
-;; Insert map
-(define-prefix-command 'insert-map)
-(global-set-key (kbd "C-c i") 'insert-map)
-
 (defun km/toggle-line-or-region-comment ()
   "Comment/uncomment the current line or region"
     (interactive)
@@ -87,20 +83,20 @@
 
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
-(define-key insert-map "i" 'indent-relative)
-
 ;; Put multiple cursors map under insert prefix.
-(define-prefix-command 'multiple-cursors-map)
-(global-set-key (kbd "C-c c") 'multiple-cursors-map)
+(define-prefix-command 'editing-map)
+(global-set-key (kbd "C-c e") 'editing-map)
 
-(define-key multiple-cursors-map "l" 'mc/edit-lines)
-(define-key multiple-cursors-map "b" 'mc/edit-beginnings-of-lines)
-(define-key multiple-cursors-map "e" 'mc/edit-ends-of-lines)
-(define-key multiple-cursors-map "n" 'mc/mark-next-like-this)
-(define-key multiple-cursors-map "p" 'mc/mark-previous-like-this)
-(define-key multiple-cursors-map "a" 'mc/mark-all-like-this)
+(define-key editing-map "l" 'mc/edit-lines)
+(define-key editing-map "b" 'mc/edit-beginnings-of-lines)
+(define-key editing-map "e" 'mc/edit-ends-of-lines)
+(define-key editing-map "n" 'mc/mark-next-like-this)
+(define-key editing-map "p" 'mc/mark-previous-like-this)
+(define-key editing-map "a" 'mc/mark-all-like-this)
 
 (global-set-key (kbd "C-;") 'er/expand-region)
+
+(define-key editing-map "i" 'indent-relative)
 
 ;; Kill map
 (define-prefix-command 'kill-map)
