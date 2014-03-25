@@ -30,12 +30,6 @@ other window when an asynchronous command is run."
 (define-key external-map "s" 'shell-command)
 (define-key external-map "S" 'shell)
 
-(define-key external-map "a" 'km/zsh-ansi-term)
-(define-key external-map "t" 'km/open-external-terminal)
-(define-key external-map "r" 'shell-command-on-region)
-(define-key external-map "s" 'shell-command)
-(define-key external-map "S" 'shell)
-
 (define-key external-map "c" 'compile)
 (define-key external-map "g" 'recompile)
 
