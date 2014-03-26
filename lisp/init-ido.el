@@ -9,6 +9,7 @@
       ido-default-buffer-method 'selected-window
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
+      ido-auto-merge-work-directories-length -1
       ido-max-prospects 10
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist"
       ido-max-directory-size 100000)
