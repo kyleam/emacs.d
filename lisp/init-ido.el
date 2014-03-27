@@ -2,6 +2,7 @@
 (require-package 'flx-ido)
 (require-package 'ido-vertical-mode)
 (require-package 'ido-ubiquitous)
+(require-package 'ido-at-point)
 
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -28,6 +29,7 @@
 (ido-vertical-mode 1)
 (flx-ido-mode 1)
 (ido-ubiquitous-mode 1)
+(ido-at-point-mode)
 
 ;; From prelude
 (defun km/recentf-ido-find-file ()
