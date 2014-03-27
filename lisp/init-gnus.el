@@ -114,6 +114,11 @@ A new buffer with the patch contents is opened in another window."
   (select-window (gnus-get-buffer-window gnus-article-buffer))
   (goto-char (point-max)))
 
+(require-package 'ido-gnus)
+(define-key gnus-group-mode-map "j" 'ido-gnus-select-group)
+
+(setq ido-gnus-num-articles 20)
+
 (require 'notmuch)
 (require 'org-gnus)
 
