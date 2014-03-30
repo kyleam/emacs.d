@@ -160,6 +160,8 @@ be restored properly."
 
 (setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org")
       org-default-notes-file "~/notes/tasks.org"
+      org-agenda-text-search-extra-files '("~/notes/backburner.org"
+                                           "~/notes/misc.org")
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
@@ -178,17 +180,15 @@ be restored properly."
 
 ;;; Refiling
 
-(defvar km/org-refiling-targets
-  (append org-agenda-files '("~/notes/backburner.org" "~/notes/misc.org"))
-  "List of refiling targets for agenda, including non-agenda
-files.")
-
 (defun km/verify-refile-target ()
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-targets '((nil :maxlevel . 3)
-                           (km/org-refiling-targets :maxlevel . 2)))
+(setq org-refile-targets `((nil :maxlevel . 3)
+                           (,(append org-agenda-files
+                                     org-agenda-text-search-extra-files)
+                            :maxlevel . 2)))
+
 (setq org-refile-target-verify-function 'km/verify-refile-target
       ;; Use ido for refiling.
       org-outline-path-complete-in-steps nil
