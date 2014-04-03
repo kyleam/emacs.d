@@ -9,6 +9,8 @@
       org-goto-interface 'outline-path-completionp
       org-src-fontify-natively t
       org-special-ctrl-k t
+      org-outline-path-complete-in-steps nil
+      org-completion-use-ido t
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
 (setq org-capture-templates
@@ -189,9 +191,6 @@ be restored properly."
                                      org-agenda-text-search-extra-files)
                             :maxlevel . 2)))
 
-(setq org-refile-target-verify-function 'km/verify-refile-target
-      ;; Use ido for refiling.
-      org-outline-path-complete-in-steps nil
-      org-completion-use-ido t)
+(setq org-refile-target-verify-function 'km/verify-refile-target)
 
 (provide 'init-org)
