@@ -193,4 +193,38 @@ be restored properly."
 
 (setq org-refile-target-verify-function 'km/verify-refile-target)
 
+(defun km/org-refile-to-other-file (file &optional maxlevel)
+  "Refile with `org-refile-targets' set to FILE.
+A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
+  (interactive "fFile:")
+  (let* ((maxlevel (if current-prefix-arg
+                       (prefix-numeric-value current-prefix-arg)
+                     2))
+         (org-refile-targets
+          `((,(substring-no-properties file) :maxlevel . ,maxlevel))))
+    (org-refile)))
+
+(defun km/org-refile-to-other-org-buffer (buffer &optional maxlevel)
+  "Refile with `org-refile-targets' set to BUFFER file name.
+A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
+  (interactive (list
+                (org-icompleting-read "Buffer: "
+                                      (mapcar 'buffer-name
+                                              (org-buffer-list 'files)))))
+  (let* ((maxlevel (if current-prefix-arg
+                       (prefix-numeric-value current-prefix-arg)
+                     2))
+         (org-refile-targets
+          `((,(substring-no-properties (buffer-file-name (get-buffer buffer)))
+             :maxlevel . ,maxlevel))))
+    (org-refile)))
+
+(eval-after-load 'org
+  '(add-to-list 'org-mode-hook
+                '(lambda ()
+                   (local-set-key (kbd "C-c m r")
+                                  'km/org-refile-to-other-org-buffer)
+                   (local-set-key (kbd "C-c m R")
+                                  'km/org-refile-to-other-file))))
+
 (provide 'init-org)
