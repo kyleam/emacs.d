@@ -27,7 +27,7 @@
 (require 'init-shell)
 (require 'init-haskell)
 (require 'init-python)
-(require-package 'ess)
+(require 'init-ess)
 (require-package 'lua-mode)
 
 (require 'init-tex)
