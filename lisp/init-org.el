@@ -225,6 +225,8 @@ A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
                    (local-set-key (kbd "C-c m r")
                                   'km/org-refile-to-other-org-buffer)
                    (local-set-key (kbd "C-c m R")
-                                  'km/org-refile-to-other-file))))
+                                  'km/org-refile-to-other-file)
+                   (local-set-key (kbd "C-c m o")
+                                  'ace-link-org))))
 
 (provide 'init-org)

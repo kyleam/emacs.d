@@ -2,6 +2,8 @@
 (require-package 'expand-region)
 (require-package 'wrap-region)
 (require-package 'ace-jump-mode)
+(require-package 'ace-link)
+(ace-link-setup-default)
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
 (key-chord-define-global ";a" 'ace-jump-mode)
