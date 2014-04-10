@@ -26,6 +26,7 @@ Useful for non-source code repos (e.g., Org mode note files)."
 (magit-define-popup-action 'magit-push-popup
   ?a "Push all" 'km/magit-push-all)
 
+(add-to-list 'magit-log-popup-defaults "--all")
 
 (diminish 'magit-auto-revert-mode)
 
