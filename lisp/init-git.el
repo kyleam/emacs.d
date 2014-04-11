@@ -7,6 +7,8 @@
 
 (setq git-annex-commit nil)
 
+(add-hook 'magit-mode-hook 'turn-on-magit-annex)
+
 (key-chord-define-global ",g" 'magit-status)
 
 (defun km/magit-auto-commit ()
