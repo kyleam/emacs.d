@@ -1,5 +1,6 @@
 (require-package 'flx)
 (require-package 'flx-ido)
+(require-package 'ido-vertical-mode)
 (require-package 'ido-ubiquitous)
 (require-package 'ido-at-point)
 
@@ -25,6 +26,7 @@
 (setq ido-use-faces nil)
 
 (ido-mode 1)
+(ido-vertical-mode 1)
 (ido-everywhere 1)
 (flx-ido-mode 1)
 (ido-ubiquitous-mode 1)
