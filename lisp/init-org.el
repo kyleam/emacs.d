@@ -135,7 +135,7 @@ Before running `org-tree-to-indirect-buffer',
                               (when (eq major-mode 'org-mode)
                                 (org-show-context))))
 
-(defadvice magit-visit-item
+(defadvice magit-visit
   (after magit-visit-show-org-context activate)
   "Show context if visiting Org buffer.
 This is an improvement, but still not great. It requires the
