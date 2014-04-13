@@ -207,17 +207,12 @@ A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
 (defun km/org-refile-to-other-org-buffer (buffer &optional maxlevel)
   "Refile with `org-refile-targets' set to BUFFER file name.
 A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
-  (interactive (list
-                (org-icompleting-read "Buffer: "
-                                      (mapcar 'buffer-name
-                                              (org-buffer-list 'files)))))
-  (let* ((maxlevel (if current-prefix-arg
-                       (prefix-numeric-value current-prefix-arg)
-                     2))
-         (org-refile-targets
-          `((,(substring-no-properties (buffer-file-name (get-buffer buffer)))
-             :maxlevel . ,maxlevel))))
-    (org-refile)))
+  (interactive (list (km/get-org-file-buffer)))
+  (km/org-refile-to-other-file (buffer-file-name (get-buffer buffer))))
+
+(defun km/get-org-file-buffer ()
+  (org-icompleting-read "Buffer: " (mapcar 'buffer-name
+                                           (org-buffer-list 'files))))
 
 (eval-after-load 'org
   '(add-to-list 'org-mode-hook
