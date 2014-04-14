@@ -214,6 +214,20 @@ A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
    (org-icompleting-read "Buffer: " (mapcar 'buffer-name
                                             (org-buffer-list 'files)))))
 
+(defun km/org-set-refiling-buffer (maxlevel)
+  "Choose buffer to set as sole target in `org-refile-targets'.
+If `org-refile-targets' is already a local variable, restore the
+global value. A numeric prefix can be given to set
+MAXLEVEL (defaults to 2)."
+  (interactive "P")
+  (if (local-variable-p 'org-refile-targets)
+      (kill-local-variable 'org-refile-targets)
+    (let* ((buffer-file (substring-no-properties
+                         (buffer-file-name (km/get-org-file-buffer))))
+          (maxlevel (prefix-numeric-value (or maxlevel 2))))
+      (set (make-local-variable 'org-refile-targets)
+           `((,buffer-file :maxlevel . ,maxlevel))))))
+
 (eval-after-load 'org
   '(add-to-list 'org-mode-hook
                 '(lambda ()
