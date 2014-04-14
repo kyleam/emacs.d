@@ -196,23 +196,23 @@ be restored properly."
 (defun km/org-refile-to-other-file (file &optional maxlevel)
   "Refile with `org-refile-targets' set to FILE.
 A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
-  (interactive "fFile:")
-  (let* ((maxlevel (if current-prefix-arg
-                       (prefix-numeric-value current-prefix-arg)
-                     2))
-         (org-refile-targets
-          `((,(substring-no-properties file) :maxlevel . ,maxlevel))))
+  (interactive "fFile: \nP")
+  (let* ((maxlevel (prefix-numeric-value (or maxlevel 2)))
+         (file (substring-no-properties file))
+         (org-refile-targets `((,file :maxlevel . ,maxlevel))))
     (org-refile)))
 
 (defun km/org-refile-to-other-org-buffer (buffer &optional maxlevel)
   "Refile with `org-refile-targets' set to BUFFER file name.
 A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
-  (interactive (list (km/get-org-file-buffer)))
-  (km/org-refile-to-other-file (buffer-file-name (get-buffer buffer))))
+  (interactive (list (km/get-org-file-buffer) current-prefix-arg))
+  (let ((buffer-file (buffer-file-name buffer)))
+    (km/org-refile-to-other-file buffer-file maxlevel)))
 
 (defun km/get-org-file-buffer ()
-  (org-icompleting-read "Buffer: " (mapcar 'buffer-name
-                                           (org-buffer-list 'files))))
+  (get-buffer
+   (org-icompleting-read "Buffer: " (mapcar 'buffer-name
+                                            (org-buffer-list 'files)))))
 
 (eval-after-load 'org
   '(add-to-list 'org-mode-hook
