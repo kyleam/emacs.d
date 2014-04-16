@@ -118,6 +118,23 @@ Before running `org-tree-to-indirect-buffer',
   (let ((org-indirect-buffer-display 'current-window))
     (org-tree-to-indirect-buffer arg)))
 
+(defun km/org-sort-parent (arg)
+  "Sort on parent heading ARG levels up.
+After sorting, the point is returned to its previous location
+under the current heading."
+  (interactive "p")
+  (let ((heading (org-no-properties (org-get-heading t t)))
+        starting-pos
+        chars-after-heading)
+    (setq starting-pos (point))
+    (save-excursion
+      (org-back-to-heading t)
+      (setq chars-after-heading (- starting-pos (point)))
+      (outline-up-heading arg)
+      (call-interactively 'org-sort))
+    (goto-char (+ (org-find-exact-headline-in-buffer heading nil t)
+                  chars-after-heading))))
+
 ;;; Org in other modes
 (defun km/load-orgstruct ()
   (turn-on-orgstruct++)
@@ -235,6 +252,8 @@ MAXLEVEL (defaults to 2)."
                                   'km/org-refile-to-other-org-buffer)
                    (local-set-key (kbd "C-c m W")
                                   'km/org-refile-to-other-file)
+                   (local-set-key (kbd "C-c m s")
+                                  'km/org-sort-parent)
                    (local-set-key (kbd "C-c m o")
                                   'ace-link-org))))
 
