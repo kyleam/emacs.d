@@ -231,9 +231,9 @@ MAXLEVEL (defaults to 2)."
 (eval-after-load 'org
   '(add-to-list 'org-mode-hook
                 '(lambda ()
-                   (local-set-key (kbd "C-c m r")
+                   (local-set-key (kbd "C-c m w")
                                   'km/org-refile-to-other-org-buffer)
-                   (local-set-key (kbd "C-c m R")
+                   (local-set-key (kbd "C-c m W")
                                   'km/org-refile-to-other-file)
                    (local-set-key (kbd "C-c m o")
                                   'ace-link-org))))
