@@ -38,7 +38,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (delete-other-windows))
 
 (setq magit-restore-window-configuration t
-      magit-default-tracking-name-function 'magit-default-tracking-name-branch-only
       magit-completing-read-function 'magit-ido-completing-read
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
