@@ -167,15 +167,16 @@ be restored properly."
 (setq org-agenda-restore-windows-after-quit t
       org-agenda-sticky nil)
 
-(setq org-agenda-files '("~/notes/calendar.org" "~/notes/tasks.org")
-      org-default-notes-file "~/notes/tasks.org"
-      org-agenda-text-search-extra-files '("~/notes/backburner.org"
-                                           "~/notes/misc.org")
+(setq org-default-notes-file "~/notes/tasks.org"
+      org-agenda-files '("~/notes/agenda")
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-agenda-start-on-weekday nil
       org-reverse-note-order t)
+
+(setq org-agenda-text-search-extra-files
+      (file-expand-wildcards "~/notes/extra/*.org"))
 
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
