@@ -64,8 +64,6 @@ user."
 ;; Replace buffer-menu with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(ibuffer-auto-mode 1) ; Keep buffer list up-to-date.
-
 (setq
  ;; Don't prompt to delete unmodified buffers.
  ibuffer-expert t
