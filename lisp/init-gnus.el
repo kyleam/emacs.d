@@ -24,7 +24,7 @@
  message-sendmail-envelope-from 'header
  gnus-gcc-mark-as-read t
  message-citation-line-function 'message-insert-formatted-citation-line
- message-citation-line-format "On %D %R, %N wrote:"
+ message-citation-line-format "%f wrote:"
  message-kill-buffer-on-exit t
  gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
  gnus-confirm-mail-reply-to-news t
