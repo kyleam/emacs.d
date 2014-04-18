@@ -9,6 +9,8 @@
 (key-chord-define-global ";a" 'ace-jump-mode)
 (key-chord-define-global ",v" 'view-mode)
 
+(setq ace-jump-mode-scope 'frame)
+
 (eval-after-load 'view
   '(progn
      (define-key view-mode-map "l" 'recenter-top-bottom)
