@@ -12,9 +12,10 @@
         python-shell-completion-string-code
         "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
-(defun km/create-python-test-file (arg)
-  "Create a python test file from the name of the current file.
-Unless a prefix argument ARG is given, py.test is also imported."
+(defun km/find-python-test-file-other-window (arg)
+  "Open test file for the current Python file in another window.
+If the file does not already exist, import the original Python
+file. Unless a ARG is non-nil, py.test is also imported."
   (interactive "P")
   (let* ((py-file (file-name-nondirectory buffer-file-name))
          (test-file (concat "test_" py-file)))
@@ -32,7 +33,7 @@ If ARG, use pytest2 instead of pytest."
     (compile pytest)))
 
 (defun km/python-hook ()
-  (local-set-key (kbd "C-c m t") 'km/create-python-test-file)
+  (local-set-key (kbd "C-c m t") 'km/find-python-test-file-other-window)
   (local-set-key (kbd "C-c m c") 'km/pytest-compile))
 
 (add-hook 'python-mode-hook 'km/python-hook)
