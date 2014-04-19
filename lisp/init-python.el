@@ -20,10 +20,9 @@ Unless a prefix argument ARG is given, py.test is also imported."
          (test-file (concat "test_" py-file)))
     (find-file-other-window test-file)
     (unless (file-exists-p test-file)
-      (with-current-buffer
-          (insert (format "import %s\n" (file-name-sans-extension py-file)))
-        (unless arg
-          (insert "import pytest\n"))))))
+      (insert (format "import %s\n" (file-name-sans-extension py-file)))
+      (unless arg
+        (insert "import pytest\n")))))
 
 (defun km/pytest-compile (arg)
   "Run pytest.
