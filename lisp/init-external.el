@@ -24,6 +24,12 @@ other window when an asynchronous command is run."
   (interactive)
   (ansi-term "/bin/zsh"))
 
+(defun km/display-compilation-other-window ()
+  (interactive)
+  (-if-let (comp-buffer (get-buffer "*compilation*"))
+      (display-buffer comp-buffer)
+    (error "No compilation buffer")))
+
 (define-key external-map "a" 'km/zsh-ansi-term)
 (define-key external-map "t" 'km/open-external-terminal)
 (define-key external-map "r" 'shell-command-on-region)
@@ -32,6 +38,7 @@ other window when an asynchronous command is run."
 
 (define-key external-map "c" 'compile)
 (define-key external-map "g" 'recompile)
+(define-key external-map "o" 'km/display-compilation-other-window)
 
 (define-key external-map "w" 'woman)
 
