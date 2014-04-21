@@ -2,6 +2,8 @@
 (add-to-list 'load-path "~/src/emacs/magit")
 (require 'magit)
 
+(autoload 'magit-blame-mode "magit-blame" nil t)
+
 (require-package 'git-annex)
 (require 'git-annex)
 
