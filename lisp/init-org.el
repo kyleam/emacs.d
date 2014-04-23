@@ -236,6 +236,14 @@ MAXLEVEL (defaults to 2)."
       (set (make-local-variable 'org-refile-targets)
            `((,buffer-file :maxlevel . ,maxlevel))))))
 
+(defun km/org-switch-to-buffer-other-window (&optional arg)
+  (interactive "P")
+  (noflet ((org-pop-to-buffer-same-window (&optional buffer-or-name norecord label)
+                                          (funcall 'pop-to-buffer buffer-or-name nil norecord)))
+    (org-switchb arg)))
+
+(define-key ctl-x-4-map "o" 'km/org-switch-to-buffer-other-window)
+
 (eval-after-load 'org
   '(add-to-list 'org-mode-hook
                 '(lambda ()
