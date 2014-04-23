@@ -10,6 +10,7 @@
 (require 'dash)
 (require-package 's)
 (require 's)
+(require-package 'noflet)
 (require-package 'mocker)
 
 (require 'init-org)
