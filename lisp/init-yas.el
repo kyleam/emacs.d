@@ -1,10 +1,13 @@
 (require-package 'yasnippet)
 
 (require 'yasnippet)
-(yas-reload-all)
 
-(add-hook 'prog-mode-hook 'yas-minor-mode)
-(add-hook 'LaTeX-mode-hook 'yas-minor-mode)
+(yas-global-mode 1)
+
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+
+(key-chord-define-global ";e" 'yas-expand)
 
 (diminish 'yas-minor-mode)
 
