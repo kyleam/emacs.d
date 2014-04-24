@@ -30,7 +30,6 @@
 (require 'init-python)
 (require 'init-ess)
 (require-package 'stan-mode)
-(require-package 'stan-snippets)
 (require-package 'lua-mode)
 
 (require 'init-tex)
