@@ -29,7 +29,7 @@
 (require 'init-haskell)
 (require 'init-python)
 (require 'init-ess)
-(require-package 'stan-mode)
+(require 'init-stan)
 (require-package 'lua-mode)
 
 (require 'init-tex)
