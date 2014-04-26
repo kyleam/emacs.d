@@ -48,4 +48,12 @@
 (define-key ctl-x-4-map "D" 'km/dired-switch-to-buffer-other-window)
 (global-set-key (kbd "C-x D") 'km/dired-switch-to-buffer)
 
+(defun km/org-open-dired-file ()
+  (interactive)
+  (org-open-file (dired-get-filename)))
+
+(eval-after-load 'org
+  ;; This overrides `dired-find-file', which is also bound to "f".
+  '(define-key dired-mode-map "e" 'km/org-open-dired-file))
+
 (provide 'init-dired)
