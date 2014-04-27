@@ -18,14 +18,20 @@
          "* TODO %?\n%i")
         ("d" "date" entry (file+headline "~/notes/calendar.org" "Inbox")
          "* %?\n%i")
+        ("m" "misc" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i")
         ;; Link counterparts
         ("T" "task link" entry (file+headline "~/notes/tasks.org" "Inbox")
          "* TODO %?\n%i\nLink: %a")
         ("D" "date link" entry (file+headline "~/notes/calendar.org" "Inbox")
          "* %?\n%i\nLink: %a")
+        ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i\nLink: %a")
         ;; Clipboard
         ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
-         "* TODO %?\n%x")))
+         "* TODO %?\n%x")
+        ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%x")))
 (key-chord-define-global ",t" 'org-capture)
 
 (defun km/open-main-orgfile ()
