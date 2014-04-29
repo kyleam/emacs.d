@@ -179,26 +179,15 @@ on a new line and the resulting paragraph is filled."
       (just-one-space)
       (fill-paragraph))))
 
-(define-key message-mode-map
-  (kbd "C-c m s") 'km/snip-mail-quote)
+(define-key message-mode-map (kbd "C-c m s") 'km/snip-mail-quote)
 
-(add-hook 'gnus-summary-mode-hook
-          (lambda ()
-            (gnus-define-keys gnus-summary-mode-map
-              "c" km/gnus-catchup-and-goto-next-group
-              "j" gnus-summary-next-unread-article
-              ";" gnus-summary-universal-argument  ;; mutt's tag
-              "e" gnus-summary-scroll-up)))
+(define-key gnus-summary-mode-map "c" 'km/gnus-catchup-and-goto-next-group)
+(define-key gnus-summary-mode-map "j" 'gnus-summary-next-unread-article)
+(define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
+(define-key gnus-summary-mode-map "e" 'gnus-summary-scroll-up)
 
-(add-hook 'gnus-group-mode-hook
-          (lambda ()
-            (gnus-define-keys gnus-group-mode-map
-              "e" gnus-topic-select-group)))
-
-(add-hook 'gnus-article-mode-hook
-          (lambda ()
-            (gnus-define-keys gnus-article-mode-map
-              "e" shr-browse-url)))
+(define-key gnus-group-mode-map "e" 'gnus-topic-select-group)
+(define-key gnus-article-mode-map "e" 'shr-browse-url)
 
 ;; Modified from http://www.xsteve.at/prg/gnus/
 
