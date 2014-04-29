@@ -38,11 +38,14 @@
   (interactive)
   (find-file org-default-notes-file))
 
-(global-set-key (kbd "C-c o l") 'org-store-link)
-(global-set-key (kbd "C-c o a") 'org-agenda)
-(global-set-key (kbd "C-c o b") 'org-iswitchb)
-(global-set-key (kbd "C-c o s") 'org-save-all-org-buffers)
-(global-set-key (kbd "C-c o m") 'km/open-main-orgfile)
+(define-prefix-command 'global-org-map)
+(global-set-key (kbd "C-c o") 'global-org-map)
+
+(define-key global-org-map "l" 'org-store-link)
+(define-key global-org-map "a" 'org-agenda)
+(define-key global-org-map "b" 'org-iswitchb)
+(define-key global-org-map "s" 'org-save-all-org-buffers)
+(define-key global-org-map "m" 'km/open-main-orgfile)
 (key-chord-define-global ",a" 'org-agenda)
 
 (setq org-structure-template-alist
