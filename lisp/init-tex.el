@@ -72,9 +72,8 @@ The point should be beyond \"\\section\"."
       (error "%s does not exist" pdf-file))
     (start-process "tex-pdf" nil "xdg-open" pdf-file)))
 
-(add-hook 'LaTeX-mode-hook
-          '(lambda ()
-             (local-set-key (kbd "C-c m p") 'km/latex-find-pdf)))
+(eval-after-load 'latex
+  '(define-key LaTeX-mode-map (kbd "C-c m p") 'km/latex-find-pdf))
 
 (eval-after-load 'reftex
     '(diminish 'reftex-mode "Rf"))
