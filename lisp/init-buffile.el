@@ -1,5 +1,9 @@
 ;;; Files and buffers
 
+(require 'uniquify)
+
+(setq uniquify-buffer-name-style 'forward)
+
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
   (interactive)
