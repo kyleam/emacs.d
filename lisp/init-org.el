@@ -182,13 +182,13 @@ be restored properly."
       org-agenda-sticky nil)
 
 (setq org-default-notes-file "~/notes/agenda/tasks.org"
-      org-agenda-files '("~/notes/agenda")
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-agenda-start-on-weekday nil
       org-reverse-note-order t)
 
+(setq org-agenda-files (file-expand-wildcards "~/notes/agenda/*.org"))
 (setq org-agenda-text-search-extra-files
       (file-expand-wildcards "~/notes/extra/*.org"))
 
