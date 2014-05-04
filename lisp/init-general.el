@@ -22,10 +22,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; Store all backup and autosave files in tmp dir.
-(setq backup-directory-alist `((".*" . ,temporary-file-directory))
-      auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-
 (global-auto-revert-mode t)
 
 ;; Make scripts executable at save.
