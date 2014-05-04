@@ -98,6 +98,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.org.txt$" . org-mode))
 
+(add-to-list 'safe-local-variable-values '(org-goto-max-level . 2))
+
 (defadvice org-tree-to-indirect-buffer (before
                                         org-keep-previous-indirect
                                         (&optional arg)
