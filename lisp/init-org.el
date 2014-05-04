@@ -179,7 +179,7 @@ be restored properly."
 (setq org-agenda-restore-windows-after-quit t
       org-agenda-sticky nil)
 
-(setq org-default-notes-file "~/notes/tasks.org"
+(setq org-default-notes-file "~/notes/agenda/tasks.org"
       org-agenda-files '("~/notes/agenda")
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
