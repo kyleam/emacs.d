@@ -208,10 +208,13 @@ be restored properly."
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-targets `((nil :maxlevel . 3)
-                           (,(append org-agenda-files
-                                     org-agenda-text-search-extra-files)
-                            :maxlevel . 2)))
+(setq org-refile-targets '((nil :maxlevel . 2)))
+
+(add-to-list 'safe-local-variable-values
+             '(org-refile-targets
+               (nil :maxlevel . 3)
+               (org-agenda-files :maxlevel . 2)
+               (org-agenda-text-search-extra-files :maxlevel . 2)))
 
 (setq org-refile-target-verify-function 'km/verify-refile-target)
 
