@@ -40,9 +40,9 @@
 (defun km/recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
-  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
-    (when file
-      (find-file file))))
+  (-when-let (file (ido-completing-read "Choose recent file: "
+                                        recentf-list nil t))
+    (find-file file)))
 
 (key-chord-define-global ",r" 'km/recentf-ido-find-file)
 (key-chord-define-global ",b" 'ido-switch-buffer)
