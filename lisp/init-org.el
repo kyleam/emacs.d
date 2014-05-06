@@ -247,8 +247,8 @@ MAXLEVEL (defaults to 2)."
   (interactive "P")
   (if (local-variable-p 'org-refile-targets)
       (kill-local-variable 'org-refile-targets)
-    (let* ((buffer-file (substring-no-properties
-                         (buffer-file-name (km/get-org-file-buffer))))
+    (let ((buffer-file (substring-no-properties
+                        (buffer-file-name (km/get-org-file-buffer))))
           (maxlevel (prefix-numeric-value (or maxlevel 2))))
       (set (make-local-variable 'org-refile-targets)
            `((,buffer-file :maxlevel . ,maxlevel))))))
