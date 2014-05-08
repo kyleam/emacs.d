@@ -2,9 +2,8 @@
 
 (require 'dired-x)
 
-;; .git is present as part of `dired-omit-extensions', but this
-;; seems to only be taken into account if the a non-exension part
-;; exists.
+;; .git is present as part of `dired-omit-extensions', but this seems to
+;; only be taken into account if a non-exension part exists.
 (setq dired-omit-files
       (concat dired-omit-files "\\|\\.git$\\|\\.gitignore$\\|__pycache__"))
 
