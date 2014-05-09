@@ -61,7 +61,7 @@
         (message "Mail sync process is already running")
       (start-process process bufname km/sync-mail-cmd))))
 
-(defvar km/sync-mail-cmd "sync-mail.sh"
+(defvar km/sync-mail-cmd "sync-mail"
   "Run sync mail script.")
 
 ;; http://www.emacswiki.org/emacs/GnusSync
