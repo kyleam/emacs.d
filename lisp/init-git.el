@@ -13,6 +13,9 @@
 
 (key-chord-define-global ",g" 'magit-status)
 
+(define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
+(define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
+
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
 Useful for non-source code repos (e.g., Org mode note files)."
