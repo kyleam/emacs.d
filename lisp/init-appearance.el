@@ -1,5 +1,4 @@
-(setq default-frame-alist '((font . "Droid Sans Mono-9"))
-      inhibit-splash-screen t
+(setq inhibit-splash-screen t
       initial-scratch-message nil)
 
 (scroll-bar-mode -1)
