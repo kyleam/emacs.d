@@ -49,7 +49,7 @@ I have set `projectile-switch-project-action' to
 (key-chord-define-global ";d" 'projectile-find-dir)
 (key-chord-define-global ";g" 'projectile-grep)
 (key-chord-define-global ";w" 'projectile-multi-occur)
-(key-chord-define-global ";r" 'projectile-replace)
+(key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
 
 (diminish 'projectile-mode)
