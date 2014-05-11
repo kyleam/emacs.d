@@ -222,7 +222,8 @@ be restored properly."
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-targets '((nil :maxlevel . 2)))
+(setq org-refile-targets '((nil :maxlevel . 2))
+      org-refile-cache t)
 
 (add-to-list 'safe-local-variable-values
              '(org-refile-targets
