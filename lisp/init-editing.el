@@ -11,6 +11,8 @@
 
 (setq ace-jump-mode-scope 'frame)
 
+(setq view-read-only t)
+
 (eval-after-load 'view
   '(progn
      (define-key view-mode-map "l" 'recenter-top-bottom)
