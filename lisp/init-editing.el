@@ -7,17 +7,8 @@
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
 (key-chord-define-global ";a" 'ace-jump-mode)
-(key-chord-define-global ",v" 'view-mode)
 
 (setq ace-jump-mode-scope 'frame)
-
-(setq view-read-only t)
-
-(eval-after-load 'view
-  '(progn
-     (define-key view-mode-map "l" 'recenter-top-bottom)
-     (define-key view-mode-map "a" 'ace-jump-mode)
-     (diminish 'view-mode "Vw")))
 
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)

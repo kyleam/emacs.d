@@ -19,6 +19,7 @@
 
 (require 'init-buffile)
 (require 'init-framewin)
+(require 'init-view)
 
 (require 'init-editing)
 (require-package 'boxquote)
