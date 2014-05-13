@@ -45,7 +45,8 @@
             (buffer-list)))
 
 (define-key ctl-x-4-map "D" 'km/dired-switch-to-buffer-other-window)
-(global-set-key (kbd "C-x D") 'km/dired-switch-to-buffer)
+;; This overrides the binding for `list-directory'.
+(global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
 
 (defun km/org-open-dired-file ()
   (interactive)
