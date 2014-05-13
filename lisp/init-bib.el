@@ -54,4 +54,25 @@ capitalized."
 (defadvice bibtex-clean-entry (before convert-to-title-case activate)
   (km/bibtex-use-title-case))
 
+(defun km/browse-doi (doi)
+  "Open DOI in browser.
+The link is opened using the settings of `org-doi-server-url'.
+When called interactively, DOI is taken from the text under
+point."
+  (interactive (list (km/doi-at-point)))
+  (browse-url (org-link-escape-browser (concat org-doi-server-url doi))))
+
+(defun km/doi-at-point ()
+  "Return DOI at point.
+This is a hack that uses `(thing-at-point 'url)' and then removes
+the leading 'http://'. The DOI format is not verified in any
+way."
+  (save-excursion
+    (when (equal (thing-at-point 'word) "doi")
+      (backward-word)
+      (re-search-forward "doi:[ \t\n]*"))
+    (-if-let (http-doi (thing-at-point 'url))
+        (replace-regexp-in-string "http://" "" http-doi)
+      (user-error "No DOI found at point"))))
+
 (provide 'init-bib)
