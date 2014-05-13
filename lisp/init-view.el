@@ -6,6 +6,7 @@
   '(progn
      (define-key view-mode-map "l" 'recenter-top-bottom)
      (define-key view-mode-map "a" 'ace-jump-mode)
+     (define-key view-mode-map "j" 'imenu)
      (diminish 'view-mode "Vw")))
 
 (provide 'init-view)
