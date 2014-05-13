@@ -19,6 +19,7 @@
 
 (require 'init-buffile)
 (require 'init-framewin)
+(require 'init-ace)
 (require 'init-view)
 
 (require 'init-editing)

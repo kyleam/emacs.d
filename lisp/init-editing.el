@@ -1,14 +1,8 @@
 (require-package 'multiple-cursors)
 (require-package 'expand-region)
 (require-package 'wrap-region)
-(require-package 'ace-jump-mode)
-(require-package 'ace-link)
-(ace-link-setup-default)
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
-(key-chord-define-global ";a" 'ace-jump-mode)
-
-(setq ace-jump-mode-scope 'frame)
 
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)
