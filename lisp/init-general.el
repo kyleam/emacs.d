@@ -48,4 +48,6 @@
 (global-unset-key (kbd "M-{"))
 (global-set-key (kbd "M-[") 'backward-paragraph)
 
+(global-set-key (kbd "C-c j") 'imenu)
+
 (provide 'init-general)
