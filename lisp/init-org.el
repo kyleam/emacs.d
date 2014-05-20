@@ -82,7 +82,6 @@
        'km/org-tree-to-indirect-buffer-current-window)
      (define-key org-mode-map  (kbd "C-c m w") 'km/org-refile-to-other-org-buffer)
      (define-key org-mode-map (kbd "C-c m s") 'km/org-sort-parent)
-     (define-key org-mode-map (kbd "C-c m o") 'ace-link-org)
      ;; Don't let `org-cycle-agenda-files' binding override custom
      ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
      ;; to C-,).
