@@ -81,12 +81,14 @@
 
 (diminish 'mml-mode "Ml")
 
-(defun km/follow-last-message-link ()
-  "Follow link at bottom of message."
-  (interactive)
+(defun km/follow-last-message-link (arg)
+  "Follow link at bottom of message.
+When a prefix argument, move to the link but don't follow it."
+  (interactive "P")
   (km/gnus-end-of-article-buffer)
   (widget-backward 1)
-  (widget-button-press (point)))
+  (unless arg
+    (widget-button-press (point))))
 
 (define-key gnus-summary-mode-map
   (kbd "C-c j") 'km/follow-last-message-link)
