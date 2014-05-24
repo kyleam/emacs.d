@@ -28,12 +28,17 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (let ((remote (magit-read-remote "Remote")))
     (magit-run-git-async "push" "-v" remote "--all")))
 
+(defun km/magit-log-all-branches (range &optional args)
+  (interactive (magit-log-read-args t nil))
+  (add-to-list 'args "--all")
+  (magit-log-dwim range args))
+
 (magit-define-popup-action 'magit-commit-popup
   ?u "Auto commit" 'km/magit-auto-commit)
 (magit-define-popup-action 'magit-push-popup
   ?a "Push all" 'km/magit-push-all)
-
-(add-to-list 'magit-log-popup-defaults "--all")
+(magit-define-popup-action 'magit-log-popup
+  ?a "All branches" 'km/magit-log-all-branches)
 
 (diminish 'magit-auto-revert-mode)
 
