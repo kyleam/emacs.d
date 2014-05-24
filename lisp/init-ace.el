@@ -12,7 +12,9 @@
   '(define-key org-mode-map (kbd "C-c m o") 'ace-link-org))
 
 (define-key window-map "a" 'ace-window)
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+      aw-scope 'frame)
+
 (key-chord-define-global ",w" 'ace-window)
 
 (provide 'init-ace)
