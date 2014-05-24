@@ -154,7 +154,8 @@ A new buffer with the patch contents is opened in another window."
 (define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
 (add-hook 'gnus-group-mode-hook 'km/notmuch-shortcut)
 
-(setq notmuch-fcc-dirs nil)
+(setq notmuch-fcc-dirs nil
+      notmuch-search-oldest-first nil)
 
 ;; Modified from
 ;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html.
