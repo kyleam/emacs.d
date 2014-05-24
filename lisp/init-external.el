@@ -32,6 +32,13 @@ is non-nil, switch to the buffer."
         (switch-to-buffer buffer-name)
       (ansi-term "/bin/zsh" name))))
 
+(defun km/zsh-ansi-term-other-window (&optional new-buffer)
+  (interactive "P")
+  (let (buffer-name)
+    (save-window-excursion
+      (setq buffer-name (km/zsh-ansi-term new-buffer)))
+    (pop-to-buffer buffer-name)))
+
 (defun km/display-compilation-other-window ()
   (interactive)
   (-if-let (comp-buffer (get-buffer "*compilation*"))
@@ -39,6 +46,8 @@ is non-nil, switch to the buffer."
     (error "No compilation buffer")))
 
 (define-key external-map "a" 'km/zsh-ansi-term)
+;; This overrides binding for `add-change-log-entry-other-window'.
+(define-key ctl-x-4-map "a" 'km/zsh-ansi-term-other-window)
 (define-key external-map "t" 'km/open-external-terminal)
 (define-key external-map "r" 'shell-command-on-region)
 (define-key external-map "s" 'shell-command)
