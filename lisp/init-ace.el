@@ -13,5 +13,6 @@
 
 (define-key window-map "a" 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(key-chord-define-global ",w" 'ace-window)
 
 (provide 'init-ace)
