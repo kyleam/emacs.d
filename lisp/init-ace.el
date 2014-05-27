@@ -13,7 +13,7 @@
 
 (define-key window-map "a" 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-      aw-scope 'frame)
+      aw-scope 'global)
 
 (key-chord-define-global ",w" 'ace-window)
 
