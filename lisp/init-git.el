@@ -33,12 +33,22 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (add-to-list 'args "--all")
   (magit-log-dwim range args))
 
+(defun km/magit-checkout-local-tracking (remote-branch)
+  "Create and checkout a local tracking branch for REMOTE-BRANCH.
+\(git checkout -t REMOTE-BRANCH\)"
+  (interactive
+   (list (magit-completing-read "Remote branch"
+                                (magit-list-remote-branch-names))))
+  (magit-run-git "checkout" "-t" remote-branch))
+
 (magit-define-popup-action 'magit-commit-popup
   ?u "Auto commit" 'km/magit-auto-commit)
 (magit-define-popup-action 'magit-push-popup
   ?a "Push all" 'km/magit-push-all)
 (magit-define-popup-action 'magit-log-popup
   ?a "All branches" 'km/magit-log-all-branches)
+(magit-define-popup-action 'magit-branch-popup
+  ?t "Local tracking" 'km/magit-checkout-local-tracking)
 
 (diminish 'magit-auto-revert-mode)
 
