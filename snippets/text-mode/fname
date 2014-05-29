@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# key: fname
+# --
+`(insert (file-name-nondirectory (buffer-file-name)))` $0
