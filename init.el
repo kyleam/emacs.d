@@ -5,6 +5,7 @@
 (require 'init-elpa)
 (require 'init-appearance)
 (require 'init-general)
+(require 'init-diminish)
 
 (require-package 'dash)
 (require 'dash)

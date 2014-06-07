@@ -75,7 +75,4 @@ The point should be beyond \"\\section\"."
 (after 'latex
   (define-key LaTeX-mode-map (kbd "C-c m p") 'km/latex-find-pdf))
 
-(eval-after-load 'reftex
-    '(diminish 'reftex-mode "Rf"))
-
 (provide 'init-tex)

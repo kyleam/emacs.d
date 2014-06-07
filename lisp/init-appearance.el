@@ -11,12 +11,5 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-(require-package 'diminish)
-(require 'diminish)
-(diminish 'abbrev-mode "Ab")
-(eval-after-load 'flyspell
-  '(diminish 'flyspell-mode "Fy"))
-;; Other minor modes (paredit, view, yas, ...) are diminished where they
-;; are setup.
 
 (provide 'init-appearance)

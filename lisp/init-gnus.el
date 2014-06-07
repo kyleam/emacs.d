@@ -79,8 +79,6 @@
           '(lambda ()
              (flyspell-mode 1)))
 
-(diminish 'mml-mode "Ml")
-
 (defun km/follow-last-message-link (arg)
   "Follow link at bottom of message.
 When a prefix argument, move to the link but don't follow it."

@@ -50,8 +50,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
 (magit-define-popup-action 'magit-branch-popup
   ?t "Local tracking" 'km/magit-checkout-local-tracking)
 
-(diminish 'magit-auto-revert-mode)
-
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status (around magit-fullscreen activate)
   ad-do-it

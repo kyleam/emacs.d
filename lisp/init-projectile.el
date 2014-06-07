@@ -52,6 +52,4 @@ I have set `projectile-switch-project-action' to
 (key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
 
-(diminish 'projectile-mode)
-
 (provide 'init-projectile)
