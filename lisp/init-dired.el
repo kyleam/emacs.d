@@ -56,8 +56,8 @@
               (yes-or-no-p (format "Open %s files?" num-files)))
       (-each files 'org-open-file))))
 
-(eval-after-load 'org
+(after 'org
   ;; This overrides `dired-find-file', which is also bound to "f".
-  '(define-key dired-mode-map "e" 'km/org-open-dired-marked-files))
+  (define-key dired-mode-map "e" 'km/org-open-dired-marked-files))
 
 (provide 'init-dired)

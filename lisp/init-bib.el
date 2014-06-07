@@ -8,9 +8,9 @@
 
 (setq bibtex-align-at-equal-sign t)  ; Used by `bibtex-fill-entry'.
 
-(eval-after-load 'bibtex
-  '(setq bibtex-entry-format
-         (append '(realign sort-fields) bibtex-entry-format)))
+(after 'bibtex
+  (setq bibtex-entry-format
+        (append '(realign sort-fields) bibtex-entry-format)))
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
