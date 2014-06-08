@@ -70,6 +70,10 @@ is non-nil, switch to the buffer."
 (setq diff-command "/bin/diff"
       diff-switches "-u")
 
+(defadvice diff (after diff-select-and-view activate)
+  (select-window (get-buffer-window "*Diff*"))
+  (view-mode 1))
+
 (define-key external-map "d" 'diff)
 (define-key external-map "e" 'ediff)
 
