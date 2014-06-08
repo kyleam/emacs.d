@@ -70,4 +70,7 @@ is non-nil, switch to the buffer."
 (setq diff-command "/bin/diff"
       diff-switches "-u")
 
+(define-key external-map "d" 'diff)
+(define-key external-map "e" 'ediff)
+
 (provide 'init-external)
