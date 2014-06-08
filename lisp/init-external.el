@@ -74,7 +74,13 @@ is non-nil, switch to the buffer."
   (select-window (get-buffer-window "*Diff*"))
   (view-mode 1))
 
+(defun km/revert-buffer-and-view ()
+  (interactive)
+  (revert-buffer)
+  (view-mode 1))
+
 (define-key external-map "d" 'diff)
 (define-key external-map "e" 'ediff)
+(define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view)
 
 (provide 'init-external)
