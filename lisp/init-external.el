@@ -65,4 +65,9 @@ is non-nil, switch to the buffer."
 ;; Give frequently-used recompile a shorter binding.
 (global-set-key (kbd "C-c g") 'recompile)
 
+;;; Diff
+
+(setq diff-command "/bin/diff"
+      diff-switches "-u")
+
 (provide 'init-external)
