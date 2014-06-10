@@ -21,7 +21,7 @@ other window when an asynchronous command is run."
   "Open an ansi-term buffer running ZSH.
 The buffer is named according to `default-directory'. If a buffer
 of the same name already exists, switch to it unless NEW-BUFFER
-is non-nil, switch to the buffer."
+is non-nil."
   (interactive "P")
   (let ((name (concat "zsh:" (abbreviate-file-name default-directory))))
     (-if-let (buffer-name (and (not new-buffer)
