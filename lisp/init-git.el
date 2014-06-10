@@ -41,6 +41,14 @@ Useful for non-source code repos (e.g., Org mode note files)."
                                 (magit-list-remote-branch-names))))
   (magit-run-git "checkout" "-t" remote-branch))
 
+(defun km/magit-backup-branch ()
+  "Create a backup branch for the current branch.
+\(git branch b/<current-branch>\)"
+  (interactive)
+  (-if-let (current-branch (magit-get-current-branch))
+      (magit-run-git "branch" (concat "b/" current-branch))
+    (user-error "No current branch")))
+
 (magit-define-popup-action 'magit-commit-popup
   ?u "Auto commit" 'km/magit-auto-commit)
 (magit-define-popup-action 'magit-push-popup
@@ -49,6 +57,8 @@ Useful for non-source code repos (e.g., Org mode note files)."
   ?a "All branches" 'km/magit-log-all-branches)
 (magit-define-popup-action 'magit-branch-popup
   ?t "Local tracking" 'km/magit-checkout-local-tracking)
+(magit-define-popup-action 'magit-branch-popup
+  ?s "Backup current branch" 'km/magit-backup-branch)
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status (around magit-fullscreen activate)
