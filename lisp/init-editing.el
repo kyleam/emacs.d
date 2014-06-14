@@ -1,6 +1,8 @@
 (require-package 'multiple-cursors)
 (require-package 'expand-region)
 (require-package 'wrap-region)
+(require-package 'subr+)
+(require-package 'narrow-indirect)
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
@@ -22,6 +24,10 @@
                                          try-expand-dabbrev-from-kill
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
+
+(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-other-window)
+(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)
+(define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun unfill-paragraph ()
