@@ -48,7 +48,7 @@ is non-nil."
 
 ;;; Compilation
 
-(defadvice recompile (around restore-windows activate)
+(defadvice recompile (around prevent-window-on-compilation activate)
   "Prevent recompiling from spawning new windows."
   (save-window-excursion
     ad-do-it))
