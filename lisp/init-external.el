@@ -48,6 +48,15 @@ is non-nil."
 
 ;;; Compilation
 
+(defadvice compile (around prevent-duplicate-compilation-windows activate)
+  "Pop to compilation buffer only if it isn't visible.
+This is useful for using multiple frames (e.g., with a two
+monitor setup)."
+  (if (get-buffer-window "*compilation*" 'visible)
+      (save-window-excursion
+        ad-do-it)
+    ad-do-it))
+
 (defadvice recompile (around prevent-window-on-compilation activate)
   "Prevent recompiling from spawning new windows."
   (save-window-excursion
