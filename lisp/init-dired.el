@@ -48,13 +48,13 @@
 ;; This overrides the binding for `list-directory'.
 (global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
 
-(defun km/org-open-dired-marked-files ()
-  (interactive)
+(defun km/org-open-dired-marked-files (&optional in-emacs)
+  (interactive "P")
   (let* ((files (dired-get-marked-files))
          (num-files (length files)))
     (when (or (< num-files 5)
               (yes-or-no-p (format "Open %s files?" num-files)))
-      (-each files 'org-open-file))))
+      (--each files (org-open-file it in-emacs)))))
 
 (after 'org
   ;; This overrides `dired-find-file', which is also bound to "f".
