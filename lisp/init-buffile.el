@@ -80,4 +80,28 @@ user."
       recentf-max-menu-items 15)
 (recentf-mode t)
 
+;;; Temporary scratch files
+
+(define-prefix-command 'scratch-map)
+(global-set-key (kbd "C-c s") 'scratch-map)
+
+(defmacro km/make-find-scratch-func (name extension)
+  `(defun ,(intern (concat "km/find-scratch-" name)) ()
+     (interactive)
+     (find-file ,(concat "/tmp/scratch" extension))))
+
+(km/make-find-scratch-func "elisp" ".el")
+(km/make-find-scratch-func "python" ".py")
+(km/make-find-scratch-func "r" ".r")
+(km/make-find-scratch-func "haskell" ".hs")
+(km/make-find-scratch-func "org" ".org")
+(km/make-find-scratch-func "nomode" "")
+
+(define-key scratch-map "e" 'km/find-scratch-elisp)
+(define-key scratch-map "p" 'km/find-scratch-python)
+(define-key scratch-map "r" 'km/find-scratch-r)
+(define-key scratch-map "h" 'km/find-scratch-haskell)
+(define-key scratch-map "o" 'km/find-scratch-org)
+(define-key scratch-map "n" 'km/find-scratch-nomode)
+
 (provide 'init-buffile)
