@@ -245,6 +245,10 @@ read. Don't ask to confirm."
   "Go to next group without selecting the first article."
   (ad-set-arg 0 t))
 
+;; This overrides `gnus-summary-post-news', which is also bound to
+;; 'S p'.
+(define-key gnus-summary-mode-map "a" 'ace-jump-mode)
+
 (define-prefix-command 'mail-map)
 (global-set-key (kbd "C-x m") 'mail-map)
 
