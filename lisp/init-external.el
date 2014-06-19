@@ -90,6 +90,7 @@ monitor setup)."
 
 (define-key external-map "d" 'diff)
 (define-key external-map "e" 'ediff)
-(define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view)
+(after 'diff
+  (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
 (provide 'init-external)
