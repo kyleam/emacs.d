@@ -92,6 +92,7 @@ user."
 
 (km/make-find-scratch-func "elisp" ".el")
 (km/make-find-scratch-func "python" ".py")
+(km/make-find-scratch-func "shell" ".sh")
 (km/make-find-scratch-func "r" ".r")
 (km/make-find-scratch-func "haskell" ".hs")
 (km/make-find-scratch-func "org" ".org")
@@ -99,6 +100,7 @@ user."
 
 (define-key scratch-map "e" 'km/find-scratch-elisp)
 (define-key scratch-map "p" 'km/find-scratch-python)
+(define-key scratch-map "s" 'km/find-scratch-shell)
 (define-key scratch-map "r" 'km/find-scratch-r)
 (define-key scratch-map "h" 'km/find-scratch-haskell)
 (define-key scratch-map "o" 'km/find-scratch-org)
