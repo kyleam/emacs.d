@@ -15,6 +15,7 @@
 (require-package 'mocker)
 
 (require 'init-org)
+(require-package 'poporg)
 (require 'init-orgcontacts)
 (require 'init-babel)
 
