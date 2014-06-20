@@ -42,6 +42,7 @@
 (global-set-key (kbd "C-c o") 'global-org-map)
 
 (define-key global-org-map "l" 'org-store-link)
+(define-key global-org-map "o" 'org-open-at-point-global)
 (define-key global-org-map "a" 'org-agenda)
 (define-key global-org-map "b" 'org-iswitchb)
 (define-key global-org-map "s" 'org-save-all-org-buffers)
