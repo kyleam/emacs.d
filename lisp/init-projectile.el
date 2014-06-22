@@ -52,4 +52,18 @@ I have set `projectile-switch-project-action' to
 (key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
 
+(define-prefix-command 'projectile-ctl-x-4-map)
+(define-key ctl-x-4-map "p" 'projectile-ctl-x-4-map)
+
+(define-key projectile-ctl-x-4-map (kbd "C-o")
+  'projectile-display-buffer)
+(define-key projectile-ctl-x-4-map "b"
+  'projectile-switch-to-buffer-other-window)
+(define-key projectile-ctl-x-4-map "d"
+  'projectile-find-dir-other-window)
+(define-key projectile-ctl-x-4-map "f"
+  'projectile-find-file-other-window)
+(define-key projectile-ctl-x-4-map "t"
+  'projectile-find-implementation-or-test-other-window)
+
 (provide 'init-projectile)
