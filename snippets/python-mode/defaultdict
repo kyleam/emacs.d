@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: defaultdict
+# key: dd
+# group: imports
+# --
+from collections import defaultdict
+$0
