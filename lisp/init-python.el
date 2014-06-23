@@ -32,6 +32,11 @@ If ARG, use pytest2 instead of pytest."
   (let ((pytest (if arg "py.test2" "py.test")))
     (compile pytest)))
 
+(after 'python
+  ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
+  (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
+  (define-key python-mode-map (kbd "C-M-x") 'python-shell-send-defun))
+
 (defun km/python-hook ()
   (local-set-key (kbd "C-c m t") 'km/find-python-test-file-other-window)
   (local-set-key (kbd "C-c m c") 'km/pytest-compile))
