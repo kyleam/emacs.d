@@ -32,7 +32,67 @@ If ARG, use pytest2 instead of pytest."
   (let ((pytest (if arg "py.test2" "py.test")))
     (compile pytest)))
 
+(defun km/python-shell-send-function-or-paragraph-and-step ()
+  "Send function or paragraph to Python shell.
+
+Send function if point is inside one. Otherwise, send the current
+paragraph. After evaluation, step to the next code line.
+
+This is inspired by `ess-eval-function-or-paragraph-and-step'."
+  (interactive)
+  (if (km/python-inside-defun-p)
+      (progn
+        (python-shell-send-defun 1)
+        (python-nav-end-of-defun))
+    (let (end)
+      (save-excursion
+        (forward-paragraph)
+        (setq end (point))
+        (backward-paragraph)
+        (python-shell-send-region (point) end))
+      (goto-char end)))
+  (km/python-next-code-line 1))
+
+(defun km/python-inside-defun-p ()
+  ;; I don't use `python-nav-beginning-of-defun' because it will go to
+  ;; the function even when the point is not inside of it.
+  (when (python-info-current-defun)
+    t))
+
+(defun km/python-next-code-line (&optional arg skip-to-eob)
+  "This is copied nearly exactly from `ess-next-code-line'."
+  (interactive "p")
+  (or arg (setq arg 1))
+  (beginning-of-line)
+  (let ((pos (point))
+        (n 0)
+        (inc (if (> arg 0) 1 -1)))
+    (while (and (/= arg 0) (= n 0))
+      (setq n (forward-line inc)); n=0 is success
+      (if (not (fboundp 'comment-beginning))
+          (while (and (= n 0)
+                      (looking-at "\\s-*\\($\\|\\s<\\)"))
+            (setq n (forward-line inc)))
+        (comment-beginning)
+        (beginning-of-line)
+        (forward-comment (* inc (buffer-size))) ;; as suggested in info file
+        )
+      (if (or skip-to-eob
+              (not (looking-at "[ \t\n]*\\'"))) ;; don't go to eob or whatever
+          (setq arg (- arg inc))
+        (goto-char pos)
+        (setq arg 0)
+        (forward-line 1));; stop at next empty line
+      (setq pos (point)))
+    (goto-char pos)
+    n))
+
 (after 'python
+  ;; Rebind `python-shell-send-region'.
+  (define-key python-mode-map (kbd "C-c C-c")
+    'km/python-shell-send-function-or-paragraph-and-step)
+  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-region)
+
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
   (define-key python-mode-map (kbd "C-M-x") 'python-shell-send-defun))
