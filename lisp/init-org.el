@@ -47,6 +47,7 @@
 (define-key global-org-map "b" 'org-iswitchb)
 (define-key global-org-map "s" 'org-save-all-org-buffers)
 (define-key global-org-map "m" 'km/open-main-orgfile)
+(define-key global-org-map "p" 'poporg-dwim)
 (key-chord-define-global ",a" 'org-agenda)
 
 (setq org-structure-template-alist
