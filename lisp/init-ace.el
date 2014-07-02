@@ -2,9 +2,13 @@
 (require-package 'ace-link)
 (require-package 'ace-window)
 
+;;; Ace Jump
+
 (key-chord-define-global ";a" 'ace-jump-mode)
 
 (setq ace-jump-mode-scope 'frame)
+
+;;; Ace Link
 
 (ace-link-setup-default)
 
@@ -33,6 +37,8 @@
   ;; is rebound to 'r'.
   (define-key dired-mode-map "o" 'km/ace-link-dired)
   (define-key dired-mode-map "r" 'dired-find-file-other-window))
+
+;;; Ace Window
 
 (define-key window-map "a" 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
