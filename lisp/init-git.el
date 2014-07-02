@@ -1,8 +1,8 @@
 (add-to-list 'load-path "~/src/emacs/git-modes")
 (add-to-list 'load-path "~/src/emacs/magit")
-(require 'magit)
 
-(autoload 'magit-blame-mode "magit-blame" nil t)
+(require 'magit-autoloads)
+(require 'git-modes-autoloads)
 
 (require-package 'git-annex)
 (require 'git-annex)
@@ -12,9 +12,6 @@
 (add-hook 'magit-mode-hook 'turn-on-magit-annex)
 
 (key-chord-define-global ",g" 'magit-status)
-
-(define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
-(define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
@@ -49,17 +46,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
       (magit-run-git "branch" (concat "b/" current-branch))
     (user-error "No current branch")))
 
-(magit-define-popup-action 'magit-commit-popup
-  ?u "Auto commit" 'km/magit-auto-commit)
-(magit-define-popup-action 'magit-push-popup
-  ?a "Push all" 'km/magit-push-all)
-(magit-define-popup-action 'magit-log-popup
-  ?a "All branches" 'km/magit-log-all-branches)
-(magit-define-popup-action 'magit-branch-popup
-  ?t "Local tracking" 'km/magit-checkout-local-tracking)
-(magit-define-popup-action 'magit-branch-popup
-  ?s "Backup current branch" 'km/magit-backup-branch)
-
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status (around magit-fullscreen activate)
   ad-do-it
@@ -72,5 +58,20 @@ Useful for non-source code repos (e.g., Org mode note files)."
       magit-log-show-margin nil)
 
 (setq vc-follow-symlinks t)
+
+(after 'magit
+  (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
+  (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
+
+  (magit-define-popup-action 'magit-commit-popup
+                             ?u "Auto commit" 'km/magit-auto-commit)
+  (magit-define-popup-action 'magit-push-popup
+                             ?a "Push all" 'km/magit-push-all)
+  (magit-define-popup-action 'magit-log-popup
+                             ?a "All branches" 'km/magit-log-all-branches)
+  (magit-define-popup-action 'magit-branch-popup
+                             ?t "Local tracking" 'km/magit-checkout-local-tracking)
+  (magit-define-popup-action 'magit-branch-popup
+                             ?s "Backup current branch" 'km/magit-backup-branch))
 
 (provide 'init-git)
