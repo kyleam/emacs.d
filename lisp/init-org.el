@@ -98,7 +98,7 @@
           "nointegrals")
   (add-to-list 'org-latex-packages-alist '("" "amsmath" t)))
 
-(add-to-list 'auto-mode-alist '("\\.org.txt$" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.org.txt\\'" . org-mode))
 
 (add-to-list 'safe-local-variable-values '(org-goto-max-level . 2))
 
