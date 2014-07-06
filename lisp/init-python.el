@@ -25,13 +25,6 @@ file. Unless a ARG is non-nil, py.test is also imported."
       (unless arg
         (insert "import pytest\n")))))
 
-(defun km/pytest-compile (arg)
-  "Run pytest.
-If ARG, use pytest2 instead of pytest."
-  (interactive "P")
-  (let ((pytest (if arg "py.test2" "py.test")))
-    (compile pytest)))
-
 (defun km/python-shell-send-function-or-paragraph-and-step ()
   "Send function or paragraph to Python shell.
 
@@ -99,7 +92,7 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
 
 (defun km/python-hook ()
   (local-set-key (kbd "C-c m t") 'km/find-python-test-file-other-window)
-  (local-set-key (kbd "C-c m c") 'km/pytest-compile))
+  (set (make-local-variable 'compile-command) "py.test"))
 
 (add-hook 'python-mode-hook 'km/python-hook)
 
