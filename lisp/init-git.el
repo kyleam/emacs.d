@@ -9,7 +9,7 @@
 
 (setq git-annex-commit nil)
 
-(add-hook 'magit-mode-hook 'turn-on-magit-annex)
+(require 'magit-annex-autoloads)
 
 (key-chord-define-global ",g" 'magit-status)
 
