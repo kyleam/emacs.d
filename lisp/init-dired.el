@@ -5,7 +5,10 @@
 ;; .git is present as part of `dired-omit-extensions', but this seems to
 ;; only be taken into account if a non-exension part exists.
 (setq dired-omit-files
-      (concat dired-omit-files "\\|^\\.git$\\|^\\.gitignore$\\|^__pycache__$"))
+      (concat dired-omit-files
+              "\\|^\\.git$\\|^\\.gitignore$"
+              "\\|^__pycache__$\\|^\\.snakemake$"))
+
 (defvar km/latex-omit-extensions '(".aux"
                                    ".fdb_latexmk"
                                    ".fls"
