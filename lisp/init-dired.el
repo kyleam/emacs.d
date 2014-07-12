@@ -73,4 +73,6 @@
   (local-set-key (kbd "C-c m") 'km/dired-narrow-map))
 (add-hook 'dired-mode-hook 'km/dired-narrow-bindings)
 
+(define-key dired-mode-map "/" 'dired-narrow)
+
 (provide 'init-dired)
