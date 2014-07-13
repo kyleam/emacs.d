@@ -2,5 +2,5 @@
 # name: numpy random seed
 # key: nrs
 # --
-np.random.seed(`(random most-positive-fixnum)`)
+np.random.seed(`(random 4294967295)`)
 $0
