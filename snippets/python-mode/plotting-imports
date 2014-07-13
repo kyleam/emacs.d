@@ -5,5 +5,5 @@
 # --
 import matplotlib.pyplot as plt
 
-import pltaid
+import mplutil
 $0
