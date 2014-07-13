@@ -75,4 +75,6 @@
 
 (define-key dired-mode-map "/" 'dired-narrow)
 
+(require-package 'dired-subtree)
+
 (provide 'init-dired)
