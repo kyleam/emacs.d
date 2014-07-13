@@ -77,4 +77,22 @@
 
 (require-package 'dired-subtree)
 
+(define-prefix-command 'km/dired-subtree-map)
+(define-key km/dired-subtree-map "i" 'dired-subtree-insert)
+(define-key km/dired-subtree-map "r" 'dired-subtree-remove)
+(define-key km/dired-subtree-map "g" 'dired-subtree-revert)
+(define-key km/dired-subtree-map "s" 'dired-subtree-narrow)
+(define-key km/dired-subtree-map "u" 'dired-subtree-up)
+(define-key km/dired-subtree-map "d" 'dired-subtree-down)
+(define-key km/dired-subtree-map "n" 'dired-subtree-next-sibling)
+(define-key km/dired-subtree-map "p" 'dired-subtree-previous-sibling)
+(define-key km/dired-subtree-map "<" 'dired-subtree-beginning)
+(define-key km/dired-subtree-map ">" 'dired-subtree-end)
+(define-key km/dired-subtree-map "@" 'dired-subtree-mark-subtree)
+(define-key km/dired-subtree-map "." 'dired-subtree-unmark-subtree)
+
+(defun km/dired-subtree-bindings ()
+  (local-set-key (kbd "C-c m s") 'km/dired-subtree-map))
+(add-hook 'dired-mode-hook 'km/dired-subtree-bindings)
+
 (provide 'init-dired)
