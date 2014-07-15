@@ -83,6 +83,7 @@
     'km/org-tree-to-indirect-buffer-current-window)
   (define-key org-mode-map  (kbd "C-c m w") 'km/org-refile-to-other-org-buffer)
   (define-key org-mode-map (kbd "C-c m s") 'km/org-sort-parent)
+  (define-key org-mode-map (kbd "C-c m l") 'km/org-remove-title-leader)
   ;; Override global `imenu' binding.
   (define-key org-mode-map (kbd "C-c j") 'org-goto)
   ;; Don't let `org-cycle-agenda-files' binding override custom
@@ -154,6 +155,25 @@ under the current heading."
           (setq heading-words (cdr heading-words)))
         (mapconcat 'identity heading-words " "))
     nil))
+
+(defun km/org-remove-title-leader ()
+  "Remove leader from Org heading title.
+
+Convert
+
+  * TODO leader: Rest of title       :tag:
+
+to
+
+  * TODO Rest of title               :tag:"
+  (interactive)
+  (save-excursion
+    (let ((regex (format "^%s\\(?:%s \\)?\\(.*: \\)\\w+"
+                         org-outline-regexp org-todo-regexp)))
+      (org-back-to-heading)
+      (when (re-search-forward regex (point-at-eol) t)
+        (replace-match "" nil nil nil 2)
+        (org-set-tags nil t)))))
 
 ;;; Org in other modes
 (defun km/load-orgstruct ()
