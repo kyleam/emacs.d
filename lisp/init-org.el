@@ -240,7 +240,7 @@ be restored properly."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
 (setq org-refile-targets '((nil :maxlevel . 2))
-      org-refile-cache t)
+      org-refile-cache nil)
 
 (add-to-list 'safe-local-variable-values
              '(org-refile-targets
