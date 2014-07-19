@@ -81,14 +81,14 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     n))
 
 (after 'python
-  ;; Rebind `python-shell-send-region'.
+  ;; Rebind `python-shell-send-buffer'.
   (define-key python-mode-map (kbd "C-c C-c")
     'km/python-shell-send-function-or-paragraph-and-step)
-  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-region)
+  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
 
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
-  (define-key python-mode-map (kbd "C-M-x") 'python-shell-send-defun))
+  (define-key python-mode-map (kbd "C-M-x") 'python-eldoc-at-point))
 
 (defun km/python-hook ()
   (local-set-key (kbd "C-c m t") 'km/find-python-test-file-other-window)
