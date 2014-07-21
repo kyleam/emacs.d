@@ -41,12 +41,19 @@ I have set `projectile-switch-project-action' to
   (let ((projectile-switch-project-action 'projectile-find-file))
     (projectile-switch-project)))
 
+(defun km/projectile-open-external-terminal-in-root ()
+  "Run `km/open-external-terminal' in project root."
+  (interactive)
+  (let ((default-directory (projectile-project-root)))
+    (km/open-external-terminal)))
+
 (define-key projectile-mode-map (kbd "C-c p j")
   'km/projectile-switch-project-to-file)
 
 (key-chord-define-global ";s" 'projectile-switch-project)
 (key-chord-define-global ";f" 'projectile-find-file)
 (key-chord-define-global ";d" 'projectile-find-dir)
+(key-chord-define-global ";t" 'km/projectile-open-external-terminal-in-root)
 (key-chord-define-global ";g" 'projectile-grep)
 (key-chord-define-global ";w" 'projectile-multi-occur)
 (key-chord-define-global ";r" 'projectile-recentf)
