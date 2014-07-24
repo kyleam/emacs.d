@@ -80,7 +80,12 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     (goto-char pos)
     n))
 
+(define-prefix-command 'km/python-prefix-map)
+(define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window)
+
 (after 'python
+  (define-key python-mode-map (kbd "C-c m") 'km/python-prefix-map)
+
   ;; Rebind `python-shell-send-buffer'.
   (define-key python-mode-map (kbd "C-c C-c")
     'km/python-shell-send-function-or-paragraph-and-step)
@@ -91,7 +96,6 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
   (define-key python-mode-map (kbd "C-M-x") 'python-eldoc-at-point))
 
 (defun km/python-hook ()
-  (local-set-key (kbd "C-c m t") 'km/find-python-test-file-other-window)
   (set (make-local-variable 'compile-command) "py.test"))
 
 (add-hook 'python-mode-hook 'km/python-hook)

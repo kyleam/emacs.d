@@ -70,10 +70,6 @@
 (define-key km/dired-narrow-prefix-map "f" 'dired-narrow-fuzzy)
 (define-key km/dired-narrow-prefix-map "r" 'dired-narrow-regexp)
 
-(defun km/dired-narrow-bindings ()
-  (local-set-key (kbd "C-c m n") 'km/dired-narrow-prefix-map))
-(add-hook 'dired-mode-hook 'km/dired-narrow-bindings)
-
 (define-key dired-mode-map "/" 'dired-narrow-fuzzy)
 
 (require-package 'dired-subtree)
@@ -92,8 +88,11 @@
 (define-key km/dired-subtree-prefix-map "@" 'dired-subtree-mark-subtree)
 (define-key km/dired-subtree-prefix-map "." 'dired-subtree-unmark-subtree)
 
-(defun km/dired-subtree-bindings ()
-  (local-set-key (kbd "C-c m s") 'km/dired-subtree-prefix-map))
-(add-hook 'dired-mode-hook 'km/dired-subtree-bindings)
+(define-prefix-command 'km/dired-prefix-map)
+
+(define-key km/dired-prefix-map "n" 'km/dired-narrow-prefix-map)
+(define-key km/dired-prefix-map "s" 'km/dired-subtree-prefix-map)
+
+(define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map)
 
 (provide 'init-dired)
