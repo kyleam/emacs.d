@@ -74,4 +74,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (magit-define-popup-action 'magit-branch-popup
                              ?s "Backup current branch" 'km/magit-backup-branch))
 
+(define-key ctl-x-4-map "g" 'magit-find-file-other-window)
+
 (provide 'init-git)
