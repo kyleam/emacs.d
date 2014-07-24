@@ -63,6 +63,8 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
+  (define-key magit-mode-map (kbd "C-c m") 'km/magit-prefix-map)
+
   (magit-define-popup-action 'magit-commit-popup
                              ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
@@ -75,5 +77,9 @@ Useful for non-source code repos (e.g., Org mode note files)."
                              ?s "Backup current branch" 'km/magit-backup-branch))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
+
+(define-prefix-command 'km/magit-prefix-map)
+(define-key km/magit-prefix-map "f" 'magit-find-file)
+
 
 (provide 'init-git)
