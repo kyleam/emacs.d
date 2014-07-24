@@ -78,12 +78,15 @@
         ("i" "#+index: ?" "#+index: ?")
         ("I" "#+include: %file ?" "<include file=%file markup=\"?\">")))
 
+(define-prefix-command 'km/org-prefix-map)
+(define-key km/org-prefix-map "w" 'km/org-refile-to-other-org-buffer)
+(define-key km/org-prefix-map "s" 'km/org-sort-parent)
+(define-key km/org-prefix-map "l" 'km/org-remove-title-leader)
+
 (after 'org
   (define-key org-mode-map (kbd "C-c C-x B")
     'km/org-tree-to-indirect-buffer-current-window)
-  (define-key org-mode-map  (kbd "C-c m w") 'km/org-refile-to-other-org-buffer)
-  (define-key org-mode-map (kbd "C-c m s") 'km/org-sort-parent)
-  (define-key org-mode-map (kbd "C-c m l") 'km/org-remove-title-leader)
+  (define-key org-mode-map (kbd "C-c m") 'km/org-prefix-map)
   ;; Override global `imenu' binding.
   (define-key org-mode-map (kbd "C-c j") 'org-goto)
   ;; Don't let `org-cycle-agenda-files' binding override custom
