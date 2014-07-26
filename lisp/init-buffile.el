@@ -2,7 +2,8 @@
 
 (require 'uniquify)
 
-(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-buffer-name-style 'forward
+      require-final-newline t)
 
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
