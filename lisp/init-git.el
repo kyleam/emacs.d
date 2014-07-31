@@ -7,6 +7,8 @@
 (require-package 'git-annex)
 (require 'git-annex)
 
+(require-package 'git-timemachine)
+
 (setq git-annex-commit nil)
 
 (require 'magit-annex-autoloads)
