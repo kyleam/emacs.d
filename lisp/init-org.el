@@ -253,6 +253,28 @@ be restored properly."
 
 (setq org-refile-target-verify-function 'km/verify-refile-target)
 
+(defadvice org-refile (around km/org-refile-dwim activate)
+  "Rebind `org-refile-targets' if next window is an Org buffer.
+A target is determined by `km/org-refile-dwim-target-file'."
+  (let* ((dwim-target (km/org-refile-dwim-target-file))
+         (org-refile-targets (if dwim-target
+                                 `((dwim-target
+                                    :maxlevel . ,km/org-refile-dwim-maxlevel))
+                               org-refile-targets)))
+    ad-do-it))
+
+(defun km/org-refile-dwim-target-file ()
+  "Return next window that is an Org buffer."
+  (let ((from-buffer (current-buffer)))
+    (--when-let (get-window-with-predicate
+                 (lambda (w)
+                   (with-current-buffer (window-buffer w)
+                     (and (eq major-mode 'org-mode)
+                          (not (eq from-buffer (current-buffer)))))))
+      (buffer-file-name (window-buffer it)))))
+
+(defvar km/org-refile-dwim-maxlevel 2)
+
 (defun km/org-refile-to-other-file (file &optional maxlevel)
   "Refile with `org-refile-targets' set to FILE.
 A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
