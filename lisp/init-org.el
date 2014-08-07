@@ -258,7 +258,9 @@ be restored properly."
 A target is determined by `km/org-refile-dwim-target-file'."
   (let* ((dwim-target (km/org-refile-dwim-target-file))
          (org-refile-targets (if dwim-target
-                                 `((dwim-target
+                                 `((nil
+                                    :maxlevel . ,km/org-refile-dwim-maxlevel)
+                                   (dwim-target
                                     :maxlevel . ,km/org-refile-dwim-maxlevel))
                                org-refile-targets)))
     ad-do-it))
