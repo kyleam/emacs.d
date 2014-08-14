@@ -38,6 +38,8 @@
   (interactive)
   (find-file org-default-notes-file))
 
+(setq initial-major-mode 'org-mode)
+
 (define-prefix-command 'global-org-map)
 (global-set-key (kbd "C-c o") 'global-org-map)
 
