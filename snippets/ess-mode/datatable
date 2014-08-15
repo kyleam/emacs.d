@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: data.table
+# key: dt
+# group: imports
+# --
+library('data.table')
+$0

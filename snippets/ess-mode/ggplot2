@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ggplot2
+# key: gg
+# group: imports
+# --
+library('ggplot2')
+$0
