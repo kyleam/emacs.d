@@ -50,6 +50,11 @@ path is always relative to `projectile-project-root'."
   "Find a project directory in other window."
   (call-interactively 'projectile-find-dir-other-window))
 
+;; Default binding is v.
+(def-projectile-commander-method ?m
+  "Open project root in vc-dir or magit."
+  (projectile-vc))
+
 (def-projectile-commander-method ?c
   "Run project compilation command."
   (call-interactively 'projectile-compile-project))
