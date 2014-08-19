@@ -6,31 +6,6 @@
       projectile-find-dir-includes-top-level t
       projectile-use-git-grep t)
 
-;; Default binding is D.
-(def-projectile-commander-method ?r
-  "Open project root in dired."
-  (projectile-dired))
-
-(def-projectile-commander-method ?c
-  "Run project compilation command."
-  (call-interactively 'projectile-compile-project))
-
-(def-projectile-commander-method ?F
-  "Find project file in other window."
-  (call-interactively 'projectile-find-file-other-window))
-
-(def-projectile-commander-method ?B
-  "Find project buffer in other window."
-  (call-interactively 'projectile-switch-to-buffer-other-window))
-
-(def-projectile-commander-method ?D
-  "Find a project directory in other window."
-  (call-interactively 'projectile-find-dir-other-window))
-
-(def-projectile-commander-method ?O
-  "Display a project buffer in other window."
-  (call-interactively 'projectile-display-buffer))
-
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
 
@@ -46,9 +21,6 @@ I have set `projectile-switch-project-action' to
   (interactive)
   (let ((default-directory (projectile-project-root)))
     (km/open-external-terminal)))
-
-(define-key projectile-mode-map (kbd "C-c p j")
-  'km/projectile-switch-project-to-file)
 
 (defun km/dired-copy-project-filename-as-kill ()
   "Copy names of marked project files into kill ring.
@@ -69,6 +41,31 @@ path is always relative to `projectile-project-root'."
 (after 'dired
   (define-key dired-mode-map "W" 'km/dired-copy-project-filename-as-kill))
 
+;; Default binding is D.
+(def-projectile-commander-method ?r
+  "Open project root in dired."
+  (projectile-dired))
+
+(def-projectile-commander-method ?D
+  "Find a project directory in other window."
+  (call-interactively 'projectile-find-dir-other-window))
+
+(def-projectile-commander-method ?c
+  "Run project compilation command."
+  (call-interactively 'projectile-compile-project))
+
+(def-projectile-commander-method ?F
+  "Find project file in other window."
+  (call-interactively 'projectile-find-file-other-window))
+
+(def-projectile-commander-method ?B
+  "Find project buffer in other window."
+  (call-interactively 'projectile-switch-to-buffer-other-window))
+
+(def-projectile-commander-method ?O
+  "Display a project buffer in other window."
+  (call-interactively 'projectile-display-buffer))
+
 (key-chord-define-global ";s" 'projectile-switch-project)
 (key-chord-define-global ";f" 'projectile-find-file)
 (key-chord-define-global ";d" 'projectile-find-dir)
@@ -77,6 +74,9 @@ path is always relative to `projectile-project-root'."
 (key-chord-define-global ";w" 'projectile-multi-occur)
 (key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
+
+(define-key projectile-mode-map (kbd "C-c p j")
+  'km/projectile-switch-project-to-file)
 
 (define-prefix-command 'projectile-ctl-x-4-map)
 (define-key ctl-x-4-map "p" 'projectile-ctl-x-4-map)
