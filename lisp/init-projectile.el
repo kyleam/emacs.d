@@ -22,6 +22,22 @@ I have set `projectile-switch-project-action' to
   (let ((default-directory (projectile-project-root)))
     (km/open-external-terminal)))
 
+(defun km/projectile-view-file ()
+  "View project file.
+Interactive arguments are processed according to
+`projectile-find-file'."
+  (interactive)
+  (call-interactively 'projectile-find-file)
+  (view-mode 1))
+
+(defun km/projectile-view-file-other-window ()
+  "View project file in other window.
+Interactive arguments are processed according to
+`projectile-find-file-other-window'."
+  (interactive)
+  (call-interactively 'projectile-find-file-other-window)
+  (view-mode 1))
+
 (defun km/dired-copy-project-filename-as-kill ()
   "Copy names of marked project files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
