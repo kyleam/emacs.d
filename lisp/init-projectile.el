@@ -71,6 +71,14 @@ path is always relative to `projectile-project-root'."
   "Open project root in vc-dir or magit."
   (projectile-vc))
 
+(def-projectile-commander-method ?v
+  "View project file."
+  (km/projectile-view-file))
+
+(def-projectile-commander-method ?V
+  "View project file in other window."
+  (km/projectile-view-file-other-window))
+
 (def-projectile-commander-method ?c
   "Run project compilation command."
   (call-interactively 'projectile-compile-project))
@@ -89,6 +97,7 @@ path is always relative to `projectile-project-root'."
 
 (key-chord-define-global ";s" 'projectile-switch-project)
 (key-chord-define-global ";f" 'projectile-find-file)
+(key-chord-define-global ";v" 'km/projectile-view-file)
 (key-chord-define-global ";d" 'projectile-find-dir)
 (key-chord-define-global ";t" 'km/projectile-open-external-terminal-in-root)
 (key-chord-define-global ";g" 'projectile-grep)
@@ -98,6 +107,9 @@ path is always relative to `projectile-project-root'."
 
 (define-key projectile-mode-map (kbd "C-c p j")
   'km/projectile-switch-project-to-file)
+
+(define-key projectile-mode-map (kbd "C-c p 4 v")
+  'km/projectile-view-file-other-window)
 
 (define-prefix-command 'projectile-ctl-x-4-map)
 (define-key ctl-x-4-map "p" 'projectile-ctl-x-4-map)
@@ -110,6 +122,8 @@ path is always relative to `projectile-project-root'."
   'projectile-find-dir-other-window)
 (define-key projectile-ctl-x-4-map "f"
   'projectile-find-file-other-window)
+(define-key projectile-ctl-x-4-map "v"
+  'km/projectile-view-file-other-window)
 (define-key projectile-ctl-x-4-map "t"
   'projectile-find-implementation-or-test-other-window)
 
