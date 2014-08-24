@@ -9,8 +9,6 @@
 (add-hook 'snakemake-mode-hook
           '(lambda ()
              (set (make-local-variable 'compile-command)
-                  (mapconcat 'identity
-                             (cons "snakemake" snakemake-compile-command-options)
-                             " "))))
+                  (snakemake-compile-command))))
 
 (provide 'init-snakemake)
