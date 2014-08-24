@@ -19,4 +19,6 @@
         (default-directory (projectile-project-root)))
     (call-interactively 'compile)))
 
+(autoload 'snakemake-compile-command "snakemake-mode")
+
 (provide 'init-snakemake)
