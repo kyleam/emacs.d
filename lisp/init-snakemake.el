@@ -11,4 +11,12 @@
              (set (make-local-variable 'compile-command)
                   (snakemake-compile-command))))
 
+(defun km/snakemake-compile-project-file-at-point ()
+  "Run Snakemake to produce project file at point."
+  (interactive)
+  (let ((compile-command (concat (snakemake-compile-command) " "
+                                 (km/project-filename-at-point)))
+        (default-directory (projectile-project-root)))
+    (call-interactively 'compile)))
+
 (provide 'init-snakemake)
