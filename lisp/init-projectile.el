@@ -38,6 +38,11 @@ Interactive arguments are processed according to
   (call-interactively 'projectile-find-file-other-window)
   (view-mode 1))
 
+(defun km/project-filename-at-point ()
+  "Return file name relative to `projectile-project-root'."
+  (file-relative-name (thing-at-point 'filename)
+                      (projectile-project-root)))
+
 (defun km/dired-copy-project-filename-as-kill ()
   "Copy names of marked project files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
