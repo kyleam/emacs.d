@@ -76,7 +76,10 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (magit-define-popup-action 'magit-branch-popup
                              ?t "Local tracking" 'km/magit-checkout-local-tracking)
   (magit-define-popup-action 'magit-branch-popup
-                             ?s "Backup current branch" 'km/magit-backup-branch))
+                             ?s "Backup current branch" 'km/magit-backup-branch)
+
+  (setq magit-branch-popup-defaults
+        (delete "--track" magit-branch-popup-defaults)))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 
