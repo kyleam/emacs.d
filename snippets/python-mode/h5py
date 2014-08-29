@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: h5py
+# key: h5
+# group: imports
+# --
+import h5py
+$0
