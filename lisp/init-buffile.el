@@ -70,6 +70,11 @@ user."
                                  (save-buffer)
                                  (server-edit)))
 
+(define-prefix-command 'km/file-map)
+(global-set-key (kbd "C-c f") 'km/file-map)
+
+(define-key km/file-map "v" 'view-file)
+
 ;;; Ibuffer
 
 ;; Replace buffer-menu with ibuffer.

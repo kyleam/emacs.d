@@ -82,9 +82,6 @@ Useful for non-source code repos (e.g., Org mode note files)."
         (delete "--track" magit-branch-popup-defaults)))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
-
-(define-prefix-command 'km/magit-prefix-map)
-(define-key km/magit-prefix-map "f" 'magit-find-file)
-
+(define-key km/file-map "g" 'magit-find-file)
 
 (provide 'init-git)
