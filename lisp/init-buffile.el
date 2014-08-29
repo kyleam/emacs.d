@@ -56,10 +56,6 @@ user."
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 (key-chord-define-global ",f" 'find-file)
 
-;; Replace `find-file-read-only-other-window' binding with
-;; `view-file-other-window'. This is functionally the same, but more
-;; consistent with my projectile bindings.
-(define-key ctl-x-4-map "R" nil)
 (define-key ctl-x-4-map "v" 'view-file-other-window)
 
 (key-chord-define-global ",s" 'save-buffer)

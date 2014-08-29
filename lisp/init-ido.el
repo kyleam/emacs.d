@@ -53,8 +53,9 @@
   (ido-completing-read "Choose recent file: " recentf-list nil t))
 
 (key-chord-define-global ",r" 'km/recentf-ido-find-file)
-;; Remap find-file-read-only-other-window to free up "r".
-(define-key ctl-x-4-map "R" 'find-file-read-only-other-window)
+;; This overrides `find-file-read-only-other-window', but
+;; `view-file-other-window', which I map to 'v', has the same
+;; functionality.
 (define-key ctl-x-4-map "r" 'km/recentf-ido-find-file-other-window)
 (key-chord-define-global ",b" 'ido-switch-buffer)
 
