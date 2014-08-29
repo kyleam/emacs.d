@@ -1,5 +1,5 @@
-(define-prefix-command 'external-map)
-(global-set-key (kbd "C-c x") 'external-map)
+(define-prefix-command 'km/external-map)
+(global-set-key (kbd "C-c x") 'km/external-map)
 
 ;;; Terminals
 
@@ -36,15 +36,15 @@ is non-nil."
       (setq buffer-name (km/zsh-ansi-term new-buffer)))
     (pop-to-buffer buffer-name)))
 
-(define-key external-map "a" 'km/zsh-ansi-term)
+(define-key km/external-map "a" 'km/zsh-ansi-term)
 ;; This overrides binding for `add-change-log-entry-other-window'.
 (define-key ctl-x-4-map "a" 'km/zsh-ansi-term-other-window)
-(define-key external-map "t" 'km/open-external-terminal)
-(define-key external-map "r" 'shell-command-on-region)
-(define-key external-map "s" 'shell-command)
-(define-key external-map "S" 'shell)
+(define-key km/external-map "t" 'km/open-external-terminal)
+(define-key km/external-map "r" 'shell-command-on-region)
+(define-key km/external-map "s" 'shell-command)
+(define-key km/external-map "S" 'shell)
 
-(define-key external-map "w" 'woman)
+(define-key km/external-map "w" 'woman)
 
 ;;; Compilation
 
@@ -68,9 +68,9 @@ monitor setup)."
       (display-buffer comp-buffer)
     (error "No compilation buffer")))
 
-(define-key external-map "c" 'compile)
-(define-key external-map "g" 'recompile)
-(define-key external-map "o" 'km/display-compilation-other-window)
+(define-key km/external-map "c" 'compile)
+(define-key km/external-map "g" 'recompile)
+(define-key km/external-map "o" 'km/display-compilation-other-window)
 ;; Give frequently-used recompile a shorter binding.
 (global-set-key (kbd "C-c g") 'recompile)
 
@@ -88,8 +88,8 @@ monitor setup)."
   (revert-buffer)
   (view-mode 1))
 
-(define-key external-map "d" 'diff)
-(define-key external-map "e" 'ediff)
+(define-key km/external-map "d" 'diff)
+(define-key km/external-map "e" 'ediff)
 (after 'diff
   (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 

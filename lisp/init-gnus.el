@@ -249,14 +249,14 @@ read. Don't ask to confirm."
 ;; 'S p'.
 (define-key gnus-summary-mode-map "a" 'ace-jump-mode)
 
-(define-prefix-command 'mail-map)
-(global-set-key (kbd "C-x m") 'mail-map)
+(define-prefix-command 'km/mail-map)
+(global-set-key (kbd "C-x m") 'km/mail-map)
 
-(define-key mail-map "g" 'gnus)
-(define-key mail-map "b" 'km/gnus-select-or-bury)
-(define-key mail-map "p" 'gnus-plugged)
-(define-key mail-map "u" 'gnus-unplugged)
-(define-key mail-map "s" 'km/sync-mail)
-(define-key mail-map "n" 'notmuch-search)
+(define-key km/mail-map "g" 'gnus)
+(define-key km/mail-map "b" 'km/gnus-select-or-bury)
+(define-key km/mail-map "p" 'gnus-plugged)
+(define-key km/mail-map "u" 'gnus-unplugged)
+(define-key km/mail-map "s" 'km/sync-mail)
+(define-key km/mail-map "n" 'notmuch-search)
 
 (provide 'init-gnus)

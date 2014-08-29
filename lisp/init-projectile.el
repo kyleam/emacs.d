@@ -116,20 +116,20 @@ path is always relative to `projectile-project-root'."
 (define-key projectile-mode-map (kbd "C-c p 4 v")
   'km/projectile-view-file-other-window)
 
-(define-prefix-command 'projectile-ctl-x-4-map)
-(define-key ctl-x-4-map "p" 'projectile-ctl-x-4-map)
+(define-prefix-command 'km/projectile-ctl-x-4-map)
+(define-key ctl-x-4-map "p" 'km/projectile-ctl-x-4-map)
 
-(define-key projectile-ctl-x-4-map (kbd "C-o")
+(define-key km/projectile-ctl-x-4-map (kbd "C-o")
   'projectile-display-buffer)
-(define-key projectile-ctl-x-4-map "b"
+(define-key km/projectile-ctl-x-4-map "b"
   'projectile-switch-to-buffer-other-window)
-(define-key projectile-ctl-x-4-map "d"
+(define-key km/projectile-ctl-x-4-map "d"
   'projectile-find-dir-other-window)
-(define-key projectile-ctl-x-4-map "f"
+(define-key km/projectile-ctl-x-4-map "f"
   'projectile-find-file-other-window)
-(define-key projectile-ctl-x-4-map "v"
+(define-key km/projectile-ctl-x-4-map "v"
   'km/projectile-view-file-other-window)
-(define-key projectile-ctl-x-4-map "t"
+(define-key km/projectile-ctl-x-4-map "t"
   'projectile-find-implementation-or-test-other-window)
 
 (provide 'init-projectile)

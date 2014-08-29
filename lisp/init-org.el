@@ -40,16 +40,16 @@
 
 (setq initial-major-mode 'org-mode)
 
-(define-prefix-command 'global-org-map)
-(global-set-key (kbd "C-c o") 'global-org-map)
+(define-prefix-command 'km/global-org-map)
+(global-set-key (kbd "C-c o") 'km/global-org-map)
 
-(define-key global-org-map "l" 'org-store-link)
-(define-key global-org-map "o" 'org-open-at-point-global)
-(define-key global-org-map "a" 'org-agenda)
-(define-key global-org-map "b" 'org-iswitchb)
-(define-key global-org-map "s" 'org-save-all-org-buffers)
-(define-key global-org-map "m" 'km/open-main-orgfile)
-(define-key global-org-map "p" 'poporg-dwim)
+(define-key km/global-org-map "l" 'org-store-link)
+(define-key km/global-org-map "o" 'org-open-at-point-global)
+(define-key km/global-org-map "a" 'org-agenda)
+(define-key km/global-org-map "b" 'org-iswitchb)
+(define-key km/global-org-map "s" 'org-save-all-org-buffers)
+(define-key km/global-org-map "m" 'km/open-main-orgfile)
+(define-key km/global-org-map "p" 'poporg-dwim)
 (key-chord-define-global ",a" 'org-agenda)
 
 (setq org-structure-template-alist

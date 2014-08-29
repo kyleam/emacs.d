@@ -32,13 +32,13 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
-(define-prefix-command 'window-map)
-(global-set-key (kbd "C-c w") 'window-map)
+(define-prefix-command 'km/window-map)
+(global-set-key (kbd "C-c w") 'km/window-map)
 
-(define-key window-map "s" 'km/swap-windows)
-(define-key window-map "l" 'km/switch-window-split)
+(define-key km/window-map "s" 'km/swap-windows)
+(define-key km/window-map "l" 'km/switch-window-split)
 
-(define-key window-map "f" 'make-frame)
+(define-key km/window-map "f" 'make-frame)
 
 (global-set-key (kbd "M-o") 'scroll-other-window)
 

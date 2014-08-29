@@ -60,13 +60,13 @@
 (add-hook 'before-save-hook 'km/cleanup-buffer)
 
 ;; Replace map
-(define-prefix-command 'replace-map)
-(global-set-key (kbd "C-c r") 'replace-map)
+(define-prefix-command 'km/replace-map)
+(global-set-key (kbd "C-c r") 'km/replace-map)
 
-(define-key replace-map "s" 'query-replace)
-(define-key replace-map "S" 'replace-string)
-(define-key replace-map "r" 'query-replace-regexp)
-(define-key replace-map "R" 'replace-regexp)
+(define-key km/replace-map "s" 'query-replace)
+(define-key km/replace-map "S" 'replace-string)
+(define-key km/replace-map "r" 'query-replace-regexp)
+(define-key km/replace-map "R" 'replace-regexp)
 
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
@@ -136,23 +136,23 @@ and '<<<' mark the bounds of the narrowed region.
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
 ;; Put multiple cursors map under insert prefix.
-(define-prefix-command 'editing-map)
-(global-set-key (kbd "C-c e") 'editing-map)
+(define-prefix-command 'km/editing-map)
+(global-set-key (kbd "C-c e") 'km/editing-map)
 
-(define-key editing-map "l" 'mc/edit-lines)
-(define-key editing-map "b" 'mc/edit-beginnings-of-lines)
-(define-key editing-map "e" 'mc/edit-ends-of-lines)
-(define-key editing-map "n" 'mc/mark-next-like-this)
-(define-key editing-map "p" 'mc/mark-previous-like-this)
-(define-key editing-map "a" 'mc/mark-all-like-this)
+(define-key km/editing-map "l" 'mc/edit-lines)
+(define-key km/editing-map "b" 'mc/edit-beginnings-of-lines)
+(define-key km/editing-map "e" 'mc/edit-ends-of-lines)
+(define-key km/editing-map "n" 'mc/mark-next-like-this)
+(define-key km/editing-map "p" 'mc/mark-previous-like-this)
+(define-key km/editing-map "a" 'mc/mark-all-like-this)
 
 (global-set-key (kbd "C-;") 'er/expand-region)
 
-(define-key editing-map "i" 'indent-relative)
+(define-key km/editing-map "i" 'indent-relative)
 
 ;; Kill map
-(define-prefix-command 'kill-map)
-(global-set-key (kbd "C-c k") 'kill-map)
+(define-prefix-command 'km/kill-map)
+(global-set-key (kbd "C-c k") 'km/kill-map)
 
 (defun km/kill-string-at-point ()
   (interactive)
@@ -172,11 +172,11 @@ and '<<<' mark the bounds of the narrowed region.
 (km/make-kill-thing-at-point "line" 'line 'kill-line)
 (km/make-kill-thing-at-point "sexp" 'sexp 'kill-sexp)
 
-(define-key kill-map  "s" 'km/kill-string-at-point)
-(define-key kill-map  "." 'km/kill-sentence-at-point)
-(define-key kill-map  "w" 'km/kill-word-at-point)
-(define-key kill-map  "p" 'km/kill-paragraph-at-point)
-(define-key kill-map  "l" 'km/kill-line-at-point)
+(define-key km/kill-map  "s" 'km/kill-string-at-point)
+(define-key km/kill-map  "." 'km/kill-sentence-at-point)
+(define-key km/kill-map  "w" 'km/kill-word-at-point)
+(define-key km/kill-map  "p" 'km/kill-paragraph-at-point)
+(define-key km/kill-map  "l" 'km/kill-line-at-point)
 
 ;; Taken from prelude-core.el.
 (defun km/join-next-line-with-space ()
@@ -184,6 +184,6 @@ and '<<<' mark the bounds of the narrowed region.
   (interactive)
   (delete-indentation 1))
 
-(define-key kill-map  "j" 'km/join-next-line-with-space)
+(define-key km/kill-map  "j" 'km/join-next-line-with-space)
 
 (provide 'init-editing)

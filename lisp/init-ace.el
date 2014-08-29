@@ -40,7 +40,7 @@
 
 ;;; Ace Window
 
-(define-key window-map "a" 'ace-window)
+(define-key km/window-map "a" 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
       aw-scope 'global)
 
