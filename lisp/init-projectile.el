@@ -43,25 +43,6 @@ Interactive arguments are processed according to
   (file-relative-name (thing-at-point 'filename)
                       (projectile-project-root)))
 
-(defun km/dired-copy-project-filename-as-kill ()
-  "Copy names of marked project files into kill ring.
-This is similar to `dired-copy-filename-as-kill', but the leading
-path is always relative to `projectile-project-root'."
-  (interactive)
-  (let* ((project-dir (projectile-project-root))
-         (string
-          (mapconcat 'identity
-                     (--map (file-relative-name it project-dir)
-                            (dired-get-marked-files t))
-                     " ")))
-    (if (eq last-command 'kill-region)
-        (kill-append string nil)
-      (kill-new string))
-    (message "%s" string)))
-
-(after 'dired
-  (define-key dired-mode-map "W" 'km/dired-copy-project-filename-as-kill))
-
 ;; Default binding is D.
 (def-projectile-commander-method ?r
   "Open project root in dired."
