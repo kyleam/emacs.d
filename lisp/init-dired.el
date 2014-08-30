@@ -52,6 +52,21 @@ relative to DIRECTORY."
       (kill-new string))
     (message "%s" string)))
 
+(defun km/dired-copy-relative-filename-as-kill ()
+  "Copy names of marked files into kill ring.
+This is similar to `dired-copy-filename-as-kill', but the leading
+path is always relative to the `default-directory' of the other
+window."
+  (interactive)
+  (let ((other-dir (km/other-default-directory)))
+    (km/dired-copy-filename-relative-to-directory other-dir)))
+
+(defun km/other-default-directory ()
+  "Get `default-directory' for result of `(other-window 1)'."
+  (save-window-excursion
+    (other-window 1)
+    default-directory))
+
 (defun km/dired-switch-to-buffer ()
   (interactive)
   (let ((buffer-name (km/dired-completing-buffer)))
