@@ -36,9 +36,6 @@ path is always relative to `projectile-project-root'."
   (let ((project-dir (projectile-project-root)))
     (km/dired-copy-filename-relative-to-directory project-dir)))
 
-(after 'projectile
-  (define-key dired-mode-map "W" 'km/dired-copy-project-filename-as-kill))
-
 (defun km/dired-copy-filename-relative-to-directory (directory)
   "Like `dired-copy-filename-as-kill', but the filename is always
 relative to DIRECTORY."
@@ -66,6 +63,17 @@ window."
   (save-window-excursion
     (other-window 1)
     default-directory))
+
+(define-prefix-command 'km/dired-copy-filename-map)
+(after 'projectile
+  (define-key km/dired-copy-filename-map "o"
+  'km/dired-copy-relative-filename-as-kill))
+(define-key km/dired-copy-filename-map "w" 'dired-copy-filename-as-kill)
+(define-key km/dired-copy-filename-map "p"
+  'km/dired-copy-project-filename-as-kill)
+
+;; This overrides the default binding for `dired-copy-filename-as-kill'.
+(define-key dired-mode-map "w" 'km/dired-copy-filename-map)
 
 (defun km/dired-switch-to-buffer ()
   (interactive)
