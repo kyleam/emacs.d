@@ -33,19 +33,24 @@
 This is similar to `dired-copy-filename-as-kill', but the leading
 path is always relative to `projectile-project-root'."
   (interactive)
-  (let* ((project-dir (projectile-project-root))
-         (string
+  (let ((project-dir (projectile-project-root)))
+    (km/dired-copy-filename-relative-to-directory project-dir)))
+
+(after 'projectile
+  (define-key dired-mode-map "W" 'km/dired-copy-project-filename-as-kill))
+
+(defun km/dired-copy-filename-relative-to-directory (directory)
+  "Like `dired-copy-filename-as-kill', but the filename is always
+relative to DIRECTORY."
+  (let* ((string
           (mapconcat 'identity
-                     (--map (file-relative-name it project-dir)
+                     (--map (file-relative-name it directory)
                             (dired-get-marked-files t))
                      " ")))
     (if (eq last-command 'kill-region)
         (kill-append string nil)
       (kill-new string))
     (message "%s" string)))
-
-(after 'projectile
-  (define-key dired-mode-map "W" 'km/dired-copy-project-filename-as-kill))
 
 (defun km/dired-switch-to-buffer ()
   (interactive)
