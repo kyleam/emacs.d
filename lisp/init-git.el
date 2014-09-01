@@ -57,6 +57,7 @@ Useful for non-source code repos (e.g., Org mode note files)."
       magit-completing-read-function 'magit-ido-completing-read
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
+      magit-find-file-hook 'view-mode
       magit-log-show-margin nil)
 
 (setq vc-follow-symlinks t)
