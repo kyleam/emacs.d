@@ -40,6 +40,12 @@ Useful for non-source code repos (e.g., Org mode note files)."
                                 (magit-list-remote-branch-names))))
   (magit-run-git "checkout" "-t" remote-branch))
 
+(defun km/magit-checkout-previous-branch ()
+  "Checkout previous branch.
+\n(git checkout -)"
+  (interactive)
+  (magit-run-git "checkout" "-"))
+
 (defun km/magit-branch-and-checkout-from-current (branch)
   "Create and checkout BRANCH at current branch.
 This is equivalent to running `magit-branch-and-checkout' with
@@ -91,6 +97,8 @@ START-POINT set to the current branch.
   (magit-define-popup-action 'magit-branch-popup
     ?c "Create & checkout from current"
     'km/magit-branch-and-checkout-from-current)
+  (magit-define-popup-action 'magit-branch-popup
+    ?p "Checkout previous" 'km/magit-checkout-previous-branch)
 
   (setq magit-branch-popup-defaults
         (delete "--track" magit-branch-popup-defaults)))
