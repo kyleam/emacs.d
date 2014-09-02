@@ -69,15 +69,15 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (define-key magit-mode-map (kbd "C-c m") 'km/magit-prefix-map)
 
   (magit-define-popup-action 'magit-commit-popup
-                             ?u "Auto commit" 'km/magit-auto-commit)
+    ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
-                             ?a "Push all" 'km/magit-push-all)
+    ?a "Push all" 'km/magit-push-all)
   (magit-define-popup-action 'magit-log-popup
-                             ?a "All branches" 'km/magit-log-all-branches)
+    ?a "All branches" 'km/magit-log-all-branches)
   (magit-define-popup-action 'magit-branch-popup
-                             ?t "Local tracking" 'km/magit-checkout-local-tracking)
+    ?t "Local tracking" 'km/magit-checkout-local-tracking)
   (magit-define-popup-action 'magit-branch-popup
-                             ?s "Backup current branch" 'km/magit-backup-branch)
+    ?s "Backup current branch" 'km/magit-backup-branch)
 
   (setq magit-branch-popup-defaults
         (delete "--track" magit-branch-popup-defaults)))
