@@ -34,7 +34,7 @@ Useful for non-source code repos (e.g., Org mode note files)."
 
 (defun km/magit-checkout-local-tracking (remote-branch)
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
-\(git checkout -t REMOTE-BRANCH\)"
+\n(git checkout -t REMOTE-BRANCH\)"
   (interactive
    (list (magit-completing-read "Remote branch"
                                 (magit-list-remote-branch-names))))
@@ -44,14 +44,13 @@ Useful for non-source code repos (e.g., Org mode note files)."
   "Create and checkout BRANCH at current branch.
 This is equivalent to running `magit-branch-and-checkout' with
 START-POINT set to the current branch.
-
-\(git checkout -b BRANCH)"
+\n(git checkout -b BRANCH)"
   (interactive (list (magit-read-string "Branch name")))
   (magit-run-git "checkout" "-b" branch))
 
 (defun km/magit-backup-branch ()
   "Create a backup branch for the current branch.
-\(git branch b/<current-branch>\)"
+\n(git branch b/<current-branch>)"
   (interactive)
   (-if-let (current-branch (magit-get-current-branch))
       (magit-run-git "branch" (concat "b/" current-branch))
