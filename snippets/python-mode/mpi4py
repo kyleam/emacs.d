@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: mpi5py
+# key: mpi
+# group: imports
+# --
+from mpi4py import MPI
+$0
