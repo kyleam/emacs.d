@@ -21,4 +21,8 @@
 
 (autoload 'snakemake-compile-command "snakemake-mode")
 
+(after 'init-external
+(define-key km/external-map "p"
+  'km/snakemake-compile-project-file-at-point))
+
 (provide 'init-snakemake)
