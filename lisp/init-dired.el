@@ -28,6 +28,9 @@
 (setq dired-guess-shell-alist-user
         '(("\\.pdf\\'" "zathura")))
 
+(setq dired-recursive-deletes t
+      dired-recursive-copies t)
+
 (defun km/dired-copy-project-filename-as-kill ()
   "Copy names of marked project files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
