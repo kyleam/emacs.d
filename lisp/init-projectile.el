@@ -43,6 +43,14 @@ Interactive arguments are processed according to
   (file-relative-name (thing-at-point 'filename)
                       (projectile-project-root)))
 
+(defun km/projectile-copy-project-filename-as-kill ()
+  (interactive)
+  (let ((fname (km/project-filename-at-point)))
+    (if (eq last-command 'kill-region)
+        (kill-append fname nil)
+      (kill-new fname))
+    (message "%s" fname)))
+
 ;; Default binding is D.
 (def-projectile-commander-method ?r
   "Open project root in dired."
@@ -93,6 +101,8 @@ Interactive arguments are processed according to
 
 (define-key projectile-command-map "j"
   'km/projectile-switch-project-to-file)
+(define-key projectile-command-map "."
+  'km/projectile-copy-project-filename-as-kill)
 
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
