@@ -70,7 +70,7 @@ window."
 (define-prefix-command 'km/dired-copy-filename-map)
 (after 'projectile
   (define-key km/dired-copy-filename-map "o"
-  'km/dired-copy-relative-filename-as-kill))
+    'km/dired-copy-relative-filename-as-kill))
 (define-key km/dired-copy-filename-map "w" 'dired-copy-filename-as-kill)
 (define-key km/dired-copy-filename-map "p"
   'km/dired-copy-project-filename-as-kill)
