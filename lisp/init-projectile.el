@@ -91,10 +91,10 @@ Interactive arguments are processed according to
 (key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
 
-(define-key projectile-mode-map (kbd "C-c p j")
+(define-key projectile-command-map "j"
   'km/projectile-switch-project-to-file)
 
-(define-key projectile-mode-map (kbd "C-c p 4 v")
+(define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
 
 (define-prefix-command 'km/projectile-ctl-x-4-map)
