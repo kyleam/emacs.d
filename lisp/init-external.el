@@ -68,11 +68,12 @@ monitor setup)."
       (display-buffer comp-buffer)
     (user-error "No compilation buffer")))
 
-(define-key km/external-map "c" 'compile)
-(define-key km/external-map "g" 'recompile)
-(define-key km/external-map "o" 'km/display-compilation-other-window)
-;; Give frequently-used recompile a shorter binding.
-(global-set-key (kbd "C-c g") 'recompile)
+(define-prefix-command 'km/compile-map)
+(global-set-key (kbd "C-c c") 'km/compile-map)
+
+(define-key km/compile-map "c" 'compile)
+(define-key km/compile-map "g" 'recompile)
+(define-key km/compile-map "o" 'km/display-compilation-other-window)
 
 ;;; Diff
 
