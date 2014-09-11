@@ -66,7 +66,7 @@ monitor setup)."
   (interactive)
   (-if-let (comp-buffer (get-buffer "*compilation*"))
       (display-buffer comp-buffer)
-    (error "No compilation buffer")))
+    (user-error "No compilation buffer")))
 
 (define-key km/external-map "c" 'compile)
 (define-key km/external-map "g" 'recompile)

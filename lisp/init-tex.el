@@ -69,7 +69,7 @@ The point should be beyond \"\\section\"."
   (let ((pdf-file (concat (file-name-base (buffer-file-name))
                           ".pdf")))
     (unless (file-exists-p pdf-file)
-      (error "%s does not exist" pdf-file))
+      (user-error "%s does not exist" pdf-file))
     (start-process "tex-pdf" nil "xdg-open" pdf-file)))
 
 (after 'latex

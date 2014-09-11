@@ -24,7 +24,7 @@
 Assumes that the window is only split into two."
   (interactive)
   (unless (= (length (window-list)) 2)
-    (error "Can only toggle a window split in two"))
+    (user-error "Can only toggle a window split in two"))
   (let ((split-vertically-p (window-combined-p)))
     (delete-window)
     (if split-vertically-p
