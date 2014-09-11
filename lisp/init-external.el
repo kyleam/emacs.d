@@ -68,11 +68,19 @@ monitor setup)."
       (display-buffer comp-buffer)
     (user-error "No compilation buffer")))
 
+(defun km/recompile-current-compilation ()
+  (interactive)
+  (-if-let (comp-buffer (get-buffer "*compilation*"))
+      (with-current-buffer comp-buffer
+        (recompile))
+    (user-error "No compilation buffer")))
+
 (define-prefix-command 'km/compile-map)
 (global-set-key (kbd "C-c c") 'km/compile-map)
 
 (define-key km/compile-map "c" 'compile)
 (define-key km/compile-map "g" 'recompile)
+(define-key km/compile-map "r" 'km/recompile-current-compilation)
 (define-key km/compile-map "o" 'km/display-compilation-other-window)
 
 ;;; Diff
