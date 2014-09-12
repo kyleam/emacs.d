@@ -46,6 +46,12 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (interactive)
   (magit-run-git "checkout" "-"))
 
+(defun km/magit-checkout-master ()
+  "Checkout master branch.
+\n(git checkout master)"
+  (interactive)
+  (magit-run-git "checkout" "master"))
+
 (defun km/magit-branch-and-checkout-from-current (branch)
   "Create and checkout BRANCH at current branch.
 This is equivalent to running `magit-branch-and-checkout' with
@@ -100,6 +106,8 @@ START-POINT set to the current branch.
     'km/magit-branch-and-checkout-from-current)
   (magit-define-popup-action 'magit-branch-popup
     ?p "Checkout previous" 'km/magit-checkout-previous-branch)
+  (magit-define-popup-action 'magit-branch-popup
+    ?m "Checkout master" 'km/magit-checkout-master)
 
   (setq magit-branch-popup-defaults
         (delete "--track" magit-branch-popup-defaults)))
