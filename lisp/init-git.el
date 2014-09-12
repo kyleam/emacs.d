@@ -109,8 +109,8 @@ START-POINT set to the current branch.
   (magit-define-popup-action 'magit-branch-popup
     ?m "Checkout master" 'km/magit-checkout-master)
 
-  (setq magit-branch-popup-defaults
-        (delete "--track" magit-branch-popup-defaults)))
+  (setq magit-branch-arguments
+        (delete "--track" magit-branch-arguments)))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
