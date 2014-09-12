@@ -38,6 +38,17 @@
   (interactive)
   (find-file org-default-notes-file))
 
+(defun km/org-open-file-at-point ()
+  "Open file at point with `org-open-file'."
+  (interactive)
+  (let ((file (thing-at-point 'filename)))
+    (if (and file (file-exists-p file))
+        (org-open-file file)
+      (user-error "No file at point"))))
+
+(after 'init-buffile
+  (define-key km/file-map "p" 'km/org-open-file-at-point))
+
 (setq initial-major-mode 'org-mode)
 
 (define-prefix-command 'km/global-org-map)
