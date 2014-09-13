@@ -46,6 +46,14 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
       (goto-char end)))
   (km/python-next-code-line 1))
 
+(defun km/python-shell-send-buffer-up-to-point ()
+  "Send from beginning of buffer up until point to Python shell."
+  (interactive)
+  (save-excursion
+    (setq end (point))
+    (goto-char (point-min))
+    (python-shell-send-region (point) end)))
+
 (defun km/python-inside-defun-p ()
   ;; I don't use `python-nav-beginning-of-defun' because it will go to
   ;; the function even when the point is not inside of it.
@@ -90,6 +98,8 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
   (define-key python-mode-map (kbd "C-c C-c")
     'km/python-shell-send-function-or-paragraph-and-step)
   (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
+  (define-key python-mode-map (kbd "C-c C-.")
+    'km/python-shell-send-buffer-up-to-point)
 
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
