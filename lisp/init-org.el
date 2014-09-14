@@ -47,9 +47,13 @@
       (user-error "No file at point"))))
 
 (defun km/org-open-file ()
-  "Interactive version of `org-open-file'."
+  "Interactive version of `org-open-file'.
+The value of `completion-ignored-extensions' is modified so that
+PDF files are not ignored."
   (interactive)
-  (org-open-file (read-file-name "Open file" nil nil t)))
+  (let ((completion-ignored-extensions
+         (remove ".pdf" completion-ignored-extensions)))
+    (org-open-file (read-file-name "Open file" nil nil t))))
 
 (defun km/org-open-annex-file ()
   "Open a git annex file with `org-open-file'."
