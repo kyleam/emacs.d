@@ -46,6 +46,11 @@
         (org-open-file file)
       (user-error "No file at point"))))
 
+(defun km/org-open-file ()
+  "Interactive version of `org-open-file'."
+  (interactive)
+  (org-open-file (read-file-name "Open file" nil nil t)))
+
 (defun km/org-open-annex-file ()
   "Open a git annex file with `org-open-file'."
   (interactive)
@@ -57,6 +62,7 @@
 
 (after 'init-buffile
   (define-key km/file-map "a" 'km/org-open-annex-file)
+  (define-key km/file-map "o" 'km/org-open-file)
   (define-key km/file-map "p" 'km/org-open-file-at-point))
 
 (setq initial-major-mode 'org-mode)
