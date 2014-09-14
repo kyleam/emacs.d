@@ -46,7 +46,17 @@
         (org-open-file file)
       (user-error "No file at point"))))
 
+(defun km/org-open-annex-file ()
+  "Open a git annex file with `org-open-file'."
+  (interactive)
+  (-if-let (files (magit-annex-present-files))
+      (org-open-file (magit-completing-read "Open annex file" files nil t))
+    (message "No annex files found")))
+
+(autoload 'magit-annex-present-files "magit-annex")
+
 (after 'init-buffile
+  (define-key km/file-map "a" 'km/org-open-annex-file)
   (define-key km/file-map "p" 'km/org-open-file-at-point))
 
 (setq initial-major-mode 'org-mode)
