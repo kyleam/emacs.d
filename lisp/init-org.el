@@ -53,7 +53,7 @@ PDF files are not ignored."
   (interactive)
   (let ((completion-ignored-extensions
          (remove ".pdf" completion-ignored-extensions)))
-    (org-open-file (read-file-name "Open file" nil nil t))))
+    (org-open-file (read-file-name "Open file: " nil nil t))))
 
 (defun km/org-open-annex-file ()
   "Open a git annex file with `org-open-file'."
