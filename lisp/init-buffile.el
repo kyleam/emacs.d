@@ -104,6 +104,7 @@ user."
 (km/make-find-scratch-func "r" ".r")
 (km/make-find-scratch-func "haskell" ".hs")
 (km/make-find-scratch-func "org" ".org")
+(km/make-find-scratch-func "markdown" ".md")
 (km/make-find-scratch-func "nomode" "")
 
 (define-key km/scratch-map "e" 'km/find-scratch-elisp)
@@ -112,6 +113,7 @@ user."
 (define-key km/scratch-map "r" 'km/find-scratch-r)
 (define-key km/scratch-map "h" 'km/find-scratch-haskell)
 (define-key km/scratch-map "o" 'km/find-scratch-org)
+(define-key km/scratch-map "m" 'km/find-scratch-markdown)
 (define-key km/scratch-map "n" 'km/find-scratch-nomode)
 
 (provide 'init-buffile)
