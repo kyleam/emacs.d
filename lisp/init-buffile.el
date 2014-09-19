@@ -93,10 +93,18 @@ user."
 (define-prefix-command 'km/scratch-map)
 (global-set-key (kbd "C-c s") 'km/scratch-map)
 
+(define-prefix-command 'km/scratch-other-window-map)
+(define-key ctl-x-4-map "s" 'km/scratch-other-window-map)
+
 (defmacro km/make-find-scratch-func (name extension)
   `(defun ,(intern (concat "km/find-scratch-" name)) ()
      (interactive)
      (find-file ,(concat "/tmp/scratch" extension))))
+
+(defmacro km/make-find-scratch-other-window-func (name extension)
+  `(defun ,(intern (concat "km/find-scratch-" name "-other-window")) ()
+     (interactive)
+     (find-file-other-window ,(concat "/tmp/scratch" extension))))
 
 (km/make-find-scratch-func "elisp" ".el")
 (km/make-find-scratch-func "python" ".py")
@@ -107,6 +115,15 @@ user."
 (km/make-find-scratch-func "markdown" ".md")
 (km/make-find-scratch-func "nomode" "")
 
+(km/make-find-scratch-other-window-func "elisp" ".el")
+(km/make-find-scratch-other-window-func "python" ".py")
+(km/make-find-scratch-other-window-func "shell" ".sh")
+(km/make-find-scratch-other-window-func "r" ".r")
+(km/make-find-scratch-other-window-func "haskell" ".hs")
+(km/make-find-scratch-other-window-func "org" ".org")
+(km/make-find-scratch-other-window-func "markdown" ".md")
+(km/make-find-scratch-other-window-func "nomode" "")
+
 (define-key km/scratch-map "e" 'km/find-scratch-elisp)
 (define-key km/scratch-map "p" 'km/find-scratch-python)
 (define-key km/scratch-map "s" 'km/find-scratch-shell)
@@ -115,5 +132,22 @@ user."
 (define-key km/scratch-map "o" 'km/find-scratch-org)
 (define-key km/scratch-map "m" 'km/find-scratch-markdown)
 (define-key km/scratch-map "n" 'km/find-scratch-nomode)
+
+(define-key km/scratch-other-window-map "e"
+  'km/find-scratch-elisp-other-window)
+(define-key km/scratch-other-window-map "p"
+  'km/find-scratch-python-other-window)
+(define-key km/scratch-other-window-map "s"
+  'km/find-scratch-shell-other-window)
+(define-key km/scratch-other-window-map "r"
+  'km/find-scratch-r-other-window)
+(define-key km/scratch-other-window-map "h"
+  'km/find-scratch-haskell-other-window)
+(define-key km/scratch-other-window-map "o"
+  'km/find-scratch-org-other-window)
+(define-key km/scratch-other-window-map "m"
+  'km/find-scratch-markdown-other-window)
+(define-key km/scratch-other-window-map "n"
+  'km/find-scratch-nomode-other-window)
 
 (provide 'init-buffile)
