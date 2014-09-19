@@ -52,7 +52,7 @@ Interactive arguments are processed according to
     (message "%s" fname)))
 
 ;; Default binding is D.
-(def-projectile-commander-method ?r
+(def-projectile-commander-method ?t
   "Open project root in dired."
   (projectile-dired))
 
@@ -76,6 +76,11 @@ Interactive arguments are processed according to
 (def-projectile-commander-method ?c
   "Run project compilation command."
   (call-interactively 'projectile-compile-project))
+
+;; Default binding is e.
+(def-projectile-commander-method ?r
+  "Find recently visited file in project."
+  (projectile-recentf))
 
 (def-projectile-commander-method ?F
   "Find project file in other window."
