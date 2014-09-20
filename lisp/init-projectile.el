@@ -94,6 +94,10 @@ Interactive arguments are processed according to
   "Display a project buffer in other window."
   (call-interactively 'projectile-display-buffer))
 
+(def-projectile-commander-method ?i
+  "Open an IBuffer window showing all buffers in the current project."
+  (call-interactively 'projectile-ibuffer))
+
 (key-chord-define-global ";s" 'projectile-switch-project)
 (key-chord-define-global ";f" 'projectile-find-file)
 (key-chord-define-global ";v" 'km/projectile-view-file)
