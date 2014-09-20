@@ -113,6 +113,10 @@ Interactive arguments are processed according to
 (define-key projectile-command-map "."
   'km/projectile-copy-project-filename-as-kill)
 
+;; Swap `projectile-invalidate-cache' and `projectile-ibuffer'.
+(define-key projectile-command-map "I" 'projectile-invalidate-cache)
+(define-key projectile-command-map "i" 'projectile-ibuffer)
+
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
 
