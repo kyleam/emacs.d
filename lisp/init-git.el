@@ -112,6 +112,11 @@ START-POINT set to the current branch.
   (magit-define-popup-action 'magit-branch-popup
     ?m "Checkout master" 'km/magit-checkout-master)
 
+  (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
+    "Set '--no-ff' flag when running `magit-merge-editmsg'."
+    (let ((args '("--no-ff")))
+      ad-do-it))
+
   (setq magit-branch-arguments
         (delete "--track" magit-branch-arguments)))
 
