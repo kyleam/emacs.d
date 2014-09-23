@@ -83,6 +83,8 @@ monitor setup)."
 (define-key km/compile-map "r" 'km/recompile-current-compilation)
 (define-key km/compile-map "o" 'km/display-compilation-other-window)
 
+(key-chord-define-global ",e" 'km/recompile-current-compilation)
+
 ;;; Diff
 
 (setq diff-command "/bin/diff"
