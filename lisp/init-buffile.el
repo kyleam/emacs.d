@@ -61,10 +61,6 @@ user."
 (key-chord-define-global ",s" 'save-buffer)
 (key-chord-define-global ",q" 'kill-this-buffer)
 (key-chord-define-global ",d" 'km/save-and-kill-buffer)
-(key-chord-define-global ",e" '(lambda ()
-                                 (interactive)
-                                 (save-buffer)
-                                 (server-edit)))
 
 (define-prefix-command 'km/file-map)
 (global-set-key (kbd "C-c f") 'km/file-map)
