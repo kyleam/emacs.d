@@ -83,6 +83,9 @@ PDF files are not ignored."
 (define-key km/global-org-map "p" 'poporg-dwim)
 (key-chord-define-global ",a" 'org-agenda)
 
+(after 'poporg
+  (define-key poporg-mode-map (kbd "C-c C-c") 'poporg-edit-exit))
+
 (setq org-structure-template-alist
       '(("p" "#+property: " "")
         ("o" "#+options: " "")
