@@ -46,6 +46,8 @@ is non-nil."
 
 (define-key km/external-map "w" 'woman)
 
+(define-key km/external-map "i" 'ispell-buffer)
+
 ;;; Compilation
 
 (defadvice compile (around prevent-duplicate-compilation-windows activate)
