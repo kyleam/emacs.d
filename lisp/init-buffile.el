@@ -85,15 +85,15 @@ user."
       recentf-max-menu-items 15)
 (recentf-mode t)
 
-;; From prelude
-(defun km/recentf-ido-find-file ()
-  "Find a recent file using ido."
+;; Modified from prelude
+(defun km/recentf-find-file ()
+  "Find a file from `recentf-list'."
   (interactive)
   (-when-let (file (km/read-recent-file))
     (find-file file)))
 
-(defun km/recentf-ido-find-file-other-window ()
-  "Find a recent file in other window using ido."
+(defun km/recentf-find-file-other-window ()
+  "Find a file from `recentf-list' in other window."
   (interactive)
   (-when-let (file (km/read-recent-file))
     (find-file-other-window file)))
@@ -101,11 +101,11 @@ user."
 (defun km/read-recent-file ()
   (ido-completing-read "Choose recent file: " recentf-list nil t))
 
-(key-chord-define-global ",r" 'km/recentf-ido-find-file)
+(key-chord-define-global ",r" 'km/recentf-find-file)
 ;; This overrides `find-file-read-only-other-window', but
 ;; `view-file-other-window', which I map to 'v', has the same
 ;; functionality.
-(define-key ctl-x-4-map "r" 'km/recentf-ido-find-file-other-window)
+(define-key ctl-x-4-map "r" 'km/recentf-find-file-other-window)
 
 ;;; Temporary scratch files
 
