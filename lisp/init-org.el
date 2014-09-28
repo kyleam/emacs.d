@@ -65,12 +65,19 @@ PDF files are not ignored."
       (org-open-file (magit-completing-read "Open annex file" files nil t))
     (message "No annex files found")))
 
+(defun km/org-open-recent-file ()
+  "Open a file from `recentf-list' with `org-open-file'."
+  (interactive)
+  (-when-let (file (km/read-recent-file))
+    (org-open-file file)))
+
 (autoload 'magit-annex-present-files "magit-annex")
 
 (after 'init-buffile
   (define-key km/file-map "a" 'km/org-open-annex-file)
   (define-key km/file-map "o" 'km/org-open-file)
-  (define-key km/file-map "p" 'km/org-open-file-at-point))
+  (define-key km/file-map "p" 'km/org-open-file-at-point)
+  (define-key km/file-map "r" 'km/org-open-recent-file))
 
 (setq initial-major-mode 'org-mode)
 
