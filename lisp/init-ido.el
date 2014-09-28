@@ -36,27 +36,6 @@
 (ido-ubiquitous-mode 1)
 (ido-at-point-mode)
 
-;; From prelude
-(defun km/recentf-ido-find-file ()
-  "Find a recent file using ido."
-  (interactive)
-  (-when-let (file (km/read-recent-file))
-    (find-file file)))
-
-(defun km/recentf-ido-find-file-other-window ()
-  "Find a recent file in other window using ido."
-  (interactive)
-  (-when-let (file (km/read-recent-file))
-    (find-file-other-window file)))
-
-(defun km/read-recent-file ()
-  (ido-completing-read "Choose recent file: " recentf-list nil t))
-
-(key-chord-define-global ",r" 'km/recentf-ido-find-file)
-;; This overrides `find-file-read-only-other-window', but
-;; `view-file-other-window', which I map to 'v', has the same
-;; functionality.
-(define-key ctl-x-4-map "r" 'km/recentf-ido-find-file-other-window)
 (key-chord-define-global ",b" 'ido-switch-buffer)
 
 (provide 'init-ido)

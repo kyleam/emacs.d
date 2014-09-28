@@ -78,11 +78,34 @@ user."
  ;; Don't show empty filter groups.
  ibuffer-show-empty-filter-groups nil)
 
-;; Recent files
+;;; Recent files
+
 (setq recentf-save-file "~/.emacs.d/cache/recentf"
       recentf-max-saved-items 200
       recentf-max-menu-items 15)
 (recentf-mode t)
+
+;; From prelude
+(defun km/recentf-ido-find-file ()
+  "Find a recent file using ido."
+  (interactive)
+  (-when-let (file (km/read-recent-file))
+    (find-file file)))
+
+(defun km/recentf-ido-find-file-other-window ()
+  "Find a recent file in other window using ido."
+  (interactive)
+  (-when-let (file (km/read-recent-file))
+    (find-file-other-window file)))
+
+(defun km/read-recent-file ()
+  (ido-completing-read "Choose recent file: " recentf-list nil t))
+
+(key-chord-define-global ",r" 'km/recentf-ido-find-file)
+;; This overrides `find-file-read-only-other-window', but
+;; `view-file-other-window', which I map to 'v', has the same
+;; functionality.
+(define-key ctl-x-4-map "r" 'km/recentf-ido-find-file-other-window)
 
 ;;; Temporary scratch files
 
