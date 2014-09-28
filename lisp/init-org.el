@@ -34,6 +34,9 @@
          "* %?\n%x")))
 (key-chord-define-global ",t" 'org-capture)
 
+(defadvice org-open-file (after km/org-open-add-to-recentf activate)
+  (recentf-add-file path))
+
 (defun km/open-main-orgfile ()
   (interactive)
   (find-file org-default-notes-file))
