@@ -78,12 +78,13 @@ START-POINT set to the current branch.
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
       magit-popup-use-prefix-argument 'default
-      magit-find-file-hook 'view-mode
       magit-log-show-margin nil)
 
 (setq vc-follow-symlinks t)
 
 (after 'magit
+  (add-hook 'magit-find-file-hook 'view-mode)
+
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
