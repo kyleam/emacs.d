@@ -230,7 +230,9 @@ to
   (turn-on-orgtbl))
 
 (add-hook 'message-mode-hook 'km/load-orgstruct)
-(add-hook 'git-commit-mode-hook 'km/load-orgstruct)
+
+(after 'git-commit-mode
+  (add-hook 'git-commit-setup-hook 'km/load-orgstruct))
 
 (add-hook 'next-error-hook '(lambda ()
                               (when (eq major-mode 'org-mode)
