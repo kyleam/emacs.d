@@ -82,6 +82,9 @@ START-POINT set to the current branch.
 
 (setq vc-follow-symlinks t)
 
+(after 'git-commit-mode
+  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
+
 (after 'magit
   (add-hook 'magit-find-file-hook 'view-mode)
 
