@@ -13,6 +13,10 @@
 
 (require 'magit-annex-autoloads)
 
+(after 'magit-annex
+  (setq magit-annex-all-action-arguments
+        (delete "--auto" magit-annex-all-action-arguments)))
+
 (key-chord-define-global ",g" 'magit-status)
 
 (defun km/magit-auto-commit ()
