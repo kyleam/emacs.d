@@ -82,6 +82,7 @@ START-POINT set to the current branch.
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
       magit-popup-use-prefix-argument 'default
+      magit-backup-untracked nil
       magit-log-show-margin nil)
 
 (setq vc-follow-symlinks t)
