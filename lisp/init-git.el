@@ -32,6 +32,14 @@ This is useful for commit IDs in files and log messages."
   (--when-let (thing-at-point 'word)
     (magit-show-commit it)))
 
+(defun km/magit-show-project-commit-under-point ()
+  "Select a project and run `km/magit-show-project-commit-under-point'."
+  (interactive)
+  (--when-let (thing-at-point 'word)
+    (let ((projectile-switch-project-action
+           '(lambda () (magit-show-commit it))))
+      (projectile-switch-project))))
+
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
@@ -141,6 +149,7 @@ START-POINT set to the current branch.
 (define-prefix-command 'km/git-map)
 (global-set-key (kbd "C-c g") 'km/git-map)
 (define-key km/git-map "c" 'km/magit-show-commit-under-point)
+(define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
 
 (define-key km/git-map "u" 'km/magit-auto-commit)
 
