@@ -131,4 +131,9 @@ START-POINT set to the current branch.
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
+(define-prefix-command 'km/git-map)
+(global-set-key (kbd "C-c g") 'km/git-map)
+
+(define-key km/git-map "u" 'km/magit-auto-commit)
+
 (provide 'init-git)
