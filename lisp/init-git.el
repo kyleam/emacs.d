@@ -25,6 +25,13 @@ Useful for non-source code repos (e.g., Org mode note files)."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
+(defun km/magit-show-commit-under-point ()
+  "Pass text at point as commit to `magit-show-commit'.
+This is useful for commit IDs in files and log messages."
+  (interactive)
+  (--when-let (thing-at-point 'word)
+    (magit-show-commit it)))
+
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
@@ -133,6 +140,7 @@ START-POINT set to the current branch.
 
 (define-prefix-command 'km/git-map)
 (global-set-key (kbd "C-c g") 'km/git-map)
+(define-key km/git-map "c" 'km/magit-show-commit-under-point)
 
 (define-key km/git-map "u" 'km/magit-auto-commit)
 
