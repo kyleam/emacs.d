@@ -96,7 +96,6 @@ START-POINT set to the current branch.
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
-  (define-key magit-mode-map (kbd "C-c m") 'km/magit-prefix-map)
   ;; Remove `magit-add-change-log-entry-other-window', which overrides
   ;; my binding for `km/zsh-ansi-term-other-window'.
   (define-key magit-mode-map (kbd "C-x 4 a") nil)
