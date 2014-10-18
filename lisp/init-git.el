@@ -40,6 +40,24 @@ This is useful for commit IDs in files and log messages."
            '(lambda () (magit-show-commit it))))
       (projectile-switch-project))))
 
+(defun km/magit-stage-file-intent (file)
+  "Stage FILE but not its content.
+With a prefix argument or when there is no file at point ask for
+the file to be staged.  Otherwise stage the file at point without
+requiring confirmation.
+\n(git add -N FILE)"
+  ;; Modified from `magit-stage-file'.
+  (interactive
+   (let* ((atpoint (magit-section-when (file)))
+          (current (magit-file-relative-name))
+          (choices (magit-untracked-files))
+          (default (car (member (or atpoint current) choices))))
+     (list (if (or current-prefix-arg (not default))
+               (magit-completing-read "Stage file" choices
+                                      nil t nil nil default)
+             default))))
+  (magit-run-git "add" "-N" file))
+
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
@@ -114,6 +132,8 @@ START-POINT set to the current branch.
   ;; Remove `magit-add-change-log-entry-other-window', which overrides
   ;; my binding for `km/zsh-ansi-term-other-window'.
   (define-key magit-mode-map (kbd "C-x 4 a") nil)
+
+  (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
