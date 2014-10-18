@@ -42,6 +42,13 @@ This is useful for commit IDs in files and log messages."
            '(lambda () (magit-show-commit it))))
       (projectile-switch-project))))
 
+(defun km/magit-commit-extend-all ()
+  "Run `magit-commit-extend' with '--all' flag.
+This can easily be done from the popup menu but is put into a
+function for calling from outside Magit buffers."
+  (interactive)
+  (magit-commit-extend '("--all")))
+
 (defun km/magit-stage-file-intent (file)
   "Stage FILE but not its content.
 With a prefix argument or when there is no file at point ask for
@@ -172,7 +179,7 @@ START-POINT set to the current branch.
 (global-set-key (kbd "C-c g") 'km/git-map)
 (define-key km/git-map "c" 'km/magit-show-commit-under-point)
 (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
-
+(define-key km/git-map "e" 'km/magit-commit-extend-all)
 (define-key km/git-map "u" 'km/magit-auto-commit)
 
 (provide 'init-git)
