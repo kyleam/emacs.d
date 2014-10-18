@@ -21,7 +21,9 @@
 
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
-Useful for non-source code repos (e.g., Org mode note files)."
+This can be useful for non-source code repos (e.g., Org mode note
+files) or commiting incomplete changes that will be extended into
+a proper commit."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
