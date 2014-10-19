@@ -124,7 +124,6 @@ START-POINT set to the current branch.
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
       magit-popup-use-prefix-argument 'default
-      magit-backup-untracked nil
       magit-log-show-margin nil)
 
 (setq vc-follow-symlinks t)
@@ -133,6 +132,7 @@ START-POINT set to the current branch.
   (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 (after 'magit
+  (magit-backup-mode -1)
   (add-hook 'magit-find-file-hook 'view-mode)
 
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
