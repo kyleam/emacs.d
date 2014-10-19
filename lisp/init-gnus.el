@@ -116,6 +116,7 @@ A new buffer with the patch contents is opened in another window."
 
 (require 'notmuch)
 (require 'org-gnus)
+(require 'org-notmuch)
 
 (setq org-gnus-prefer-web-links t)
 
@@ -145,6 +146,23 @@ A new buffer with the patch contents is opened in another window."
     (switch-to-buffer "*Group*")
     (org-gnus-follow-link group message-id))
       (message "Couldn't get relevant infos for switching to Gnus."))))
+
+(defadvice org-store-link (around km/maybe-use-notmuch-link activate)
+  "Use notmuch links for local mail."
+  (save-window-excursion
+    (km/gnus-goto-message-in-notmuch)
+    ad-do-it))
+
+(defun km/gnus-goto-message-in-notmuch ()
+  "Show message in notmuch."
+  (interactive)
+  (if (and (memq major-mode '(gnus-summary-mode gnus-article-mode))
+           (string= (cadr (gnus-find-method-for-group gnus-newsgroup-name))
+                    "dov"))
+      (let* ((header (with-current-buffer gnus-summary-buffer
+                       (gnus-summary-article-header)))
+             (message-id (org-remove-angle-brackets (mail-header-id header))))
+        (notmuch-show (concat "id:" message-id)))))
 
 (define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
 (add-hook 'gnus-group-mode-hook 'km/notmuch-shortcut)
