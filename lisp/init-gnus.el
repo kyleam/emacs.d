@@ -117,6 +117,8 @@ A new buffer with the patch contents is opened in another window."
 (require 'notmuch)
 (require 'org-gnus)
 
+(setq org-gnus-prefer-web-links t)
+
 (define-key gnus-group-mode-map "GG" 'notmuch-search)
 ;; http://roland.entierement.nu/blog/2010/09/08/gnus-dovecot-offlineimap-search-a-howto.html
 (defun km/notmuch-shortcut ()
