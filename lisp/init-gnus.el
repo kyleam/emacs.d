@@ -81,11 +81,13 @@
 
 (defun km/gnus-follow-last-message-link (arg)
   "Follow link at bottom of message.
-When a prefix argument, move to the link but don't follow it."
+When a prefix argument, move to and copy the link but don't
+follow it."
   (interactive "P")
   (km/gnus-end-of-article-buffer)
   (widget-backward 1)
-  (unless arg
+  (if arg
+      (shr-copy-url)
     (widget-button-press (point))))
 
 (define-key gnus-summary-mode-map
