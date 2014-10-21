@@ -79,7 +79,7 @@
           '(lambda ()
              (flyspell-mode 1)))
 
-(defun km/follow-last-message-link (arg)
+(defun km/gnus-follow-last-message-link (arg)
   "Follow link at bottom of message.
 When a prefix argument, move to the link but don't follow it."
   (interactive "P")
@@ -89,9 +89,9 @@ When a prefix argument, move to the link but don't follow it."
     (widget-button-press (point))))
 
 (define-key gnus-summary-mode-map
-  (kbd "C-c j") 'km/follow-last-message-link)
+  (kbd "C-c j") 'km/gnus-follow-last-message-link)
 (define-key gnus-article-mode-map
-  (kbd "C-c j") 'km/follow-last-message-link)
+  (kbd "C-c j") 'km/gnus-follow-last-message-link)
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
