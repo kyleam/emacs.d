@@ -150,6 +150,8 @@ and '<<<' mark the bounds of the narrowed region.
 
 (define-key km/editing-map "i" 'indent-relative)
 
+(electric-indent-mode -1)
+
 ;; From http://whattheemacsd.com/key-bindings.el-01.html
 (defun km/goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input"

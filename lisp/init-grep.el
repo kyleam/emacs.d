@@ -16,7 +16,8 @@ entering `ch' is equivalent to `*.[ch]'.")
 (defadvice rgrep (after hide-grep-header activate) (hide-grep-header))
 (defadvice lgrep (after hide-grep-hxoeader activate) (hide-grep-header))
 (defadvice grep-find (after hide-grep-header activate) (hide-grep-header))
-(defadvice vc-git-grep (after hide-grep-header activate) (hide-grep-header))
+(after 'vc-git
+  (defadvice vc-git-grep (after hide-grep-header activate) (hide-grep-header)))
 
 (key-chord-define-global ",z" 'rgrep)
 

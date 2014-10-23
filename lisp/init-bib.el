@@ -63,16 +63,12 @@ point."
   (browse-url (org-link-escape-browser (concat org-doi-server-url doi))))
 
 (defun km/doi-at-point ()
-  "Return DOI at point.
-This is a hack that uses `(thing-at-point 'url)' and then removes
-the leading 'http://'. The DOI format is not verified in any
-way."
+  "Return DOI at point."
   (save-excursion
-    (when (equal (thing-at-point 'word) "doi")
-      (backward-word)
-      (re-search-forward "doi:[ \t\n]*"))
-    (--if-let (thing-at-point 'url)
-        (replace-regexp-in-string "http://" "" it)
-      (user-error "No DOI found at point"))))
+    (let ((doi (cadr (get-text-property (point) 'htmlize-link))))
+      (when (or (not doi)
+                (not (string-prefix-p "doi:" doi)))
+        (user-error "No DOI found at point"))
+      (replace-regexp-in-string "doi:" "" doi))))
 
 (provide 'init-bib)
