@@ -110,8 +110,8 @@ START-POINT set to the current branch.
   "Create a backup branch for the current branch.
 \n(git branch b/<current-branch>)"
   (interactive)
-  (-if-let (current-branch (magit-get-current-branch))
-      (magit-run-git "branch" (concat "b/" current-branch))
+  (--if-let (magit-get-current-branch)
+      (magit-run-git "branch" (concat "b/" it))
     (user-error "No current branch")))
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html

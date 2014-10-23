@@ -28,8 +28,8 @@
     (save-excursion
       (goto-char (window-start))
       (while (< (point) end)
-        (-when-let (pos (dired-next-line 1))
-          (push pos points)))
+        (--when-let (dired-next-line 1)
+          (push it points)))
       (nreverse points))))
 
 (after 'dired

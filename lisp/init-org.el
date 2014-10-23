@@ -61,8 +61,8 @@ PDF files are not ignored."
 (defun km/org-open-annex-file ()
   "Open a git annex file with `org-open-file'."
   (interactive)
-  (-if-let (files (magit-annex-present-files))
-      (org-open-file (magit-completing-read "Open annex file" files nil t))
+  (--if-let (magit-annex-present-files)
+      (org-open-file (magit-completing-read "Open annex file" it nil t))
     (message "No annex files found")))
 
 (defun km/org-open-recent-file ()

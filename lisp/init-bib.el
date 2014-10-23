@@ -71,8 +71,8 @@ way."
     (when (equal (thing-at-point 'word) "doi")
       (backward-word)
       (re-search-forward "doi:[ \t\n]*"))
-    (-if-let (http-doi (thing-at-point 'url))
-        (replace-regexp-in-string "http://" "" http-doi)
+    (--if-let (thing-at-point 'url)
+        (replace-regexp-in-string "http://" "" it)
       (user-error "No DOI found at point"))))
 
 (provide 'init-bib)

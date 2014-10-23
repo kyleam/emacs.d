@@ -24,9 +24,9 @@ of the same name already exists, switch to it unless NEW-BUFFER
 is non-nil."
   (interactive "P")
   (let ((name (concat "zsh:" (abbreviate-file-name default-directory))))
-    (-if-let (buffer-name (and (not new-buffer)
-                               (get-buffer (concat "*" name "*"))))
-        (switch-to-buffer buffer-name)
+    (--if-let (and (not new-buffer)
+                   (get-buffer (concat "*" name "*")))
+        (switch-to-buffer it)
       (ansi-term "/bin/zsh" name))))
 
 (defun km/zsh-ansi-term-other-window (&optional new-buffer)
@@ -66,14 +66,14 @@ monitor setup)."
 
 (defun km/display-compilation-other-window ()
   (interactive)
-  (-if-let (comp-buffer (get-buffer "*compilation*"))
-      (display-buffer comp-buffer)
+  (--if-let (get-buffer "*compilation*")
+      (display-buffer it)
     (user-error "No compilation buffer")))
 
 (defun km/recompile-current-compilation ()
   (interactive)
-  (-if-let (comp-buffer (get-buffer "*compilation*"))
-      (with-current-buffer comp-buffer
+  (--if-let (get-buffer "*compilation*")
+      (with-current-buffer it
         (recompile))
     (user-error "No compilation buffer")))
 
