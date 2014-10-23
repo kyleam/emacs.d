@@ -248,16 +248,17 @@ context will be shown for above heading."
 
 ;;; Agenda
 
-(defadvice org-agenda-list (around org-agenda-fullscreen activate)
-  "Start agenda in fullscreen.
+(after 'org-agenda
+  (defadvice org-agenda-list (around org-agenda-fullscreen activate)
+    "Start agenda in fullscreen.
 
 After agenda loads, delete other windows.
 `org-agenda-restore-windows-after-quit' should non-nil to restore
 the previous window configuration. If `org-agenda-sticky' is
 non-nil, configurations with more than one window do not seem to
 be restored properly."
-  ad-do-it
-  (delete-other-windows))
+    ad-do-it
+    (delete-other-windows)))
 
 (setq org-agenda-restore-windows-after-quit t
       org-agenda-sticky nil)
