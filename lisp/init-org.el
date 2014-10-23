@@ -68,8 +68,7 @@ PDF files are not ignored."
 (defun km/org-open-recent-file ()
   "Open a file from `recentf-list' with `org-open-file'."
   (interactive)
-  (-when-let (file (km/read-recent-file))
-    (org-open-file file)))
+  (org-open-file (km/read-recent-file)))
 
 (autoload 'magit-annex-present-files "magit-annex")
 

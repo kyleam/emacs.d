@@ -89,14 +89,12 @@ user."
 (defun km/recentf-find-file ()
   "Find a file from `recentf-list'."
   (interactive)
-  (-when-let (file (km/read-recent-file))
-    (find-file file)))
+  (find-file (km/read-recent-file)))
 
 (defun km/recentf-find-file-other-window ()
   "Find a file from `recentf-list' in other window."
   (interactive)
-  (-when-let (file (km/read-recent-file))
-    (find-file-other-window file)))
+  (find-file-other-window (km/read-recent-file)))
 
 (defun km/read-recent-file ()
   (ido-completing-read "Choose recent file: " recentf-list nil t))
