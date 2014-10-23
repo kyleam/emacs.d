@@ -150,6 +150,18 @@ and '<<<' mark the bounds of the narrowed region.
 
 (define-key km/editing-map "i" 'indent-relative)
 
+;; From http://whattheemacsd.com/key-bindings.el-01.html
+(defun km/goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (call-interactively 'goto-line))
+    (linum-mode -1)))
+
+(global-set-key [remap goto-line] 'km/goto-line-with-feedback)
+
 ;; Kill map
 (define-prefix-command 'km/kill-map)
 (global-set-key (kbd "C-c k") 'km/kill-map)
