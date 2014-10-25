@@ -102,6 +102,34 @@ monitor setup)."
 (after 'diff
   (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
+;;; WebJump
+
+(define-key km/external-map  "j" 'webjump)
+
+(setq webjump-sites
+  '(("Arch User Repository" .
+     [simple-query "https://aur.archlinux.org"
+                   "https://aur.archlinux.org/packages/?K=" ""])
+    ("DuckDuckGo" .
+     [simple-query "https://duckduckgo.com"
+                   "https://duckduckgo.com/?q=" ""])
+    ("Emacs Wiki" .
+     [simple-query "www.emacswiki.org"
+                   "www.emacswiki.org/cgi-bin/wiki/" ""])
+    ("GitHub" . "https://github.com")
+    ("GitHub search" .
+     [simple-query "https://github.com"
+                   "https://github.com/search?q=" ""])
+    ("Google" .
+     [simple-query "www.google.com"
+                   "www.google.com/search?q=" ""])
+    ("Google Scholar" .
+     [simple-query "http://scholar.google.com"
+                   "http://scholar.google.com/scholar?&q=" ""])
+    ("Wikipedia" .
+     [simple-query "wikipedia.org"
+                   "wikipedia.org/wiki/" ""])))
+
 ;;; Misc
 
 (define-key km/external-map "w" 'woman)
