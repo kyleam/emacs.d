@@ -1,8 +1,11 @@
 (add-to-list 'load-path "~/src/emacs/git-modes")
 (add-to-list 'load-path "~/src/emacs/magit")
+(add-to-list 'load-path "~/src/emacs/orgit")
 
 (require 'magit-autoloads)
 (require 'git-modes-autoloads)
+
+(require 'orgit)
 
 (require-package 'git-annex)
 (require 'git-annex)
