@@ -38,7 +38,7 @@ This is useful for commit IDs in files and log messages."
     (magit-show-commit it)))
 
 (defun km/magit-show-project-commit-under-point ()
-  "Select a project and run `km/magit-show-project-commit-under-point'."
+  "Show commit under point for a selected project."
   (interactive)
   (--when-let (thing-at-point 'word)
     (let ((projectile-switch-project-action
