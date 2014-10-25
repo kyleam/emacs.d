@@ -368,4 +368,16 @@ MAXLEVEL (defaults to 2)."
 
 (define-key ctl-x-4-map "o" 'km/org-switch-to-buffer-other-window)
 
+;;; Export
+
+(after 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("short"
+                 "\\documentclass{short}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
 (provide 'init-org)
