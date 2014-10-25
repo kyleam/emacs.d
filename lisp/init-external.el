@@ -44,10 +44,6 @@ is non-nil."
 (define-key km/external-map "s" 'shell-command)
 (define-key km/external-map "S" 'shell)
 
-(define-key km/external-map "w" 'woman)
-
-(define-key km/external-map "i" 'ispell-buffer)
-
 ;;; Compilation
 
 (defadvice compile (around prevent-duplicate-compilation-windows activate)
@@ -105,5 +101,10 @@ monitor setup)."
 (define-key km/external-map "e" 'ediff)
 (after 'diff
   (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
+
+;;; Misc
+
+(define-key km/external-map "w" 'woman)
+(define-key km/external-map "i" 'ispell-buffer)
 
 (provide 'init-external)
