@@ -12,6 +12,7 @@
       org-outline-path-complete-in-steps nil
       org-completion-use-ido t
       org-reverse-note-order t
+      org-link-search-must-match-exact-headline nil
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
 (setq org-capture-templates
