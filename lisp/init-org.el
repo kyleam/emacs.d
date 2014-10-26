@@ -11,6 +11,7 @@
       org-special-ctrl-k t
       org-outline-path-complete-in-steps nil
       org-completion-use-ido t
+      org-reverse-note-order t
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
 (setq org-capture-templates
@@ -263,8 +264,7 @@ be restored properly."
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
-      org-agenda-start-on-weekday nil
-      org-reverse-note-order t)
+      org-agenda-start-on-weekday nil)
 
 (setq org-agenda-files (file-expand-wildcards "~/notes/agenda/*.org"))
 (setq org-agenda-text-search-extra-files
