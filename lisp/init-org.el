@@ -264,6 +264,7 @@ be restored properly."
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
+      org-agenda-use-time-grid nil
       org-agenda-start-on-weekday nil)
 
 (setq org-agenda-files (file-expand-wildcards "~/notes/agenda/*.org"))
