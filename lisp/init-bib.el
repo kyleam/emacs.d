@@ -65,10 +65,10 @@ point."
 (defun km/doi-at-point ()
   "Return DOI at point."
   (save-excursion
-    (let ((doi (cadr (get-text-property (point) 'htmlize-link))))
-      (when (or (not doi)
-                (not (string-prefix-p "doi:" doi)))
-        (user-error "No DOI found at point"))
-      (replace-regexp-in-string "doi:" "" doi))))
+    (re-search-backward "[ \t\n]" nil t)
+    (re-search-forward "\\(doi:[ \t\n]*\\)*\\([-./A-z0-9]+\\)[.; \t\n]" nil t)
+    (--if-let (match-string-no-properties 2)
+        (s-chop-suffix "." it)
+      (error "No DOI found"))))
 
 (provide 'init-bib)
