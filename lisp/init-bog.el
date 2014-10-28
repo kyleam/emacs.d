@@ -6,4 +6,6 @@
 
 (add-hook 'org-mode-hook 'bog-mode)
 
+(setq bog-use-citekey-cache t)
+
 (provide 'init-bog)
