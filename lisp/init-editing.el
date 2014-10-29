@@ -30,7 +30,7 @@
 (define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
-(defun unfill-paragraph ()
+(defun km/unfill-paragraph ()
   "Takes a multi-line paragraph and makes it into a single line of text."
   (interactive)
   (let ((fill-column (point-max)))

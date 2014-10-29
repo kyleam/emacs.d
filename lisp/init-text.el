@@ -26,7 +26,7 @@ is non-nil, the region is copied with `x-select-text'."
     (while (not (eobp))
       (forward-paragraph)
       (forward-line -1)
-      (unfill-paragraph)
+      (km/unfill-paragraph)
       (forward-line 1))
     (when arg
       (x-select-text (buffer-substring-no-properties (point-min) (point-max))))))
