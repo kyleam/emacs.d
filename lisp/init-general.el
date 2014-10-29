@@ -41,6 +41,10 @@
 
 (global-set-key (kbd "C-h :") 'find-function)
 
+;; This is also bound to 'm', but I always want to press 'j' because
+;; binding for `imenu' and `org-goto'.
+(define-key Info-mode-map "j" 'Info-menu)
+
 ;; Disable `suspend-frame' binding.
 (global-unset-key (kbd "C-x C-z"))
 
