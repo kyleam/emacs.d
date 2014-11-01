@@ -97,10 +97,24 @@ monitor setup)."
   (revert-buffer)
   (view-mode 1))
 
+(defun km/ediff-with-other-window ()
+  "Run Ediff on current window's file and other window's file."
+  (interactive)
+  (let ((windows (window-list)))
+       (unless (= (length windows) 2)
+         (user-error "Function restricted to two-window frames"))
+       (-if-let* ((file-a (buffer-file-name
+                             (window-buffer (car windows))))
+                  (file-b (buffer-file-name
+                           (window-buffer (cadr windows)))))
+           (ediff file-a file-b)
+         (user-error "At least one buffer is not visiting a file"))))
+
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (define-key km/external-map "d" 'diff)
 (define-key km/external-map "e" 'ediff)
+(define-key km/external-map "o" 'km/ediff-with-other-window)
 (after 'diff
   (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
