@@ -97,6 +97,8 @@ monitor setup)."
   (revert-buffer)
   (view-mode 1))
 
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
 (define-key km/external-map "d" 'diff)
 (define-key km/external-map "e" 'ediff)
 (after 'diff
