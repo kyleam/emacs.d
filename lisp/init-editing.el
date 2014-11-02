@@ -59,14 +59,10 @@
     (set-buffer-file-coding-system 'utf-8)))
 (add-hook 'before-save-hook 'km/cleanup-buffer)
 
-;; Replace map
-(define-prefix-command 'km/replace-map)
-(global-set-key (kbd "C-c r") 'km/replace-map)
-
-(define-key km/replace-map "s" 'query-replace)
-(define-key km/replace-map "S" 'replace-string)
-(define-key km/replace-map "r" 'query-replace-regexp)
-(define-key km/replace-map "R" 'replace-regexp)
+(define-key search-map "s" 'query-replace)
+(define-key search-map "S" 'replace-string)
+(define-key search-map "r" 'query-replace-regexp)
+(define-key search-map "R" 'replace-regexp)
 
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
