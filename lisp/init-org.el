@@ -2,7 +2,8 @@
 
 (setq org-modules '(org-bibtex org-gnus org-info)
       org-log-done t
-      org-todo-keywords '((sequence "TODO" "STARTED" "|" "DONE" "NA(@)"))
+      org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w@)"
+                                    "|" "DONE(d)" "NA(n@)"))
       org-log-into-drawer t
       org-clock-into-drawer t
       org-use-speed-commands t
