@@ -85,7 +85,20 @@
 (define-prefix-command 'km/global-org-map)
 (global-set-key (kbd "C-c o") 'km/global-org-map)
 
-(define-key km/global-org-map "l" 'org-store-link)
+(defvar km/org-store-link-hook nil
+  "Hook run before by `km/org-store-link-hook'.
+These are run within a `save-window-excursion' block.")
+
+(defun km/org-store-link ()
+  "Run `km/org-store-link-hook' before `org-store-link'.
+The hook functions and `org-store-link' are called within a
+`save-window-excursion' block."
+  (interactive)
+  (save-window-excursion
+    (run-hooks 'km/org-store-link-hook)
+    (call-interactively 'org-store-link)))
+
+(define-key km/global-org-map "l" 'km/org-store-link)
 (define-key km/global-org-map "o" 'org-open-at-point-global)
 (define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "b" 'org-iswitchb)

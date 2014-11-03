@@ -149,12 +149,6 @@ A new buffer with the patch contents is opened in another window."
     (org-gnus-follow-link group message-id))
       (message "Couldn't get relevant infos for switching to Gnus."))))
 
-(defadvice org-store-link (around km/maybe-use-notmuch-link activate)
-  "Use notmuch links for local mail."
-  (save-window-excursion
-    (km/gnus-goto-message-in-notmuch)
-    ad-do-it))
-
 (defun km/gnus-goto-message-in-notmuch ()
   "Show message in notmuch."
   (interactive)
@@ -165,6 +159,8 @@ A new buffer with the patch contents is opened in another window."
                        (gnus-summary-article-header)))
              (message-id (org-remove-angle-brackets (mail-header-id header))))
         (notmuch-show (concat "id:" message-id)))))
+
+(add-hook 'km/org-store-link-hook 'km/gnus-goto-message-in-notmuch)
 
 (define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
 (add-hook 'gnus-group-mode-hook 'km/notmuch-shortcut)
