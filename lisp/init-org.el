@@ -17,6 +17,7 @@
       org-completion-use-ido t
       org-reverse-note-order t
       org-link-search-must-match-exact-headline nil
+      org-insert-heading-respect-content t
       org-M-RET-may-split-line nil
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
