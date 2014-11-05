@@ -120,7 +120,7 @@ window."
 (define-key km/dired-narrow-prefix-map "f" 'dired-narrow-fuzzy)
 (define-key km/dired-narrow-prefix-map "r" 'dired-narrow-regexp)
 
-(define-key dired-mode-map "/" 'dired-narrow-fuzzy)
+(define-key dired-mode-map "/" 'dired-narrow)
 
 (require-package 'dired-subtree)
 
