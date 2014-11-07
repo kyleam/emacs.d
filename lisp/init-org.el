@@ -277,6 +277,12 @@ be restored properly."
     ad-do-it
     (delete-other-windows)))
 
+(defun km/org-agenda-cd-and-read-dir-locals ()
+  (setq default-directory "~/notes/")
+  (hack-local-variables))
+
+(add-hook 'org-agenda-mode-hook 'km/org-agenda-cd-and-read-dir-locals)
+
 (setq org-agenda-restore-windows-after-quit t
       org-agenda-sticky nil)
 
