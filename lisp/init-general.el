@@ -64,4 +64,7 @@
   `(eval-after-load ,mode
      '(progn ,@body)))
 
+(define-key occur-mode-map "n" 'next-line)
+(define-key occur-mode-map "p" 'previous-line)
+
 (provide 'init-general)
