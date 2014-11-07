@@ -288,6 +288,12 @@ be restored properly."
       org-agenda-use-time-grid nil
       org-agenda-start-on-weekday nil)
 
+(setq org-agenda-sorting-strategy
+      '((agenda time-up deadline-up scheduled-up priority-down category-keep)
+        (todo priority-down category-keep)
+        (tags priority-down category-keep)
+        (search category-keep)))
+
 (setq org-agenda-files (file-expand-wildcards "~/notes/agenda/*.org"))
 (setq org-agenda-text-search-extra-files
       (file-expand-wildcards "~/notes/extra/*.org"))
