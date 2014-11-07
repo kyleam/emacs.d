@@ -124,6 +124,7 @@ START-POINT set to the current branch.
 
 (setq magit-restore-window-configuration t
       magit-completing-read-function 'magit-ido-completing-read
+      magit-delete-by-moving-to-trash nil
       magit-popup-show-help-echo nil
       magit-popup-show-help-section nil
       magit-popup-use-prefix-argument 'default
