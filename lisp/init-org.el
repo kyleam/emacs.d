@@ -294,9 +294,33 @@ be restored properly."
         (tags priority-down category-keep)
         (search category-keep)))
 
-(setq org-agenda-files (file-expand-wildcards "~/notes/agenda/*.org"))
+(defvar km/org-agenda-file-directory "~/notes/agenda/")
+(setq org-agenda-files (list km/org-agenda-file-directory))
 (setq org-agenda-text-search-extra-files
       (file-expand-wildcards "~/notes/extra/*.org"))
+
+(defun km/org-agenda-add-or-remove-file (file)
+  "Add or remove link to FILE in `km/org-agenda-file-directory'.
+If a link for FILE does not exist, create it. Otherwise, remove
+it. Like `org-agenda-file-to-front', this results in FILE being
+displayed in the agenda."
+  (interactive (list (case major-mode
+                       (org-mode (buffer-file-name))
+                       (dired-mode (dired-get-filename))
+                       (org-agenda-mode (ignore-errors (save-window-excursion
+                                                         (org-agenda-goto)
+                                                         (buffer-file-name))))
+                       (t (read-file-name "Link file: ")))))
+  (let ((agenda-file (expand-file-name (file-name-nondirectory file)
+                                       km/org-agenda-file-directory)))
+    (if (file-equal-p (file-truename agenda-file) file)
+        (progn
+          (when (called-interactively-p) (message "Deleting %s" agenda-file))
+          (delete-file agenda-file))
+      (when (called-interactively-p) (message "Adding %s" agenda-file))
+      (make-symbolic-link file agenda-file))))
+
+(define-key km/global-org-map "n" 'km/org-agenda-add-or-remove-file)
 
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
