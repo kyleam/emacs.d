@@ -45,10 +45,10 @@
 (defun km/toggle-prevent-cleanup ()
   "Toggle state of `km/prevent-cleanup'"
   (interactive)
-  (let ((state t))
-    (when km/prevent-cleanup
-        (setq state nil))
-    (set (make-local-variable 'km/prevent-cleanup) state)))
+  (if km/prevent-cleanup
+      (message "Allowing cleanup on save ")
+    (message "Preventing cleanup on save"))
+  (set (make-local-variable 'km/prevent-cleanup) (not km/prevent-cleanup)))
 
 (defun km/cleanup-buffer ()
   (interactive)
