@@ -142,6 +142,8 @@ and '<<<' mark the bounds of the narrowed region.
 (define-key km/editing-map "p" 'mc/mark-previous-like-this)
 (define-key km/editing-map "a" 'mc/mark-all-like-this)
 
+(define-key km/editing-map "t" 'km/toggle-prevent-cleanup)
+
 (global-set-key (kbd "C-;") 'er/expand-region)
 
 (define-key km/editing-map "i" 'indent-relative)
