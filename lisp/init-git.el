@@ -139,6 +139,8 @@ START-POINT set to the current branch.
   (magit-backup-mode -1)
   (add-hook 'magit-find-file-hook 'view-mode)
 
+  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
+
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
