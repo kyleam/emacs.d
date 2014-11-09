@@ -77,9 +77,9 @@ requiring confirmation.
     (magit-run-git-async "push" "-v" remote "--all")))
 
 (defun km/magit-log-all-branches (range &optional args)
-  (interactive (magit-log-read-args t nil))
+  (interactive (magit-log-read-args t))
   (add-to-list 'args "--all")
-  (magit-log-dwim range args))
+  (magit-log range args))
 
 (defun km/magit-checkout-local-tracking (remote-branch)
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
