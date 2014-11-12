@@ -36,29 +36,6 @@
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
 
-;; Buffer-specific prevention modified from
-;; http://stackoverflow.com/questions/14913398/
-;; in-emacs-how-do-i-save-without-running-save-hooks.
-(defvar km/prevent-cleanup nil
-  "If set, `km/cleanup-buffer' does not perform clean up on save.")
-
-(defun km/toggle-prevent-cleanup ()
-  "Toggle state of `km/prevent-cleanup'"
-  (interactive)
-  (if km/prevent-cleanup
-      (message "Allowing cleanup on save ")
-    (message "Preventing cleanup on save"))
-  (set (make-local-variable 'km/prevent-cleanup) (not km/prevent-cleanup)))
-
-(defun km/cleanup-buffer ()
-  (interactive)
-  (unless km/prevent-cleanup
-    (unless (equal major-mode 'makefile-gmake-mode)
-      (untabify (point-min) (point-max)))
-    (delete-trailing-whitespace)
-    (set-buffer-file-coding-system 'utf-8)))
-(add-hook 'before-save-hook 'km/cleanup-buffer)
-
 (define-key search-map "s" 'query-replace)
 (define-key search-map "S" 'replace-string)
 (define-key search-map "r" 'query-replace-regexp)
