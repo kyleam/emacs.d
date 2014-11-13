@@ -72,6 +72,14 @@
         (gnus-group-exit))))
 (add-hook 'kill-emacs-hook 'gnus-grace-exit-before-kill-emacs)
 
+(defun km/message-confirm-sender ()
+  "Stop sending message from the wrong address."
+  (unless (yes-or-no-p (format "Send message from %s?"
+                               (message-field-value "From")))
+    (user-error "Not sending message")))
+
+(add-hook 'message-send-hook 'km/message-confirm-sender)
+
 ;; Start in topic mode.
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
