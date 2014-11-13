@@ -269,6 +269,11 @@ read. Don't ask to confirm."
   "Go to next group without selecting the first article."
   (ad-set-arg 0 t))
 
+(defun km/gnus-setup-local-ace-jump ()
+  (add-hook 'ace-jump-mode-end-hook '(lambda () (gnus-summary-scroll-up 0))
+            nil t))
+(add-hook 'gnus-summary-mode-hook 'km/gnus-setup-local-ace-jump)
+
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
 (define-key gnus-summary-mode-map "a" 'ace-jump-mode)
