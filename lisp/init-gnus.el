@@ -204,7 +204,6 @@ on a new line and the resulting paragraph is filled."
 (define-key message-mode-map (kbd "C-c m s") 'km/snip-mail-quote)
 
 (define-key gnus-summary-mode-map "c" 'km/gnus-catchup-and-goto-next-group)
-(define-key gnus-summary-mode-map "j" 'gnus-summary-next-unread-article)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 (define-key gnus-summary-mode-map "e" 'gnus-summary-scroll-up)
 
@@ -277,6 +276,8 @@ read. Don't ask to confirm."
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
 (define-key gnus-summary-mode-map "a" 'ace-jump-mode)
+
+(define-key gnus-summary-mode-map "j" 'ace-jump-mode)
 
 (define-prefix-command 'km/mail-map)
 (global-set-key (kbd "C-x m") 'km/mail-map)
