@@ -76,10 +76,10 @@ requiring confirmation.
   (let ((remote (magit-read-remote "Remote")))
     (magit-run-git-async "push" "-v" remote "--all")))
 
-(defun km/magit-log-all-branches (range &optional args)
+(defun km/magit-log-all-branches (range &optional args files)
   (interactive (magit-log-read-args t))
   (add-to-list 'args "--all")
-  (magit-log range args))
+  (magit-log range args files))
 
 (defun km/magit-checkout-local-tracking (remote-branch)
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
