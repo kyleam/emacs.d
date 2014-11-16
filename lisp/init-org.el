@@ -45,10 +45,6 @@
 (defadvice org-open-file (after km/org-open-add-to-recentf activate)
   (recentf-add-file path))
 
-(defun km/open-main-orgfile ()
-  (interactive)
-  (find-file org-default-notes-file))
-
 (defun km/org-open-file-at-point ()
   "Open file at point with `org-open-file'."
   (interactive)
@@ -105,7 +101,6 @@ The hook functions and `org-store-link' are called within a
 (define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "b" 'org-iswitchb)
 (define-key km/global-org-map "s" 'org-save-all-org-buffers)
-(define-key km/global-org-map "m" 'km/open-main-orgfile)
 (define-key km/global-org-map "p" 'poporg-dwim)
 (key-chord-define-global ",a" 'org-agenda)
 
@@ -327,6 +322,16 @@ displayed in the agenda."
       (make-symbolic-link file agenda-file))))
 
 (define-key km/global-org-map "n" 'km/org-agenda-add-or-remove-file)
+
+(defun km/org-open-default-notes-file-inbox ()
+  "Open \"Inbox\" heading of `org-default-notes-file'."
+  (interactive)
+  (find-file org-default-notes-file)
+  (goto-char (org-find-exact-headline-in-buffer "Inbox" nil t))
+  (recenter-top-bottom 0)
+  (show-children))
+
+(define-key km/global-org-map "m" 'km/org-open-default-notes-file-inbox)
 
 (setq org-agenda-custom-commands
       '(("d" todo "DONE" nil)
