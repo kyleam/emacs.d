@@ -78,6 +78,8 @@ window."
 ;; This overrides the default binding for `dired-copy-filename-as-kill'.
 (define-key dired-mode-map "w" 'km/dired-copy-filename-map)
 
+(define-key dired-mode-map (kbd "C-c C-b") 'dired-up-directory)
+
 (defun km/dired-switch-to-buffer ()
   (interactive)
   (let ((buffer-name (km/dired-completing-buffer)))
