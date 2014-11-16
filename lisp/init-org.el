@@ -78,8 +78,6 @@
   (define-key km/file-map "p" 'km/org-open-file-at-point)
   (define-key km/file-map "r" 'km/org-open-recent-file))
 
-(setq initial-major-mode 'org-mode)
-
 (define-prefix-command 'km/global-org-map)
 (global-set-key (kbd "C-c o") 'km/global-org-map)
 
