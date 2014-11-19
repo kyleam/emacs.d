@@ -26,10 +26,18 @@ run."
          (default-directory (projectile-project-root)))
     (call-interactively 'compile)))
 
+(defun km/snakemake-compile-project-rule ()
+  "Run `snakemake-compile-rule' from project root."
+  (interactive)
+  (let ((default-directory (projectile-project-root)))
+    (call-interactively #'snakemake-compile-rule)))
+
 (autoload 'snakemake-compile-command "snakemake-mode")
 
 (after 'init-external
   (define-key km/compile-map "p"
-    'km/snakemake-compile-project-file-at-point))
+    'km/snakemake-compile-project-file-at-point)
+  (define-key km/compile-map "b"
+    'km/snakemake-compile-project-rule))
 
 (provide 'init-snakemake)
