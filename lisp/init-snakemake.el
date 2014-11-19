@@ -11,13 +11,14 @@
              (set (make-local-variable 'compile-command)
                   (snakemake-compile-command))))
 
-(defun km/snakemake-compile-project-file-at-point (jobs)
+(defun km/snakemake-compile-project-file (jobs)
   "Run Snakemake to produce project file at point.
 The numeric prefix JOBS controls the number of jobs that
 Snakemake runs (defaults to 1). If JOBS is zero, perform a dry
 run."
   (interactive "p")
-  (let* ((fname (km/project-filename-at-point))
+  (let* ((fname (or (km/project-filename-at-point)
+                    (read-file-name "File: ")))
          (job-flag (if (zerop jobs)
                        " -n "
                      (format " -j%s " jobs)))
@@ -36,7 +37,7 @@ run."
 
 (after 'init-external
   (define-key km/compile-map "p"
-    'km/snakemake-compile-project-file-at-point)
+    'km/snakemake-compile-project-file)
   (define-key km/compile-map "b"
     'km/snakemake-compile-project-rule))
 
