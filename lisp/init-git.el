@@ -1,9 +1,7 @@
-(add-to-list 'load-path "~/src/emacs/git-modes")
 (add-to-list 'load-path "~/src/emacs/magit")
 (add-to-list 'load-path "~/src/emacs/orgit")
 
 (require 'magit-autoloads)
-(require 'git-modes-autoloads)
 
 (require 'orgit)
 
@@ -11,6 +9,11 @@
 (require 'git-annex)
 
 (require-package 'git-timemachine)
+
+(require-package 'git-timemachine)
+(require-package 'gitconfig-mode)
+(require-package'gitignore-mode)
+(require-package 'gitattributes-mode)
 
 (setq git-annex-commit nil)
 
