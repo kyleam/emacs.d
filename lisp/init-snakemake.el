@@ -11,15 +11,17 @@
              (set (make-local-variable 'compile-command)
                   (snakemake-compile-command))))
 
-(defun km/snakemake-compile-project-file-at-point (arg)
+(defun km/snakemake-compile-project-file-at-point (jobs)
   "Run Snakemake to produce project file at point.
-With prefix ARG, use file name as is, without trying to append
-the project's path."
-  (interactive "P")
-  (let* ((fname (if arg
-                    (thing-at-point 'filename)
-                  (km/project-filename-at-point)))
-         (compile-command (concat (snakemake-compile-command) " "
+The numeric prefix JOBS controls the number of jobs that
+Snakemake runs (defaults to 1). If JOBS is zero, perform a dry
+run."
+  (interactive "p")
+  (let* ((fname (km/project-filename-at-point))
+         (job-flag (if (zerop jobs)
+                       " -n "
+                     (format " -j%s " jobs)))
+         (compile-command (concat (snakemake-compile-command) job-flag
                                   fname))
          (default-directory (projectile-project-root)))
     (call-interactively 'compile)))
