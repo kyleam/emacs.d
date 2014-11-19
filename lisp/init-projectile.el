@@ -40,8 +40,8 @@ Interactive arguments are processed according to
 
 (defun km/project-filename-at-point ()
   "Return file name relative to `projectile-project-root'."
-  (file-relative-name (thing-at-point 'filename)
-                      (projectile-project-root)))
+  (--when-let (thing-at-point 'filename)
+    (file-relative-name it (projectile-project-root))))
 
 (defun km/projectile-copy-project-filename-as-kill ()
   (interactive)
