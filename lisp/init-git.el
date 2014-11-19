@@ -76,6 +76,13 @@ requiring confirmation.
   (let ((remote (magit-read-remote "Remote")))
     (magit-run-git-async "push" "-v" remote "--all")))
 
+(defun km/magit-push-head ()
+  "Push current branch to same name on remote.
+\n(git push REMOTE HEAD)"
+  (interactive)
+  (let ((remote (magit-read-remote "Remote")))
+    (magit-run-git-async "push" "-v" remote "HEAD")))
+
 (defun km/magit-log-all-branches (range &optional args files)
   (interactive (magit-log-read-args t))
   (add-to-list 'args "--all")
@@ -154,6 +161,8 @@ START-POINT set to the current branch.
     ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
     ?a "Push all" 'km/magit-push-all)
+  (magit-define-popup-action 'magit-push-popup
+    ?h "Push HEAD" 'km/magit-push-head)
   (magit-define-popup-action 'magit-log-popup
     ?a "All branches" 'km/magit-log-all-branches)
   (magit-define-popup-action 'magit-branch-popup
