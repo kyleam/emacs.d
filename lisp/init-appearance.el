@@ -12,4 +12,9 @@
 (size-indication-mode t)
 
 
+(custom-set-faces
+ '(dired-subtree-depth-1-face ((t (:background "gray80"))))
+ '(dired-subtree-depth-2-face ((t (:background "gray90"))))
+ '(dired-subtree-depth-3-face ((t (:background "gray95")))))
+
 (provide 'init-appearance)
