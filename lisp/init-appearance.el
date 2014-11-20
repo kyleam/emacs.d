@@ -13,6 +13,11 @@
 
 (load-theme 'stekene-light t)
 
+(custom-theme-set-faces
+ 'stekene-light
+ ;; Darken a bit (was gray40).
+ '(font-lock-keyword-face ((t (:foreground "gray33")))))
+
 (custom-set-faces
  '(dired-subtree-depth-1-face ((t (:background "gray80"))))
  '(dired-subtree-depth-2-face ((t (:background "gray90"))))
