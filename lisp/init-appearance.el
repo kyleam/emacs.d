@@ -16,6 +16,20 @@
 (custom-theme-set-faces
  'stekene-light
  '(default ((t (:background "white"))))
+ '(outline-1 ((t (:inherit font-lock-function-name-face))))
+ '(outline-2 ((t (:inherit font-lock-doc-face))))
+ '(outline-3 ((t (:inherit font-lock-constant-face))))
+ '(org-todo ((t (:foreground "#ba2727" :background "gray85"))))
+ '(org-done ((t (:foreground "#557755" :background "gray85"))))
+ '(org-date ((t (:inherit font-lock-builtin-face))))
+ '(org-upcoming-deadline ((t (:inherit font-lock-constant-face))))
+ '(org-warning ((t (:inherit font-lock-string-face))))
+ '(org-agenda-date-today ((t (:weight semi-bold))))
+ '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
+ '(org-agenda-structure ((t (:foreground "gray40"))))
+ '(org-agenda-date ((t (:inherit default))))
+ '(org-scheduled ((t (:inherit font-lock-string-face))))
+ '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
  ;; Darken a bit (was gray40).
  '(font-lock-keyword-face ((t (:foreground "gray33")))))
 
