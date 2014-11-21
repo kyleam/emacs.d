@@ -79,12 +79,11 @@ requiring confirmation.
   (let ((remote (magit-read-remote "Remote")))
     (magit-run-git-async "push" "-v" remote "--all")))
 
-(defun km/magit-push-head ()
+(defun km/magit-push-head (remote &optional args)
   "Push current branch to same name on remote.
-\n(git push REMOTE HEAD)"
-  (interactive)
-  (let ((remote (magit-read-remote "Remote")))
-    (magit-run-git-async "push" "-v" remote "HEAD")))
+\n(git push [ARGS] REMOTE HEAD)"
+  (interactive (list (magit-read-remote "Remote") (magit-push-arguments)))
+  (magit-run-git-async "push" "-v" args remote "HEAD"))
 
 (defun km/magit-log-all-branches (range &optional args files)
   (interactive (magit-log-read-args t))
