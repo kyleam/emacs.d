@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# key: pst
+# --
+import pdb; pdb.set_trace()$0
