@@ -30,6 +30,18 @@
  '(org-agenda-date ((t (:inherit default))))
  '(org-scheduled ((t (:inherit font-lock-string-face))))
  '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
+ '(gnus-group-mail-1-empty ((t (:inherit font-lock-string-face))))
+ '(gnus-group-mail-2-empty ((t (:inherit font-lock-function-name-face))))
+ '(gnus-group-mail-3-empty ((t (:inherit font-lock-type-face))))
+ '(gnus-group-mail-1 ((t (:inherit gnus-group-mail-1-empty :weight semi-bold))))
+ '(gnus-group-mail-2 ((t (:inherit gnus-group-mail-2-empty :weight semi-bold))))
+ '(gnus-group-mail-3 ((t (:inherit gnus-group-mail-3-empty :weight semi-bold))))
+ '(gnus-subject ((t (:inherit font-lock-doc-face))))
+ '(gnus-button ((t (:inherit default))))
+ '(gnus-cite-1 ((t (:inherit font-lock-function-name-face))))
+ '(gnus-cite-2 ((t (:inherit font-lock-string-face))))
+ '(gnus-header-name ((t (:inherit font-lock-constant-face))))
+ '(gnus-header-content ((t (:inherit default))))
  ;; Darken a bit (was gray40).
  '(font-lock-keyword-face ((t (:foreground "gray33")))))
 
