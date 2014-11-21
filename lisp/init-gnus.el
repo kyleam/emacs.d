@@ -84,8 +84,7 @@
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
 (add-hook 'message-mode-hook
-          '(lambda ()
-             (flyspell-mode 1)))
+          (lambda () (flyspell-mode 1)))
 
 (defun km/gnus-follow-last-message-link (arg)
   "Follow link at bottom of message.
@@ -269,7 +268,7 @@ read. Don't ask to confirm."
   (ad-set-arg 0 t))
 
 (defun km/gnus-setup-local-ace-jump ()
-  (add-hook 'ace-jump-mode-end-hook '(lambda () (gnus-summary-scroll-up 0))
+  (add-hook 'ace-jump-mode-end-hook (lambda () (gnus-summary-scroll-up 0))
             nil t))
 (add-hook 'gnus-summary-mode-hook 'km/gnus-setup-local-ace-jump)
 

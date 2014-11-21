@@ -7,9 +7,9 @@
 ;; mode hook that sets `compile-command', which overides the snakemake
 ;; version.
 (add-hook 'snakemake-mode-hook
-          '(lambda ()
-             (set (make-local-variable 'compile-command)
-                  (snakemake-compile-command))))
+          (lambda ()
+            (set (make-local-variable 'compile-command)
+                 (snakemake-compile-command))))
 
 (defun km/snakemake-compile-project-file (jobs)
   "Run Snakemake to produce project file at point.

@@ -45,7 +45,7 @@ This is useful for commit IDs in files and log messages."
   (interactive)
   (--when-let (thing-at-point 'word)
     (let ((projectile-switch-project-action
-           '(lambda () (magit-show-commit it))))
+           (lambda () (magit-show-commit it))))
       (projectile-switch-project))))
 
 (defun km/magit-commit-extend-all ()

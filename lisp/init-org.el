@@ -243,9 +243,9 @@ to
 (after 'git-commit-mode
   (add-hook 'git-commit-setup-hook 'km/load-orgstruct))
 
-(add-hook 'next-error-hook '(lambda ()
-                              (when (eq major-mode 'org-mode)
-                                (org-show-context))))
+(add-hook 'next-error-hook (lambda ()
+                             (when (eq major-mode 'org-mode)
+                               (org-show-context))))
 
 (defadvice magit-visit
   (after magit-visit-show-org-context activate)

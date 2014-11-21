@@ -16,8 +16,8 @@
       ido-max-directory-size 100000)
 
 (add-hook 'dired-mode-hook
-          '(lambda ()
-             (set (make-local-variable 'ido-use-filename-at-point) nil)))
+          (lambda ()
+            (set (make-local-variable 'ido-use-filename-at-point) nil)))
 
 (setq ido-file-extensions-order
       '(".org" ".txt" ".md" ".rst" ".tex" ".py" ".el" ".hs"))
