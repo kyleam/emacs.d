@@ -15,6 +15,7 @@
 
 (custom-theme-set-faces
  'stekene-light
+ '(default ((t (:background "white"))))
  ;; Darken a bit (was gray40).
  '(font-lock-keyword-face ((t (:foreground "gray33")))))
 
