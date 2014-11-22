@@ -104,7 +104,6 @@ Interactive arguments are processed according to
 (key-chord-define-global ";d" 'projectile-find-dir)
 (key-chord-define-global ";t" 'km/projectile-open-external-terminal-in-root)
 (key-chord-define-global ";g" 'projectile-grep)
-(key-chord-define-global ";w" 'projectile-multi-occur)
 (key-chord-define-global ";r" 'projectile-recentf)
 (key-chord-define-global ";c" 'projectile-commander)
 
