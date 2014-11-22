@@ -1,3 +1,12 @@
+(require-package 'auto-complete)
+(require-package 'jedi)
+
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook 'auto-complete-mode)
+
+(setq jedi:tooltip-method nil
+      ac-auto-start nil)
+
 ;; http://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc5
 (defun km/setup-ipython-shell ()
   (interactive)
@@ -100,6 +109,8 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
   (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
   (define-key python-mode-map (kbd "C-c C-.")
     'km/python-shell-send-buffer-up-to-point)
+
+  (key-chord-define python-mode-map ";w" 'auto-complete)
 
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
