@@ -13,3 +13,4 @@ vendor
 /abbrev_defs
 /.org-id-locations
 /.python-environments
+/ac-comphist.dat
