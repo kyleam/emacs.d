@@ -240,7 +240,7 @@ to
 
 (add-hook 'message-mode-hook 'km/load-orgstruct)
 
-(after 'git-commit-mode
+(after 'git-commit
   (add-hook 'git-commit-setup-hook 'km/load-orgstruct))
 
 (add-hook 'next-error-hook (lambda ()
