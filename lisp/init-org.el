@@ -247,15 +247,6 @@ to
                              (when (eq major-mode 'org-mode)
                                (org-show-context))))
 
-(defadvice magit-visit
-  (after magit-visit-show-org-context activate)
-  "Show context if visiting Org buffer.
-This is an improvement, but still not great. It requires the
-point be on or under a heading in the Magit diff. If above, the
-context will be shown for above heading."
-  (when (eq major-mode 'org-mode)
-    (org-show-context)))
-
 ;;; Agenda
 
 (after 'org-agenda
