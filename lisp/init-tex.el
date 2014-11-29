@@ -1,4 +1,3 @@
-(require-package 'auctex)
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 

@@ -1,7 +1,3 @@
-(require-package 'ace-jump-mode)
-(require-package 'ace-link)
-(require-package 'ace-window)
-
 ;;; Ace Jump
 
 (key-chord-define-global ";a" 'ace-jump-mode)

@@ -1,8 +1,3 @@
-(require-package 'multiple-cursors)
-(require-package 'expand-region)
-(require-package 'wrap-region)
-(require-package 'subr+)
-(require-package 'narrow-indirect)
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
 

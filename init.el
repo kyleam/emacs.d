@@ -2,19 +2,21 @@
 (add-to-list 'load-path km/init-lisp-dir)
 
 (require 'init-elpa)
+
+(require 'cask)
+(cask-initialize)
+(require 'pallet)
+(pallet-mode 1)
+
 (require 'init-appearance)
+
+(require 'dash)
+(require 's)
+
 (require 'init-general)
 (require 'init-diminish)
 
-(require-package 'dash)
-(require 'dash)
-(require-package 's)
-(require 's)
-(require-package 'noflet)
-(require-package 'mocker)
-
 (require 'init-org)
-(require-package 'poporg)
 (require 'init-orgcontacts)
 (require 'init-babel)
 
@@ -24,7 +26,6 @@
 (require 'init-view)
 
 (require 'init-editing)
-(require-package 'boxquote)
 
 (require 'init-text)
 (require 'init-elisp)
@@ -32,16 +33,10 @@
 (require 'init-haskell)
 (require 'init-python)
 (require 'init-ess)
-(require-package 'stan-mode)
-(require-package 'lua-mode)
 
 (require 'init-tex)
 (require 'init-bib)
 (require 'init-bog)
-
-(require-package 'htmlize)
-(require-package 'less-css-mode)
-(require-package 'yaml-mode)
 
 (require 'init-dired)
 (require 'init-git)

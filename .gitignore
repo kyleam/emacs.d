@@ -1,6 +1,5 @@
 auto-save-list
 cache
-elpa
 bookmarks
 /lisp/init-untracked.el
 /.mc-lists.el
@@ -13,3 +12,4 @@ bookmarks
 /.org-id-locations
 /.python-environments
 /ac-comphist.dat
+/.cask

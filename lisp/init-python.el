@@ -1,5 +1,3 @@
-(require-package 'auto-complete)
-(require-package 'jedi)
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook 'auto-complete-mode)

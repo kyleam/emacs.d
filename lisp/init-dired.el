@@ -115,16 +115,12 @@ window."
   ;; This overrides `dired-find-file', which is also bound to "f".
   (define-key dired-mode-map "e" 'km/org-open-dired-marked-files))
 
-(require-package 'dired-narrow)
-
 (define-prefix-command 'km/dired-narrow-prefix-map)
 (define-key km/dired-narrow-prefix-map "n" 'dired-narrow)
 (define-key km/dired-narrow-prefix-map "f" 'dired-narrow-fuzzy)
 (define-key km/dired-narrow-prefix-map "r" 'dired-narrow-regexp)
 
 (define-key dired-mode-map "/" 'dired-narrow)
-
-(require-package 'dired-subtree)
 
 (define-prefix-command 'km/dired-subtree-prefix-map)
 (define-key km/dired-subtree-prefix-map "i" 'dired-subtree-insert)

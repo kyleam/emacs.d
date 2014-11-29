@@ -36,7 +36,6 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(require-package 'key-chord)
 (key-chord-mode 1)
 
 (global-set-key (kbd "C-h :") 'find-function)

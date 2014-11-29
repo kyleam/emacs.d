@@ -1,4 +1,3 @@
-(require-package 'diminish)
 (require 'diminish)
 
 (diminish 'abbrev-mode "Ab")

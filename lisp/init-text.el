@@ -1,4 +1,3 @@
-(require-package 'markdown-mode)
 
 (setq-default fill-column 72)
 

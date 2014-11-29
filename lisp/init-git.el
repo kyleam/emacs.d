@@ -6,15 +6,7 @@
 
 (require 'orgit)
 
-(require-package 'git-annex)
 (require 'git-annex)
-
-(require-package 'git-timemachine)
-
-(require-package 'git-timemachine)
-(require-package 'gitconfig-mode)
-(require-package'gitignore-mode)
-(require-package 'gitattributes-mode)
 
 (setq git-annex-commit nil)
 

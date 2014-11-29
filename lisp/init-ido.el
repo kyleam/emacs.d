@@ -1,8 +1,3 @@
-(require-package 'flx)
-(require-package 'flx-ido)
-(require-package 'ido-vertical-mode)
-(require-package 'ido-ubiquitous)
-(require-package 'ido-at-point)
 
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
