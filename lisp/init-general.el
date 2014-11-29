@@ -54,7 +54,17 @@
 (global-unset-key (kbd "M-{"))
 (global-set-key (kbd "M-[") 'backward-paragraph)
 
-(global-set-key (kbd "C-c j") 'imenu)
+
+(defun km/imenu (rescan)
+  "Call `imenu', rescanning if RESCAN is non-nil"
+  (interactive "P")
+  (when rescan
+    ;; Taken from `imenu-choose-buffer-index'.
+    (imenu--cleanup)
+    (setq imenu--index-alist nil))
+  (call-interactively #'imenu))
+
+(global-set-key (kbd "C-c j") 'km/imenu)
 
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.

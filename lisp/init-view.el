@@ -9,6 +9,6 @@
   (define-key view-mode-map "b" 'backward-word)
   (define-key view-mode-map "]" 'forward-paragraph)
   (define-key view-mode-map "[" 'backward-paragraph)
-  (define-key view-mode-map "j" 'imenu))
+  (define-key view-mode-map "j" 'km/imenu))
 
 (provide 'init-view)
