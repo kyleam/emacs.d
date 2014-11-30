@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/src/emacs/bog")
+(add-to-list 'load-path "~/src/emacs/bog/")
 
 (setq bog-keymap-prefix (kbd "C-c b"))
 (global-set-key (kbd "C-c B") 'bog-commander)

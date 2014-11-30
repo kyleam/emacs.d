@@ -1,4 +1,4 @@
-(defvar init-lisp-dir (expand-file-name "lisp" user-emacs-directory))
+(defvar init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
 (add-to-list 'load-path init-lisp-dir)
 
 (require 'init-elpa)

@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/src/emacs/snakemake-mode")
+(add-to-list 'load-path "~/src/emacs/snakemake-mode/")
 
 (require 'snakemake-mode-autoloads)
 

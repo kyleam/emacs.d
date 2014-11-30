@@ -1,6 +1,6 @@
-(add-to-list 'load-path "~/src/emacs/org-mode/lisp")
-(add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp" t)
-(add-to-list 'Info-directory-list "~/src/emacs/org-mode/doc")
+(add-to-list 'load-path "~/src/emacs/org-mode/lisp/")
+(add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp/" t)
+(add-to-list 'Info-directory-list "~/src/emacs/org-mode/doc/")
 
 (setq org-modules '(org-bibtex org-gnus org-info)
       org-log-done t

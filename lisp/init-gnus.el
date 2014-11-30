@@ -2,10 +2,10 @@
 
 (setq
  ;; Locations
- gnus-home-directory "~/.gnus.d"
+ gnus-home-directory "~/.gnus.d/"
  gnus-directory gnus-home-directory
- gnus-article-save-directory (expand-file-name "saved" gnus-directory)
- gnus-kill-files-directory (expand-file-name "scores" gnus-directory)
+ gnus-article-save-directory (expand-file-name "saved/" gnus-directory)
+ gnus-kill-files-directory (expand-file-name "scores/" gnus-directory)
  ;; Startup files
  gnus-startup-file (expand-file-name "newsrc" gnus-home-directory)
  gnus-init-file (expand-file-name "gnus" gnus-home-directory)
@@ -51,7 +51,7 @@
 (defun km/sync-mail ()
   (interactive)
   (let ((bufname (get-buffer-create "*Mail sync*"))
-        (default-directory "~")
+        (default-directory "~/")
         (process "mail-sync"))
     (with-current-buffer bufname
       (view-mode 1)
