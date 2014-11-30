@@ -1,3 +1,5 @@
+(add-to-list 'load-path "~/src/emacs/snakemake-mode")
+
 (require 'snakemake-mode-autoloads)
 
 (setq snakemake-compile-command-options '("-p"))

@@ -1,4 +1,5 @@
 (add-to-list 'load-path "~/src/emacs/magit")
+(add-to-list 'load-path "~/src/emacs/magit-annex")
 (add-to-list 'load-path "~/src/emacs/orgit")
 
 (require 'magit-autoloads)
