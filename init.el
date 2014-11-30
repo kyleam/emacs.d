@@ -1,5 +1,5 @@
-(defvar init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
-(add-to-list 'load-path init-lisp-dir)
+(defvar km/init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
+(add-to-list 'load-path km/init-lisp-dir)
 
 (require 'init-elpa)
 (require 'init-appearance)
@@ -57,7 +57,7 @@
 
 (require 'init-gnus)
 
-(when (file-exists-p (expand-file-name "init-untracked.el" init-lisp-dir))
+(when (file-exists-p (expand-file-name "init-untracked.el" km/init-lisp-dir))
   (require 'init-untracked))
 
 (require 'server)
