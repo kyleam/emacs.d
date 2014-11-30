@@ -47,7 +47,6 @@
 (require 'init-dired)
 (require 'init-git)
 (require 'init-projectile)
-(require 'init-grep)
 (require 'init-snakemake)
 
 (require 'init-ido)
