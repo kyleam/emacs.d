@@ -81,14 +81,31 @@ entering `ch' is equivalent to `*.[ch]'.")
       (goto-line 5)
       (narrow-to-region (point) (point-max)))))
 
-(defadvice grep (after hide-grep-header activate) (hide-grep-header))
-(defadvice rgrep (after hide-grep-header activate) (hide-grep-header))
-(defadvice lgrep (after hide-grep-hxoeader activate) (hide-grep-header))
-(defadvice grep-find (after hide-grep-header activate) (hide-grep-header))
+(after 'grep
+  (defadvice grep (after hide-grep-header activate) (hide-grep-header))
+  (defadvice rgrep (after hide-grep-header activate) (hide-grep-header))
+  (defadvice lgrep (after hide-grep-hxoeader activate) (hide-grep-header))
+  (defadvice grep-find (after hide-grep-header activate) (hide-grep-header)))
 (after 'vc-git
   (defadvice vc-git-grep (after hide-grep-header activate) (hide-grep-header)))
 
 (key-chord-define-global ",z" 'rgrep)
+
+(define-prefix-command 'km/file-search-map)
+(define-key 'km/file-map "s" 'km/file-search-map)
+
+(define-key 'km/file-search-map "g" 'lgrep)
+(define-key 'km/file-search-map "G" 'grep)
+(define-key 'km/file-search-map "f" 'grep-find)
+
+(define-key 'km/file-search-map "r" 'rgrep)
+
+(define-key 'km/file-search-map "v" 'vc-git-grep)
+(define-key 'km/file-search-map "z" 'zrgrep)
+
+(define-key 'km/file-search-map "n" 'find-name-dired)
+(define-key 'km/file-search-map "d" 'find-grep-dired)
+(define-key 'km/file-search-map "D" 'find-dired)
 
 ;;; Ibuffer
 
