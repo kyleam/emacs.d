@@ -1,4 +1,3 @@
-(add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp" t)
 (require 'org-contacts)
 
 (setq org-contacts-files '("~/notes/contacts.org"))
