@@ -42,6 +42,7 @@
 (depends-on "s")
 (depends-on "smex")
 (depends-on "stan-mode")
+(depends-on "stekene-theme")
 (depends-on "subr+")
 (depends-on "wrap-region")
 (depends-on "yaml-mode")
