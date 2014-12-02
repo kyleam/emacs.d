@@ -48,6 +48,14 @@ function for calling from outside Magit buffers."
   (interactive)
   (magit-commit-extend '("--all")))
 
+(defun km/magit-ff-merge-upstream ()
+  "Perform fast-forward merge of upstream branch.
+\n(git merge --no-edit --ff-only <upstream>)"
+  (interactive)
+  (--if-let (magit-get-tracked-branch)
+      (magit-merge it '("--ff-only"))
+    (user-error "No upstream branch")))
+
 (defun km/magit-stage-file-intent (file)
   "Stage FILE but not its content.
 With a prefix argument or when there is no file at point ask for
@@ -158,6 +166,8 @@ START-POINT set to the current branch.
     ?a "Push all" 'km/magit-push-all)
   (magit-define-popup-action 'magit-push-popup
     ?h "Push HEAD" 'km/magit-push-head)
+  (magit-define-popup-action 'magit-merge-popup
+    ?u "Merge upstream" 'km/magit-ff-merge-upstream)
   (magit-define-popup-action 'magit-log-popup
     ?a "All branches" 'km/magit-log-all-branches)
   (magit-define-popup-action 'magit-branch-popup
