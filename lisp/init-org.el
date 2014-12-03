@@ -227,11 +227,12 @@ to
   * TODO Rest of title               :tag:"
   (interactive)
   (save-excursion
-    (let ((regex (format "^%s\\(?:%s \\)?\\(.*: \\)\\w+"
-                         org-outline-regexp org-todo-regexp)))
+    (let ((regex (format "^%s\\(?:%s \\)?\\(?:%s \\)?\\(.*: \\)\\w+"
+                         org-outline-regexp org-todo-regexp
+                         org-priority-regexp)))
       (org-back-to-heading)
       (when (re-search-forward regex (point-at-eol) t)
-        (replace-match "" nil nil nil 2)
+        (replace-match "" nil nil nil 4)
         (org-set-tags nil t)))))
 
 ;;; Org in other modes
