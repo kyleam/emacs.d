@@ -133,8 +133,7 @@ and '<<<' mark the bounds of the narrowed region.
   (unless km/prevent-cleanup
     (unless indent-tabs-mode
       (untabify (point-min) (point-max)))
-    (delete-trailing-whitespace)
-    (set-buffer-file-coding-system 'utf-8)))
+    (delete-trailing-whitespace)))
 (add-hook 'before-save-hook 'km/cleanup-buffer)
 
 (define-key km/editing-map "t" 'km/toggle-prevent-cleanup)
