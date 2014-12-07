@@ -131,7 +131,7 @@ and '<<<' mark the bounds of the narrowed region.
 (defun km/cleanup-buffer ()
   (interactive)
   (unless km/prevent-cleanup
-    (unless (equal major-mode 'makefile-gmake-mode)
+    (unless indent-tabs-mode
       (untabify (point-min) (point-max)))
     (delete-trailing-whitespace)
     (set-buffer-file-coding-system 'utf-8)))
