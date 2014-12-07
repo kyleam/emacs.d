@@ -1,16 +1,10 @@
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t
-      shell-command-switch "-ic"
-      x-select-enable-clipboard t ; Share clipboard with system.
-      x-select-enable-primary t
-      ispell-program-name "aspell"
       whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark)
       tramp-default-method "ssh"
       sentence-end-double-space nil
-      enable-recursive-minibuffers t
-      browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox")
+      enable-recursive-minibuffers t)
 
 (setq-default indicate-empty-lines t
               indent-tabs-mode nil)

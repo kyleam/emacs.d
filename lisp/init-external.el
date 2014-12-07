@@ -1,6 +1,13 @@
 (define-prefix-command 'km/external-map)
 (global-set-key (kbd "C-c x") 'km/external-map)
 
+(setq shell-command-switch "-ic"
+      x-select-enable-clipboard t ; Share clipboard with system.
+      x-select-enable-primary t
+      ispell-program-name "aspell"
+      browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
+
 ;;; Terminals
 
 (defvar km/terminal "urxvt")
