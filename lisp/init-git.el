@@ -128,7 +128,7 @@ START-POINT set to the current branch.
     (user-error "No current branch")))
 
 ;; http://whattheemacsd.com/setup-magit.el-01.html
-(defadvice magit-status (around magit-fullscreen activate)
+(defadvice magit-status-internal (around magit-fullscreen activate)
   ad-do-it
   (delete-other-windows))
 
