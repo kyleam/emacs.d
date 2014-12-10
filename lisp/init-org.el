@@ -203,17 +203,16 @@ under the current heading."
 
 (defun km/org-sort-heading-ignoring-articles ()
   "Sort alphabetically, but ignore any leading articles."
-  (if (looking-at org-complex-heading-regexp)
-      (let ((ignored-words '("a" "an" "the"))
-            heading heading-words)
-        (setq heading
-              (funcall 'downcase
-                       (org-sort-remove-invisible (match-string 4))))
-        (setq heading-words (split-string heading))
-        (when (member (car heading-words) ignored-words)
-          (setq heading-words (cdr heading-words)))
-        (mapconcat 'identity heading-words " "))
-    nil))
+  (when (looking-at org-complex-heading-regexp)
+    (let ((ignored-words '("a" "an" "the"))
+          heading heading-words)
+      (setq heading
+            (funcall 'downcase
+                     (org-sort-remove-invisible (match-string 4))))
+      (setq heading-words (split-string heading))
+      (when (member (car heading-words) ignored-words)
+        (setq heading-words (cdr heading-words)))
+      (mapconcat 'identity heading-words " "))))
 
 (defun km/org-remove-title-leader ()
   "Remove leader from Org heading title.
