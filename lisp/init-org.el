@@ -190,14 +190,16 @@ After sorting, the point is returned to its previous location
 under the current heading."
   (interactive "p")
   (let ((heading (org-no-properties (org-get-heading t t)))
-        starting-pos
+        (starting-pos (point))
         chars-after-heading)
-    (setq starting-pos (point))
-    (save-excursion
-      (org-back-to-heading t)
-      (setq chars-after-heading (- starting-pos (point)))
-      (outline-up-heading arg)
-      (call-interactively 'org-sort))
+    (org-back-to-heading t)
+    (setq chars-after-heading (- starting-pos (point)))
+    (outline-up-heading arg)
+    (call-interactively #'org-sort)
+    ;; Sorting doesn't play well with `save-restriction' or markers,
+    ;; so just put the point where it was relative to original
+    ;; heading.  This may not actually be the same tree if there are
+    ;; redundant headings.
     (goto-char (+ (org-find-exact-headline-in-buffer heading nil t)
                   chars-after-heading))))
 
