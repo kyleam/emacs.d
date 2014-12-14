@@ -31,6 +31,38 @@
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
 
+(defun km/fill-surrounding-indented ()
+  "Fill current line with all surrounding lines of same indentation.
+This is like `fill-individual-paragraphs', but 1) it acts only on
+a single paragraph at point, not all paragraphs in a region, and
+2) it doesn't treat lines with the following structure as a
+special case.
+
+     foo>    This line with extra indentation starts
+     foo> a paragraph that continues on more lines."
+  (interactive)
+  (save-excursion
+    (let ((orig-point (point))
+          (level (current-indentation))
+          beg end)
+      (beginning-of-line)
+      (while (and (not beg) (not (bobp)))
+        (forward-line -1)
+        (when (or (/= level (current-indentation))
+                  (looking-at "^\\s-*$"))
+          (forward-line)
+          (setq beg (point))))
+      (goto-char orig-point)
+      (beginning-of-line)
+      (while (and (not end) (not (eobp)))
+        (forward-line)
+        (when (or (/= level (current-indentation))
+                  (looking-at "^\\s-*$"))
+          (forward-line -1)
+          (end-of-line)
+          (setq end (point))))
+      (fill-region (or beg (point-min)) (or end (point-max))))))
+
 (define-key search-map "s" 'query-replace)
 (define-key search-map "S" 'replace-string)
 (define-key search-map "r" 'query-replace-regexp)
@@ -141,6 +173,7 @@ and '<<<' mark the bounds of the narrowed region.
 (global-set-key (kbd "C-;") 'er/expand-region)
 
 (define-key km/editing-map "i" 'indent-relative)
+(define-key km/editing-map "f" 'km/fill-surrounding-indented)
 
 (electric-indent-mode -1)
 
