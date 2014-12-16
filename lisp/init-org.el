@@ -246,6 +246,14 @@ to
        (beginning-of-line)
        (open-line 1)))))
 
+(defun km/org-normalize-spaces ()
+  "Reduce to single spaces and add space before headings."
+  (interactive)
+  (km/reduce-to-single-spaces)
+  (km/org-add-blank-before-heading))
+
+(define-key km/org-prefix-map "n" 'km/org-normalize-spaces)
+
 ;;; Org in other modes
 (defun km/load-orgstruct ()
   (turn-on-orgstruct++)
