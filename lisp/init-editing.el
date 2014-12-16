@@ -63,6 +63,15 @@ special case.
           (setq end (point))))
       (fill-region (or beg (point-min)) (or end (point-max))))))
 
+(defun km/reduce-to-single-spaces ()
+  "Reduce consecutive blank lines to a single line."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\\([ \t]*\n\\)\\{3,\\}" nil t)
+      (forward-line -1)
+      (delete-blank-lines))))
+
 (define-key search-map "s" 'query-replace)
 (define-key search-map "S" 'replace-string)
 (define-key search-map "r" 'query-replace-regexp)
