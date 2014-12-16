@@ -197,7 +197,7 @@ under the current heading."
     (outline-up-heading arg)
     (call-interactively #'org-sort)
     ;; Sorting doesn't play well with `save-restriction' or markers,
-    ;; so just put the point where it was relative to original
+    ;; so just put the point where it was relative to the original
     ;; heading.  This may not actually be the same tree if there are
     ;; redundant headings.
     (goto-char (+ (org-find-exact-headline-in-buffer heading nil t)
