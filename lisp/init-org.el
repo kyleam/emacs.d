@@ -236,6 +236,16 @@ to
         (replace-match "" nil nil nil 4)
         (org-set-tags nil t)))))
 
+(defun km/org-add-blank-before-heading ()
+  "Add a blank line before Org headings in buffer."
+  (interactive)
+  (save-excursion
+   (goto-char (point-min))
+   (while (re-search-forward "[^\n]\n\\*" nil t)
+     (when (org-at-heading-p)
+       (beginning-of-line)
+       (open-line 1)))))
+
 ;;; Org in other modes
 (defun km/load-orgstruct ()
   (turn-on-orgstruct++)
