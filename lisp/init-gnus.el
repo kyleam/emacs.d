@@ -159,13 +159,13 @@ A new buffer with the patch contents is opened in another window."
 (defun km/gnus-goto-message-in-notmuch ()
   "Show message in notmuch."
   (interactive)
-  (if (and (memq major-mode '(gnus-summary-mode gnus-article-mode))
-           (string= (cadr (gnus-find-method-for-group gnus-newsgroup-name))
-                    "dov"))
-      (let* ((header (with-current-buffer gnus-summary-buffer
-                       (gnus-summary-article-header)))
-             (message-id (org-remove-angle-brackets (mail-header-id header))))
-        (notmuch-show (concat "id:" message-id)))))
+  (when (and (memq major-mode '(gnus-summary-mode gnus-article-mode))
+             (string= (cadr (gnus-find-method-for-group gnus-newsgroup-name))
+                      "dov"))
+    (let* ((header (with-current-buffer gnus-summary-buffer
+                     (gnus-summary-article-header)))
+           (message-id (org-remove-angle-brackets (mail-header-id header))))
+      (notmuch-show (concat "id:" message-id)))))
 
 (add-hook 'km/org-store-link-hook 'km/gnus-goto-message-in-notmuch)
 
