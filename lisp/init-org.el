@@ -9,6 +9,7 @@
       org-log-into-drawer t
       org-clock-into-drawer t
       org-use-speed-commands t
+      org-use-extra-keys t
       org-fast-tag-selection-single-key 'expert
       org-catch-invisible-edits  'error
       org-goto-interface 'outline-path-completionp
