@@ -52,7 +52,9 @@
 (defun km/imenu (rescan)
   "Call `imenu', rescanning if RESCAN is non-nil"
   (interactive "P")
-  (when rescan
+  (when (and rescan
+             ;; No need to rescan if imenu hasn't been autoloaded yet.
+             (fboundp 'imenu--cleanup))
     ;; Taken from `imenu-choose-buffer-index'.
     (imenu--cleanup)
     (setq imenu--index-alist nil))
