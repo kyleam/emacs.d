@@ -168,6 +168,10 @@ START-POINT set to the current branch.
 
   (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
 
+  ;; `magit-diff-visit-file-worktree' is also on C-RET.
+  (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
+  (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
+
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
