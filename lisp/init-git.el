@@ -127,6 +127,12 @@ START-POINT set to the current branch.
       (magit-run-git "branch" (concat "b/" it))
     (user-error "No current branch")))
 
+(defun km/magit-mode-quit-all-windows (&optional kill-buffer)
+  "Run `magit-mode-quit-window' until no longer in Magit buffer."
+  (interactive "P")
+  (while (derived-mode-p 'magit-mode)
+    (magit-mode-quit-window kill-buffer)))
+
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (defadvice magit-status-internal (around magit-fullscreen activate)
   ad-do-it
@@ -150,6 +156,8 @@ START-POINT set to the current branch.
   (add-hook 'magit-find-file-hook 'view-mode)
 
   (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
+
+  (define-key magit-mode-map "Q" 'km/magit-mode-quit-all-windows)
 
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
