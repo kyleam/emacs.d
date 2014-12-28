@@ -178,11 +178,11 @@ A new buffer with the patch contents is opened in another window."
 ;; Modified from
 ;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html.
 (defun km/snip-mail-quote (beg end &optional number quote-char)
-  "Replace region lines with \"[n lines ...]\".
-If NUMBER is non-nil (or when called interactively with a prefix
-argument), add the number of lines that were snipped. The default
-QUOTE-CHAR is \">\". Text following the snipped lines is placed
-on a new line and the resulting paragraph is filled."
+  "Replace region lines with \"[...]\".
+If prefix argument NUMBER is non-nil, add the number of lines
+that were snipped.  The default QUOTE-CHAR is \">\".  Text
+following the snipped lines is placed on a new line and the
+resulting paragraph is filled."
   (interactive "r\nP")
   (let ((nlines (count-lines beg end))
         (quote-char (or quote-char ">")))
