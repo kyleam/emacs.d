@@ -92,20 +92,20 @@ entering `ch' is equivalent to `*.[ch]'.")
 (key-chord-define-global ",z" 'rgrep)
 
 (define-prefix-command 'km/file-search-map)
-(define-key 'km/file-map "s" 'km/file-search-map)
+(define-key km/file-map "s" 'km/file-search-map)
 
-(define-key 'km/file-search-map "g" 'lgrep)
-(define-key 'km/file-search-map "G" 'grep)
-(define-key 'km/file-search-map "f" 'grep-find)
+(define-key km/file-search-map "g" 'lgrep)
+(define-key km/file-search-map "G" 'grep)
+(define-key km/file-search-map "f" 'grep-find)
 
-(define-key 'km/file-search-map "r" 'rgrep)
+(define-key km/file-search-map "r" 'rgrep)
 
-(define-key 'km/file-search-map "v" 'vc-git-grep)
-(define-key 'km/file-search-map "z" 'zrgrep)
+(define-key km/file-search-map "v" 'vc-git-grep)
+(define-key km/file-search-map "z" 'zrgrep)
 
-(define-key 'km/file-search-map "n" 'find-name-dired)
-(define-key 'km/file-search-map "d" 'find-grep-dired)
-(define-key 'km/file-search-map "D" 'find-dired)
+(define-key km/file-search-map "n" 'find-name-dired)
+(define-key km/file-search-map "d" 'find-grep-dired)
+(define-key km/file-search-map "D" 'find-dired)
 
 ;;; Ibuffer
 
