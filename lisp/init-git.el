@@ -151,6 +151,20 @@ START-POINT set to the current branch.
 (after 'git-commit
   (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
+(defun km/git-rebase-show-commit ()
+  "Show the commit on the current line if any.
+Unlike `git-rebase-show-commit', display (but don't switch to)
+the commit buffer. And no dinging."
+  (interactive)
+  (save-excursion
+    (goto-char (line-beginning-position))
+    (--if-let (and (looking-at git-rebase-line)
+                   (match-string 2))
+        (magit-show-commit it t))))
+
+(after 'git-rebase
+  (define-key git-rebase-mode-map "\s" 'km/git-rebase-show-commit))
+
 (after 'magit
   (magit-backup-mode -1)
   (add-hook 'magit-find-file-hook 'view-mode)
