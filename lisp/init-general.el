@@ -3,7 +3,6 @@
       visible-bell t
       whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark)
       tramp-default-method "ssh"
-      sentence-end-double-space nil
       enable-recursive-minibuffers t)
 
 (setq-default indicate-empty-lines t
