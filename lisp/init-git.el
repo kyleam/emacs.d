@@ -186,6 +186,9 @@ the commit buffer. And no dinging."
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
   (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
 
+  (define-key magit-log-mode-map "j" 'ace-jump-mode)
+  (define-key magit-refs-mode-map "j" 'ace-jump-mode)
+
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
