@@ -152,8 +152,8 @@ A new buffer with the patch contents is opened in another window."
     (setq message-id (replace-regexp-in-string "\"" "" message-id))
     (if (and group message-id)
         (progn
-    (switch-to-buffer "*Group*")
-    (org-gnus-follow-link group message-id))
+          (switch-to-buffer "*Group*")
+          (org-gnus-follow-link group message-id))
       (message "Couldn't get relevant infos for switching to Gnus."))))
 
 (defun km/gnus-goto-message-in-notmuch ()
