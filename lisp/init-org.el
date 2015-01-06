@@ -101,6 +101,7 @@ The hook functions and `org-store-link' are called within a
 (define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "b" 'org-iswitchb)
 (define-key km/global-org-map "s" 'org-save-all-org-buffers)
+(define-key km/global-org-map "w" 'org-refile-goto-last-stored)
 (define-key km/global-org-map "p" 'poporg-dwim)
 (key-chord-define-global ",a" 'org-agenda)
 
