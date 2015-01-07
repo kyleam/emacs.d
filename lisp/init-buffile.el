@@ -113,6 +113,7 @@ entering `ch' is equivalent to `*.[ch]'.")
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (setq
+ ibuffer-restore-window-config-on-quit t
  ;; Don't prompt to delete unmodified buffers.
  ibuffer-expert t
  ;; Don't show empty filter groups.
