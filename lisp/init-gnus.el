@@ -80,9 +80,6 @@
 
 (add-hook 'message-send-hook 'km/message-confirm-sender)
 
-;; Start in topic mode.
-(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
-
 (add-hook 'message-mode-hook
           (lambda () (flyspell-mode 1)))
 
