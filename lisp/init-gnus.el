@@ -203,7 +203,7 @@ paragraph."
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 (define-key gnus-summary-mode-map "e" 'gnus-summary-scroll-up)
 
-(define-key gnus-group-mode-map "e" 'gnus-topic-select-group)
+(define-key gnus-group-mode-map "e" 'gnus-group-select-group)
 (define-key gnus-article-mode-map "e" 'shr-browse-url)
 
 ;; Modified from http://www.xsteve.at/prg/gnus/
