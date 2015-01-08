@@ -162,7 +162,7 @@ The hook functions and `org-store-link' are called within a
 
 (add-to-list 'auto-mode-alist '("\\.org.txt\\'" . org-mode))
 
-(add-to-list 'safe-local-variable-values '(org-goto-max-level . 2))
+(put 'org-goto-max-level 'safe-local-variable #'integerp)
 
 (defadvice org-tree-to-indirect-buffer (before
                                         org-keep-previous-indirect
