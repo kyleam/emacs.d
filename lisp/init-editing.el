@@ -26,7 +26,7 @@
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
-  "Takes a multi-line paragraph and makes it into a single line of text."
+  "Convert a multi-line paragraph to a single line of text."
   (interactive)
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
@@ -80,15 +80,15 @@ special case.
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
 
+Narrow the buffer from the current comment heading to the next
+comment heading of the same level or, if not found, to the end of
+the buffer.
+
 A comment is considered a heading if it is at the beginning of
 the line and if it conists of 3 or more occurences of
 `comment-start'. The number of `comment-start' characters is
 taken to indicate the level of the heading (with 3 being the top
 level).
-
-The buffer will be narrowed from the current comment heading to
-the next comment heading of the same level or, if not found, to
-the end of the buffer.
 
 In the examples below, 'x' indicates the current point and '>>>'
 and '<<<' mark the bounds of the narrowed region.
@@ -133,7 +133,7 @@ and '<<<' mark the bounds of the narrowed region.
 (define-key narrow-map "c" 'km/narrow-to-comment-heading)
 
 (defun km/toggle-line-or-region-comment ()
-  "Comment/uncomment the current line or region"
+  "Comment/uncomment the current line or region."
     (interactive)
     (let (beg end)
       (if (region-active-p)
@@ -162,7 +162,7 @@ and '<<<' mark the bounds of the narrowed region.
   "If set, `km/cleanup-buffer' does not perform clean up on save.")
 
 (defun km/toggle-prevent-cleanup ()
-  "Toggle state of `km/prevent-cleanup'"
+  "Toggle state of `km/prevent-cleanup'."
   (interactive)
   (if km/prevent-cleanup
       (message "Allowing cleanup on save ")
@@ -188,7 +188,7 @@ and '<<<' mark the bounds of the narrowed region.
 
 ;; From http://whattheemacsd.com/key-bindings.el-01.html
 (defun km/goto-line-with-feedback ()
-  "Show line numbers temporarily, while prompting for the line number input"
+  "Show line numbers when prompting for the line number input."
   (interactive)
   (unwind-protect
       (progn

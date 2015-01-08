@@ -49,7 +49,7 @@
 
 
 (defun km/imenu (rescan)
-  "Call `imenu', rescanning if RESCAN is non-nil"
+  "Call `imenu', rescanning if RESCAN is non-nil."
   (interactive "P")
   (when (and rescan
              ;; No need to rescan if imenu hasn't been autoloaded yet.

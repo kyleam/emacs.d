@@ -5,11 +5,12 @@
 
 (defun km/export-wrapped-text (arg)
   "Export the text in current buffer as wrapped text.
+
 This is useful for preparing text in emacs and then exporting to
 a wrapped buffer for pasting text (e.g., into a web form).
 
-If region is active, export is restricted to the region. If ARG
-is non-nil, the region is copied with `x-select-text'."
+If region is active, restrict export to the region. If ARG is
+non-nil, copy the region with `x-select-text'."
   (interactive "P")
   (let ((wrapped-buffer (get-buffer-create "*Wrapped export*"))
         beg end)

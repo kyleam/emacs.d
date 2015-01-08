@@ -22,7 +22,7 @@
 (defun km/find-python-test-file-other-window (arg)
   "Open test file for the current Python file in another window.
 If the file does not already exist, import the original Python
-file. Unless a ARG is non-nil, py.test is also imported."
+file. Unless ARG is non-nil, py.test is also imported."
   (interactive "P")
   (let* ((py-file (file-name-nondirectory buffer-file-name))
          (test-file (concat "test_" py-file)))

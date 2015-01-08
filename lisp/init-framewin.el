@@ -2,7 +2,7 @@
 
 ;; From prelude
 (defun km/swap-windows ()
-  "If you have 2 windows, it swaps them."
+  "Swap 2 windows."
   (interactive)
   (if (/= (count-windows) 2)
       (message "You need exactly 2 windows to do this.")

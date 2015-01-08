@@ -56,9 +56,9 @@ capitalized."
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
-The link is opened using the settings of `org-doi-server-url'.
-When called interactively, DOI is taken from the text under
-point."
+When called interactively, take the DOI from the text under
+point.  The link is opened using the settings of
+`org-doi-server-url'."
   (interactive (list (km/doi-at-point)))
   (browse-url (org-link-escape-browser (concat org-doi-server-url doi))))
 

@@ -180,8 +180,8 @@ number, which has a different meaning, it is left untouched."
 
 (defun km/org-tree-to-indirect-buffer-current-window (&optional arg)
   "Create indirect buffer and narrow to subtree in this window.
-Before running `org-tree-to-indirect-buffer',
-`org-indirect-buffer-display' is set to `current-window'."
+Before running `org-tree-to-indirect-buffer', set
+`org-indirect-buffer-display' to `current-window'."
   (interactive "P")
   (let ((org-indirect-buffer-display 'current-window))
     (org-tree-to-indirect-buffer arg)))
@@ -227,8 +227,8 @@ The repeater is removed from the original subtree."
 
 (defun km/org-sort-parent (arg)
   "Sort on parent heading ARG levels up.
-After sorting, the point is returned to its previous location
-under the current heading."
+After sorting, return point to its previous location under the
+current heading."
   (interactive "p")
   (let ((heading (org-no-properties (org-get-heading t t)))
         (starting-pos (point))
@@ -437,7 +437,7 @@ A target is determined by `km/org-refile-dwim-target-file'."
 
 (defun km/org-refile-to-other-file (file &optional maxlevel)
   "Refile with `org-refile-targets' set to FILE.
-A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
+A numeric prefix sets MAXLEVEL (defaults to 2)."
   (interactive "fFile: \nP")
   (let* ((maxlevel (prefix-numeric-value (or maxlevel 2)))
          (file (substring-no-properties file))
@@ -446,7 +446,7 @@ A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
 
 (defun km/org-refile-to-other-org-buffer (buffer &optional maxlevel)
   "Refile with `org-refile-targets' set to BUFFER file name.
-A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
+A numeric prefix sets MAXLEVEL (defaults to 2)."
   (interactive (list (km/get-org-file-buffer) current-prefix-arg))
   (let ((buffer-file (buffer-file-name buffer)))
     (km/org-refile-to-other-file buffer-file maxlevel)))
@@ -459,8 +459,7 @@ A numeric prefix can be given to set MAXLEVEL (defaults to 2)."
 (defun km/org-set-refiling-buffer (&optional maxlevel)
   "Choose buffer to set as sole target in `org-refile-targets'.
 If `org-refile-targets' is already a local variable, restore the
-global value. A numeric prefix can be given to set
-MAXLEVEL (defaults to 2)."
+global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   (interactive "P")
   (if (local-variable-p 'org-refile-targets)
       (kill-local-variable 'org-refile-targets)

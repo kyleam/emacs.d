@@ -36,9 +36,7 @@
 
 ;; http://emacs-fu.blogspot.com/2013/03/editing-with-root-privileges-once-more.html
 (defun km/find-file-as-root ()
-  "`ido-find-file` that automatically edits the file with
-root-privileges (using tramp/sudo) if the file is not writable by
-user."
+  "Automatically edit file with root-privileges."
   (interactive)
   (let ((file (ido-read-file-name "Edit as root: ")))
     (unless (file-writable-p file)
@@ -48,7 +46,7 @@ user."
 (global-set-key (kbd "C-x F") 'km/find-file-as-root)
 
 (defun km/save-and-kill-buffer ()
-  "Save current buffer and then kill it"
+  "Save current buffer and then kill it."
   (interactive)
   (save-buffer)
   (kill-this-buffer))

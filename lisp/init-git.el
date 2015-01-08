@@ -58,9 +58,9 @@ function for calling from outside Magit buffers."
 
 (defun km/magit-stage-file-intent (file)
   "Stage FILE but not its content.
-With a prefix argument or when there is no file at point ask for
-the file to be staged.  Otherwise stage the file at point without
-requiring confirmation.
+With a prefix argument or when there is no file at point, ask for
+the file to be staged.  Otherwise, stage the file at point
+without requiring confirmation.
 \n(git add -N FILE)"
   ;; Modified from `magit-stage-file'.
   (interactive
