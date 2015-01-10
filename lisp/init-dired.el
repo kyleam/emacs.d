@@ -36,8 +36,8 @@
 This is similar to `dired-copy-filename-as-kill', but the leading
 path is always relative to `projectile-project-root'."
   (interactive)
-  (let ((project-dir (projectile-project-root)))
-    (km/dired-copy-filename-relative-to-directory project-dir)))
+  (km/dired-copy-filename-relative-to-directory
+   (projectile-project-root)))
 
 (defun km/dired-copy-filename-relative-to-directory (directory)
   "Like `dired-copy-filename-as-kill', but the filename is always
@@ -58,8 +58,8 @@ This is similar to `dired-copy-filename-as-kill', but the leading
 path is always relative to the `default-directory' of the other
 window."
   (interactive)
-  (let ((other-dir (km/other-default-directory)))
-    (km/dired-copy-filename-relative-to-directory other-dir)))
+  (km/dired-copy-filename-relative-to-directory
+   (km/other-default-directory)))
 
 (defun km/other-default-directory ()
   "Get `default-directory' for result of `(other-window 1)'."
@@ -82,13 +82,11 @@ window."
 
 (defun km/dired-switch-to-buffer ()
   (interactive)
-  (let ((buffer-name (km/dired-completing-buffer)))
-    (switch-to-buffer buffer-name)))
+  (switch-to-buffer (km/dired-completing-buffer)))
 
 (defun km/dired-switch-to-buffer-other-window ()
   (interactive)
-  (let ((buffer-name (km/dired-completing-buffer)))
-    (pop-to-buffer buffer-name)))
+  (pop-to-buffer (km/dired-completing-buffer)))
 
 (defun km/dired-completing-buffer ()
   (ido-completing-read "Dired buffer: "

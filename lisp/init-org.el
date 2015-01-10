@@ -448,8 +448,8 @@ A numeric prefix sets MAXLEVEL (defaults to 2)."
   "Refile with `org-refile-targets' set to BUFFER file name.
 A numeric prefix sets MAXLEVEL (defaults to 2)."
   (interactive (list (km/get-org-file-buffer) current-prefix-arg))
-  (let ((buffer-file (buffer-file-name buffer)))
-    (km/org-refile-to-other-file buffer-file maxlevel)))
+  (km/org-refile-to-other-file (buffer-file-name buffer)
+                               maxlevel))
 
 (defun km/get-org-file-buffer ()
   (get-buffer
