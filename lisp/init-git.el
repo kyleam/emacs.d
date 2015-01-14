@@ -188,6 +188,7 @@ the commit buffer. And no dinging."
 
   (define-key magit-log-mode-map "j" 'ace-jump-mode)
   (define-key magit-refs-mode-map "j" 'ace-jump-mode)
+  (define-key magit-cherry-mode-map "j" 'ace-jump-mode)
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
