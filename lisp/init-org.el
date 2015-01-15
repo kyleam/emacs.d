@@ -99,6 +99,7 @@ The hook functions and `org-store-link' are called within a
 (define-key km/global-org-map "l" 'km/org-store-link)
 (define-key km/global-org-map "o" 'org-open-at-point-global)
 (define-key km/global-org-map "a" 'org-agenda)
+(define-key km/global-org-map "j" 'km/org-goto-agenda-heading)
 (define-key km/global-org-map "b" 'org-iswitchb)
 (define-key km/global-org-map "s" 'org-save-all-org-buffers)
 (define-key km/global-org-map "w" 'org-refile-goto-last-stored)
@@ -394,6 +395,14 @@ displayed in the agenda."
                                        'regexp "\n]+>")))
           (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))
+
+(defun km/org-goto-agenda-heading ()
+  "Jump to heading in agenda files."
+  (interactive)
+  (let ((org-refile-targets
+         '((org-agenda-files :maxlevel . 3)
+           (org-agenda-text-search-extra-files :maxlevel . 3))))
+    (org-refile '(4))))
 
 ;;; Refiling
 
