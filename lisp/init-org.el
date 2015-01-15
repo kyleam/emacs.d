@@ -404,11 +404,13 @@ displayed in the agenda."
 (setq org-refile-targets '((nil :maxlevel . 2))
       org-refile-cache nil)
 
+(defvar km/org-agenda-refile-targets
+  '((nil :maxlevel . 3)
+    (org-agenda-files :maxlevel . 2)
+    (org-agenda-text-search-extra-files :maxlevel . 2)))
+
 (add-to-list 'safe-local-variable-values
-             '(org-refile-targets
-               (nil :maxlevel . 3)
-               (org-agenda-files :maxlevel . 2)
-               (org-agenda-text-search-extra-files :maxlevel . 2)))
+             (cons 'org-refile-targets km/org-agenda-refile-targets))
 
 (setq org-refile-target-verify-function 'km/verify-refile-target)
 
