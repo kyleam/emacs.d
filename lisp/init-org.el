@@ -342,6 +342,15 @@ be restored properly."
       org-agenda-use-time-grid nil
       org-agenda-start-on-weekday nil)
 
+(defun km/org-agenda-store-current-span ()
+    "Store the current span value in `org-agenda-span'.
+This allows the view to persist when the agenda buffer is
+killed."
+    (when org-agenda-current-span
+      (setq org-agenda-span org-agenda-current-span)))
+
+(add-hook 'org-agenda-finalize-hook 'km/org-agenda-store-current-span)
+
 (setq org-agenda-sorting-strategy
       '((agenda time-up deadline-up scheduled-up priority-down category-keep)
         (todo priority-down category-keep)
