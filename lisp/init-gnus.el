@@ -80,6 +80,18 @@
 
 (add-hook 'message-send-hook 'km/message-confirm-sender)
 
+(autoload 'gnus-group-topic "gnus-topic")
+
+(defun km/gnus-group-sort-by-topic (info1 info2)
+  "Sort alphabetically by group topic.
+This allows groups to be ordered by topics even when topic mode
+is off."
+  (string< (gnus-group-topic (gnus-info-group info1))
+           (gnus-group-topic (gnus-info-group info2))))
+
+(setq gnus-group-sort-function '(km/gnus-group-sort-by-topic
+                                 gnus-group-sort-by-level))
+
 (add-hook 'message-mode-hook
           (lambda () (flyspell-mode 1)))
 
