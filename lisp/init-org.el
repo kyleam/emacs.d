@@ -145,6 +145,8 @@ The hook functions and `org-store-link' are called within a
 (after 'org
   (define-key org-mode-map (kbd "C-c C-x B")
     'km/org-tree-to-indirect-buffer-current-window)
+  (define-key org-mode-map [remap org-tree-to-indirect-buffer]
+    'km/org-tree-to-indirect-buffer)
   (define-key org-mode-map (kbd "C-c m") 'km/org-prefix-map)
   ;; Override global `imenu' binding.
   (define-key org-mode-map (kbd "C-c j") 'org-goto)
@@ -166,19 +168,18 @@ The hook functions and `org-store-link' are called within a
 (setq org-goto-max-level 3)
 (put 'org-goto-max-level 'safe-local-variable #'integerp)
 
-(defadvice org-tree-to-indirect-buffer (before
-                                        org-keep-previous-indirect
-                                        (&optional arg)
-                                        activate)
-  "Retain previous indirect buffer from `org-tree-to-indirect-buffer'.
+(defun km/org-tree-to-indirect-buffer (&optional arg)
+  "Run `org-tree-to-indirect-buffer', keeping previous buffer.
 By default, `org-tree-to-indirect-buffer' deletes the previous
 indirect buffer when making a new one to avoid accumulating
-buffers, which can be overriden by a C-u prefix. This advice
-reverses this behavior so that the prefix must be given in order
-to delete the previous indirect buffer. If the argument is a
-number, which has a different meaning, it is left untouched."
+buffers, which can be overriden by a C-u prefix. Reverse this
+behavior so that the prefix must be given in order to delete the
+previous indirect buffer. If the argument is a number, which has
+a different meaning, it is left untouched."
+  (interactive "P")
   (unless (numberp arg)
-    (setq arg (not arg))))
+    (setq arg (not arg)))
+  (org-tree-to-indirect-buffer arg))
 
 (defun km/org-tree-to-indirect-buffer-current-window (&optional arg)
   "Create indirect buffer and narrow to subtree in this window.
@@ -186,7 +187,7 @@ Before running `org-tree-to-indirect-buffer', set
 `org-indirect-buffer-display' to `current-window'."
   (interactive "P")
   (let ((org-indirect-buffer-display 'current-window))
-    (org-tree-to-indirect-buffer arg)))
+    (km/org-tree-to-indirect-buffer arg)))
 
 (defun km/org-clone-and-shift-by-repeater ()
   "Clone current subtree, shifting new timestamp by repeater.
