@@ -34,22 +34,38 @@ the next article you read will have \"athwart\" in the title.")
 
 (defun km/bibtex-use-title-case ()
   "Convert title of current BibTeX entry to title case.
-All words except those in `km/bibtex-unimportant-title-words' are
-capitalized."
+Change words in `km/bibtex-unimportant-title-words' to lower
+case, unless the word is the first word in the title.  Capitalize
+all other words unless they are protected by brackets."
   (interactive)
   (save-excursion
     (bibtex-beginning-of-entry)
-    (goto-char (car (cdr (bibtex-search-forward-field "title" t))))
-    (while (not (looking-at "},"))
-      ;; Not using `forward-word' because I want to capture character
-      ;; before word. If "-" or "{", the word should not be capitalized.
-      (re-search-forward "\\(.\\)[a-z]+")
-      (let ((before-word (match-string-no-properties 1))
-            (word (thing-at-point 'word)))
-        (unless (or (member before-word '("-" "{"))
-                    (member word km/bibtex-unimportant-title-words))
+    (let* ((text-bounds (cdr (bibtex-search-forward-field "title" t)))
+           (beg (car text-bounds))
+           (end (cadr text-bounds)))
+      (goto-char (1- beg))
+      (while (re-search-forward "\\(\\W\\)\\(\\w+\\)\\(\\W\\)" end t)
+        (cond
+         ((and (string= (match-string 1) "{")
+               (string= (match-string 3) "}"))
+          ;; Go to previous character in case '}' is within the word.
+          (backward-char))
+         ;; Capitalize the first word of the title.  This will fail if
+         ;; there is a space after '{'.
+         ((= (match-beginning 1) beg)
           (backward-word)
-          (capitalize-word 1))))))
+          (capitalize-word 1))
+         ;; Subword is separated by '-' or '{'.
+         ((or (string= (match-string 1) "-")
+              (string= (match-string 1) "}"))
+          (backward-word)
+          (downcase-word 1))
+         (t
+          (backward-word)
+          (if (member (downcase (match-string-no-properties 2))
+                      km/bibtex-unimportant-title-words)
+              (downcase-word 1)
+            (capitalize-word 1))))))))
 
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
 
