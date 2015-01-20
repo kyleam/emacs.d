@@ -51,8 +51,7 @@ capitalized."
           (backward-word)
           (capitalize-word 1))))))
 
-(defadvice bibtex-clean-entry (before convert-to-title-case activate)
-  (km/bibtex-use-title-case))
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
