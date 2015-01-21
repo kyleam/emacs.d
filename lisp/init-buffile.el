@@ -135,66 +135,53 @@ entering `ch' is equivalent to `*.[ch]'.")
 ;; functionality.
 (define-key ctl-x-4-map "r" 'km/recentf-find-file-other-window)
 
-;;; Temporary scratch files
+;;; Scratch files
 
-(define-prefix-command 'km/scratch-map)
-(global-set-key (kbd "C-c s") 'km/scratch-map)
+(defvar km/find-scratch-buffers
+  '((?e ".el"  "Elisp")
+    (?p ".py"  "Python")
+    (?s ".sh"  "Shell")
+    (?r ".r"   "R")
+    (?h ".hs"  "Haskell")
+    (?o ".org" "Org")
+    (?m ".md"  "Markdown")
+    (?n ""     "No mode"))
+  "List of scratch buffers.
+Format of each element should be (CHARACTER EXTENSION DOC). DOC
+is not required.")
 
-(define-prefix-command 'km/scratch-other-window-map)
-(define-key ctl-x-4-map "s" 'km/scratch-other-window-map)
+;; This is based off of Projectile's commander.
+(defun km/scratch--get-file-name ()
+  (-let* ((choices (-map #'car km/find-scratch-buffers))
+          (prompt (concat "Scratch buffer [" choices "]: "))
+          (ch (read-char-choice prompt choices))
+          ((_ ext _) (assq ch km/find-scratch-buffers)))
+    (concat "/tmp/scratch" ext)))
 
-(defmacro km/make-find-scratch-func (name extension)
-  `(defun ,(intern (concat "km/find-scratch-" name)) ()
-     (interactive)
-     (find-file ,(concat "/tmp/scratch" extension))))
+(defun km/scratch--find-file-no-select (erase)
+  (let ((scratch-buffer
+         (find-file-noselect (km/scratch--get-file-name))))
+    (when erase
+      (with-current-buffer scratch-buffer
+        (erase-buffer)))
+    scratch-buffer))
 
-(defmacro km/make-find-scratch-other-window-func (name extension)
-  `(defun ,(intern (concat "km/find-scratch-" name "-other-window")) ()
-     (interactive)
-     (find-file-other-window ,(concat "/tmp/scratch" extension))))
+(defun km/scratch-find-file (erase)
+  "Find scratch buffer.
 
-(km/make-find-scratch-func "elisp" ".el")
-(km/make-find-scratch-func "python" ".py")
-(km/make-find-scratch-func "shell" ".sh")
-(km/make-find-scratch-func "r" ".r")
-(km/make-find-scratch-func "haskell" ".hs")
-(km/make-find-scratch-func "org" ".org")
-(km/make-find-scratch-func "markdown" ".md")
-(km/make-find-scratch-func "nomode" "")
+Prompt with characters from `km/find-scratch-buffers' to
+determine the extension of the scratch file.
 
-(km/make-find-scratch-other-window-func "elisp" ".el")
-(km/make-find-scratch-other-window-func "python" ".py")
-(km/make-find-scratch-other-window-func "shell" ".sh")
-(km/make-find-scratch-other-window-func "r" ".r")
-(km/make-find-scratch-other-window-func "haskell" ".hs")
-(km/make-find-scratch-other-window-func "org" ".org")
-(km/make-find-scratch-other-window-func "markdown" ".md")
-(km/make-find-scratch-other-window-func "nomode" "")
+With prefix ERASE, delete contents of buffer."
+  (interactive "P")
+  (switch-to-buffer (km/scratch--find-file-no-select erase)))
 
-(define-key km/scratch-map "e" 'km/find-scratch-elisp)
-(define-key km/scratch-map "p" 'km/find-scratch-python)
-(define-key km/scratch-map "s" 'km/find-scratch-shell)
-(define-key km/scratch-map "r" 'km/find-scratch-r)
-(define-key km/scratch-map "h" 'km/find-scratch-haskell)
-(define-key km/scratch-map "o" 'km/find-scratch-org)
-(define-key km/scratch-map "m" 'km/find-scratch-markdown)
-(define-key km/scratch-map "n" 'km/find-scratch-nomode)
+(defun km/scratch-find-file-other-window (erase)
+    "Like `km/find-scratch-file', but open buffer in another window."
+  (interactive "P")
+  (switch-to-buffer-other-window (km/scratch--find-file-no-select erase)))
 
-(define-key km/scratch-other-window-map "e"
-  'km/find-scratch-elisp-other-window)
-(define-key km/scratch-other-window-map "p"
-  'km/find-scratch-python-other-window)
-(define-key km/scratch-other-window-map "s"
-  'km/find-scratch-shell-other-window)
-(define-key km/scratch-other-window-map "r"
-  'km/find-scratch-r-other-window)
-(define-key km/scratch-other-window-map "h"
-  'km/find-scratch-haskell-other-window)
-(define-key km/scratch-other-window-map "o"
-  'km/find-scratch-org-other-window)
-(define-key km/scratch-other-window-map "m"
-  'km/find-scratch-markdown-other-window)
-(define-key km/scratch-other-window-map "n"
-  'km/find-scratch-nomode-other-window)
+(global-set-key (kbd "C-c s") 'km/scratch-find-file)
+(define-key ctl-x-4-map "s" 'km/scratch-find-file-other-window)
 
 (provide 'init-buffile)
