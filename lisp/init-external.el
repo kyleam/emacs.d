@@ -16,24 +16,64 @@
   (interactive)
   (start-process "ext-term" nil km/terminal))
 
-(defun km/zsh-ansi-term (&optional new-buffer)
-  "Open an ansi-term buffer running ZSH.
-The buffer is named according to `default-directory'. If a buffer
-of the same name already exists, switch to it unless NEW-BUFFER
-is non-nil."
-  (interactive "P")
-  (let ((name (concat "zsh:" (abbreviate-file-name default-directory))))
-    (--if-let (and (not new-buffer)
-                   (get-buffer (concat "*" name "*")))
-        (switch-to-buffer it)
-      (ansi-term "/bin/zsh" name))))
+(defun km/zsh-ansi-term (&optional directory)
+  "Open an ansi-term buffer running ZSH in DIRECTORY.
 
-(defun km/zsh-ansi-term-other-window (&optional new-buffer)
-  (interactive "P")
-  (let (buffer-name)
-    (save-window-excursion
-      (setq buffer-name (km/zsh-ansi-term new-buffer)))
-    (pop-to-buffer buffer-name)))
+If a terminal for DIRECTORY already exists, switch to that
+buffer.  If the current buffer is a terminal for DIRECTORY,
+create an additional terminal.
+
+By default, DIRECTORY is `default-directory'.
+
+With a numeric prefix argument 0, prompt the user with existing
+ZSH terminal directories.
+
+With a C-u prefix argument, set DIRECTORY to the user home
+directory.
+
+With any other non-nil value, prompt for a directory."
+  (interactive (km/zsh-ansi-term--args))
+  (let* ((dir (abbreviate-file-name directory))
+         (name (concat "zsh: " dir))
+         (full-name (concat "*" name "*"))
+         (default-directory dir))
+    (cond
+     ((string= (km/zsh-ansi-term-directory) dir)
+      (ansi-term "/bin/zsh" name))
+     ((get-buffer full-name)
+      (switch-to-buffer full-name))
+     (t
+      (ansi-term "/bin/zsh" name)))))
+
+(defun km/zsh-ansi-term-other-window (&optional directory)
+  (interactive (km/zsh-ansi-term--args))
+  (pop-to-buffer (save-window-excursion (km/zsh-ansi-term directory))))
+
+(defun km/zsh-ansi-term--args ()
+  (list (cond
+         ((not current-prefix-arg)
+          default-directory)
+         ((= (prefix-numeric-value current-prefix-arg) 4)
+          "~/")
+         ((= (prefix-numeric-value current-prefix-arg) 0)
+          (--if-let (km/zsh-ansi-term-current-directories)
+              (completing-read "Directory: " it nil nil nil nil (car it))
+            (user-error "No ZSH buffers found")))
+         (t
+          (read-directory-name "Directory: ")))))
+
+(defun km/zsh-ansi-term-directory (&optional buffer)
+  "Return directory name for ZSH terminal in BUFFER.
+BUFFER defaults to current buffer."
+  (with-current-buffer (or buffer (current-buffer))
+    (let ((bname (buffer-name)))
+      (and (derived-mode-p 'term-mode)
+           (string-match "^\\*zsh: \\(.*\\)\\*\\(<[0-9]+>\\)*$"
+                         bname)
+           (match-string 1 bname)))))
+
+(defun km/zsh-ansi-term-current-directories ()
+  (-distinct (-keep #'km/zsh-ansi-term-directory (buffer-list))))
 
 (define-key km/external-map "a" 'km/zsh-ansi-term)
 ;; This overrides binding for `add-change-log-entry-other-window'.
