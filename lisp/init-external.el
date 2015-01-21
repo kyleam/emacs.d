@@ -16,14 +16,6 @@
   (interactive)
   (start-process "ext-term" nil km/terminal))
 
-(defadvice shell-command (around shell-command-restore-windows activate)
-  "Restore window configuraiton after shell-command.
-The hides the *Async Shell Command* buffer that is opened in the
-other window when an asynchronous command is run."
-  (window-configuration-to-register :before-shell-command)
-  ad-do-it
-  (jump-to-register :before-shell-command))
-
 (defun km/zsh-ansi-term (&optional new-buffer)
   "Open an ansi-term buffer running ZSH.
 The buffer is named according to `default-directory'. If a buffer
