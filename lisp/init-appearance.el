@@ -42,6 +42,13 @@
  '(gnus-cite-2 ((t (:inherit font-lock-string-face))))
  '(gnus-header-name ((t (:inherit font-lock-constant-face))))
  '(gnus-header-content ((t (:inherit default))))
+ '(term-color-black ((t (:inherit default))))
+ '(term-color-red ((t (:inherit font-lock-string-face))))
+ '(term-color-green ((t (:foreground "#3cb371"))))
+ '(term-color-yellow ((t (:inherit font-lock-doc-face))))
+ '(term-color-blue ((t (:inherit font-lock-function-name-face))))
+ '(term-color-magenta ((t (:foreground "#8b008b"))))
+ '(term-color-cyan ((t (:foreground "#008b8b"))))
  ;; Darken a bit (was gray40).
  '(font-lock-keyword-face ((t (:foreground "gray33")))))
 
