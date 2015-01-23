@@ -158,23 +158,34 @@ and '<<<' mark the bounds of the narrowed region.
 ;; Buffer-specific prevention modified from
 ;; http://stackoverflow.com/questions/14913398/
 ;; in-emacs-how-do-i-save-without-running-save-hooks.
-(defvar km/prevent-cleanup nil
+(defvar-local km/prevent-cleanup nil
   "If set, `km/cleanup-buffer' does not perform clean up on save.")
+
+(setq whitespace-style '(face trailing indentation))
+(global-whitespace-mode 1)
 
 (defun km/toggle-prevent-cleanup ()
   "Toggle state of `km/prevent-cleanup'."
   (interactive)
   (if km/prevent-cleanup
-      (message "Allowing cleanup on save ")
-    (message "Preventing cleanup on save"))
-  (set (make-local-variable 'km/prevent-cleanup) (not km/prevent-cleanup)))
+      (progn
+        (message "Allowing cleanup on save")
+        (kill-local-variable 'whitespace-style)
+        (global-whitespace-mode 0)
+        (global-whitespace-mode 1))
+    (message "Preventing cleanup on save")
+    (setq-local whitespace-style
+         '(face trailing indentation
+           tab-mark space-mark newline-mark))
+    (global-whitespace-mode 0)
+    (global-whitespace-mode 1))
+  (setq km/prevent-cleanup (not km/prevent-cleanup)))
 
 (defun km/cleanup-buffer ()
   (interactive)
   (unless km/prevent-cleanup
-    (unless indent-tabs-mode
-      (untabify (point-min) (point-max)))
-    (delete-trailing-whitespace)))
+    (whitespace-cleanup)))
+
 (add-hook 'before-save-hook 'km/cleanup-buffer)
 
 (define-key km/editing-map "t" 'km/toggle-prevent-cleanup)

@@ -1,7 +1,6 @@
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t
-      whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark)
       tramp-default-method "ssh"
       enable-recursive-minibuffers t)
 
