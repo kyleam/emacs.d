@@ -277,7 +277,7 @@ to
       (file-expand-wildcards "~/notes/extra/*.org"))
 
 (setq org-agenda-restore-windows-after-quit t
-      org-agenda-sticky nil)
+      org-agenda-sticky t)
 
 (setq org-agenda-dim-blocked-tasks nil
       org-agenda-show-all-dates t
@@ -306,15 +306,11 @@ to
 (add-hook 'org-agenda-finalize-hook 'km/org-agenda-store-current-span)
 
 (after 'org-agenda
-  (defadvice org-agenda-list (around org-agenda-fullscreen activate)
+  (defadvice org-agenda-prepare-window (after org-agenda-fullscreen activate)
     "Start agenda in fullscreen.
-
 After agenda loads, delete other windows.
 `org-agenda-restore-windows-after-quit' should non-nil to restore
-the previous window configuration. If `org-agenda-sticky' is
-non-nil, configurations with more than one window do not seem to
-be restored properly."
-    ad-do-it
+the previous window configuration."
     (delete-other-windows)))
 
 (defun km/org-agenda-cd-and-read-dir-locals ()
