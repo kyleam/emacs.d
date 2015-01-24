@@ -10,9 +10,8 @@
       ido-save-directory-list-file "~/.emacs.d/cache/ido.hist"
       ido-max-directory-size 100000)
 
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (set (make-local-variable 'ido-use-filename-at-point) nil)))
+;; Disable ido faces to see flx highlights.
+(setq ido-use-faces nil)
 
 (setq ido-file-extensions-order
       '(".org" ".txt" ".md" ".rst" ".tex" ".py" ".el" ".hs"))
@@ -21,14 +20,15 @@
       (append '(".out" ".log" ".fls" ".fdb" ".fdb_latexmk")
               completion-ignored-extensions))
 
-;; Disable ido faces to see flx highlights.
-(setq ido-use-faces nil)
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (set (make-local-variable 'ido-use-filename-at-point) nil)))
 
 (ido-mode 1)
-(ido-vertical-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-(ido-ubiquitous-mode 1)
+(ido-vertical-mode)
+(ido-everywhere)
+(flx-ido-mode)
+(ido-ubiquitous-mode)
 (ido-at-point-mode)
 
 (key-chord-define-global ",b" 'ido-switch-buffer)

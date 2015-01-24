@@ -1,13 +1,11 @@
 
 (require 'yasnippet)
 
-(yas-global-mode 1)
-
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
+(yas-global-mode)
 
 (key-chord-define-global ";e" 'yas-expand)
 
-(diminish 'yas-minor-mode)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
 
 (provide 'init-yas)

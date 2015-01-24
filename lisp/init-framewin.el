@@ -1,5 +1,10 @@
 ;;; Frames and windows
 
+(defadvice clone-indirect-buffer-other-window
+  (after clone-indirect-and-widen activate)
+  "Widen after cloning an indirect buffer."
+  (widen))
+
 ;; From prelude
 (defun km/swap-windows ()
   "Swap 2 windows."
@@ -32,19 +37,13 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
+(global-set-key (kbd "M-o") 'scroll-other-window)
+
 (define-prefix-command 'km/window-map)
 (global-set-key (kbd "C-c w") 'km/window-map)
 
-(define-key km/window-map "s" 'km/swap-windows)
-(define-key km/window-map "l" 'km/switch-window-split)
-
 (define-key km/window-map "f" 'make-frame)
-
-(global-set-key (kbd "M-o") 'scroll-other-window)
-
-(defadvice clone-indirect-buffer-other-window
-  (after clone-indirect-and-widen activate)
-  "Widen after cloning an indirect buffer."
-  (widen))
+(define-key km/window-map "l" 'km/switch-window-split)
+(define-key km/window-map "s" 'km/swap-windows)
 
 (provide 'init-framewin)

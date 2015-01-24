@@ -6,10 +6,11 @@
 (menu-bar-mode -1)
 (blink-cursor-mode -1)
 
-;; Line info
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
+(line-number-mode)
+(column-number-mode)
+(size-indication-mode)
+
+;;; Theme
 
 (load-theme 'stekene-light t)
 

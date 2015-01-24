@@ -1,7 +1,8 @@
 
 (autoload 'R-mode "ess-site")
-(add-to-list 'auto-mode-alist '("\\.[rR]\\'" . R-mode))
 
 (setq ess-smart-S-assign-key ";")
+
+(add-to-list 'auto-mode-alist '("\\.[rR]\\'" . R-mode))
 
 (provide 'init-ess)

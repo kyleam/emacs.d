@@ -1,16 +1,8 @@
 
-(global-set-key (kbd "C-x \\") 'align-regexp)
-
-;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
-(global-set-key (kbd "C-z") 'zap-to-char)
 ;; http://irreal.org/blog/?p=1536
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
-(global-set-key (kbd "M-z") 'zap-up-to-char)
 
-(global-set-key (kbd "C-'") 'backward-kill-word)
-
-(global-set-key (kbd "M-/") 'hippie-expand)
 (setq hippie-expand-try-functions-list '(try-complete-file-name-partially
                                          try-complete-file-name
                                          try-expand-all-abbrevs
@@ -20,9 +12,7 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-other-window)
-(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)
-(define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
+(electric-indent-mode -1)
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
@@ -71,11 +61,6 @@ special case.
     (while (re-search-forward "\\([ \t]*\n\\)\\{3,\\}" nil t)
       (forward-line -1)
       (delete-blank-lines))))
-
-(define-key search-map "s" 'query-replace)
-(define-key search-map "S" 'replace-string)
-(define-key search-map "r" 'query-replace-regexp)
-(define-key search-map "R" 'replace-regexp)
 
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
@@ -130,8 +115,6 @@ and '<<<' mark the bounds of the narrowed region.
       (outline-mark-subtree)
       (narrow-to-region (region-beginning) (region-end)))))
 
-(define-key narrow-map "c" 'km/narrow-to-comment-heading)
-
 (defun km/toggle-line-or-region-comment ()
   "Comment/uncomment the current line or region."
     (interactive)
@@ -142,27 +125,59 @@ and '<<<' mark the bounds of the narrowed region.
       (comment-or-uncomment-region beg end))
     (forward-line))
 
+;; From http://whattheemacsd.com/key-bindings.el-01.html
+(defun km/goto-line-with-feedback ()
+  "Show line numbers when prompting for the line number input."
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (call-interactively 'goto-line))
+    (linum-mode -1)))
+
+(global-set-key (kbd "C-x \\") 'align-regexp)
+
+(global-set-key (kbd "C-;") 'er/expand-region)
+
+;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
+(global-set-key (kbd "C-z") 'zap-to-char)
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+(global-set-key (kbd "C-'") 'backward-kill-word)
+
+(global-set-key (kbd "M-/") 'hippie-expand)
+
 (key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
 
-;; Put multiple cursors map under insert prefix.
+(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-other-window)
+(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)
+(define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
+
+(define-key narrow-map "c" 'km/narrow-to-comment-heading)
+
+(define-key search-map "s" 'query-replace)
+(define-key search-map "S" 'replace-string)
+(define-key search-map "r" 'query-replace-regexp)
+(define-key search-map "R" 'replace-regexp)
+
+(global-set-key [remap goto-line] 'km/goto-line-with-feedback)
+
 (define-prefix-command 'km/editing-map)
 (global-set-key (kbd "C-c e") 'km/editing-map)
 
-(define-key km/editing-map "l" 'mc/edit-lines)
-(define-key km/editing-map "b" 'mc/edit-beginnings-of-lines)
-(define-key km/editing-map "e" 'mc/edit-ends-of-lines)
-(define-key km/editing-map "n" 'mc/mark-next-like-this)
-(define-key km/editing-map "p" 'mc/mark-previous-like-this)
-(define-key km/editing-map "a" 'mc/mark-all-like-this)
+(define-key km/editing-map "f" 'km/fill-surrounding-indented)
+(define-key km/editing-map "i" 'indent-relative)
 
-;; Buffer-specific prevention modified from
-;; http://stackoverflow.com/questions/14913398/
-;; in-emacs-how-do-i-save-without-running-save-hooks.
-(defvar-local km/prevent-cleanup nil
-  "If set, `km/cleanup-buffer' does not perform clean up on save.")
+
+;;; Buffer cleanup
 
 (setq whitespace-style '(face trailing indentation))
+
 (global-whitespace-mode 1)
+
+(add-hook 'before-save-hook 'km/cleanup-buffer)
+
+(defvar-local km/prevent-cleanup nil
+  "If set, `km/cleanup-buffer' does not perform clean up on save.")
 
 (defun km/toggle-prevent-cleanup ()
   "Toggle state of `km/prevent-cleanup'."
@@ -186,38 +201,22 @@ and '<<<' mark the bounds of the narrowed region.
   (unless km/prevent-cleanup
     (whitespace-cleanup)))
 
-(add-hook 'before-save-hook 'km/cleanup-buffer)
-
 (define-key km/editing-map "t" 'km/toggle-prevent-cleanup)
 
-(global-set-key (kbd "C-;") 'er/expand-region)
-
-(define-key km/editing-map "i" 'indent-relative)
-(define-key km/editing-map "f" 'km/fill-surrounding-indented)
-
-(electric-indent-mode -1)
-
-;; From http://whattheemacsd.com/key-bindings.el-01.html
-(defun km/goto-line-with-feedback ()
-  "Show line numbers when prompting for the line number input."
-  (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (call-interactively 'goto-line))
-    (linum-mode -1)))
-
-(global-set-key [remap goto-line] 'km/goto-line-with-feedback)
-
-;; Kill map
-(define-prefix-command 'km/kill-map)
-(global-set-key (kbd "C-c k") 'km/kill-map)
+
+;;; Kill map
 
 (defun km/kill-string-at-point ()
   (interactive)
   (let ((string-start (nth 8 (syntax-ppss))))
     (goto-char string-start)
     (kill-sexp)))
+
+;; Taken from prelude-core.el.
+(defun km/join-next-line-with-space ()
+  "Join current line to the next line with a space in between."
+  (interactive)
+  (delete-indentation 1))
 
 (defmacro km/make-kill-thing-at-point (name thing kill-func)
   `(defun ,(intern (concat "km/kill-" name "-at-point")) (arg)
@@ -231,18 +230,24 @@ and '<<<' mark the bounds of the narrowed region.
 (km/make-kill-thing-at-point "line" 'line 'kill-line)
 (km/make-kill-thing-at-point "sexp" 'sexp 'kill-sexp)
 
-(define-key km/kill-map  "s" 'km/kill-string-at-point)
+(define-prefix-command 'km/kill-map)
+(global-set-key (kbd "C-c k") 'km/kill-map)
+
 (define-key km/kill-map  "." 'km/kill-sentence-at-point)
-(define-key km/kill-map  "w" 'km/kill-word-at-point)
-(define-key km/kill-map  "p" 'km/kill-paragraph-at-point)
-(define-key km/kill-map  "l" 'km/kill-line-at-point)
-
-;; Taken from prelude-core.el.
-(defun km/join-next-line-with-space ()
-  "Join current line to the next line with a space in between."
-  (interactive)
-  (delete-indentation 1))
-
 (define-key km/kill-map  "j" 'km/join-next-line-with-space)
+(define-key km/kill-map  "l" 'km/kill-line-at-point)
+(define-key km/kill-map  "p" 'km/kill-paragraph-at-point)
+(define-key km/kill-map  "s" 'km/kill-string-at-point)
+(define-key km/kill-map  "w" 'km/kill-word-at-point)
+
+
+;;; Multiple cursors
+
+(define-key km/editing-map "a" 'mc/mark-all-like-this)
+(define-key km/editing-map "b" 'mc/edit-beginnings-of-lines)
+(define-key km/editing-map "e" 'mc/edit-ends-of-lines)
+(define-key km/editing-map "l" 'mc/edit-lines)
+(define-key km/editing-map "n" 'mc/mark-next-like-this)
+(define-key km/editing-map "p" 'mc/mark-previous-like-this)
 
 (provide 'init-editing)

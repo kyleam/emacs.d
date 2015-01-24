@@ -1,7 +1,6 @@
 (require 'diminish)
 
 (diminish 'abbrev-mode "Ab")
-(after 'whitespace (diminish 'global-whitespace-mode))
 (after 'flyspell (diminish 'flyspell-mode "Fy"))
 (after 'paredit (diminish 'paredit-mode " Pe"))
 (after 'magit (diminish 'magit-auto-revert-mode))
@@ -11,5 +10,7 @@
 (after 'projectile (diminish 'projectile-mode))
 (after 'reftex (diminish 'reftex-mode "Rf"))
 (after 'view (diminish 'view-mode "Vw"))
+(after 'whitespace (diminish 'global-whitespace-mode))
+(after 'yasnippet (diminish 'yas-minor-mode))
 
 (provide 'init-diminish)

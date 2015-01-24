@@ -1,22 +1,34 @@
-(add-to-list 'load-path "~/src/emacs/magit/")
-(add-to-list 'load-path "~/src/emacs/magit-annex/")
-(add-to-list 'load-path "~/src/emacs/orgit/")
-
-(require 'magit-autoloads)
-
-(require 'orgit)
-
 (require 'git-annex)
+
+(setq vc-follow-symlinks t)
 
 (setq git-annex-commit nil)
 
-(require 'magit-annex-autoloads)
+(define-prefix-command 'km/git-map)
+(global-set-key (kbd "C-c g") 'km/git-map)
 
-(after 'magit-annex
-  (setq magit-annex-all-action-arguments
-        (delete "--auto" magit-annex-all-action-arguments)))
+
+;;; Magit
 
-(key-chord-define-global ",g" 'magit-status)
+(add-to-list 'load-path "~/src/emacs/magit/")
+(require 'magit-autoloads)
+
+(add-to-list 'load-path "~/src/emacs/orgit/")
+(require 'orgit)
+
+(setq magit-restore-window-configuration t
+      magit-completing-read-function 'magit-ido-completing-read
+      magit-delete-by-moving-to-trash nil
+      magit-log-show-margin nil)
+
+(add-hook 'magit-find-file-hook 'view-mode)
+(after 'magit
+  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
+
+  (magit-backup-mode -1))
+
+(after 'git-commit
+  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
@@ -138,19 +150,6 @@ START-POINT set to the current branch.
   ad-do-it
   (delete-other-windows))
 
-(setq magit-restore-window-configuration t
-      magit-completing-read-function 'magit-ido-completing-read
-      magit-delete-by-moving-to-trash nil
-      magit-popup-show-help-echo nil
-      magit-popup-show-help-section nil
-      magit-popup-use-prefix-argument 'default
-      magit-log-show-margin nil)
-
-(setq vc-follow-symlinks t)
-
-(after 'git-commit
-  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
-
 (defun km/git-rebase-show-commit ()
   "Show the commit on the current line if any.
 Unlike `git-rebase-show-commit', display (but don't switch to)
@@ -162,25 +161,17 @@ the commit buffer. And no dinging."
                    (match-string 2))
         (magit-show-commit it t))))
 
-(after 'git-rebase
-  (define-key git-rebase-mode-map "\s" 'km/git-rebase-show-commit))
+(define-key ctl-x-4-map "g" 'magit-find-file-other-window)
+(define-key km/file-map "g" 'magit-find-file)
+
+(key-chord-define-global ",g" 'magit-status)
 
 (after 'magit
-  (magit-backup-mode -1)
-  (add-hook 'magit-find-file-hook 'view-mode)
-
-  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
-
-  (define-key magit-mode-map "Q" 'km/magit-mode-quit-all-windows)
-
-  (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
-  (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
-
   ;; Remove `magit-add-change-log-entry-other-window', which overrides
   ;; my binding for `km/zsh-ansi-term-other-window'.
   (define-key magit-mode-map (kbd "C-x 4 a") nil)
-
   (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
+  (define-key magit-mode-map "Q" 'km/magit-mode-quit-all-windows)
 
   ;; `magit-diff-visit-file-worktree' is also on C-RET.
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
@@ -189,6 +180,28 @@ the commit buffer. And no dinging."
   (define-key magit-log-mode-map "j" 'ace-jump-mode)
   (define-key magit-refs-mode-map "j" 'ace-jump-mode)
   (define-key magit-cherry-mode-map "j" 'ace-jump-mode)
+
+  (define-key km/git-map "c" 'km/magit-show-commit-under-point)
+  (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
+  (define-key km/git-map "e" 'km/magit-commit-extend-all)
+  (define-key km/git-map "u" 'km/magit-auto-commit))
+
+(after 'git-rebase
+  (define-key git-rebase-mode-map "\s" 'km/git-rebase-show-commit))
+
+
+;;; Magit popups
+
+(setq magit-popup-show-help-echo nil
+      magit-popup-show-help-section nil
+      magit-popup-use-prefix-argument 'default)
+
+(after 'magit
+  (setq magit-branch-arguments
+        (delete "--track" magit-branch-arguments))
+
+  (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
+  (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
@@ -217,19 +230,16 @@ the commit buffer. And no dinging."
   (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
     "Set '--no-ff' flag when running `magit-merge-editmsg'."
     (let ((args '("--no-ff")))
-      ad-do-it))
+      ad-do-it)))
 
-  (setq magit-branch-arguments
-        (delete "--track" magit-branch-arguments)))
+
+;;; Magit Annex
 
-(define-key ctl-x-4-map "g" 'magit-find-file-other-window)
-(define-key km/file-map "g" 'magit-find-file)
+(add-to-list 'load-path "~/src/emacs/magit-annex/")
+(require 'magit-annex-autoloads)
 
-(define-prefix-command 'km/git-map)
-(global-set-key (kbd "C-c g") 'km/git-map)
-(define-key km/git-map "c" 'km/magit-show-commit-under-point)
-(define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
-(define-key km/git-map "e" 'km/magit-commit-extend-all)
-(define-key km/git-map "u" 'km/magit-auto-commit)
+(after 'magit-annex
+  (setq magit-annex-all-action-arguments
+        (delete "--auto" magit-annex-all-action-arguments)))
 
 (provide 'init-git)

@@ -1,4 +1,6 @@
-;; Set up babel languages.
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((sh . t)
@@ -6,8 +8,5 @@
    (R . t)
    (emacs-lisp . t)
    (latex . t)))
-
-;; Don't ask for confirmation before running code.
-(setq org-confirm-babel-evaluate nil)
 
 (provide 'init-babel)

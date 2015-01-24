@@ -2,8 +2,9 @@
 
 (require 'uniquify)
 
-(setq uniquify-buffer-name-style 'forward
-      require-final-newline t)
+(setq require-final-newline t)
+
+(setq uniquify-buffer-name-style 'forward)
 
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
@@ -21,8 +22,6 @@
           (set-buffer-modified-p nil)
           (message "File '%s' successfully renamed to '%s'"
                    name (file-name-nondirectory new-name)))))))
-
-(global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
 
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-utils.el
 (defun km/delete-this-file ()
@@ -43,27 +42,29 @@
       (setq file (concat "/sudo:root@localhost:" file)))
     (find-file file)))
 
-(global-set-key (kbd "C-x F") 'km/find-file-as-root)
-
 (defun km/save-and-kill-buffer ()
   "Save current buffer and then kill it."
   (interactive)
   (save-buffer)
   (kill-this-buffer))
 
+(global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
+(global-set-key (kbd "C-x F") 'km/find-file-as-root)
 (global-set-key (kbd "C-x K") 'kill-buffer-and-window)
+
+(key-chord-define-global ",d" 'km/save-and-kill-buffer)
 (key-chord-define-global ",f" 'find-file)
+(key-chord-define-global ",s" 'save-buffer)
+(key-chord-define-global ",q" 'kill-this-buffer)
 
 (define-key ctl-x-4-map "v" 'view-file-other-window)
 
-(key-chord-define-global ",s" 'save-buffer)
-(key-chord-define-global ",q" 'kill-this-buffer)
-(key-chord-define-global ",d" 'km/save-and-kill-buffer)
-
 (define-prefix-command 'km/file-map)
 (global-set-key (kbd "C-c f") 'km/file-map)
-
 (define-key km/file-map "v" 'view-file)
+
+
+;;; Search
 
 (autoload 'vc-git-grep "vc-git"
   "Run git grep, searching for REGEXP in FILES in directory DIR.
@@ -71,49 +72,47 @@ The search is limited to file names matching shell pattern FILES.
 FILES may use abbreviations defined in `grep-files-aliases', e.g.
 entering `ch' is equivalent to `*.[ch]'.")
 
+(add-hook 'grep-setup-hook 'km/grep-hide-header)
+
 (defun km/grep-hide-header ()
   (save-excursion
     (goto-char (point-min))
     (forward-line 4)
     (narrow-to-region (point) (point-max))))
-(add-hook 'grep-setup-hook 'km/grep-hide-header)
 
 (key-chord-define-global ",z" 'rgrep)
 
 (define-prefix-command 'km/file-search-map)
 (define-key km/file-map "s" 'km/file-search-map)
 
+(define-key km/file-search-map "d" 'find-grep-dired)
+(define-key km/file-search-map "D" 'find-dired)
+(define-key km/file-search-map "f" 'grep-find)
 (define-key km/file-search-map "g" 'lgrep)
 (define-key km/file-search-map "G" 'grep)
-(define-key km/file-search-map "f" 'grep-find)
-
+(define-key km/file-search-map "n" 'find-name-dired)
 (define-key km/file-search-map "r" 'rgrep)
-
 (define-key km/file-search-map "v" 'vc-git-grep)
 (define-key km/file-search-map "z" 'zrgrep)
 
-(define-key km/file-search-map "n" 'find-name-dired)
-(define-key km/file-search-map "d" 'find-grep-dired)
-(define-key km/file-search-map "D" 'find-dired)
-
+
 ;;; Ibuffer
 
-;; Replace buffer-menu with ibuffer.
+(setq ibuffer-expert t
+      ibuffer-restore-window-config-on-quit t
+      ibuffer-show-empty-filter-groups nil)
+
+;; Replace `list-buffers' with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(setq
- ibuffer-restore-window-config-on-quit t
- ;; Don't prompt to delete unmodified buffers.
- ibuffer-expert t
- ;; Don't show empty filter groups.
- ibuffer-show-empty-filter-groups nil)
 
+
 ;;; Recent files
 
-(setq recentf-save-file "~/.emacs.d/cache/recentf"
+(setq recentf-max-menu-items 15
       recentf-max-saved-items 200
-      recentf-max-menu-items 15)
-(recentf-mode t)
+      recentf-save-file "~/.emacs.d/cache/recentf")
+(recentf-mode)
 
 ;; Modified from prelude
 (defun km/recentf-find-file ()
@@ -125,16 +124,16 @@ entering `ch' is equivalent to `*.[ch]'.")
   "Find a file from `recentf-list' in other window."
   (interactive)
   (find-file-other-window (km/read-recent-file)))
-
+;; This overrides `find-file-read-only-other-window', but
+;; `view-file-other-window', which I map to 'v', has the same
+;; functionality.
 (defun km/read-recent-file ()
   (ido-completing-read "Choose recent file: " recentf-list nil t))
 
 (key-chord-define-global ",r" 'km/recentf-find-file)
-;; This overrides `find-file-read-only-other-window', but
-;; `view-file-other-window', which I map to 'v', has the same
-;; functionality.
 (define-key ctl-x-4-map "r" 'km/recentf-find-file-other-window)
 
+
 ;;; Scratch files
 
 (defvar km/find-scratch-buffers
@@ -150,22 +149,6 @@ entering `ch' is equivalent to `*.[ch]'.")
 Format of each element should be (CHARACTER EXTENSION DOC). DOC
 is not required.")
 
-;; This is based off of Projectile's commander.
-(defun km/scratch--get-file-name ()
-  (-let* ((choices (-map #'car km/find-scratch-buffers))
-          (prompt (concat "Scratch buffer [" choices "]: "))
-          (ch (read-char-choice prompt choices))
-          ((_ ext _) (assq ch km/find-scratch-buffers)))
-    (concat "/tmp/scratch" ext)))
-
-(defun km/scratch--find-file-no-select (erase)
-  (let ((scratch-buffer
-         (find-file-noselect (km/scratch--get-file-name))))
-    (when erase
-      (with-current-buffer scratch-buffer
-        (erase-buffer)))
-    scratch-buffer))
-
 (defun km/scratch-find-file (erase)
   "Find scratch buffer.
 
@@ -180,6 +163,22 @@ With prefix ERASE, delete contents of buffer."
     "Like `km/find-scratch-file', but open buffer in another window."
   (interactive "P")
   (switch-to-buffer-other-window (km/scratch--find-file-no-select erase)))
+
+(defun km/scratch--find-file-no-select (erase)
+  (let ((scratch-buffer
+         (find-file-noselect (km/scratch--get-file-name))))
+    (when erase
+      (with-current-buffer scratch-buffer
+        (erase-buffer)))
+    scratch-buffer))
+
+;; This is based off of Projectile's commander.
+(defun km/scratch--get-file-name ()
+  (-let* ((choices (-map #'car km/find-scratch-buffers))
+          (prompt (concat "Scratch buffer [" choices "]: "))
+          (ch (read-char-choice prompt choices))
+          ((_ ext _) (assq ch km/find-scratch-buffers)))
+    (concat "/tmp/scratch" ext)))
 
 (global-set-key (kbd "C-c s") 'km/scratch-find-file)
 (define-key ctl-x-4-map "s" 'km/scratch-find-file-other-window)

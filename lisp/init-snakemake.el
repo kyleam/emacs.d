@@ -1,6 +1,7 @@
 (add-to-list 'load-path "~/src/emacs/snakemake-mode/")
-
 (require 'snakemake-mode-autoloads)
+
+(autoload 'snakemake-compile-command "snakemake-mode")
 
 (setq snakemake-compile-command-options '("-p"))
 
@@ -35,12 +36,10 @@ run."
   (let ((default-directory (projectile-project-root)))
     (call-interactively #'snakemake-compile-rule)))
 
-(autoload 'snakemake-compile-command "snakemake-mode")
-
 (after 'init-external
-  (define-key km/compile-map "p"
-    'km/snakemake-compile-project-file)
   (define-key km/compile-map "b"
-    'km/snakemake-compile-project-rule))
+    'km/snakemake-compile-project-rule)
+  (define-key km/compile-map "p"
+    'km/snakemake-compile-project-file))
 
 (provide 'init-snakemake)

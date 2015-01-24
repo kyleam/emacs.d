@@ -1,27 +1,18 @@
+
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t
-      tramp-default-method "ssh"
       enable-recursive-minibuffers t)
+
+(setq tramp-default-method "ssh")
 
 (setq-default indicate-empty-lines t
               indent-tabs-mode nil)
 
-(show-paren-mode t)
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Set location of custom.el.
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(global-auto-revert-mode t)
-
-;; Make scripts executable at save.
-(add-hook 'after-save-hook
-  'executable-make-buffer-file-executable-if-script-p)
-
-(transient-mark-mode -1)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
@@ -29,23 +20,13 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+(add-hook 'after-save-hook
+  'executable-make-buffer-file-executable-if-script-p)
+
+(show-paren-mode)
+(global-auto-revert-mode)
+(transient-mark-mode -1)
 (key-chord-mode 1)
-
-(global-set-key (kbd "C-h :") 'find-function)
-
-;; This is also bound to 'm', but I always want to press 'j' because
-;; binding for `imenu' and `org-goto'.
-(define-key Info-mode-map "j" 'Info-menu)
-
-;; Disable `suspend-frame' binding.
-(global-unset-key (kbd "C-x C-z"))
-
-;; Avoid shift key for `backward-paragraph' and `forward-paragraph'.
-(global-unset-key (kbd "M-}"))
-(global-set-key (kbd "M-]") 'forward-paragraph)
-(global-unset-key (kbd "M-{"))
-(global-set-key (kbd "M-[") 'backward-paragraph)
-
 
 (defun km/imenu (rescan)
   "Call `imenu', rescanning if RESCAN is non-nil."
@@ -58,8 +39,6 @@
     (setq imenu--index-alist nil))
   (call-interactively #'imenu))
 
-(global-set-key (kbd "C-c j") 'km/imenu)
-
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.
 (defmacro after (mode &rest body)
@@ -67,6 +46,23 @@
   (declare (indent defun))
   `(eval-after-load ,mode
      '(progn ,@body)))
+
+(global-set-key (kbd "C-h :") 'find-function)
+
+(global-set-key (kbd "C-c j") 'km/imenu)
+
+;; Disable `suspend-frame' binding.
+(global-unset-key (kbd "C-x C-z"))
+
+;; Avoid shift key for `backward-paragraph' and `forward-paragraph'.
+(global-unset-key (kbd "M-}"))
+(global-set-key (kbd "M-]") 'forward-paragraph)
+(global-unset-key (kbd "M-{"))
+(global-set-key (kbd "M-[") 'backward-paragraph)
+
+;; This is also bound to 'm', but I always want to press 'j' because
+;; binding for `imenu' and `org-goto'.
+(define-key Info-mode-map "j" 'Info-menu)
 
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)

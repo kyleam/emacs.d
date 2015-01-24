@@ -1,20 +1,29 @@
+
+(setq x-select-enable-clipboard t ; Share clipboard with system.
+      x-select-enable-primary t)
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
+
+(setq ispell-program-name "aspell")
+
 (define-prefix-command 'km/external-map)
 (global-set-key (kbd "C-c x") 'km/external-map)
 
-(setq shell-command-switch "-ic"
-      x-select-enable-clipboard t ; Share clipboard with system.
-      x-select-enable-primary t
-      ispell-program-name "aspell"
-      browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox")
+(define-key km/external-map "w" 'woman)
+(define-key km/external-map "i" 'ispell-buffer)
 
-;;; Terminals
+
+;;; Shells
+
+(setq shell-command-switch "-ic")
 
 (defvar km/terminal "urxvt")
 
 (defun km/open-external-terminal ()
   (interactive)
   (start-process "ext-term" nil km/terminal))
+(define-key km/external-map "t" 'km/open-external-terminal)
 
 (defun km/zsh-ansi-term (&optional directory)
   "Open an ansi-term buffer running ZSH in DIRECTORY.
@@ -76,13 +85,14 @@ BUFFER defaults to current buffer."
   (-distinct (-keep #'km/zsh-ansi-term-directory (buffer-list))))
 
 (define-key km/external-map "a" 'km/zsh-ansi-term)
-;; This overrides binding for `add-change-log-entry-other-window'.
-(define-key ctl-x-4-map "a" 'km/zsh-ansi-term-other-window)
-(define-key km/external-map "t" 'km/open-external-terminal)
 (define-key km/external-map "r" 'shell-command-on-region)
 (define-key km/external-map "s" 'shell-command)
 (define-key km/external-map "S" 'shell)
 
+;; This overrides binding for `add-change-log-entry-other-window'.
+(define-key ctl-x-4-map "a" 'km/zsh-ansi-term-other-window)
+
+
 ;;; Compilation
 
 (defadvice compile (around prevent-duplicate-compilation-windows activate)
@@ -117,15 +127,18 @@ monitor setup)."
 
 (define-key km/compile-map "c" 'compile)
 (define-key km/compile-map "g" 'recompile)
-(define-key km/compile-map "r" 'km/recompile-current-compilation)
 (define-key km/compile-map "o" 'km/display-compilation-other-window)
+(define-key km/compile-map "r" 'km/recompile-current-compilation)
 
 (key-chord-define-global ",e" 'km/recompile-current-compilation)
 
+
 ;;; Diff
 
 (setq diff-command "/bin/diff"
       diff-switches "-u")
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (defadvice diff (after diff-select-and-view activate)
   (select-window (get-buffer-window "*Diff*"))
@@ -135,6 +148,8 @@ monitor setup)."
   (interactive)
   (revert-buffer)
   (view-mode 1))
+(after 'diff
+  (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
 (defun km/ediff-with-other-window ()
   "Run Ediff on current window's file and other window's file."
@@ -149,17 +164,12 @@ monitor setup)."
            (ediff file-a file-b)
          (user-error "At least one buffer is not visiting a file"))))
 
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
 (define-key km/external-map "d" 'diff)
 (define-key km/external-map "e" 'ediff)
 (define-key km/external-map "o" 'km/ediff-with-other-window)
-(after 'diff
-  (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
+
 ;;; WebJump
-
-(define-key km/external-map  "j" 'webjump)
 
 (setq webjump-sites
   '(("Arch User Repository" .
@@ -185,9 +195,6 @@ monitor setup)."
      [simple-query "wikipedia.org"
                    "wikipedia.org/wiki/" ""])))
 
-;;; Misc
-
-(define-key km/external-map "w" 'woman)
-(define-key km/external-map "i" 'ispell-buffer)
+(define-key km/external-map  "j" 'webjump)
 
 (provide 'init-external)

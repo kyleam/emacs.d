@@ -1,15 +1,10 @@
 ;;; Ace Jump
 
-(key-chord-define-global ";a" 'ace-jump-mode)
-
 (setq ace-jump-mode-scope 'frame)
 
+(key-chord-define-global ";a" 'ace-jump-mode)
+
 ;;; Ace Link
-
-(ace-link-setup-default)
-
-(after 'org
- (define-key org-mode-map (kbd "C-c m o") 'ace-link-org))
 
 (defun km/ace-link-dired ()
   "Ace jump to files in dired buffers."
@@ -28,18 +23,20 @@
           (push it points)))
       (nreverse points))))
 
+(ace-link-setup-default)
+(after 'org
+ (define-key org-mode-map (kbd "C-c m o") 'ace-link-org))
 (after 'dired
-  ;; This overrides the binding for `dired-find-file-other-window', which
-  ;; is rebound to 'r'.
+  ;; This overrides the binding for `dired-find-file-other-window'.
   (define-key dired-mode-map "o" 'km/ace-link-dired)
   (define-key dired-mode-map "r" 'dired-find-file-other-window))
 
 ;;; Ace Window
 
-(define-key km/window-map "a" 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
       aw-scope 'global)
 
+(define-key km/window-map "a" 'ace-window)
 (key-chord-define-global ",w" 'ace-window)
 
 (provide 'init-ace)

@@ -1,9 +1,17 @@
+(setq python-fill-docstring-style 'pep-257-nn)
+
+(setq jedi:tooltip-method nil
+      ac-auto-start nil)
+
+(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook 'auto-complete-mode)
 
-(setq jedi:tooltip-method nil
-      ac-auto-start nil)
+(defun km/python-hook ()
+  (set (make-local-variable 'compile-command) "py.test"))
+(add-hook 'python-mode-hook 'km/python-hook)
 
 ;; http://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc5
 (defun km/setup-ipython-shell ()
@@ -95,33 +103,23 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     (goto-char pos)
     n))
 
-(define-prefix-command 'km/python-prefix-map)
-(define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window)
-
 (after 'python
-  (define-key python-mode-map (kbd "C-c m") 'km/python-prefix-map)
+  (key-chord-define python-mode-map ";w" 'auto-complete)
 
+  (define-key python-mode-map (kbd "C-c C-.")
+    'km/python-shell-send-buffer-up-to-point)
+  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
   ;; Rebind `python-shell-send-buffer'.
   (define-key python-mode-map (kbd "C-c C-c")
     'km/python-shell-send-function-or-paragraph-and-step)
-  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
-  (define-key python-mode-map (kbd "C-c C-.")
-    'km/python-shell-send-buffer-up-to-point)
-
-  (key-chord-define python-mode-map ";w" 'auto-complete)
 
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
-  (define-key python-mode-map (kbd "C-M-x") 'python-eldoc-at-point))
+  (define-key python-mode-map (kbd "C-M-x") 'python-eldoc-at-point)
 
-(defun km/python-hook ()
-  (set (make-local-variable 'compile-command) "py.test"))
+  (define-prefix-command 'km/python-prefix-map)
+  (define-key python-mode-map (kbd "C-c m") 'km/python-prefix-map)
 
-(add-hook 'python-mode-hook 'km/python-hook)
-
-(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-
-(setq python-fill-docstring-style 'pep-257-nn)
+  (define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window))
 
 (provide 'init-python)
