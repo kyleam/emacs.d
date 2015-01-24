@@ -67,6 +67,8 @@
 (setq gnus-topic-display-empty-topics nil
       gnus-group-list-inactive-groups nil)
 
+(setq gnus-group-use-permanent-levels t)
+
 (setq gnus-group-sort-function '(km/gnus-group-sort-by-topic
                                  gnus-group-sort-by-level))
 
