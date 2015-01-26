@@ -1,9 +1,10 @@
 ;;; Frames and windows
 
-(defadvice clone-indirect-buffer-other-window
-  (after clone-indirect-and-widen activate)
-  "Widen after cloning an indirect buffer."
-  (widen))
+(defun km/clone-indirect-buffer-other-window-and-widen ()
+  "Clone as indirect buffer and then widen."
+   (interactive)
+   (call-interactively #'clone-indirect-buffer-other-window)
+   (widen))
 
 ;; From prelude
 (defun km/swap-windows ()
@@ -45,5 +46,7 @@ Assumes that the window is only split into two."
 (define-key km/window-map "f" 'make-frame)
 (define-key km/window-map "l" 'km/switch-window-split)
 (define-key km/window-map "s" 'km/swap-windows)
+
+(define-key ctl-x-4-map "c" 'km/clone-indirect-buffer-other-window-and-widen)
 
 (provide 'init-framewin)
