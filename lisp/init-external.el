@@ -140,7 +140,10 @@ monitor setup)."
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(defadvice diff (after diff-select-and-view activate)
+(defun km/diff ()
+  "Run `diff` and then select buffer and turn on View mode."
+  (interactive)
+  (call-interactively #'diff)
   (select-window (get-buffer-window "*Diff*"))
   (view-mode 1))
 
@@ -164,7 +167,7 @@ monitor setup)."
            (ediff file-a file-b)
          (user-error "At least one buffer is not visiting a file"))))
 
-(define-key km/external-map "d" 'diff)
+(define-key km/external-map "d" 'km/diff)
 (define-key km/external-map "e" 'ediff)
 (define-key km/external-map "o" 'km/ediff-with-other-window)
 
