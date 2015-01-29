@@ -61,13 +61,10 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
       (goto-char end)))
   (km/python-next-code-line 1))
 
-(defun km/python-shell-send-buffer-up-to-point ()
-  "Send from beginning of buffer up until point to Python shell."
+(defun km/python-shell-send-buffer-up-to-line ()
+  "Send beginning of buffer to the current line to Python shell."
   (interactive)
-  (save-excursion
-    (setq end (point))
-    (goto-char (point-min))
-    (python-shell-send-region (point) end)))
+  (python-shell-send-region (point-min) (line-end-position)))
 
 (defun km/python-inside-defun-p ()
   ;; I don't use `python-nav-beginning-of-defun' because it will go to
@@ -107,7 +104,7 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
   (key-chord-define python-mode-map ";w" 'auto-complete)
 
   (define-key python-mode-map (kbd "C-c C-.")
-    'km/python-shell-send-buffer-up-to-point)
+    'km/python-shell-send-buffer-up-to-line)
   (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
   ;; Rebind `python-shell-send-buffer'.
   (define-key python-mode-map (kbd "C-c C-c")
