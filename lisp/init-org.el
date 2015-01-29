@@ -329,7 +329,7 @@ killed."
 If a link for FILE does not exist, create it. Otherwise, remove
 it. Like `org-agenda-file-to-front', this results in FILE being
 displayed in the agenda."
-  (interactive (list (case major-mode
+  (interactive (list (cl-case major-mode
                        (org-mode (buffer-file-name))
                        (dired-mode (dired-get-filename))
                        (org-agenda-mode (ignore-errors (save-window-excursion
