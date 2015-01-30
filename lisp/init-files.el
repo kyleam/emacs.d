@@ -1,10 +1,7 @@
-;;; Files and buffers
 
 (require 'uniquify)
 
 (setq require-final-newline t)
-
-(setq uniquify-buffer-name-style 'forward)
 
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
@@ -42,20 +39,10 @@
       (setq file (concat "/sudo:root@localhost:" file)))
     (find-file file)))
 
-(defun km/save-and-kill-buffer ()
-  "Save current buffer and then kill it."
-  (interactive)
-  (save-buffer)
-  (kill-this-buffer))
-
 (global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
 (global-set-key (kbd "C-x F") 'km/find-file-as-root)
-(global-set-key (kbd "C-x K") 'kill-buffer-and-window)
 
-(key-chord-define-global ",d" 'km/save-and-kill-buffer)
 (key-chord-define-global ",f" 'find-file)
-(key-chord-define-global ",s" 'save-buffer)
-(key-chord-define-global ",q" 'kill-this-buffer)
 
 (define-key ctl-x-4-map "v" 'view-file-other-window)
 
@@ -94,17 +81,6 @@ entering `ch' is equivalent to `*.[ch]'.")
 (define-key km/file-search-map "r" 'rgrep)
 (define-key km/file-search-map "v" 'vc-git-grep)
 (define-key km/file-search-map "z" 'zrgrep)
-
-
-;;; Ibuffer
-
-(setq ibuffer-expert t
-      ibuffer-restore-window-config-on-quit t
-      ibuffer-show-empty-filter-groups nil)
-
-;; Replace `list-buffers' with ibuffer.
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
 
 
 ;;; Recent files
@@ -183,4 +159,4 @@ With prefix ERASE, delete contents of buffer."
 (global-set-key (kbd "C-c s") 'km/scratch-find-file)
 (define-key ctl-x-4-map "s" 'km/scratch-find-file-other-window)
 
-(provide 'init-buffile)
+(provide 'init-files)

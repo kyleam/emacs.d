@@ -21,7 +21,8 @@
 (require 'init-orgcontacts)
 (require 'init-babel)
 
-(require 'init-buffile)
+(require 'init-files)
+(require 'init-buffers)
 (require 'init-framewin)
 (require 'init-ace)
 (require 'init-view)

@@ -522,7 +522,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   (interactive)
   (org-open-file (km/read-recent-file)))
 
-(after 'init-buffile
+(after 'init-files
   (define-key km/file-map "a" 'km/org-open-annex-file)
   (define-key km/file-map "o" 'km/org-open-file)
   (define-key km/file-map "p" 'km/org-open-file-at-point)
