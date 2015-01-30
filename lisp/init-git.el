@@ -22,6 +22,8 @@
       magit-log-show-margin nil)
 
 (add-hook 'magit-find-file-hook 'view-mode)
+;; http://whattheemacsd.com/setup-magit.el-01.html
+(add-hook 'magit-status-mode-hook 'delete-other-windows)
 (after 'magit
   (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
 
@@ -144,11 +146,6 @@ START-POINT set to the current branch.
   (interactive "P")
   (while (derived-mode-p 'magit-mode)
     (magit-mode-quit-window kill-buffer)))
-
-;; http://whattheemacsd.com/setup-magit.el-01.html
-(defadvice magit-status-internal (around magit-fullscreen activate)
-  ad-do-it
-  (delete-other-windows))
 
 (defun km/git-rebase-show-commit ()
   "Show the commit on the current line if any.
