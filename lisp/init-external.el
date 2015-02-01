@@ -130,8 +130,6 @@ monitor setup)."
 (define-key km/compile-map "o" 'km/display-compilation-other-window)
 (define-key km/compile-map "r" 'km/recompile-current-compilation)
 
-(key-chord-define-global ",e" 'km/recompile-current-compilation)
-
 
 ;;; Diff
 

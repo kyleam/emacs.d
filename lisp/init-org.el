@@ -355,10 +355,8 @@ displayed in the agenda."
            (org-agenda-text-search-extra-files :maxlevel . 3))))
     (org-refile '(4))))
 
-(key-chord-define-global ",a" 'org-agenda)
-(key-chord-define-global ",t" 'org-capture)
-
 (define-key km/global-org-map "a" 'org-agenda)
+(define-key km/global-org-map "c" 'org-capture)
 (define-key km/global-org-map "j" 'km/org-goto-agenda-heading)
 (define-key km/global-org-map "m" 'km/org-open-default-notes-file-inbox)
 (define-key km/global-org-map "n" 'km/org-agenda-add-or-remove-file)

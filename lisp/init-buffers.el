@@ -28,9 +28,7 @@ kill this buffer and the window."
 
 (global-set-key (kbd "C-x K") 'km/kill-buffer)
 
-(key-chord-define-global ",d" 'km/save-and-kill-buffer)
-(key-chord-define-global ",s" 'save-buffer)
-(key-chord-define-global ",q" 'kill-this-buffer)
+(key-chord-define-global "js" 'save-buffer)
 
 ;; Replace `list-buffers' with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)

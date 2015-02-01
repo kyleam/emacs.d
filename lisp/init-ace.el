@@ -2,7 +2,7 @@
 
 (setq ace-jump-mode-scope 'frame)
 
-(key-chord-define-global ";a" 'ace-jump-mode)
+(key-chord-define-global "jf" 'ace-jump-mode)
 
 ;;; Ace Link
 
@@ -36,7 +36,6 @@
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
       aw-scope 'global)
 
-(define-key km/window-map "a" 'ace-window)
-(key-chord-define-global ",w" 'ace-window)
+(key-chord-define-global "jw" 'ace-window)
 
 (provide 'init-ace)

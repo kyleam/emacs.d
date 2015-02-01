@@ -161,7 +161,7 @@ the commit buffer. And no dinging."
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
-(key-chord-define-global ",g" 'magit-status)
+(key-chord-define-global "jg" 'magit-status)
 
 (after 'magit
   ;; Remove `magit-add-change-log-entry-other-window', which overrides

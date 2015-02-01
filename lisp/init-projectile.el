@@ -60,14 +60,8 @@ Interactive arguments are processed according to
 (define-key projectile-command-map "j"
   'km/projectile-switch-project-to-file)
 
-(key-chord-define-global ";c" 'projectile-commander)
-(key-chord-define-global ";d" 'projectile-find-dir)
-(key-chord-define-global ";f" 'projectile-find-file)
-(key-chord-define-global ";g" 'projectile-grep)
-(key-chord-define-global ";r" 'projectile-recentf)
-(key-chord-define-global ";s" 'projectile-switch-project)
-(key-chord-define-global ";t" 'km/projectile-open-external-terminal-in-root)
-(key-chord-define-global ";v" 'km/projectile-view-file)
+(key-chord-define-global "jq" 'projectile-commander)
+(key-chord-define-global "gp" 'projectile-switch-project)
 
 (define-prefix-command 'km/projectile-ctl-x-4-map)
 (define-key ctl-x-4-map "p" 'km/projectile-ctl-x-4-map)

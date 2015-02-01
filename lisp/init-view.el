@@ -9,6 +9,6 @@
   (define-key view-mode-map "[" 'backward-paragraph)
   (define-key view-mode-map "j" 'km/imenu))
 
-(key-chord-define-global ",v" 'view-mode)
+(key-chord-define-global "hq" 'view-mode)
 
 (provide 'init-view)

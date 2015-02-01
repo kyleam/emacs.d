@@ -144,7 +144,8 @@ and '<<<' mark the bounds of the narrowed region.
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
-(key-chord-define-global ",c" 'km/toggle-line-or-region-comment)
+(key-chord-define-global "jx" 'km/toggle-line-or-region-comment)
+(key-chord-define-global "qp" 'fill-paragraph)
 
 (define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-other-window)
 (define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)

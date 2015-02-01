@@ -42,7 +42,7 @@
 (global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
 (global-set-key (kbd "C-x F") 'km/find-file-as-root)
 
-(key-chord-define-global ",f" 'find-file)
+(key-chord-define-global "jc" 'find-file)
 
 (define-key ctl-x-4-map "v" 'view-file-other-window)
 
@@ -66,8 +66,6 @@ entering `ch' is equivalent to `*.[ch]'.")
     (goto-char (point-min))
     (forward-line 4)
     (narrow-to-region (point) (point-max))))
-
-(key-chord-define-global ",z" 'rgrep)
 
 (define-prefix-command 'km/file-search-map)
 (define-key km/file-map "s" 'km/file-search-map)
@@ -106,7 +104,7 @@ entering `ch' is equivalent to `*.[ch]'.")
 (defun km/read-recent-file ()
   (ido-completing-read "Choose recent file: " recentf-list nil t))
 
-(key-chord-define-global ",r" 'km/recentf-find-file)
+(key-chord-define-global "jt" 'km/recentf-find-file)
 (define-key ctl-x-4-map "r" 'km/recentf-find-file-other-window)
 
 

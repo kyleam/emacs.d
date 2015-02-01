@@ -31,6 +31,6 @@
 (ido-ubiquitous-mode)
 (ido-at-point-mode)
 
-(key-chord-define-global ",b" 'ido-switch-buffer)
+(key-chord-define-global "vv" 'ido-switch-buffer)
 
 (provide 'init-ido)

@@ -101,8 +101,6 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     n))
 
 (after 'python
-  (key-chord-define python-mode-map ";w" 'auto-complete)
-
   (define-key python-mode-map (kbd "C-c C-.")
     'km/python-shell-send-buffer-up-to-line)
   (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
