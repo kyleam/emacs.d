@@ -1,9 +1,8 @@
+(require 'projectile)
 
 (setq projectile-switch-project-action 'projectile-commander
       projectile-find-dir-includes-top-level t
       projectile-use-git-grep t)
-
-(projectile-global-mode)
 
 (defun km/projectile-switch-project-to-file ()
   "Provide access to the of default `projectile-find-file'.
@@ -135,5 +134,7 @@ Interactive arguments are processed according to
 (def-projectile-commander-method ?V
   "View project file in other window."
   (km/projectile-view-file-other-window))
+
+(projectile-global-mode)
 
 (provide 'init-projectile)

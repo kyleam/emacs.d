@@ -23,11 +23,6 @@
 (add-hook 'after-save-hook
   'executable-make-buffer-file-executable-if-script-p)
 
-(show-paren-mode)
-(global-auto-revert-mode)
-(transient-mark-mode -1)
-(key-chord-mode 1)
-
 (defun km/imenu (rescan)
   "Call `imenu', rescanning if RESCAN is non-nil."
   (interactive "P")
@@ -66,5 +61,10 @@
 
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)
+
+(show-paren-mode)
+(global-auto-revert-mode)
+(transient-mark-mode -1)
+(key-chord-mode 1)
 
 (provide 'init-general)

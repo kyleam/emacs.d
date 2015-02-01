@@ -12,8 +12,6 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-(electric-indent-mode -1)
-
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
@@ -166,6 +164,8 @@ and '<<<' mark the bounds of the narrowed region.
 
 (define-key km/editing-map "f" 'km/fill-surrounding-indented)
 (define-key km/editing-map "i" 'indent-relative)
+
+(electric-indent-mode -1)
 
 
 ;;; Buffer cleanup
