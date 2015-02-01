@@ -166,6 +166,7 @@ and '<<<' mark the bounds of the narrowed region.
 (define-key km/editing-map "i" 'indent-relative)
 
 (electric-indent-mode -1)
+(whole-line-or-region-mode)
 
 
 ;;; Buffer cleanup

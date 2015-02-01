@@ -11,6 +11,7 @@
 (after 'reftex (diminish 'reftex-mode "Rf"))
 (after 'view (diminish 'view-mode "Vw"))
 (after 'whitespace (diminish 'global-whitespace-mode))
+(after 'whole-line-or-region (diminish 'whole-line-or-region-mode))
 (after 'yasnippet (diminish 'yas-minor-mode))
 
 (provide 'init-diminish)

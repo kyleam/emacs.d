@@ -46,6 +46,7 @@
 (depends-on "stan-mode")
 (depends-on "stekene-theme")
 (depends-on "subr+")
+(depends-on "whole-line-or-region")
 (depends-on "wrap-region")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
