@@ -242,31 +242,6 @@ to
 (define-key ctl-x-4-map "o" 'km/org-switch-to-buffer-other-window)
 
 
-;;; Org capture
-
-(setq org-capture-templates
-      '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
-         "* TODO %?\n%i")
-        ("d" "date" entry (file+headline "~/notes/calendar.org" "Inbox")
-         "* %?\n%i")
-        ("m" "misc" entry (file+headline "~/notes/misc.org" "Inbox")
-         "* %?\n%i")
-        ;; Link counterparts
-        ("T" "task link" entry (file+headline "~/notes/tasks.org" "Inbox")
-         "* TODO %?\n%i\nLink: %a")
-        ("D" "date link" entry (file+headline "~/notes/calendar.org" "Inbox")
-         "* %?\n%i\nLink: %a")
-        ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
-         "* %?\n%i\nLink: %a")
-        ;; Clipboard
-        ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
-         "* TODO %?\n%x")
-        ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
-         "* %?\n%x")))
-
-(key-chord-define-global ",t" 'org-capture)
-
-
 ;;; Agenda
 
 (setq org-default-notes-file "~/notes/agenda/tasks.org")
@@ -300,6 +275,26 @@ to
                                        'regexp "\n]+>")))
           (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))
+
+(setq org-capture-templates
+      '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%i")
+        ("d" "date" entry (file+headline "~/notes/calendar.org" "Inbox")
+         "* %?\n%i")
+        ("m" "misc" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i")
+        ;; Link counterparts
+        ("T" "task link" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%i\nLink: %a")
+        ("D" "date link" entry (file+headline "~/notes/calendar.org" "Inbox")
+         "* %?\n%i\nLink: %a")
+        ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%i\nLink: %a")
+        ;; Clipboard
+        ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
+         "* TODO %?\n%x")
+        ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
+         "* %?\n%x")))
 
 (add-hook 'org-agenda-mode-hook 'km/org-agenda-cd-and-read-dir-locals)
 (add-hook 'org-agenda-finalize-hook 'km/org-agenda-store-current-span)
@@ -361,6 +356,7 @@ displayed in the agenda."
     (org-refile '(4))))
 
 (key-chord-define-global ",a" 'org-agenda)
+(key-chord-define-global ",t" 'org-capture)
 
 (define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "j" 'km/org-goto-agenda-heading)
