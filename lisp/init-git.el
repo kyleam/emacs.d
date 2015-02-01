@@ -141,11 +141,11 @@ START-POINT set to the current branch.
       (magit-run-git "branch" (concat "b/" it))
     (user-error "No current branch")))
 
-(defun km/magit-mode-quit-all-windows (&optional kill-buffer)
+(defun km/magit-mode-bury-all-windows (&optional kill-buffer)
   "Run `magit-mode-quit-window' until no longer in Magit buffer."
   (interactive "P")
   (while (derived-mode-p 'magit-mode)
-    (magit-mode-quit-window kill-buffer)))
+    (magit-mode-bury-buffer kill-buffer)))
 
 (defun km/git-rebase-show-commit ()
   "Show the commit on the current line if any.
@@ -168,7 +168,7 @@ the commit buffer. And no dinging."
   ;; my binding for `km/zsh-ansi-term-other-window'.
   (define-key magit-mode-map (kbd "C-x 4 a") nil)
   (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
-  (define-key magit-mode-map "Q" 'km/magit-mode-quit-all-windows)
+  (define-key magit-mode-map "Q" 'km/magit-mode-bury-all-windows)
 
   ;; `magit-diff-visit-file-worktree' is also on C-RET.
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
