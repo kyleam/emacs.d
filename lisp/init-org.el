@@ -234,7 +234,6 @@ to
 (define-prefix-command 'km/global-org-map)
 (global-set-key (kbd "C-c o") 'km/global-org-map)
 
-(define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "b" 'org-iswitchb)
 (define-key km/global-org-map "l" 'km/org-store-link)
 (define-key km/global-org-map "o" 'org-open-at-point-global)
@@ -363,6 +362,7 @@ displayed in the agenda."
 
 (key-chord-define-global ",a" 'org-agenda)
 
+(define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "j" 'km/org-goto-agenda-heading)
 (define-key km/global-org-map "m" 'km/org-open-default-notes-file-inbox)
 (define-key km/global-org-map "n" 'km/org-agenda-add-or-remove-file)
