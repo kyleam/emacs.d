@@ -100,10 +100,10 @@ without requiring confirmation.
   (interactive (list (magit-read-remote "Remote") (magit-push-arguments)))
   (magit-run-git-async "push" "-v" args remote "HEAD"))
 
-(defun km/magit-log-all-branches (range &optional args files)
-  (interactive (magit-log-read-args t))
+(defun km/magit-log-all-branches (&optional args files)
+  (interactive (magit-log-read-args nil t))
   (add-to-list 'args "--all")
-  (magit-log range args files))
+  (magit-log-head args files))
 
 (defun km/magit-checkout-local-tracking (remote-branch)
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
