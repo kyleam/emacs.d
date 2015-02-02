@@ -42,7 +42,7 @@
   `(eval-after-load ,mode
      '(progn ,@body)))
 
-(global-set-key (kbd "C-h :") 'find-function)
+(global-set-key (kbd "C-h ;") 'find-function)
 
 (global-set-key (kbd "C-c j") 'km/imenu)
 
