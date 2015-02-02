@@ -10,6 +10,8 @@
 (add-hook 'python-mode-hook 'auto-complete-mode)
 
 (defun km/python-hook ()
+  (set (make-local-variable 'yas-fallback-behavior)
+       '(apply auto-complete))
   (set (make-local-variable 'compile-command) "py.test"))
 (add-hook 'python-mode-hook 'km/python-hook)
 
