@@ -54,11 +54,18 @@ Interactive arguments are processed according to
 
 (define-key projectile-command-map "."
   'km/projectile-copy-project-filename-as-kill)
+;; This overrides `projectile-find-file-dwim'.
+(define-key projectile-command-map "g" 'projectile-vc)
 ;; Swap `projectile-invalidate-cache' and `projectile-ibuffer'.
 (define-key projectile-command-map "I" 'projectile-invalidate-cache)
 (define-key projectile-command-map "i" 'projectile-ibuffer)
-(define-key projectile-command-map "j"
-  'km/projectile-switch-project-to-file)
+(define-key projectile-command-map "q" 'projectile-replace)
+;; This overrides `projectile-replace', which is now on 'q'.
+(define-key projectile-command-map "r" 'projectile-recentf)
+;; This overrides Projectile's general search prefix.
+(define-key projectile-command-map "s" 'projectile-grep)
+;; This overrides `projectile-vc', which is now on 'g'.
+(define-key projectile-command-map "v" 'km/projectile-view-file)
 
 (key-chord-define-global "jq" 'projectile-commander)
 (key-chord-define-global "gp" 'projectile-switch-project)
@@ -98,25 +105,26 @@ Interactive arguments are processed according to
   "Find project file in other window."
   (call-interactively 'projectile-find-file-other-window))
 
+(def-projectile-commander-method ?g
+  "Open project root in vc-dir or magit."
+  (projectile-vc))
+
 (def-projectile-commander-method ?i
   "Open an IBuffer window showing all buffers in the current project."
   (call-interactively 'projectile-ibuffer))
-
-;; Default binding is v.
-(def-projectile-commander-method ?m
-  "Open project root in vc-dir or magit."
-  (projectile-vc))
 
 (def-projectile-commander-method ?O
   "Display a project buffer in other window."
   (call-interactively 'projectile-display-buffer))
 
-;; Default binding is e.
 (def-projectile-commander-method ?r
   "Find recently visited file in project."
   (projectile-recentf))
 
-;; Default binding is D.
+(def-projectile-commander-method ?s
+  "Run grep on project."
+  (call-interactively #'projectile-grep))
+
 (def-projectile-commander-method ?t
   "Open project root in dired."
   (projectile-dired))
