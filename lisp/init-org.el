@@ -227,6 +227,7 @@ to
   (define-key org-mode-map (kbd "C-c m") 'km/org-prefix-map))
 
 (define-prefix-command 'km/org-prefix-map)
+(define-key km/org-prefix-map "c" 'km/org-clone-and-shift-by-repeater)
 (define-key km/org-prefix-map "l" 'km/org-remove-title-leader)
 (define-key km/org-prefix-map "n" 'km/org-normalize-spaces)
 (define-key km/org-prefix-map "s" 'km/org-sort-parent)
