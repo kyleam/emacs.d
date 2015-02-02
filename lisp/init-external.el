@@ -54,6 +54,12 @@ With any other non-nil value, prompt for a directory."
      (t
       (ansi-term "/bin/zsh" name)))))
 
+(defun km/zsh-toggle-ansi-term-home ()
+  (interactive)
+  (if (string= "*zsh: ~/*" (buffer-name))
+      (bury-buffer)
+    (km/zsh-ansi-term "~/")))
+
 (defun km/zsh-ansi-term-other-window (&optional directory)
   (interactive (km/zsh-ansi-term--args))
   (pop-to-buffer (save-window-excursion (km/zsh-ansi-term directory))))
@@ -88,6 +94,8 @@ BUFFER defaults to current buffer."
 (define-key km/external-map "r" 'shell-command-on-region)
 (define-key km/external-map "s" 'shell-command)
 (define-key km/external-map "S" 'shell)
+
+(key-chord-define-global "kz" 'km/zsh-toggle-ansi-term-home)
 
 ;; This overrides binding for `add-change-log-entry-other-window'.
 (define-key ctl-x-4-map "a" 'km/zsh-ansi-term-other-window)
