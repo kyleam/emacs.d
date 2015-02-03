@@ -62,10 +62,9 @@ entering `ch' is equivalent to `*.[ch]'.")
 (add-hook 'grep-setup-hook 'km/grep-hide-header)
 
 (defun km/grep-hide-header ()
-  (save-excursion
-    (goto-char (point-min))
-    (forward-line 4)
-    (narrow-to-region (point) (point-max))))
+  (let ((beg (save-excursion (goto-char (point-min))
+                             (line-beginning-position 5))))
+    (narrow-to-region beg (point-max))))
 
 (define-prefix-command 'km/file-search-map)
 (define-key km/file-map "s" 'km/file-search-map)
