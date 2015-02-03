@@ -465,6 +465,31 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 
+;;; Org Babel
+
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)
+   (python . t)
+   (R . t)
+   (emacs-lisp . t)
+   (latex . t)))
+
+
+;;; Org Contacts
+
+(require 'org-contacts)
+
+(setq org-contacts-files '("~/notes/contacts.org"))
+
+(add-to-list 'org-capture-templates
+             '("a" "email address" entry (file+headline "~/notes/contacts.org" "Inbox")
+               "** %(org-contacts-template-name)\n   :PROPERTIES:\n   :EMAIL: %(org-contacts-template-email)\n   :END:"))
+
+
 ;;; Org in other modes
 
 (after 'git-commit

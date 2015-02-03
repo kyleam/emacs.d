@@ -18,8 +18,6 @@
 (require 'init-diminish)
 
 (require 'init-org)
-(require 'init-orgcontacts)
-(require 'init-babel)
 
 (require 'init-files)
 (require 'init-buffers)
