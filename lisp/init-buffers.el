@@ -26,9 +26,23 @@ kill this buffer and the window."
    (t
     (call-interactively #'kill-buffer))))
 
+(defun km/save-buffers ()
+  "Run `save-some-buffers', but don't ask to save the current buffer.
+`save-some-buffers' is called interactively."
+  (interactive)
+  (let* ((base-buf (buffer-base-buffer))
+         (buf (or base-buf (current-buffer)))
+         (buf-file (buffer-file-name buf)))
+    (when (and (buffer-live-p buf)
+               (buffer-modified-p buf)
+               buf-file)
+      (with-current-buffer buf
+        (save-buffer))))
+  (call-interactively #'save-some-buffers))
+
 (global-set-key (kbd "C-x K") 'km/kill-buffer)
 
-(key-chord-define-global "js" 'save-buffer)
+(key-chord-define-global "js" 'km/save-buffers)
 
 ;; Replace `list-buffers' with ibuffer.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
