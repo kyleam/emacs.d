@@ -80,10 +80,8 @@ point.  The link is opened using the settings of
 (defun km/doi-at-point ()
   "Return DOI at point."
   (save-excursion
-    (re-search-backward "[ \t\n]" nil t)
-    (re-search-forward "\\(doi:[ \t\n]*\\)*\\([-./A-z0-9]+\\)[.; \t\n]" nil t)
-    (--if-let (match-string-no-properties 2)
-        (s-chop-suffix "." it)
-      (error "No DOI found"))))
+    (skip-chars-backward "-.A-z0-9/")
+    (and (looking-at "\\(doi:[ \t\n]*\\)*\\([-./A-z0-9]+[A-z0-9]\\)\\b")
+         (match-string-no-properties 2))))
 
 (provide 'init-bib)
