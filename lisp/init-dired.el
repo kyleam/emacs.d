@@ -63,8 +63,8 @@
   (interactive)
   (view-file-other-window (dired-get-file-for-visit)))
 
-;; This overrides the binding for `list-directory'.
 (define-key dired-mode-map (kbd "C-c C-b") 'dired-up-directory)
+;; This overrides the binding for `list-directory'.
 (global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
 ;; This overrides `dired-do-run-mail'.
 (define-key dired-mode-map "V" 'km/dired-view-file-other-window)
