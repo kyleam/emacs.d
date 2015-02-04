@@ -58,9 +58,16 @@
               (yes-or-no-p (format "Open %s files?" num-files)))
       (--each files (org-open-file it in-emacs)))))
 
+(defun km/dired-view-file-other-window ()
+  "In Dired, view this file in another window."
+  (interactive)
+  (view-file-other-window (dired-get-file-for-visit)))
+
 ;; This overrides the binding for `list-directory'.
 (define-key dired-mode-map (kbd "C-c C-b") 'dired-up-directory)
 (global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
+;; This overrides `dired-do-run-mail'.
+(define-key dired-mode-map "V" 'km/dired-view-file-other-window)
 
 (define-key ctl-x-4-map "D" 'km/dired-switch-to-buffer-other-window)
 
