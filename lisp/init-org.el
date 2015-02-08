@@ -362,6 +362,11 @@ displayed in the agenda."
 (define-key km/global-org-map "m" 'km/org-open-default-notes-file-inbox)
 (define-key km/global-org-map "n" 'km/org-agenda-add-or-remove-file)
 
+(after 'org-agenda
+  ;; Bind `org-agenda-follow-mode' to same key as
+  ;; `next-error-follow-minor-mode'.
+  (define-key org-agenda-mode-map (kbd "C-c C-f")  'org-agenda-follow-mode))
+
 
 ;;; Refiling
 
