@@ -77,6 +77,12 @@ point.  The link is opened using the settings of
   (interactive (list (km/doi-at-point)))
   (browse-url (org-link-escape-browser (concat org-doi-server-url doi))))
 
+(defun km/copy-doi-as-kill ()
+  "Copy DOI at point to kill ring."
+  (interactive)
+  (-when-let (doi (km/doi-at-point))
+    (kill-new (message "%s" (concat "doi:" doi)))))
+
 (defun km/doi-at-point ()
   "Return DOI at point."
   (save-excursion
