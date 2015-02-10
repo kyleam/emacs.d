@@ -34,7 +34,7 @@
 ;;; Ace Window
 
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-      aw-scope 'global)
+      aw-scope 'frame)
 
 (key-chord-define-global "jw" 'ace-window)
 
