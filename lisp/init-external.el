@@ -129,6 +129,11 @@ monitor setup)."
       (save-window-excursion ad-do-it)
     ad-do-it))
 
+(defun km/compile-in-home-dir ()
+  (interactive)
+  (let ((default-directory "~/"))
+    (call-interactively #'compile)))
+
 (defadvice recompile (around prevent-window-on-compilation activate)
   "Prevent recompiling from spawning new windows."
   (save-window-excursion ad-do-it))
@@ -181,6 +186,7 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (global-set-key (kbd "C-c c") 'km/compile-map)
 
 (define-key km/compile-map "c" 'compile)
+(define-key km/compile-map "h" 'km/compile-in-home-dir)
 (define-key km/compile-map "g" 'recompile)
 (define-key km/compile-map "o" 'km/compilation-display-buffer)
 (define-key km/compile-map "r" 'km/compilation-recompile)
