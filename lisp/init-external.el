@@ -103,40 +103,87 @@ BUFFER defaults to current buffer."
 
 ;;; Compilation
 
+(defvar km/compilation-buffer-name-prefix "compilation: ")
+
+(defun km/compilation-name-by-directory (&optional mode)
+  (let ((name (if (and mode (not (equal mode "compilation")))
+                  (downcase mode)
+                (concat km/compilation-buffer-name-prefix
+                        (abbreviate-file-name default-directory)))))
+    (concat "*" name "*")))
+
+(setq compilation-buffer-name-function 'km/compilation-name-by-directory)
+
+(defun km/compilation-buffer-p (buffer)
+  (with-current-buffer buffer
+    (and (derived-mode-p 'compilation-mode)
+         (string-prefix-p (concat "*" km/compilation-buffer-name-prefix)
+                          (buffer-name)))))
+
 (defadvice compile (around prevent-duplicate-compilation-windows activate)
   "Pop to compilation buffer only if it isn't visible.
 This is useful for using multiple frames (e.g., with a two
 monitor setup)."
-  (if (get-buffer-window "*compilation*" 'visible)
-      (save-window-excursion
-        ad-do-it)
+  (if (get-buffer-window (km/compilation-name-by-directory)
+                         'visible)
+      (save-window-excursion ad-do-it)
     ad-do-it))
 
 (defadvice recompile (around prevent-window-on-compilation activate)
   "Prevent recompiling from spawning new windows."
-  (save-window-excursion
-    ad-do-it))
+  (save-window-excursion ad-do-it))
 
-(defun km/display-compilation-other-window ()
-  (interactive)
-  (--if-let (get-buffer "*compilation*")
-      (display-buffer it)
-    (user-error "No compilation buffer")))
+(defun km/compilation-recompile (&optional arg)
+  "Recompile buffer.
+By default, use `compilation-last-buffer'.  If ARG is 0, get
+buffer with name given by `km/compilation-name-by-directory'.
+Otherwise, if ARG is non-nil, prompt with buffers from
+`km/compilation-buffer-list'."
+  (interactive (list (and current-prefix-arg
+                          (prefix-numeric-value current-prefix-arg))))
+  (with-current-buffer (km/compilation--get-buffer arg)
+    (if (derived-mode-p 'occur-mode)
+        (revert-buffer)
+      (recompile))))
 
-(defun km/recompile-current-compilation ()
-  (interactive)
-  (--if-let (get-buffer "*compilation*")
-      (with-current-buffer it
-        (recompile))
-    (user-error "No compilation buffer")))
+(defun km/compilation-display-buffer (&optional arg)
+  "Display compilation buffer.
+By default, use `compilation-last-buffer'.  If ARG is 0, get
+buffer with name given by `km/compilation-name-by-directory'.
+Otherwise, if ARG is non-nil, prompt with buffers from
+`km/compilation-buffer-list'."
+  (interactive (list (and current-prefix-arg
+                          (prefix-numeric-value current-prefix-arg))))
+  (display-buffer (km/compilation--get-buffer arg)))
+
+(defun km/compilation--get-buffer (&optional arg)
+  (cond
+   ((and (not arg)
+         (buffer-live-p compilation-last-buffer)
+         compilation-last-buffer))
+   ((and (numberp arg)
+         (= arg 0))
+    (get-buffer (km/compilation-name-by-directory)))
+   (t
+    (let ((cbufs (-map #'buffer-name (km/compilation-buffer-list)))
+          buf)
+      (cl-case (length cbufs)
+        (0 (user-error "No compilation buffers found"))
+        (1 (setq buf (car cbufs)))
+        (t (setq buf (completing-read "Compilation buffer: " cbufs
+                                      nil nil nil nil (car cbufs)))))
+      buf))))
+
+(defun km/compilation-buffer-list ()
+  (-filter #'km/compilation-buffer-p (buffer-list)))
 
 (define-prefix-command 'km/compile-map)
 (global-set-key (kbd "C-c c") 'km/compile-map)
 
 (define-key km/compile-map "c" 'compile)
 (define-key km/compile-map "g" 'recompile)
-(define-key km/compile-map "o" 'km/display-compilation-other-window)
-(define-key km/compile-map "r" 'km/recompile-current-compilation)
+(define-key km/compile-map "o" 'km/compilation-display-buffer)
+(define-key km/compile-map "r" 'km/compilation-recompile)
 
 
 ;;; Diff
