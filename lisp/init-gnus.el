@@ -217,46 +217,50 @@ paragraph."
 
 ;; Modified from http://www.xsteve.at/prg/gnus/
 
-(defun km/gnus-select-or-bury ()
-  "Start, select, or bury gnus."
-  (interactive)
-  (let ((bufname (buffer-name)))
-    (if (or (string-equal "*Group*" bufname)
-            (string-match "\*Summary" bufname)
-            (string-match "\*Article" bufname))
-        (km/bury-gnus)
-      (if (get-buffer "*Group*")
-          (km/unbury-gnus)
-        (gnus-unplugged)))))
+(defun km/gnus-select-or-bury (&optional plugged)
+  "Start, select, or bury gnus.
+Prefix argument PLUGGED is passed to `gnus-unbury'."
+  (interactive "P")
+  (if (km/gnus-bufferp (current-buffer))
+      (km/gnus-bury)
+    (km/gnus-unbury plugged)))
 
-(defvar gnus-bury-window-configuration nil)
+(defvar km/gnus-window-configuration nil)
 
-(defun km/unbury-gnus ()
-  (let (dead-frame-p
-        (windows-saved-p
-         (and (boundp 'gnus-bury-window-configuration)
-              gnus-bury-window-configuration)))
-    (when windows-saved-p
-      (unless (set-window-configuration gnus-bury-window-configuration)
-        (setq dead-frame-p t)))
-    (when (or dead-frame-p (not windows-saved-p))
-      (switch-to-buffer "*Group*"))))
+(defun km/gnus-unbury (&optional plugged)
+  "Unbury Gnus-related buffers.
+If PLUGGED is non-nil, start Gnus in a plugged state.  This only
+has an effect if Gnus is not currently open."
+  (cond
+   (km/gnus-window-configuration
+    (set-window-configuration km/gnus-window-configuration))
+   ((get-buffer "*Group*")
+    (delete-other-windows)
+    (pop-to-buffer-same-window "*Group*"))
+   (t
+    (setq gnus-plugged plugged)
+    (gnus)))
+  (setq km/gnus-window-configuration nil))
 
-(defun km/bury-gnus ()
-  (let ((buf nil)
-        (bufname nil))
-    (setq gnus-bury-window-configuration nil)
-    (dolist (buf (buffer-list))
-      (setq bufname (buffer-name buf))
-      (when (or (string-equal "*Group*" bufname)
-                (string-match "\*Summary" bufname)
-                (string-match "\*Article" bufname))
-        (unless gnus-bury-window-configuration
-          (setq gnus-bury-window-configuration (current-window-configuration)))
-        (delete-other-windows)
-        (if (eq (current-buffer) buf)
-            (bury-buffer)
-          (bury-buffer buf))))))
+(defun km/gnus-bury ()
+  (when (km/gnus-bufferp (current-buffer))
+    (setq km/gnus-window-configuration (current-window-configuration))
+    (--each (km/gnus-buffer-list)
+      (if (eq (current-buffer) it)
+          (progn
+            (delete-other-windows)
+            (bury-buffer))
+        (bury-buffer it)))))
+
+(defun km/gnus-bufferp (buffer)
+  (with-current-buffer buffer
+    (derived-mode-p 'gnus-group-mode
+                    'gnus-summary-mode
+                    'gnus-article-mode
+                    'message-mode)))
+
+(defun km/gnus-buffer-list ()
+  (-filter #'km/gnus-bufferp (buffer-list)))
 
 (define-key km/mail-map "b" 'km/gnus-select-or-bury)
 
