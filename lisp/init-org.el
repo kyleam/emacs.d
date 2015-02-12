@@ -450,6 +450,11 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 (define-key km/global-org-map "w" 'org-refile-goto-last-stored)
 (define-key km/org-prefix-map "w" 'km/org-refile-to-other-org-buffer)
 
+(after 'org-agenda
+  ;; Free up 'j' for `ace-jump-mode'.
+  (define-key org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date)
+  (define-key org-agenda-mode-map "j" 'ace-jump-mode))
+
 
 ;;; Export
 
