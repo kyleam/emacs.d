@@ -9,6 +9,8 @@
 (setq-default indicate-empty-lines t
               indent-tabs-mode nil)
 
+(setq set-mark-command-repeat-pop t)
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
