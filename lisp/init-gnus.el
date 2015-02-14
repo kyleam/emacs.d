@@ -157,27 +157,20 @@ A new buffer with the patch contents is opened in another window."
   (goto-char (point-max)))
 
 
-;; From http://ivan.kanis.fr/ivan-gnus.el
-(defun km/gnus-catchup-and-goto-next-group (&optional all)
-  "Mark all articles in this group as read and select the next group.
-If given a prefix, mark all articles, unread as well as ticked, as
-read. Don't ask to confirm."
+(defun km/gnus-summary-catchup (&optional no-next)
+  "Mark all articles as read.
+Don't ask for confirmation.  With prefix argument NO-NEXT, exit
+to group buffer instead of moving to next group."
   (interactive "P")
-  (save-excursion
-    (gnus-summary-catchup all t))
-  (gnus-summary-next-group))
-
-;; From http://ivan.kanis.fr/ivan-gnus.el
-(defadvice gnus-summary-next-group (before km/gnus-next-group activate)
-  "Go to next group without selecting the first article."
-  (ad-set-arg 0 t))
+  (let ((gnus-auto-select-next (unless no-next 'quietly)))
+    (gnus-summary-catchup-and-exit nil t)))
 
 (define-key gnus-summary-mode-map
   (kbd "C-c j") 'km/gnus-follow-last-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
-(define-key gnus-summary-mode-map "c" 'km/gnus-catchup-and-goto-next-group)
+(define-key gnus-summary-mode-map "c" 'km/gnus-summary-catchup)
 (define-key gnus-summary-mode-map "e" 'gnus-summary-scroll-up)
 (define-key gnus-summary-mode-map "j" 'ace-jump-mode)
 
