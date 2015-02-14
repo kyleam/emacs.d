@@ -196,8 +196,7 @@ read. Don't ask to confirm."
       footnote-section-tag "")
 
 (add-hook 'message-send-hook 'km/message-confirm-sender)
-(add-hook 'message-mode-hook
-          (lambda () (flyspell-mode 1)))
+(add-hook 'message-mode-hook 'flyspell-mode)
 
 (defun km/message-confirm-sender ()
   "Stop sending message from the wrong address."
