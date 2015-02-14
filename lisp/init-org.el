@@ -14,6 +14,7 @@
       org-special-ctrl-k t
       org-insert-heading-respect-content t
       org-M-RET-may-split-line nil
+      org-adapt-indentation nil
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
 (setq org-link-search-must-match-exact-headline nil)
