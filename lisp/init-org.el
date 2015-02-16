@@ -218,6 +218,12 @@ to
   (define-key org-mode-map (kbd "C-c C-x d") 'org-metadown)
   (define-key org-mode-map (kbd "C-c C-x w") 'org-insert-drawer)
 
+  ;; Rebind `org-set-property' to free up binding for
+  ;; `org-previous-item'.
+  (define-key org-mode-map (kbd "C-c C-x s") 'org-set-property)
+  (define-key org-mode-map (kbd "C-c C-x n") 'org-next-item)
+  (define-key org-mode-map (kbd "C-c C-x p") 'org-previous-item)
+
   ;; Override global `imenu' binding.
   (define-key org-mode-map (kbd "C-c j") 'org-goto)
   ;; Don't let `org-cycle-agenda-files' binding override custom
