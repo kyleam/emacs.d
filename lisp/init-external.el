@@ -200,7 +200,7 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (defun km/diff ()
-  "Run `diff` and then select buffer and turn on View mode."
+  "Run `diff' and then select buffer and turn on View mode."
   (interactive)
   (call-interactively #'diff)
   (select-window (get-buffer-window "*Diff*"))
@@ -214,7 +214,7 @@ Otherwise, if ARG is non-nil, prompt with buffers from
   (define-key diff-mode-map (kbd "C-c C-g") 'km/revert-buffer-and-view))
 
 (defun km/ediff-with-other-window ()
-  "Run Ediff on current window's file and other window's file."
+  "Run `ediff' on current window's file and other window's file."
   (interactive)
   (let ((windows (window-list)))
        (unless (= (length windows) 2)
