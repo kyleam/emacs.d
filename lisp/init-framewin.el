@@ -49,6 +49,8 @@ Assumes that the window is only split into two."
 (define-key km/window-map "s" 'km/swap-windows)
 (define-key km/window-map "u" 'winner-undo)
 
+(key-chord-define-global "lq" 'winner-undo)
+
 (define-key ctl-x-4-map "c" 'km/clone-indirect-buffer-other-window-and-widen)
 
 (winner-mode 1)
