@@ -147,6 +147,33 @@ START-POINT set to the current branch.
   (while (derived-mode-p 'magit-mode)
     (magit-mode-bury-buffer kill-buffer)))
 
+(defun km/magit-log-select-guess-fixup-commit (&optional ntop)
+  "Guess commit from fixup/squash commmits.
+Consider NTOP commits (default is 5) when searching for 'fixup!'
+and 'squash!' titles."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         5)))
+  (let (ntop-end msgs commit-pts)
+    (save-excursion
+      ;; Get limit for fixup/squash search.
+      (goto-char (point-min))
+      (setq ntop-end (line-end-position (1+ ntop)))
+      ;; Get fixup and squash messages.
+      (while (re-search-forward "[a-z0-9]+ \\(fixup!\\|squash!\\) \\(.+\\)"
+                                ntop-end t)
+        (push (match-string-no-properties 2) msgs))
+      (when (not msgs)
+        (user-error "No fixup or squash commits found"))
+      ;; Find earliest commit.
+      (goto-char (point-min))
+      (dolist (msg msgs)
+        (when (re-search-forward (concat "[a-z0-9]+ " msg "\n") nil t)
+          (push (match-beginning 0) commit-pts))))
+    (if commit-pts
+        (goto-char (apply #'max commit-pts))
+      (message "No matching commits found"))))
+
 (defun km/git-rebase-show-commit ()
   "Show the commit on the current line if any.
 Unlike `git-rebase-show-commit', display (but don't switch to)
@@ -182,6 +209,10 @@ the commit buffer. And no dinging."
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "u" 'km/magit-auto-commit))
+
+(after 'magit-log
+  (define-key magit-log-select-mode-map "."
+    'km/magit-log-select-guess-fixup-commit))
 
 (after 'git-rebase
   (define-key git-rebase-mode-map "\s" 'km/git-rebase-show-commit))
