@@ -49,12 +49,12 @@
 (global-set-key (kbd "C-c j") 'km/imenu)
 
 ;; Disable `suspend-frame' binding.
-(global-unset-key (kbd "C-x C-z"))
+(global-set-key (kbd "C-x C-z") nil)
 
 ;; Avoid shift key for `backward-paragraph' and `forward-paragraph'.
-(global-unset-key (kbd "M-}"))
+(global-set-key (kbd "M-}") nil)
 (global-set-key (kbd "M-]") 'forward-paragraph)
-(global-unset-key (kbd "M-{"))
+(global-set-key (kbd "M-{") nil)
 (global-set-key (kbd "M-[") 'backward-paragraph)
 
 ;; This is also bound to 'm', but I always want to press 'j' because
