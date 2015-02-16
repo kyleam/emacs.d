@@ -45,8 +45,12 @@ Assumes that the window is only split into two."
 
 (define-key km/window-map "f" 'make-frame)
 (define-key km/window-map "l" 'km/switch-window-split)
+(define-key km/window-map "r" 'winner-redo)
 (define-key km/window-map "s" 'km/swap-windows)
+(define-key km/window-map "u" 'winner-undo)
 
 (define-key ctl-x-4-map "c" 'km/clone-indirect-buffer-other-window-and-widen)
+
+(winner-mode 1)
 
 (provide 'init-framewin)
