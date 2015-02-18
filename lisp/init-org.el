@@ -453,9 +453,10 @@ displayed in the agenda."
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(defadvice org-refile (around km/org-refile-dwim activate)
+(defun km/org-refile-dwim ()
   "Rebind `org-refile-targets' if next window is an Org buffer.
 A target is determined by `km/org-refile-dwim-target-file'."
+  (interactive)
   (let* ((dwim-target (km/org-refile-dwim-target-file))
          (org-refile-targets (if dwim-target
                                  `((nil
@@ -463,7 +464,7 @@ A target is determined by `km/org-refile-dwim-target-file'."
                                    (dwim-target
                                     :maxlevel . ,km/org-refile-dwim-maxlevel))
                                org-refile-targets)))
-    ad-do-it))
+    (call-interactively #'org-refile)))
 
 (defun km/org-refile-dwim-target-file ()
   "Return next window that is an Org buffer."
@@ -513,6 +514,10 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 
 (define-key km/global-org-map "w" 'org-refile-goto-last-stored)
 (define-key km/org-prefix-map "w" 'km/org-refile-to-other-org-buffer)
+
+(after 'org
+  (define-key org-mode-map [remap org-refile] 'km/org-refile-dwim)
+  (add-to-list 'org-speed-commands-user '("w" . km/org-refile-dwim)))
 
 (after 'org-agenda
   ;; Free up 'j' for `ace-jump-mode'.
