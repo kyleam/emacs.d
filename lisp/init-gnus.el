@@ -124,38 +124,46 @@ is off."
   (add-hook 'ace-jump-mode-end-hook (lambda () (gnus-summary-scroll-up 0))
             nil t))
 
-(defun km/gnus-follow-last-message-link (arg)
-  "Follow link at bottom of message.
-When a prefix argument, move to and copy the link but don't
-follow it."
+(defun km/gnus-follow-last-message-link (copy)
+  "Follow shr link at bottom of message.
+With prefix argument COPY, just copy the link."
   (interactive "P")
-  (km/gnus-end-of-article-buffer)
-  (widget-backward 1)
-  (if arg
-      (shr-copy-url)
-    (widget-button-press (point))))
+  (km/gnus-summary-set-current-article)
+  (with-current-buffer gnus-article-buffer
+    (save-excursion
+      (goto-char (point-max))
+      (shr-previous-link)
+      (if copy
+          (shr-copy-url)
+        ;; Cannot use `shr-browse-url' directly because the
+        ;; `mouse-set-point' call moves point.
+        (browse-url
+         (get-text-property (point) 'shr-url))))))
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
 A new buffer with the patch contents is opened in another window."
   (interactive)
-  (km/gnus-end-of-article-buffer)
-  (search-backward "patch")
-  (let ((url (thing-at-point 'url))
-        (patch-buffer (generate-new-buffer "*gnus-github-patch*")))
-    (switch-to-buffer-other-window patch-buffer)
-    (url-insert-file-contents url)
-    (diff-mode)
-    (view-mode 1)))
+  (km/gnus-summary-set-current-article)
+  (let ((bufname (generate-new-buffer-name "*gnus-github-patch*"))
+        url)
+    (with-current-buffer gnus-original-article-buffer
+      (save-excursion
+        (goto-char (point-min))
+        (if (re-search-forward "https://github.com/.*\\.patch")
+            (setq url (match-string-no-properties 0))
+          (user-error "No patch found"))))
+    (with-current-buffer (get-buffer-create bufname)
+      (url-insert-file-contents url)
+      (diff-mode)
+      (view-mode 1))
+    (pop-to-buffer bufname)))
 
-(defun km/gnus-end-of-article-buffer ()
-  "Move point to the end of the article buffer."
-  ;; The next 3 lines are from `gnus-summary-widget-forward'.
-  (gnus-summary-select-article)
-  (gnus-configure-windows 'article)
-  (select-window (gnus-get-buffer-window gnus-article-buffer))
-  (goto-char (point-max)))
-
+(defun km/gnus-summary-set-current-article ()
+  (unless gnus-summary-buffer
+    (user-error "No summary buffer"))
+  (with-current-buffer gnus-summary-buffer
+    (save-window-excursion (gnus-summary-select-article))))
 
 (defun km/gnus-summary-catchup (&optional no-next)
   "Mark all articles as read.
