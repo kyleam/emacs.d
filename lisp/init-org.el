@@ -133,6 +133,58 @@ The repeater is removed from the original subtree."
        "<[^<>\n]+\\( +[.+]?\\+[0-9]+[hdwmy]\\)" deadline-end)
       (delete-region (match-beginning 1) (match-end 1)))))
 
+(defun km/org-delete-checked-items ()
+  "Delete checked items.
+
+If the element at point is not a plain list, search the parent
+elements for a plain list, stopping when the first plain list or
+headline is found.
+
+After deleting checked items, move to the first item of the list.
+If there are no items of the list remaining, move to the parent
+heading."
+  (interactive)
+  (let ((el (org-element-lineage (org-element-context) '(plain-list) t)))
+    (unless el
+      (user-error "Point is not within a plain list"))
+    (let* ((beg (org-element-property :begin el))
+           ;; Check maximum point because, if narrowed to a heading,
+           ;; org-element can return a point beyond this.
+           (end (min (org-element-property :end el) (point-max)))
+           (struct (org-element-property :structure el))
+           (list-level (org-list-get-ind beg struct))
+           (deleted-count 0)
+           (text (buffer-substring beg end))
+           new-text)
+      (with-temp-buffer
+        (insert text)
+        (let ((offset (1- beg))
+              (pmax (point-max))
+              level box bpos epos)
+          (dolist (item (reverse struct))
+            (setq level (nth 1 item)
+                  box (nth 4 item)
+                  bpos (- (nth 0 item) offset)
+                  ;; Minimum check here is for the same reason as
+                  ;; above with `end'.  This only comes into play for
+                  ;; the last item.
+                  epos (min (- (nth 6 item) offset) pmax))
+            (when (and (= list-level level)
+                       (string= box "[X]"))
+              (delete-region bpos epos)
+              (setq deleted-count (1+ deleted-count)))))
+        (setq new-text (buffer-string)))
+      (if (= deleted-count 0)
+          (message "No checked boxes found")
+        (delete-region beg end)
+        (goto-char beg)
+        (insert new-text)
+        (goto-char beg)
+        (unless (eq (car (org-element-at-point)) 'plain-list)
+          (outline-previous-heading))
+        (org-update-checkbox-count-maybe)
+        (message "Deleted %s item(s)" deleted-count)))))
+
 (defun km/org-sort-parent (arg)
   "Sort on parent heading ARG levels up.
 After sorting, return point to its previous location under the
@@ -233,6 +285,7 @@ to
 
 (define-prefix-command 'km/org-prefix-map)
 (define-key km/org-prefix-map "c" 'km/org-clone-and-shift-by-repeater)
+(define-key km/org-prefix-map "d" 'km/org-delete-checked-items)
 (define-key km/org-prefix-map "l" 'km/org-remove-title-leader)
 (define-key km/org-prefix-map "n" 'km/org-normalize-spaces)
 (define-key km/org-prefix-map "s" 'km/org-sort-parent)
