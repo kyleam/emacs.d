@@ -173,6 +173,17 @@ to group buffer instead of moving to next group."
   (let ((gnus-auto-select-next (unless no-next 'quietly)))
     (gnus-summary-catchup-and-exit nil t)))
 
+(defun km/gnus-copy-gmane-link-as-kill ()
+  (interactive)
+  (km/gnus-summary-set-current-article)
+  (with-current-buffer gnus-original-article-buffer
+    (save-excursion
+      (goto-char (point-min))
+      (if (re-search-forward "Archived-At: <\\(.*\\)>")
+          (let ((link (match-string-no-properties 1)))
+            (kill-new (message "%s" link)))
+        (user-error "No link found")))))
+
 (define-key gnus-summary-mode-map
   (kbd "C-c j") 'km/gnus-follow-last-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
@@ -189,10 +200,12 @@ to group buffer instead of moving to next group."
 (define-prefix-command 'km/gnus-summary-prefix-map)
 (define-key gnus-summary-mode-map (kbd "C-c m") 'km/gnus-summary-prefix-map)
 (define-key km/gnus-summary-prefix-map "p" 'km/gnus-open-github-patch)
+(define-key km/gnus-summary-prefix-map "l" 'km/gnus-copy-gmane-link-as-kill)
 
 (define-prefix-command 'km/gnus-article-prefix-map)
 (define-key gnus-article-mode-map (kbd "C-c m") 'km/gnus-article-prefix-map)
 (define-key km/gnus-article-prefix-map "p" 'km/gnus-open-github-patch)
+(define-key km/gnus-article-prefix-map "l" 'km/gnus-copy-gmane-link-as-kill)
 
 
 ;;; Message mode
