@@ -268,6 +268,15 @@ called through the speed command interface."
   (save-excursion
     (call-interactively #'org-open-at-point)))
 
+(defun km/org-open-link-directory ()
+  "Open Dired for directory of file link at point."
+  (interactive)
+  (let ((el (org-element-lineage (org-element-context) '(link) t)))
+    (unless (and el (equal (org-element-property :type el) "file"))
+      (user-error "Not on file link"))
+    (dired (file-name-directory
+            (org-element-property :path el)))))
+
 (after 'org
   (define-key org-mode-map (kbd "C-c C-x B")
     'km/org-tree-to-indirect-buffer-current-window)
@@ -298,10 +307,12 @@ called through the speed command interface."
 
 (define-prefix-command 'km/org-prefix-map)
 (define-key km/org-prefix-map "c" 'km/org-clone-and-shift-by-repeater)
-(define-key km/org-prefix-map "d" 'km/org-delete-checked-items)
+(define-key km/org-prefix-map "d" 'km/org-open-link-directory)
+(define-key km/org-prefix-map "D" 'km/org-delete-checked-items)
 (define-key km/org-prefix-map "l" 'km/org-remove-title-leader)
 (define-key km/org-prefix-map "n" 'km/org-normalize-spaces)
 (define-key km/org-prefix-map "s" 'km/org-sort-parent)
+
 
 (define-prefix-command 'km/global-org-map)
 (global-set-key (kbd "C-c o") 'km/global-org-map)
