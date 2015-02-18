@@ -12,6 +12,8 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
+(setq flyspell-auto-correct-binding (kbd "C-c e ;"))
+
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
