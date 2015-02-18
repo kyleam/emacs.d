@@ -178,6 +178,14 @@ to group buffer instead of moving to next group."
   (kbd "C-c j") 'km/gnus-follow-last-message-link)
 (define-key gnus-article-mode-map "e" 'shr-browse-url)
 
+(define-prefix-command 'km/gnus-summary-prefix-map)
+(define-key gnus-summary-mode-map (kbd "C-c m") 'km/gnus-summary-prefix-map)
+(define-key km/gnus-summary-prefix-map "p" 'km/gnus-open-github-patch)
+
+(define-prefix-command 'km/gnus-article-prefix-map)
+(define-key gnus-article-mode-map (kbd "C-c m") 'km/gnus-article-prefix-map)
+(define-key km/gnus-article-prefix-map "p" 'km/gnus-open-github-patch)
+
 
 ;;; Message mode
 
