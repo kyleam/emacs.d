@@ -257,6 +257,17 @@ to
                                           (funcall 'pop-to-buffer buffer-or-name nil norecord)))
     (org-switchb arg)))
 
+(defun km/org-open-at-point-stay ()
+  "Like `org-open-at-point', but stay on heading.
+This variant is convient to use in `org-speed-commands-user'
+because remaining on the heading allows additional commands to be
+called through the speed command interface."
+  (interactive)
+  (unless (org-at-heading-p)
+    (user-error "Not at heading"))
+  (save-excursion
+    (call-interactively #'org-open-at-point)))
+
 (after 'org
   (define-key org-mode-map (kbd "C-c C-x B")
     'km/org-tree-to-indirect-buffer-current-window)
@@ -281,7 +292,9 @@ to
   ;; to C-,).
   (define-key org-mode-map (kbd "C-'") nil)
 
-  (define-key org-mode-map (kbd "C-c m") 'km/org-prefix-map))
+  (define-key org-mode-map (kbd "C-c m") 'km/org-prefix-map)
+
+  (add-to-list 'org-speed-commands-user '("o" . km/org-open-at-point-stay)))
 
 (define-prefix-command 'km/org-prefix-map)
 (define-key km/org-prefix-map "c" 'km/org-clone-and-shift-by-repeater)
