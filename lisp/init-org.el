@@ -561,7 +561,11 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 
 (add-to-list 'org-capture-templates
              '("a" "email address" entry (file+headline "~/notes/contacts.org" "Inbox")
-               "** %(org-contacts-template-name)\n   :PROPERTIES:\n   :EMAIL: %(org-contacts-template-email)\n   :END:"))
+               "
+** %(org-contacts-template-name)
+:PROPERTIES:
+:EMAIL: %(org-contacts-template-email)
+:END:"))
 
 
 ;;; Org in other modes
