@@ -295,7 +295,7 @@ called through the speed command interface."
   (define-key org-mode-map (kbd "C-c C-x p") 'org-previous-item)
 
   ;; Override global `imenu' binding.
-  (define-key org-mode-map (kbd "C-c j") 'org-goto)
+  (define-key org-mode-map (kbd "C-c l") 'org-goto)
   ;; Don't let `org-cycle-agenda-files' binding override custom
   ;; `backward-kill-word' binding (`org-cycle-agenda-files' is still bound
   ;; to C-,).

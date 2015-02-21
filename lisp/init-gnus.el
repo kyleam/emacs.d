@@ -185,7 +185,7 @@ to group buffer instead of moving to next group."
         (user-error "No link found")))))
 
 (define-key gnus-summary-mode-map
-  (kbd "C-c j") 'km/gnus-follow-last-message-link)
+  (kbd "C-c l") 'km/gnus-follow-last-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
@@ -194,7 +194,7 @@ to group buffer instead of moving to next group."
 (define-key gnus-summary-mode-map "j" 'ace-jump-mode)
 
 (define-key gnus-article-mode-map
-  (kbd "C-c j") 'km/gnus-follow-last-message-link)
+  (kbd "C-c l") 'km/gnus-follow-last-message-link)
 (define-key gnus-article-mode-map "e" 'shr-browse-url)
 
 (define-prefix-command 'km/gnus-summary-prefix-map)

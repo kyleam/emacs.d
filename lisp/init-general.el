@@ -46,7 +46,7 @@
 
 (global-set-key (kbd "C-h ;") 'find-function)
 
-(global-set-key (kbd "C-c j") 'km/imenu)
+(global-set-key (kbd "C-c l") 'km/imenu)
 
 ;; Disable `suspend-frame' binding.
 (global-set-key (kbd "C-x C-z") nil)
@@ -56,10 +56,6 @@
 (global-set-key (kbd "M-]") 'forward-paragraph)
 (global-set-key (kbd "M-{") nil)
 (global-set-key (kbd "M-[") 'backward-paragraph)
-
-;; This is also bound to 'm', but I always want to press 'j' because
-;; binding for `imenu' and `org-goto'.
-(define-key Info-mode-map "j" 'Info-menu)
 
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)
