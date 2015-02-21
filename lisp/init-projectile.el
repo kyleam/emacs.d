@@ -49,11 +49,70 @@ Interactive arguments are processed according to
       (kill-new fname))
     (message "%s" fname)))
 
+(defvar km/projectile-project-saved-thing nil
+  "Property list of saved thing for projects.
+The keys are project roots (strings), so use `lax-plist-put' and
+`lax-plist-get'.")
+
+(defun km/projectile-save-thing (thing)
+  "Save thing for current project.
+
+Thing is a character representing
+-  . point marker
+- (b)uffer
+- (f)ile
+- (w)indow configuration
+
+- (d)elete saved thing"
+  (interactive (list
+                (let ((letters '(?. ?b ?f ?w ?d)))
+                  (read-char-choice (concat "Save [" letters "]: ")
+                                    letters))))
+  (let ((value (cl-case thing
+                 (?.
+                  (point-marker))
+                 (?b
+                  (current-buffer))
+                 (?f
+                  (buffer-file-name))
+                 (?w
+                  (current-window-configuration))
+                 (?d nil))))
+    (setq km/projectile-project-saved-thing
+          (lax-plist-put km/projectile-project-saved-thing
+                         (projectile-project-root)
+                         (cons thing value)))))
+
+(defun km/projectile-restore-thing ()
+  "Restore saved thing for current project.
+Return nil if there is no thing saved for the current project."
+  (interactive)
+  (-when-let* ((thing-value (lax-plist-get km/projectile-project-saved-thing
+                                           (projectile-project-root)))
+               (thing (car thing-value))
+               (value (cdr thing-value)))
+    (cl-case thing
+      (?.
+       (-if-let (buf (marker-buffer value))
+           (progn (switch-to-buffer buf)
+                  (goto-char value))
+          (user-error "Buffer no longer exists")))
+      (?b
+       (if (buffer-live-p value)
+           (switch-to-buffer value)
+         (user-error "Buffer no longer exists")))
+      (?f
+       (find-file value))
+      (?w
+       (set-window-configuration value)))
+    t))
+
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
 
 (define-key projectile-command-map "."
   'km/projectile-copy-project-filename-as-kill)
+(define-key projectile-command-map "e" 'km/projectile-restore-thing)
 ;; This overrides `projectile-find-file-dwim'.
 (define-key projectile-command-map "g" 'projectile-vc)
 ;; Swap `projectile-invalidate-cache' and `projectile-ibuffer'.
@@ -66,6 +125,7 @@ Interactive arguments are processed according to
 (define-key projectile-command-map "s" 'projectile-grep)
 ;; This overrides `projectile-vc', which is now on 'g'.
 (define-key projectile-command-map "v" 'km/projectile-view-file)
+(define-key projectile-command-map "w" 'km/projectile-save-thing)
 
 (key-chord-define-global "jq" 'projectile-commander)
 (key-chord-define-global "gp" 'projectile-switch-project)
@@ -100,6 +160,10 @@ Interactive arguments are processed according to
 (def-projectile-commander-method ?D
   "Find a project directory in other window."
   (call-interactively 'projectile-find-dir-other-window))
+
+(def-projectile-commander-method ?e
+  "Restore saved thing."
+  (km/projectile-restore-thing))
 
 (def-projectile-commander-method ?F
   "Find project file in other window."
@@ -136,6 +200,10 @@ Interactive arguments are processed according to
 (def-projectile-commander-method ?V
   "View project file in other window."
   (km/projectile-view-file-other-window))
+
+(def-projectile-commander-method ?w
+  "Save thing."
+  (call-interactively #'km/projectile-save-thing))
 
 (projectile-global-mode)
 
