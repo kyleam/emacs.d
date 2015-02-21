@@ -39,10 +39,7 @@
     (display-buffer bufname)
     (if (process-live-p process)
         (message "Mail sync process is already running")
-      (start-process process bufname km/sync-mail-cmd))))
-
-(defvar km/sync-mail-cmd "sync-mail"
-  "Run sync mail script.")
+      (start-process process bufname "sync-mail"))))
 
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
