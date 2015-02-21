@@ -256,6 +256,9 @@ the commit buffer. And no dinging."
   (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
+  (setq magit-patch-popup
+        (plist-put magit-patch-popup :use-prefix 'popup))
+
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
   (magit-define-popup-action 'magit-push-popup
