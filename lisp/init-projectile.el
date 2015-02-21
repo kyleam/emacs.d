@@ -123,11 +123,14 @@ If there is nothing ot restore, call
 
 (defun km/projectile-kill-buffers ()
   "Kill all project buffers.
-Before running `projectile-kill-buffers', delete any saved thing
-for the project."
+Like `projectile-kill-buffers', but
+- Before killing buffers, delete any saved thing for the project.
+- Don't ask for confirmation to kill project buffers (but
+  `kill-buffer' will still ask when killing a modified buffer)."
   (interactive)
   (km/projectile-save-thing ?d)
-  (projectile-kill-buffers))
+  (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t)))
+    (projectile-kill-buffers)))
 
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
