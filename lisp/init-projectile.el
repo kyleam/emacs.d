@@ -121,6 +121,14 @@ If there is nothing ot restore, call
   (or (km/projectile-restore-thing)
       (funcall km/projectile-switch-fallback)))
 
+(defun km/projectile-kill-buffers ()
+  "Kill all project buffers.
+Before running `projectile-kill-buffers', delete any saved thing
+for the project."
+  (interactive)
+  (km/projectile-save-thing ?d)
+  (projectile-kill-buffers))
+
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
 
@@ -132,6 +140,7 @@ If there is nothing ot restore, call
 ;; Swap `projectile-invalidate-cache' and `projectile-ibuffer'.
 (define-key projectile-command-map "I" 'projectile-invalidate-cache)
 (define-key projectile-command-map "i" 'projectile-ibuffer)
+(define-key projectile-command-map "k" 'km/projectile-kill-buffers)
 (define-key projectile-command-map "q" 'projectile-replace)
 ;; This overrides `projectile-replace', which is now on 'q'.
 (define-key projectile-command-map "r" 'projectile-recentf)
@@ -190,6 +199,10 @@ If there is nothing ot restore, call
 (def-projectile-commander-method ?i
   "Open an IBuffer window showing all buffers in the current project."
   (call-interactively 'projectile-ibuffer))
+
+(def-projectile-commander-method ?k
+  "Kill all project buffers."
+  (call-interactively 'km/projectile-kill-buffers))
 
 (def-projectile-commander-method ?O
   "Display a project buffer in other window."
