@@ -13,7 +13,7 @@ non-nil, copy the region with `x-select-text'."
   (interactive "P")
   (let ((wrapped-buffer (get-buffer-create "*Wrapped export*"))
         beg end)
-    (if (region-active-p)
+    (if (use-region-p)
         (progn (setq beg (region-beginning))
                (setq end (region-end)))
       (setq beg (point-min))
