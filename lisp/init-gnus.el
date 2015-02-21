@@ -30,16 +30,16 @@
 
 (defun km/sync-mail ()
   (interactive)
-  (let ((bufname (get-buffer-create "*Mail sync*"))
+  (let ((buf (get-buffer-create "*Mail sync*"))
         (default-directory "~/")
         (process "mail-sync"))
-    (with-current-buffer bufname
+    (with-current-buffer buf
       (view-mode 1)
       (goto-char (point-max)))
-    (display-buffer bufname)
+    (display-buffer buf)
     (if (process-live-p process)
         (message "Mail sync process is already running")
-      (start-process process bufname "sync-mail"))))
+      (start-process process buf "sync-mail"))))
 
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
