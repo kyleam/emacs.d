@@ -174,6 +174,30 @@ and 'squash!' titles."
         (goto-char (apply #'max commit-pts))
       (message "No matching commits found"))))
 
+(defun km/magit-pin-file (&optional other-rev)
+  "Pin this file to the current revision.
+
+Visit the current file and current revision with
+`magit-find-file'.  Position point as in the original buffer.
+This may not correspond to same content if text before point has
+changed since the current commit.
+
+If OTHER-REV is non-nil, prompt for another revision instead of
+the current.  In this case, keep point at the beginning of the
+buffer."
+  (interactive "P")
+  (let ((pos (point))
+        (rev (if other-rev
+                 (magit-read-branch-or-commit "Find file from revision")
+               (or (magit-get-current-branch)
+                   (magit-rev-parse "HEAD"))))
+        (fname (and (or buffer-file-name
+                        (user-error "Buffer not visiting file"))
+                    (file-relative-name buffer-file-name
+                                        (magit-get-top-dir)))))
+    (magit-find-file rev fname)
+    (unless other-rev (goto-char pos))))
+
 (defun km/git-rebase-show-commit ()
   "Show the commit on the current line if any.
 Unlike `git-rebase-show-commit', display (but don't switch to)
@@ -208,6 +232,7 @@ the commit buffer. And no dinging."
   (define-key km/git-map "c" 'km/magit-show-commit-under-point)
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
+  (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "u" 'km/magit-auto-commit))
 
 (after 'magit-log
