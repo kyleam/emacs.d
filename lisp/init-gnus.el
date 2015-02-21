@@ -348,9 +348,19 @@ has an effect if Gnus is not currently open."
            (message-id (org-remove-angle-brackets (mail-header-id header))))
       (notmuch-show (concat "id:" message-id)))))
 
+(defun km/notmuch-show-copy-message-id-as-kill ()
+  (interactive)
+  (kill-new (message "%s" (notmuch-show-get-message-id))))
+
 (define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
 (define-key gnus-group-mode-map "GG" 'notmuch-search)
 
 (define-key km/mail-map "n" 'notmuch-search)
+
+(define-prefix-command 'km/notmuch-show-prefix-map)
+(define-key notmuch-show-mode-map (kbd "C-c m") 'km/notmuch-show-prefix-map)
+
+(define-key km/notmuch-show-prefix-map "i"
+  'km/notmuch-show-copy-message-id-as-kill)
 
 (provide 'init-gnus)
