@@ -1,17 +1,22 @@
 (require 'projectile)
 
-(setq projectile-switch-project-action 'projectile-commander
-      projectile-find-dir-includes-top-level t
+(setq projectile-find-dir-includes-top-level t
       projectile-use-git-grep t)
 
-(defun km/projectile-switch-project-to-file ()
-  "Provide access to the of default `projectile-find-file'.
+(defun km/projectile-switch-project (&optional arg)
+  "Switch to a project.
 
-I have set `projectile-switch-project-action' to
-`projectile-commander' but would still like quick access to
-`projectile-find-file'."
-  (interactive)
-  (let ((projectile-switch-project-action 'projectile-find-file))
+Like `projectile-switch-project', but instead of calling
+`projectile-commander' when a prefix argument ARG is given, save
+something for the current project before switching.
+
+`projectile-switch-project-action' is set to
+`km/projectile-maybe-restore-thing'.  If the thing saved for the
+destination project is the the window configuration, this may not
+end up in the project if the buffers are now dead."
+  (interactive "P")
+  (when arg (call-interactively #'km/projectile-save-thing))
+  (let ((projectile-switch-project-action 'km/projectile-maybe-restore-thing))
     (projectile-switch-project)))
 
 (defun km/projectile-open-external-terminal-in-root ()
@@ -107,6 +112,15 @@ Return nil if there is no thing saved for the current project."
        (set-window-configuration value)))
     t))
 
+(defvar km/projectile-switch-fallback 'projectile-commander)
+
+(defun km/projectile-maybe-restore-thing ()
+  "Try to restore thing for current project.
+If there is nothing ot restore, call
+`km/projectile-switch-fallback'."
+  (or (km/projectile-restore-thing)
+      (funcall km/projectile-switch-fallback)))
+
 (define-key projectile-command-map (kbd "4 v")
   'km/projectile-view-file-other-window)
 
@@ -128,7 +142,7 @@ Return nil if there is no thing saved for the current project."
 (define-key projectile-command-map "w" 'km/projectile-save-thing)
 
 (key-chord-define-global "jq" 'projectile-commander)
-(key-chord-define-global "gp" 'projectile-switch-project)
+(key-chord-define-global "gp" 'km/projectile-switch-project)
 
 (define-prefix-command 'km/projectile-ctl-x-4-map)
 (define-key ctl-x-4-map "p" 'km/projectile-ctl-x-4-map)
