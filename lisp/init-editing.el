@@ -226,7 +226,7 @@ and '<<<' mark the bounds of the narrowed region.
   `(defun ,(intern (concat "km/kill-" thing "-at-point")) ()
      ,(format "Kill %s at point." thing)
      (interactive)
-     (goto-char (beginning-of-thing (make-symbol ,thing)))
+     (goto-char (beginning-of-thing (quote ,(make-symbol thing))))
      (,(intern (concat "kill-" thing)) 1)))
 
 (km/make-kill-thing-at-point "line")
