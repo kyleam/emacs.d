@@ -14,8 +14,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(setq save-abbrevs 'silently)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (put 'narrow-to-region 'disabled nil)
@@ -46,42 +44,6 @@
   `(eval-after-load ,mode
      '(progn ,@body)))
 
-(defun km/abbrev-add-case-global ()
-  "Define lower abbreviation for the word before point.
-Like `add-global-abbrev', but always make the abbreviation the
-lower case variant of the word before point."
-  (interactive)
-  ;; Modified from `add-abbrev'.
-  (let* ((table global-abbrev-table)
-         (exp (buffer-substring-no-properties
-               (point)
-               (save-excursion (forward-word -1) (point))))
-         (name (downcase exp)))
-    (when (or (not (abbrev-expansion name table))
-              (y-or-n-p (format "%s expands to \"%s\"; redefine? "
-                                name (abbrev-expansion name table))))
-      (define-abbrev table name exp))))
-
-(defun km/abbrev-inverse-add-uppercase-global ()
-  "Define uppercase expansion for the word before point.
-Like `inverse-add-global-abbrev', but always use the lower case
-version of the word before point as the abbreviation and the
-upper case version as the expansion."
-  (interactive)
-  ;; Modified from `inverse-add-abbrev'.
-  (let* ((table global-abbrev-table)
-         (end (point))
-         (start (save-excursion (forward-word -1) (point)))
-         (name (downcase (buffer-substring-no-properties start end)))
-         (exp (upcase name)))
-    (when (or (not (abbrev-expansion name table))
-              (y-or-n-p (format "%s expands to \"%s\"; redefine? "
-                                name (abbrev-expansion name table))))
-      (define-abbrev table name exp)
-      (save-excursion
-        (goto-char end)
-        (expand-abbrev)))))
-
 (global-set-key (kbd "C-h ;") 'find-function)
 
 (global-set-key (kbd "C-c l") 'km/imenu)
@@ -97,9 +59,6 @@ upper case version as the expansion."
 
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)
-
-(define-key abbrev-map "c" 'km/abbrev-add-case-global)
-(define-key abbrev-map "iu" 'km/abbrev-inverse-add-uppercase-global)
 
 (show-paren-mode)
 (global-auto-revert-mode)

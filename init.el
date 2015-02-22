@@ -15,6 +15,7 @@
 (require 's)
 
 (require 'init-general)
+(require 'init-abbrev)
 (require 'init-diminish)
 
 (require 'init-org)
