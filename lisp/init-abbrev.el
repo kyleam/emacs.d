@@ -1,6 +1,11 @@
 
 (setq save-abbrevs 'silently)
 
+(define-abbrev-table 'typo-abbrev-table nil)
+(abbrev-table-put global-abbrev-table :parents
+                  (cons typo-abbrev-table
+                        (abbrev-table-get global-abbrev-table :parents)))
+
 (defun km/abbrev-add-case-global ()
   "Define lower abbreviation for the word before point.
 Like `add-global-abbrev', but always make the abbreviation the
