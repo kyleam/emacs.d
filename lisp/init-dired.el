@@ -50,13 +50,15 @@
               (derived-mode-p 'dired-mode))
             (buffer-list)))
 
-(defun km/org-open-dired-marked-files (&optional in-emacs)
-  (interactive "P")
-  (let* ((files (dired-get-marked-files))
+(defun km/org-open-dired-marked-files (&optional arg)
+  "Open marked files (or next ARG) with `org-open-file'."
+  (interactive "p")
+  (setq arg (and current-prefix-arg arg))
+  (let* ((files (dired-get-marked-files nil arg))
          (num-files (length files)))
     (when (or (< num-files 5)
               (yes-or-no-p (format "Open %s files?" num-files)))
-      (--each files (org-open-file it in-emacs)))))
+      (dolist (f files) (org-open-file f)))))
 
 (defun km/dired-view-file-other-window ()
   "In Dired, view this file in another window."
@@ -119,22 +121,23 @@ path is always relative to `projectile-project-root'."
   (km/dired-copy-filename-relative-to-directory
    (projectile-project-root)))
 
-(defun km/dired-copy-relative-filename-as-kill ()
-  "Copy names of marked files into kill ring.
+(defun km/dired-copy-relative-filename-as-kill (&optional arg)
+  "Copy names of marked (or next ARG) files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
 path is always relative to the `default-directory' of the other
 window."
-  (interactive)
+  (interactive "p")
+  (setq arg (and current-prefix-arg arg))
   (km/dired-copy-filename-relative-to-directory
-   (km/other-default-directory)))
+   (km/other-default-directory) arg))
 
-(defun km/dired-copy-filename-relative-to-directory (directory)
+(defun km/dired-copy-filename-relative-to-directory (directory &optional arg)
   "Like `dired-copy-filename-as-kill', but the filename is always
 relative to DIRECTORY."
   (let* ((string
-          (mapconcat 'identity
-                     (--map (file-relative-name it directory)
-                            (dired-get-marked-files t))
+          (mapconcat #'identity
+                     (mapcar (lambda (f) (file-relative-name f directory))
+                             (dired-get-marked-files t arg))
                      " ")))
     (if (eq last-command 'kill-region)
         (kill-append string nil)
