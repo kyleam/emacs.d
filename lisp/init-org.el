@@ -464,6 +464,8 @@ displayed in the agenda."
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
+(defvar km/org-refile-dwim-maxlevel 2)
+
 (defun km/org-refile-dwim ()
   "Rebind `org-refile-targets' if next window is an Org buffer.
 A target is determined by `km/org-refile-dwim-target-file'."
@@ -479,15 +481,14 @@ A target is determined by `km/org-refile-dwim-target-file'."
 
 (defun km/org-refile-dwim-target-file ()
   "Return next window that is an Org buffer."
-  (let ((from-buffer (current-buffer)))
-    (--when-let (get-window-with-predicate
-                 (lambda (w)
-                   (with-current-buffer (window-buffer w)
-                     (and (eq major-mode 'org-mode)
-                          (not (eq from-buffer (current-buffer)))))))
-      (buffer-file-name (window-buffer it)))))
-
-(defvar km/org-refile-dwim-maxlevel 2)
+  (let* ((from-buffer (current-buffer))
+         (other-win (get-window-with-predicate
+                     (lambda (w)
+                       (with-current-buffer (window-buffer w)
+                         (and (derived-mode-p 'org-mode)
+                              (not (eq from-buffer (current-buffer)))))))))
+    (and other-win
+         (buffer-file-name (window-buffer other-win)))))
 
 (defun km/org-refile-to-other-file (file &optional maxlevel)
   "Refile with `org-refile-targets' set to FILE.
