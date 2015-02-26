@@ -135,6 +135,18 @@ and '<<<' mark the bounds of the narrowed region.
         (call-interactively 'goto-line))
     (linum-mode -1)))
 
+;; Modified from http://oremacs.com/2015/01/26/occur-dwim/.
+(defun km/occur ()
+  "Call `occur' with active region or symbol at point."
+  (interactive)
+  (push (if (use-region-p)
+            (buffer-substring-no-properties
+             (region-beginning)
+             (region-end))
+          (thing-at-point 'symbol))
+        regexp-history)
+  (call-interactively 'occur))
+
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
 (global-set-key (kbd "C-;") 'er/expand-region)
@@ -155,6 +167,8 @@ and '<<<' mark the bounds of the narrowed region.
 
 (define-key narrow-map "c" 'km/narrow-to-comment-heading)
 
+;; Override default `occur'.
+(define-key search-map "o" 'km/occur)
 (define-key search-map "s" 'query-replace)
 (define-key search-map "S" 'replace-string)
 (define-key search-map "r" 'query-replace-regexp)
