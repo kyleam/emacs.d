@@ -49,8 +49,6 @@ Use the current file name as initial input of prompt."
                                    init-file)))
     (write-file new-file t)))
 
-(global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
-(global-set-key (kbd "C-x F") 'km/find-file-as-root)
 (global-set-key (kbd "C-x C-w") 'km/write-file)
 
 (key-chord-define-global "jc" 'find-file)
@@ -59,6 +57,10 @@ Use the current file name as initial input of prompt."
 
 (define-prefix-command 'km/file-map)
 (global-set-key (kbd "C-c f") 'km/file-map)
+
+(define-key km/file-map "R" 'km/find-file-as-root)
+(define-key km/file-map "n" 'km/rename-current-buffer-file)
+(define-key km/file-map "l" 'nlines-run-command)
 (define-key km/file-map "v" 'view-file)
 
 
