@@ -542,6 +542,19 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   (define-key org-agenda-mode-map "j" 'ace-jump-mode))
 
 
+;;; Custom links
+
+(after 'org
+  (org-add-link-type "pmid" 'km/org-pmid-open))
+
+(defvar km/org-pmid-search-url "http://www.ncbi.nlm.nih.gov/pubmed/?term=%s"
+  "URL to search for PMID.")
+
+(defun km/org-pmid-open (path)
+  "Seacrh for PMID at `km/org-pmid-search-url'."
+  (browse-url (format km/org-pmid-search-url path)))
+
+
 ;;; Export
 
 (after 'org
