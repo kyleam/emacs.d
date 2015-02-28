@@ -17,8 +17,6 @@
       org-adapt-indentation nil
       org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
 
-(setq org-link-search-must-match-exact-headline nil)
-
 (setq org-use-speed-commands t
       org-use-extra-keys t
       org-fast-tag-selection-single-key 'expert)
@@ -59,19 +57,6 @@
         ("I" "#+include: %file ?" "<include file=%file markup=\"?\">")))
 
 (add-to-list 'auto-mode-alist '("\\.org.txt\\'" . org-mode))
-
-(defvar km/org-store-link-hook nil
-  "Hook run before by `km/org-store-link-hook'.
-These are run within a `save-window-excursion' block.")
-
-(defun km/org-store-link ()
-  "Run `km/org-store-link-hook' before `org-store-link'.
-The hook functions and `org-store-link' are called within a
-`save-window-excursion' block."
-  (interactive)
-  (save-window-excursion
-    (run-hooks 'km/org-store-link-hook)
-    (call-interactively 'org-store-link)))
 
 (defun km/org-tree-to-indirect-buffer (&optional arg)
   "Run `org-tree-to-indirect-buffer', keeping previous buffer.
@@ -269,15 +254,6 @@ called through the speed command interface."
   (save-excursion
     (call-interactively #'org-open-at-point)))
 
-(defun km/org-open-link-directory ()
-  "Open Dired for directory of file link at point."
-  (interactive)
-  (let ((el (org-element-lineage (org-element-context) '(link) t)))
-    (unless (and el (equal (org-element-property :type el) "file"))
-      (user-error "Not on file link"))
-    (dired (file-name-directory
-            (org-element-property :path el)))))
-
 (after 'org
   (define-key org-mode-map (kbd "C-c C-x B")
     'km/org-tree-to-indirect-buffer-current-window)
@@ -308,7 +284,6 @@ called through the speed command interface."
 
 (define-prefix-command 'km/org-prefix-map)
 (define-key km/org-prefix-map "c" 'km/org-clone-and-shift-by-repeater)
-(define-key km/org-prefix-map "d" 'km/org-open-link-directory)
 (define-key km/org-prefix-map "D" 'km/org-delete-checked-items)
 (define-key km/org-prefix-map "l" 'km/org-remove-title-leader)
 (define-key km/org-prefix-map "n" 'km/org-normalize-spaces)
@@ -319,7 +294,6 @@ called through the speed command interface."
 (global-set-key (kbd "C-c o") 'km/global-org-map)
 
 (define-key km/global-org-map "b" 'org-iswitchb)
-(define-key km/global-org-map "l" 'km/org-store-link)
 (define-key km/global-org-map "o" 'org-open-at-point-global)
 (define-key km/global-org-map "s" 'org-save-all-org-buffers)
 
@@ -542,7 +516,9 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   (define-key org-agenda-mode-map "j" 'ace-jump-mode))
 
 
-;;; Custom links
+;;; Links
+
+(setq org-link-search-must-match-exact-headline nil)
 
 (after 'org
   (org-add-link-type "pmid" 'km/org-pmid-open))
@@ -553,6 +529,31 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 (defun km/org-pmid-open (path)
   "Seacrh for PMID at `km/org-pmid-search-url'."
   (browse-url (format km/org-pmid-search-url path)))
+
+(defvar km/org-store-link-hook nil
+  "Hook run before by `km/org-store-link-hook'.
+These are run within a `save-window-excursion' block.")
+
+(defun km/org-store-link ()
+  "Run `km/org-store-link-hook' before `org-store-link'.
+The hook functions and `org-store-link' are called within a
+`save-window-excursion' block."
+  (interactive)
+  (save-window-excursion
+    (run-hooks 'km/org-store-link-hook)
+    (call-interactively 'org-store-link)))
+
+(defun km/org-open-link-directory ()
+  "Open Dired for directory of file link at point."
+  (interactive)
+  (let ((el (org-element-lineage (org-element-context) '(link) t)))
+    (unless (and el (equal (org-element-property :type el) "file"))
+      (user-error "Not on file link"))
+    (dired (file-name-directory
+            (org-element-property :path el)))))
+
+(define-key km/org-prefix-map "d" 'km/org-open-link-directory)
+(define-key km/global-org-map "l" 'km/org-store-link)
 
 
 ;;; Export
