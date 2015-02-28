@@ -39,8 +39,19 @@
       (setq file (concat "/sudo:root@localhost:" file)))
     (find-file file)))
 
+(defun km/write-file ()
+  "Run `write-file'.
+Use the current file name as initial input of prompt."
+  (interactive)
+  (let* ((init-file (and buffer-file-name
+                         (file-name-nondirectory buffer-file-name)))
+         (new-file (read-file-name "Write file: " nil nil nil
+                                   init-file)))
+    (write-file new-file t)))
+
 (global-set-key (kbd "C-x C-r") 'km/rename-current-buffer-file)
 (global-set-key (kbd "C-x F") 'km/find-file-as-root)
+(global-set-key (kbd "C-x C-w") 'km/write-file)
 
 (key-chord-define-global "jc" 'find-file)
 
