@@ -34,7 +34,6 @@
 (depends-on "mocker")
 (depends-on "multiple-cursors")
 (depends-on "narrow-indirect")
-(depends-on "noflet")
 (depends-on "package-build")
 (depends-on "pallet")
 (depends-on "paredit")
