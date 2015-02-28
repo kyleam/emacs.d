@@ -253,8 +253,9 @@ to
 
 (defun km/org-switch-to-buffer-other-window (&optional arg)
   (interactive "P")
-  (noflet ((org-pop-to-buffer-same-window (&optional buffer-or-name norecord label)
-                                          (funcall 'pop-to-buffer buffer-or-name nil norecord)))
+  (cl-letf (((symbol-function 'org-pop-to-buffer-same-window)
+             (lambda (buffer-or-name &rest args)
+               (funcall #'pop-to-buffer buffer-or-name))))
     (org-switchb arg)))
 
 (defun km/org-open-at-point-stay ()
