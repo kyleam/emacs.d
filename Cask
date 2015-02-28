@@ -22,6 +22,7 @@
 (depends-on "gitignore-mode")
 (depends-on "haskell-mode")
 (depends-on "htmlize")
+(depends-on "hydra")
 (depends-on "ido-at-point")
 (depends-on "ido-ubiquitous")
 (depends-on "ido-vertical-mode")
