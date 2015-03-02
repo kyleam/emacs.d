@@ -47,6 +47,8 @@
      '(progn ,@body)))
 
 (global-set-key (kbd "C-h ;") 'find-function)
+(global-set-key (kbd "C-h 4 ;") 'find-function-other-window)
+
 
 (global-set-key (kbd "C-c l") 'km/imenu)
 
