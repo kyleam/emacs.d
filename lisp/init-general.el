@@ -16,6 +16,8 @@
 
 (setq save-abbrevs 'silently)
 
+(setq bookmark-save-flag 1)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (put 'narrow-to-region 'disabled nil)
