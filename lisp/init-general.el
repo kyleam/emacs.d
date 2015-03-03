@@ -27,7 +27,7 @@
 (put 'upcase-region 'disabled nil)
 
 (add-hook 'after-save-hook
-  'executable-make-buffer-file-executable-if-script-p)
+          'executable-make-buffer-file-executable-if-script-p)
 
 (defun km/imenu (rescan)
   "Call `imenu', rescanning if RESCAN is non-nil."
