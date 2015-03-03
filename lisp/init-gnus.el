@@ -181,6 +181,12 @@ to group buffer instead of moving to next group."
             (kill-new (message "%s" link)))
         (user-error "No link found")))))
 
+(defun km/shr-browse-url-and-goto-next ()
+  "Run `shr-browse-url' followed by `shr-next-link'."
+  (interactive)
+  (shr-browse-url)
+  (shr-next-link))
+
 (define-key gnus-summary-mode-map
   (kbd "C-c l") 'km/gnus-follow-last-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
@@ -192,7 +198,7 @@ to group buffer instead of moving to next group."
 
 (define-key gnus-article-mode-map
   (kbd "C-c l") 'km/gnus-follow-last-message-link)
-(define-key gnus-article-mode-map "e" 'shr-browse-url)
+(define-key gnus-article-mode-map "e" 'km/shr-browse-url-and-goto-next)
 
 (define-prefix-command 'km/gnus-summary-prefix-map)
 (define-key gnus-summary-mode-map (kbd "C-c m") 'km/gnus-summary-prefix-map)
