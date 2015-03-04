@@ -141,7 +141,7 @@ is not required.")
 Prompt with characters from `km/find-scratch-buffers' to
 determine the extension of the scratch file.
 
-With prefix ERASE, delete contents of buffer."
+With prefix argument ERASE, delete contents of buffer."
   (interactive "P")
   (switch-to-buffer (km/scratch--find-file-no-select erase)))
 
