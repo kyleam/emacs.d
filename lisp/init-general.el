@@ -11,8 +11,8 @@
 
 (setq set-mark-command-repeat-pop t)
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+;; This is intentionally not loaded.
+(setq custom-file "~/.emacs.d/.custom.el")
 
 (setq save-abbrevs 'silently)
 
