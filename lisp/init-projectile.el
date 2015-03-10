@@ -1,4 +1,5 @@
 (require 'projectile)
+(require 'helm-projectile)
 
 (setq projectile-find-dir-includes-top-level t
       projectile-completion-system 'helm
@@ -133,26 +134,40 @@ Like `projectile-kill-buffers', but
   (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t)))
     (projectile-kill-buffers)))
 
-(define-key projectile-command-map (kbd "4 v")
-  'km/projectile-view-file-other-window)
+;; I'm redefining a lot of bindings, so just set the whole map here to
+;; have everything in one place.
 
-(define-key projectile-command-map "."
-  'km/projectile-copy-project-filename-as-kill)
-(define-key projectile-command-map "e" 'km/projectile-restore-thing)
-;; This overrides `projectile-find-file-dwim'.
-(define-key projectile-command-map "g" 'projectile-vc)
-;; Swap `projectile-invalidate-cache' and `projectile-ibuffer'.
-(define-key projectile-command-map "I" 'projectile-invalidate-cache)
-(define-key projectile-command-map "i" 'projectile-ibuffer)
-(define-key projectile-command-map "k" 'km/projectile-kill-buffers)
-(define-key projectile-command-map "q" 'projectile-replace)
-;; This overrides `projectile-replace', which is now on 'q'.
-(define-key projectile-command-map "r" 'projectile-recentf)
-;; This overrides Projectile's general search prefix.
-(define-key projectile-command-map "s" 'projectile-grep)
-;; This overrides `projectile-vc', which is now on 'g'.
-(define-key projectile-command-map "v" 'km/projectile-view-file)
-(define-key projectile-command-map "w" 'km/projectile-save-thing)
+(setq projectile-command-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "4 b") 'projectile-switch-to-buffer-other-window)
+        (define-key map (kbd "4 C-o") 'projectile-display-buffer)
+        (define-key map (kbd "4 d") 'projectile-find-dir-other-window)
+        (define-key map (kbd "4 f") 'projectile-find-file-other-window)
+        (define-key map (kbd "4 v") 'km/projectile-view-file-other-window)
+        (define-key map (kbd ".") 'km/projectile-copy-project-filename-as-kill)
+        (define-key map "!" 'projectile-run-shell-command-in-root)
+        (define-key map "&" 'projectile-run-async-shell-command-in-root)
+        (define-key map "b" 'helm-projectile-switch-to-buffer)
+        (define-key map "c" 'projectile-compile-project)
+        (define-key map "d" 'helm-projectile-find-dir)
+        (define-key map "e" 'km/projectile-restore-thing)
+        (define-key map "f" 'helm-projectile-find-file)
+        (define-key map "F" 'helm-projectile-find-file-in-known-projects)
+        (define-key map "g" 'projectile-vc)
+        (define-key map "i" 'projectile-ibuffer)
+        (define-key map "I" 'projectile-invalidate-cache)
+        (define-key map "k" 'km/projectile-kill-buffers)
+        (define-key map "l" 'projectile-project-buffers-other-buffer)
+        (define-key map "m" 'projectile-commander)
+        (define-key map "o" 'projectile-multi-occur)
+        (define-key map "p" 'helm-projectile-switch-project)
+        (define-key map "q" 'projectile-replace)
+        (define-key map "r" 'helm-projectile-recentf)
+        (define-key map "s" 'projectile-grep)
+        (define-key map "v" 'km/projectile-view-file)
+        (define-key map "w" 'km/projectile-save-thing)
+        map))
+(fset 'projectile-command-map projectile-command-map)
 
 (key-chord-define-global "jq" 'projectile-commander)
 (key-chord-define-global "gp" 'km/projectile-switch-project)
@@ -176,13 +191,22 @@ Like `projectile-kill-buffers', but
 
 ;;; Commander methods
 
-(def-projectile-commander-method ?B
-  "Find project buffer in other window."
-  (call-interactively 'projectile-switch-to-buffer-other-window))
+;; Like `projectile-command-map', I'm redefining a lot of bindings, so
+;; unset pre-defined methods and define everyting here.
+
+(setq projectile-commander-methods nil)
+
+(def-projectile-commander-method ?b
+  "Find project buffer."
+  (call-interactively 'helm-projectile-switch-to-buffer))
 
 (def-projectile-commander-method ?c
   "Run project compilation command."
   (call-interactively 'projectile-compile-project))
+
+(def-projectile-commander-method ?d
+  "Find directory in project."
+  (helm-projectile-find-dir))
 
 (def-projectile-commander-method ?D
   "Find a project directory in other window."
@@ -191,6 +215,10 @@ Like `projectile-kill-buffers', but
 (def-projectile-commander-method ?e
   "Restore saved thing."
   (km/projectile-restore-thing))
+
+(def-projectile-commander-method ?f
+  "Open project file."
+  (helm-projectile-find-file))
 
 (def-projectile-commander-method ?F
   "Find project file in other window."
@@ -208,9 +236,17 @@ Like `projectile-kill-buffers', but
   "Kill all project buffers."
   (call-interactively 'km/projectile-kill-buffers))
 
-(def-projectile-commander-method ?O
+(def-projectile-commander-method ?o
   "Display a project buffer in other window."
   (call-interactively 'projectile-display-buffer))
+
+(def-projectile-commander-method ?O
+  "Run multi-occur on project buffers."
+  (projectile-multi-occur))
+
+(def-projectile-commander-method ?p
+  "Switch project."
+  (helm-projectile-switch-project))
 
 (def-projectile-commander-method ?r
   "Find recently visited file in project."
@@ -219,10 +255,6 @@ Like `projectile-kill-buffers', but
 (def-projectile-commander-method ?s
   "Run grep on project."
   (call-interactively #'projectile-grep))
-
-(def-projectile-commander-method ?t
-  "Open project root in dired."
-  (projectile-dired))
 
 (def-projectile-commander-method ?v
   "View project file."
