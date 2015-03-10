@@ -99,11 +99,6 @@ without requiring confirmation.
   (interactive (list (magit-read-remote "Remote") (magit-push-arguments)))
   (magit-run-git-async "push" "-v" args remote "HEAD"))
 
-(defun km/magit-log-all-branches (&optional args files)
-  (interactive (magit-log-read-args nil t))
-  (add-to-list 'args "--all")
-  (magit-log-head args files))
-
 (defun km/magit-checkout-local-tracking (remote-branch)
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
 \n(git checkout -t REMOTE-BRANCH\)"
@@ -266,8 +261,6 @@ the commit buffer. And no dinging."
     ?h "Push HEAD" 'km/magit-push-head)
   (magit-define-popup-action 'magit-merge-popup
     ?u "Merge upstream" 'km/magit-ff-merge-upstream)
-  (magit-define-popup-action 'magit-log-popup
-    ?a "All branches" 'km/magit-log-all-branches)
   (magit-define-popup-action 'magit-branch-popup
     ?t "Local tracking" 'km/magit-checkout-local-tracking)
   (magit-define-popup-action 'magit-branch-popup
