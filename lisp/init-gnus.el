@@ -71,10 +71,10 @@
   "Sort alphabetically by group topic.
 This allows groups to be ordered by topics even when topic mode
 is off."
+  (require 'gnus-topic)
   (string< (gnus-group-topic (gnus-info-group info1))
            (gnus-group-topic (gnus-info-group info2))))
 
-(autoload 'gnus-group-topic "gnus-topic")
 (defun km/gnus-group-jump-to-group ()
   "`gnus-group-jump-to-group', but with ido completion."
   (interactive)
