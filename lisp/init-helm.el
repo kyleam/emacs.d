@@ -6,6 +6,8 @@
       helm-move-to-line-cycle-in-source t
       helm-ff-skip-boring-files t)
 
+(setq helm-man-or-woman-function #'woman)
+
 (defun km/helm-ff-org-open-file ()
   "Run `org-open-file' from `helm-source-find-files'."
   (interactive)
