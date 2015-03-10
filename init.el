@@ -44,8 +44,7 @@
 (require 'init-projectile)
 (require 'init-snakemake)
 
-(require 'init-ido)
-(require 'init-smex)
+(require 'init-helm)
 
 (require 'init-external)
 

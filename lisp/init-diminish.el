@@ -1,6 +1,7 @@
 (require 'diminish)
 
 (diminish 'abbrev-mode "Ab")
+(after 'helm-mode (diminish 'helm-mode))
 (after 'flyspell (diminish 'flyspell-mode "Fy"))
 (after 'paredit (diminish 'paredit-mode " Pe"))
 (after 'magit (diminish 'magit-auto-revert-mode))

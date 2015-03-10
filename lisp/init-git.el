@@ -17,7 +17,6 @@
 (require 'orgit)
 
 (setq magit-restore-window-configuration t
-      magit-completing-read-function 'magit-ido-completing-read
       magit-delete-by-moving-to-trash nil
       magit-log-show-margin nil)
 

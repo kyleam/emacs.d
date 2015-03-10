@@ -75,27 +75,6 @@ is off."
   (string< (gnus-group-topic (gnus-info-group info1))
            (gnus-group-topic (gnus-info-group info2))))
 
-(defun km/gnus-group-jump-to-group ()
-  "`gnus-group-jump-to-group', but with ido completion."
-  (interactive)
-  (gnus-group-jump-to-group
-   (ido-completing-read "Group: "
-                        (mapcar #'car (cdr gnus-newsrc-alist))
-                        nil t)))
-
-(defun km/gnus-topic-jump-to-topic ()
-  "`gnus-group-jump-to-group', but with ido completion."
-  (interactive)
-  (gnus-topic-jump-to-topic
-   (ido-completing-read "Topic: "
-                        (mapcar #'car gnus-topic-alist)
-                        nil t)))
-
-(define-key gnus-group-mode-map [remap gnus-group-jump-to-group]
-  'km/gnus-group-jump-to-group)
-(define-key gnus-group-mode-map [remap gnus-topic-jump-to-topic]
-  'km/gnus-topic-jump-to-topic)
-
 (define-key gnus-group-mode-map "e" 'gnus-group-select-group)
 
 

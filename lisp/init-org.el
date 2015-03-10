@@ -21,8 +21,7 @@
       org-use-extra-keys t
       org-fast-tag-selection-single-key 'expert)
 
-(setq org-completion-use-ido t
-      org-outline-path-complete-in-steps nil
+(setq org-outline-path-complete-in-steps nil
       org-goto-interface 'outline-path-completionp
       org-goto-max-level 3)
 

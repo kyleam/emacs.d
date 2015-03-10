@@ -42,8 +42,8 @@
   (pop-to-buffer (km/dired-completing-buffer)))
 
 (defun km/dired-completing-buffer ()
-  (ido-completing-read "Dired buffer: "
-                       (-map 'buffer-name (km/dired-buffer-list))))
+  (completing-read "Dired buffer: "
+                   (-map 'buffer-name (km/dired-buffer-list))))
 
 (defun km/dired-buffer-list ()
   (--filter (with-current-buffer it

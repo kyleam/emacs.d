@@ -1,6 +1,7 @@
 (require 'projectile)
 
 (setq projectile-find-dir-includes-top-level t
+      projectile-completion-system 'helm
       projectile-use-git-grep t)
 
 (defun km/projectile-switch-project (&optional arg)

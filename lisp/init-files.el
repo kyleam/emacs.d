@@ -34,7 +34,7 @@
 (defun km/find-file-as-root ()
   "Automatically edit file with root-privileges."
   (interactive)
-  (let ((file (ido-read-file-name "Edit as root: ")))
+  (let ((file (read-file-name "Edit as root: ")))
     (unless (file-writable-p file)
       (setq file (concat "/sudo:root@localhost:" file)))
     (find-file file)))
@@ -50,8 +50,6 @@ Use the current file name as initial input of prompt."
     (write-file new-file t)))
 
 (global-set-key (kbd "C-x C-w") 'km/write-file)
-
-(key-chord-define-global "jc" 'find-file)
 
 (define-key ctl-x-4-map "v" 'view-file-other-window)
 
@@ -114,9 +112,8 @@ entering `ch' is equivalent to `*.[ch]'.")
 ;; `view-file-other-window', which I map to 'v', has the same
 ;; functionality.
 (defun km/read-recent-file ()
-  (ido-completing-read "Choose recent file: " recentf-list nil t))
+  (completing-read "Choose recent file: " recentf-list nil t))
 
-(key-chord-define-global "jt" 'km/recentf-find-file)
 (define-key ctl-x-4-map "r" 'km/recentf-find-file-other-window)
 
 
