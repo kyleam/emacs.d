@@ -40,7 +40,7 @@ kill this buffer and the window."
         (save-buffer))))
   (call-interactively #'save-some-buffers))
 
-(global-set-key (kbd "C-x K") 'km/kill-buffer)
+(global-set-key (kbd "C-x k") 'km/kill-buffer)
 
 (key-chord-define-global "js" 'km/save-buffers)
 
