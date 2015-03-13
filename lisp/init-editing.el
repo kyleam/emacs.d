@@ -125,16 +125,6 @@ and '<<<' mark the bounds of the narrowed region.
       (comment-or-uncomment-region beg end))
     (forward-line))
 
-;; From http://whattheemacsd.com/key-bindings.el-01.html
-(defun km/goto-line-with-feedback ()
-  "Show line numbers when prompting for the line number input."
-  (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (call-interactively 'goto-line))
-    (linum-mode -1)))
-
 ;; Modified from http://oremacs.com/2015/01/26/occur-dwim/.
 (defun km/occur ()
   "Call `occur' with active region or symbol at point."
@@ -173,8 +163,6 @@ and '<<<' mark the bounds of the narrowed region.
 (define-key search-map "S" 'replace-string)
 (define-key search-map "r" 'query-replace-regexp)
 (define-key search-map "R" 'replace-regexp)
-
-(global-set-key [remap goto-line] 'km/goto-line-with-feedback)
 
 (define-prefix-command 'km/editing-map)
 (global-set-key (kbd "C-c e") 'km/editing-map)
