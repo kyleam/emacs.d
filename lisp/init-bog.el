@@ -2,6 +2,7 @@
 (require 'bog-autoloads)
 
 (setq bog-keymap-prefix (kbd "C-c b")
+      bog-subdirectory-group 2
       bog-use-citekey-cache t)
 
 (add-hook 'org-mode-hook 'bog-mode)
