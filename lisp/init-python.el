@@ -3,6 +3,8 @@
 (setq jedi:tooltip-method nil
       ac-auto-start nil)
 
+(setq python-shell-interpreter "ipython")
+
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
@@ -15,19 +17,11 @@
   (set (make-local-variable 'compile-command) "py.test"))
 (add-hook 'python-mode-hook 'km/python-hook)
 
-;; http://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc5
-(defun km/setup-ipython-shell ()
+(defun km/toggle-ipython-shell ()
+  "Switch between using python and IPython for interactive shell."
   (interactive)
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args ""
-        python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-        python-shell-completion-setup-code
-        "from IPython.core.completerlib import module_completion"
-        python-shell-completion-module-string-code
-        "';'.join(module_completion('''%s'''))\n"
-        python-shell-completion-string-code
-        "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+  (setq python-shell-interpreter
+        (if (string= python-shell-interpreter "python") "ipython" "python")))
 
 (defun km/find-python-test-file-other-window (arg)
   "Open test file for the current Python file in another window.
