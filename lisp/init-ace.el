@@ -36,6 +36,14 @@
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
       aw-scope 'frame)
 
-(key-chord-define-global "jw" 'ace-window)
+(defun km/ace-window (arg)
+  "Run `ace-window', swapping single and double C-u's."
+  (interactive "p")
+  (cl-case arg
+    (4  (setq arg 16))
+    (16 (setq arg 4)))
+  (ace-window arg))
+
+(key-chord-define-global "jw" 'km/ace-window)
 
 (provide 'init-ace)
