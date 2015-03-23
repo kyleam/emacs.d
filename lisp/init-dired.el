@@ -65,8 +65,29 @@
   (interactive)
   (view-file-other-window (dired-get-file-for-visit)))
 
+(defun km/dired-copy-and-edit ()
+  "Copy file and enter `wdired-mode' for completing rename."
+  (interactive)
+  (unless (derived-mode-p 'dired-mode)
+    (user-error "Must be in a Dired buffer"))
+  (let* ((fname (dired-get-filename))
+         (flag "---copy---")
+         (new-fname (concat fname flag)))
+    (when (file-directory-p fname)
+      (user-error "File cannot be directory"))
+    (copy-file fname new-fname)
+    (dired-revert)
+    (wdired-change-to-wdired-mode)
+    (goto-char (point-min))
+    (re-search-forward (format "%s\\(%s\\)"
+                               (file-name-nondirectory fname)
+                               flag))
+    (replace-match "" t nil nil 1)))
+
 ;; This overrides the binding for `list-directory'.
 (global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
+(define-key dired-mode-map "c" 'dired-do-copy)
+(define-key dired-mode-map "C" 'km/dired-copy-and-edit)
 ;; This overrides `dired-do-run-mail'.
 (define-key dired-mode-map "V" 'km/dired-view-file-other-window)
 
