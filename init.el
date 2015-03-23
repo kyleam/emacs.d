@@ -50,11 +50,13 @@
 
 (require 'init-yas)
 
-(require 'init-gnus)
-
 (when (file-exists-p (expand-file-name "init-untracked.el" km/init-lisp-dir))
   (require 'init-untracked))
 
+(setq server-use-tcp t)
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
+(require 'init-mail)
+
