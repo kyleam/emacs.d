@@ -115,15 +115,21 @@ and '<<<' mark the bounds of the narrowed region.
       (outline-mark-subtree)
       (narrow-to-region (region-beginning) (region-end)))))
 
-(defun km/toggle-line-or-region-comment ()
-  "Comment/uncomment the current line or region."
-    (interactive)
-    (let (beg end)
-      (if (region-active-p)
-          (setq beg (region-beginning) end (region-end))
-        (setq beg (line-beginning-position) end (line-end-position)))
-      (comment-or-uncomment-region beg end))
-    (forward-line))
+(defun km/toggle-line-or-region-comment (beg end)
+  "Comment or uncomment the current line or region.
+If there is an active region, act on all lines that the region
+touches."
+  (interactive "*r")
+  (unless (use-region-p)
+    (setq beg (point)
+          end (point)))
+  (let ((bol (save-excursion (goto-char beg)
+                             (line-beginning-position)))
+        (eol (save-excursion (goto-char end)
+                             (line-end-position))))
+    (unless (eq bol eol)
+      (comment-or-uncomment-region bol eol)
+      (forward-line))))
 
 ;; Modified from http://oremacs.com/2015/01/26/occur-dwim/.
 (defun km/occur ()
