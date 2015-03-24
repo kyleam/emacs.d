@@ -38,7 +38,7 @@
     ;; Taken from `imenu-choose-buffer-index'.
     (imenu--cleanup)
     (setq imenu--index-alist nil))
-  (call-interactively #'imenu))
+  (call-interactively #'helm-imenu))
 
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.
