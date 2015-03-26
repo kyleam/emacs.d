@@ -261,28 +261,31 @@ the commit buffer. And no dinging."
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" 'km/magit-auto-commit)
+
   (magit-define-popup-action 'magit-push-popup
     ?a "Push all" 'km/magit-push-all)
   (magit-define-popup-action 'magit-push-popup
     ?h "Push HEAD" 'km/magit-push-head)
+
   (magit-define-popup-action 'magit-merge-popup
     ?u "Merge upstream" 'km/magit-ff-merge-upstream)
-  (magit-define-popup-action 'magit-branch-popup
-    ?t "Local tracking" 'km/magit-checkout-local-tracking)
-  (magit-define-popup-action 'magit-branch-popup
-    ?s "Backup current branch" 'km/magit-backup-branch)
-  (magit-define-popup-action 'magit-branch-popup
-    ?C "Create" 'magit-branch)
+
   (magit-define-popup-action 'magit-branch-popup
     ?c "Create & checkout from current"
     'km/magit-branch-and-checkout-from-current)
   (magit-define-popup-action 'magit-branch-popup
+    ?C "Create" 'magit-branch)
+  (magit-define-popup-action 'magit-branch-popup
     ?l "Delete previous branch"
     'km/magit-delete-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
+    ?m "Checkout master" 'km/magit-checkout-master)
+  (magit-define-popup-action 'magit-branch-popup
     ?p "Checkout previous" 'km/magit-checkout-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
-    ?m "Checkout master" 'km/magit-checkout-master)
+    ?s "Backup current branch" 'km/magit-backup-branch)
+  (magit-define-popup-action 'magit-branch-popup
+    ?t "Local tracking" 'km/magit-checkout-local-tracking)
 
   (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
     "Set '--no-ff' flag when running `magit-merge-editmsg'."
