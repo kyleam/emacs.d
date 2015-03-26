@@ -107,6 +107,12 @@ without requiring confirmation.
                                 (magit-list-remote-branch-names))))
   (magit-run-git "checkout" "-t" remote-branch))
 
+(defun km/magit-delete-previous-branch (&optional force)
+  "Delete previous branch.
+\n(git branch -d @{-1})"
+  (interactive "P")
+  (magit-run-git "branch" (if force "-D" "-d") "@{-1}"))
+
 (defun km/magit-checkout-previous-branch ()
   "Checkout previous branch.
 \n(git checkout -)"
@@ -270,6 +276,9 @@ the commit buffer. And no dinging."
   (magit-define-popup-action 'magit-branch-popup
     ?c "Create & checkout from current"
     'km/magit-branch-and-checkout-from-current)
+  (magit-define-popup-action 'magit-branch-popup
+    ?l "Delete previous branch"
+    'km/magit-delete-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
     ?p "Checkout previous" 'km/magit-checkout-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
