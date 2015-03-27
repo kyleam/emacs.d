@@ -209,6 +209,21 @@ the commit buffer. And no dinging."
                    (match-string 2))
         (magit-show-commit it t))))
 
+(defun km/magit-insert-staged-file (&optional no-directory)
+  "Select staged file to insert.
+This is useful for referring to file names in commit messages.
+By default, the path for the file name is relative to the top
+directory of the repository.  Remove the directory component from
+the file name if NO-DIRECTORY is non-nil."
+  (interactive "P")
+  (let* ((default-directory (magit-get-top-dir))
+         (files (magit-staged-files))
+         (file (if (= 1 (length files))
+                   (car files)
+                 (completing-read "Staged file: " (magit-staged-files)
+                                  nil t))))
+    (insert (if no-directory (file-name-nondirectory file) file))))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -233,6 +248,7 @@ the commit buffer. And no dinging."
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "p" 'km/magit-pin-file)
+  (define-key km/git-map "s" 'km/magit-insert-staged-file)
   (define-key km/git-map "u" 'km/magit-auto-commit))
 
 (after 'magit-log
