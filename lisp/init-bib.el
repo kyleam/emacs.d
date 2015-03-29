@@ -14,6 +14,7 @@
                 bibtex-entry-format)))
 
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-single-space-author-list)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -71,6 +72,20 @@ all other words unless they are protected by brackets."
                       km/bibtex-unimportant-title-words)
               (downcase-word 1)
             (capitalize-word 1))))))))
+
+(defun km/bibtex-single-space-author-list ()
+  "Convert multiple spaces in author list to single space."
+  (interactive)
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (let* ((text-bounds (cdr (bibtex-search-forward-field "author" t)))
+           (beg (car text-bounds))
+           (end (cadr text-bounds)))
+      (goto-char beg)
+      (while (re-search-forward "\\(\\s-+\\) and" end t)
+        (replace-match "" nil nil nil 1))
+      (goto-char beg)
+      (fill-paragraph))))
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
