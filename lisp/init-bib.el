@@ -53,6 +53,8 @@ all other words unless they are protected by brackets."
                (string= (match-string 3) "}"))
           ;; Go to previous character in case '}' is within the word.
           (backward-char))
+         ;; Leave commands alone.
+         ((string= (match-string 1) "\\"))
          ;; Capitalize the first word of the title.  This will fail if
          ;; there is a space after '{'.
          ((= (match-beginning 1) beg)
