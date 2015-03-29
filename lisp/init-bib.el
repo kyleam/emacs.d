@@ -16,6 +16,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-single-space-author-list)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-pages-use-double-hyphen)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-doi-leader)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -100,6 +101,19 @@ all other words unless they are protected by brackets."
         (goto-char beg)
         (and (re-search-forward "[^A-z0-9]*-[^A-z0-9]*" end t)
              (replace-match "--"))))))
+
+(defun km/bibtex-remove-doi-leader ()
+  "Remove leading part (http:...) of doi URL."
+  (interactive)
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (let* ((text-bounds (cdr (bibtex-search-forward-field "doi" t)))
+           (beg (car text-bounds))
+           (end (cadr text-bounds)))
+      (when text-bounds
+        (goto-char beg)
+        (and (re-search-forward "http://dx.doi.org/" end t)
+             (replace-match ""))))))
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
