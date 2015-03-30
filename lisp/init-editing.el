@@ -211,7 +211,8 @@ touches."
 (defun km/cleanup-buffer ()
   (interactive)
   (unless km/prevent-cleanup
-    (whitespace-cleanup)))
+    (whitespace-cleanup)
+    (delete-trailing-whitespace)))
 
 (define-key km/editing-map "t" 'km/toggle-prevent-cleanup)
 
