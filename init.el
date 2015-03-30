@@ -27,6 +27,7 @@
 (require 'init-view)
 
 (require 'init-editing)
+(require 'init-god)
 
 (require 'init-text)
 (require 'init-elisp)

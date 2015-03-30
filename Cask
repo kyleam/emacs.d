@@ -20,6 +20,7 @@
 (depends-on "gitattributes-mode")
 (depends-on "gitconfig-mode")
 (depends-on "gitignore-mode")
+(depends-on "god-mode")
 (depends-on "haskell-mode")
 (depends-on "helm")
 (depends-on "helm-projectile")
