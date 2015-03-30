@@ -10,7 +10,8 @@
 
 (after 'bibtex
   (setq bibtex-entry-format
-        (append '(realign sort-fields) bibtex-entry-format)))
+        (append '(realign whitespace last-comma delimiters sort-fields)
+                bibtex-entry-format)))
 
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
 
