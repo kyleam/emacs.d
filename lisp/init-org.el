@@ -174,19 +174,20 @@ heading."
 After sorting, return point to its previous location under the
 current heading."
   (interactive "p")
-  (let ((heading (org-no-properties (org-get-heading t t)))
-        (starting-pos (point))
-        chars-after-heading)
+  (let ((starting-pos (point)))
     (org-back-to-heading t)
-    (setq chars-after-heading (- starting-pos (point)))
-    (outline-up-heading arg)
-    (call-interactively #'org-sort)
-    ;; Sorting doesn't play well with `save-restriction' or markers,
-    ;; so just put the point where it was relative to the original
-    ;; heading.  This may not actually be the same tree if there are
-    ;; redundant headings.
-    (goto-char (+ (org-find-exact-headline-in-buffer heading nil t)
-                  chars-after-heading))))
+    (let ((heading-line (buffer-substring-no-properties
+                         (point-at-bol) (point-at-eol)))
+          (chars-after-heading (- starting-pos (point))))
+      (outline-up-heading arg)
+      (call-interactively #'org-sort)
+      ;; Sorting doesn't play well with `save-restriction' or markers,
+      ;; so just put the point where it was relative to the original
+      ;; heading.  This may not actually be the same tree if there are
+      ;; redundant headings.
+      (re-search-forward heading-line)
+      (beginning-of-line)
+      (goto-char (+ (point) chars-after-heading)))))
 
 (defun km/org-sort-heading-ignoring-articles ()
   "Sort alphabetically, but ignore any leading articles."
