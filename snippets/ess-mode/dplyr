@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: dplyr
+# key: dp
+# group: imports
+# --
+library(dplyr)
+$0
