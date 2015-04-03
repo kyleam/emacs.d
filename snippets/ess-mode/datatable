@@ -3,5 +3,5 @@
 # key: dt
 # group: imports
 # --
-library('data.table')
+library(data.table)
 $0
