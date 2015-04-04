@@ -518,6 +518,8 @@ displayed in the agenda."
 (setq org-refile-targets '((nil :maxlevel . 2))
       org-refile-cache nil)
 
+(add-hook 'org-after-refile-insert-hook 'km/org-maybe-sort-parent)
+
 (defvar km/org-agenda-refile-targets
   '((nil :maxlevel . 3)
     (org-agenda-files :maxlevel . 2)
