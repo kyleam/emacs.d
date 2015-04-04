@@ -169,25 +169,112 @@ heading."
         (org-update-checkbox-count-maybe)
         (message "Deleted %s item(s)" deleted-count)))))
 
+(defmacro km/org--save-pos-on-sort (&rest body)
+  "Try to return to the orginal position after sorting.
+
+Sorting doesn't play well with `save-restriction' or markers, so
+just put the point where it was relative to the original heading.
+This may not actually be the same tree if there are redundant
+headings.
+
+This relies on point being placed at the heading that was sorted,
+as `org-sort-entries' does."
+  `(let ((starting-pos (point)))
+     (org-back-to-heading t)
+     (let ((heading-line (buffer-substring-no-properties
+                          (point-at-bol) (point-at-eol)))
+           (chars-after-heading (- starting-pos (point))))
+       ,@body
+       (search-forward heading-line)
+       (beginning-of-line)
+       (goto-char (+ (point) chars-after-heading)))))
+
 (defun km/org-sort-parent (arg)
   "Sort on parent heading ARG levels up.
 After sorting, return point to its previous location under the
 current heading."
   (interactive "p")
-  (let ((starting-pos (point)))
-    (org-back-to-heading t)
-    (let ((heading-line (buffer-substring-no-properties
-                         (point-at-bol) (point-at-eol)))
-          (chars-after-heading (- starting-pos (point))))
-      (outline-up-heading arg)
-      (call-interactively #'org-sort)
-      ;; Sorting doesn't play well with `save-restriction' or markers,
-      ;; so just put the point where it was relative to the original
-      ;; heading.  This may not actually be the same tree if there are
-      ;; redundant headings.
-      (re-search-forward heading-line)
-      (beginning-of-line)
-      (goto-char (+ (point) chars-after-heading)))))
+  (km/org--save-pos-on-sort
+   (outline-up-heading arg)
+   (call-interactively #'org-sort)))
+
+(defun km/org--prop-sort-args ()
+  "Return `org-sort-entries' arguments based on \"SORT\" property."
+  (when (save-excursion (org-goto-first-child))
+    (let ((prop (org-entry-get nil "sort" 'inherit)))
+      (when prop
+        (let* ((current-level (org-current-level))
+               (sort-prop (s-split " by " prop))
+               (levels (mapcar #'string-to-number (s-split nil (car sort-prop))))
+               (sorting-type (cadr sort-prop))
+               sorting-func)
+          (if sorting-type
+              (progn
+                (setq sorting-type (read sorting-type))
+                (cond
+                 ((characterp sorting-type))
+                 ((fboundp sorting-type)
+                  (setq sorting-func sorting-type
+                        sorting-type ?f))
+                 (t
+                  (user-error "Invalid sorting type: %s" sorting-type))))
+            (setq sorting-type ?a))
+          (when (or (equal levels (list 0))
+                    (memq current-level levels))
+            (list nil sorting-type sorting-func)))))))
+
+(defun km/org-maybe-sort ()
+  "Sort current heading based on \"SORT\" property.
+
+Property value should have the format \"LEVELS by TYPE\", where
+LEVELS specifies the level of heading to sort and TYPE is the
+sorting type.
+
+If LEVELS is a space-seperated list of positive integers, only
+sort heading if it is at one of these levels.  If LEVELS is zero
+or a non-numeric string, sort heading regardless of its level.
+If LEVELS is a negative number, do not sort. (Notice that there
+is only support for sorting subheadings in a tree, not top-level
+headings.)
+
+If TYPE is a character, pass it as the SORTING-TYPE argument to
+`org-sort-entries'.  If TYPE is the name of a bound function,
+pass it as the GETKEY-FUNC argument to `org-sort-entries' (with
+?f as the SORTING-TYPE value).  If \"by TYPE\" is omitted from
+the property value, sort alphabetically.
+
+For example
+
+  2 by ?a          Sort alphabetically if level 2 heading.
+  2                Same as above.
+
+  t                Sort heading alphabetically.
+  all              Same as above.
+
+  1 by func        Sort heading using function if level 1 heading.
+
+  -1               Don't sort.  Useful for overriding parent value."
+  (let ((sort-args (km/org--prop-sort-args)))
+    (when sort-args
+      (apply #'org-sort-entries sort-args))))
+
+(defun km/org-maybe-sort-buffer-headings ()
+  "Call `km/org-maybe-sort' on buffer headings."
+  (interactive)
+  (org-map-entries #'km/org-maybe-sort))
+
+(defun km/org-maybe-sort-parent ()
+  "Sort parent heading based on \"SORT\" property.
+See `km/org-maybe-sort' for details of property value format."
+  (let (heading-pos sort-args)
+    (save-excursion
+      (and (org-up-heading-safe)
+           (setq heading-pos (point)
+                 sort-args (km/org--prop-sort-args))))
+    (when sort-args
+      (km/org--save-pos-on-sort
+       (goto-char heading-pos)
+       (apply #'org-sort-entries sort-args)))))
 
 (defun km/org-sort-heading-ignoring-articles ()
   "Sort alphabetically, but ignore any leading articles."
