@@ -35,6 +35,7 @@
 (depends-on "key-chord")
 (depends-on "less-css-mode")
 (depends-on "let-alist")
+(depends-on "lispy")
 (depends-on "lua-mode")
 (depends-on "markdown-mode")
 (depends-on "mocker")
