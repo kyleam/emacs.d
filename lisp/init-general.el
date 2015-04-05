@@ -68,7 +68,6 @@
 
 (show-paren-mode)
 (global-auto-revert-mode)
-(transient-mark-mode -1)
 (key-chord-mode 1)
 
 (provide 'init-general)
