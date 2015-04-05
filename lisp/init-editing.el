@@ -14,6 +14,9 @@
 
 (setq flyspell-auto-correct-binding (kbd "C-c e ;"))
 
+;; This is bound separately in `km/editing-map'.
+(setq iedit-toggle-key-default nil)
+
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
@@ -173,8 +176,9 @@ touches."
 (define-prefix-command 'km/editing-map)
 (global-set-key (kbd "C-c e") 'km/editing-map)
 
+(define-key km/editing-map (kbd "C-i") 'indent-relative)
 (define-key km/editing-map "f" 'km/fill-surrounding-indented)
-(define-key km/editing-map "i" 'indent-relative)
+(define-key km/editing-map "i" 'iedit-mode)
 
 (electric-indent-mode -1)
 (whole-line-or-region-mode)
