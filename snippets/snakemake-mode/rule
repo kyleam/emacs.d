@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: rule
+# key: rl
+# --
+rule $0:
+    input:
+    output:
+    shell:
