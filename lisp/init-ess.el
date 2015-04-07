@@ -21,6 +21,16 @@
 
 (add-to-list 'auto-mode-alist '("\\.[rR]\\'" . R-mode))
 
+(define-abbrev-table 'ess-mode-abbrev-table
+  '(("true" "TRUE")
+    ("false" "FALSE"))
+  :system t)
+
+(dolist (hook '(ess-mode-hook inferior-ess-mode-hook))
+  (add-hook hook (lambda ()
+                   (setq local-abbrev-table ess-mode-abbrev-table)))
+  (add-hook hook 'abbrev-mode))
+
 (defvar km/ess-dplry-pipe-key "|")
 
 (defun km/ess-insert-dplyr-pipe ()
