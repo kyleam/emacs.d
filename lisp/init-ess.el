@@ -21,4 +21,21 @@
 
 (add-to-list 'auto-mode-alist '("\\.[rR]\\'" . R-mode))
 
+(defvar km/ess-dplry-pipe-key "|")
+
+(defun km/ess-insert-dplyr-pipe ()
+  "Insert `km/ess-dplry-pipe' using `ess-smart-S-assign'.
+Based on instructions in `ess-smart-S-assign-key', I didn't think
+this would work, but it seems to so far."
+  (interactive)
+  (let ((ess-S-assign " %>% ")
+        (ess-smart-S-assign-key km/ess-dplry-pipe-key))
+    (call-interactively #'ess-smart-S-assign)))
+
+(after 'ess-mode
+  (define-key ess-mode-map "|" 'km/ess-insert-dplyr-pipe))
+
+(after 'ess-inf
+  (define-key inferior-ess-mode-map "|" 'km/ess-insert-dplyr-pipe))
+
 (provide 'init-ess)
