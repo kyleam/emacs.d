@@ -1,6 +1,9 @@
 
 (setq save-abbrevs 'silently)
 
+(add-hook 'text-mode-hook 'abbrev-mode)
+(add-hook 'prog-mode-hook 'abbrev-mode)
+
 (define-abbrev-table 'typo-abbrev-table nil)
 (abbrev-table-put global-abbrev-table :parents
                   (cons typo-abbrev-table

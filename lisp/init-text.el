@@ -1,5 +1,4 @@
 
-(add-hook 'text-mode-hook 'abbrev-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (defun km/export-wrapped-text (arg)
