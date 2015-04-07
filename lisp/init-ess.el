@@ -3,6 +3,8 @@
 
 (setq ess-smart-S-assign-key ";")
 
+(setq ess-use-ido nil)
+
 (after 'ess-mode
   (ess-add-style
    'km
