@@ -1,15 +1,10 @@
 (setq python-fill-docstring-style 'pep-257-nn)
 
-(setq jedi:tooltip-method nil
-      ac-auto-start nil)
-
 (setq python-shell-interpreter "ipython")
 
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
-(add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook 'auto-complete-mode)
 (add-hook 'python-mode-hook
           (lambda ()
             (add-hook
@@ -17,8 +12,6 @@
              #'km/python-indent-post-self-insert-function 'append 'local)))
 
 (defun km/python-hook ()
-  (set (make-local-variable 'yas-fallback-behavior)
-       '(apply auto-complete))
   ;; Stop semantic from taking over imenu.
   (setq imenu-create-index-function #'python-imenu-create-index)
   (set (make-local-variable 'compile-command) "py.test"))
