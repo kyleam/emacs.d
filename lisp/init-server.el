@@ -1,5 +1,8 @@
 
-(require 'init-gnus)
+(setq server-use-tcp t)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (let ((server (daemonp)))
   (cond
@@ -12,4 +15,4 @@
     (key-chord-define-global "jg" 'km/mail-map)
     (setq save-abbrevs nil))))
 
-(provide 'init-mail)
+(provide 'init-server)
