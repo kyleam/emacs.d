@@ -10,6 +10,11 @@
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook 'auto-complete-mode)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (add-hook
+             'post-self-insert-hook
+             #'km/python-indent-post-self-insert-function 'append 'local)))
 
 (defun km/python-hook ()
   (set (make-local-variable 'yas-fallback-behavior)
@@ -95,6 +100,31 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
       (setq pos (point)))
     (goto-char pos)
     n))
+
+(defun km/python-indent-post-self-insert-function ()
+  "Adjust indentation after insert of specfic characters.
+This is taken from `python-indent-post-self-insert-function'.
+Unlike that function, it does not rely on `electric-indent-mode'
+being turned on."
+  (when (and (not (bolp))
+             (let ((paren-start (python-syntax-context 'paren)))
+               ;; Check that point is inside parens.
+               (when paren-start
+                 (not
+                  ;; Filter the case where input is happening in the same
+                  ;; line where the open paren is.
+                  (= (line-number-at-pos)
+                     (line-number-at-pos paren-start)))))
+             ;; When content has been added before the closing paren or a
+             ;; comma has been inserted, it's ok to do the trick.
+             (or
+              (memq (char-after) '(?\) ?\] ?\}))
+              (eq (char-before) ?,)))
+    (save-excursion
+      (goto-char (line-beginning-position))
+      (let ((indentation (python-indent-calculate-indentation)))
+        (when (< (current-indentation) indentation)
+          (indent-line-to indentation))))))
 
 (after 'python
   (define-key python-mode-map (kbd "C-c C-.")
