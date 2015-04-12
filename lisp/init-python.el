@@ -19,6 +19,8 @@
 (defun km/python-hook ()
   (set (make-local-variable 'yas-fallback-behavior)
        '(apply auto-complete))
+  ;; Stop semantic from taking over imenu.
+  (setq imenu-create-index-function #'python-imenu-create-index)
   (set (make-local-variable 'compile-command) "py.test"))
 (add-hook 'python-mode-hook 'km/python-hook)
 
