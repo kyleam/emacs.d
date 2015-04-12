@@ -14,9 +14,7 @@
 ;; This is intentionally not loaded.
 (setq custom-file "~/.emacs.d/.custom.el")
 
-(setq save-abbrevs 'silently)
-
-(setq bookmark-save-flag 1)
+(setq bookmark-save-flag nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 

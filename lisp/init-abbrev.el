@@ -1,6 +1,4 @@
 
-(setq save-abbrevs 'silently)
-
 (add-hook 'text-mode-hook 'abbrev-mode)
 (add-hook 'prog-mode-hook 'abbrev-mode)
 
