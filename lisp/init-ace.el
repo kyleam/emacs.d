@@ -4,6 +4,8 @@
 
 (key-chord-define-global "jf" 'ace-jump-mode)
 
+(setq ace-jump-mode-move-keys (loop for i from ?a to ?z collect i))
+
 ;;; Ace Link
 
 (defun km/ace-link-dired ()
