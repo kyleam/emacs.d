@@ -61,6 +61,8 @@
 (global-set-key (kbd "M-{") nil)
 (global-set-key (kbd "M-[") 'backward-paragraph)
 
+(global-set-key (kbd "C-c x") 'eval-expression)
+
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)
 
