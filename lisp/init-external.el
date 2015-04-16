@@ -186,10 +186,11 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (global-set-key (kbd "C-c c") 'km/compile-map)
 
 (define-key km/compile-map "c" 'compile)
-(define-key km/compile-map "h" 'km/compile-in-home-dir)
 (define-key km/compile-map "g" 'recompile)
+(define-key km/compile-map "h" 'km/compile-in-home-dir)
 (define-key km/compile-map "o" 'km/compilation-display-buffer)
-(define-key km/compile-map "r" 'km/compilation-recompile)
+
+(key-chord-define-global "hv" 'km/compilation-recompile)
 
 
 ;;; Diff
