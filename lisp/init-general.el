@@ -16,6 +16,8 @@
 
 (setq bookmark-save-flag nil)
 
+(setq default-input-method "TeX")
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (put 'narrow-to-region 'disabled nil)
