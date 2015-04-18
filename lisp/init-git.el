@@ -314,6 +314,8 @@ the file name if NO-DIRECTORY is non-nil."
 (add-to-list 'load-path "~/src/emacs/magit-annex/")
 (require 'magit-annex-autoloads)
 
+(setq magit-annex-unused-open-function #'org-open-file)
+
 (after 'magit-annex
   (setq magit-annex-all-action-arguments
         (delete "--auto" magit-annex-all-action-arguments)))
