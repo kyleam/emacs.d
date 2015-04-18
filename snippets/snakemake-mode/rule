@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: rule
 # key: rl
+# expand-env: ((yas-indent-line 'fixed))
 # --
 rule $0:
     input:
