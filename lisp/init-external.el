@@ -10,7 +10,7 @@
 (define-prefix-command 'km/external-map)
 (global-set-key (kbd "C-c z") 'km/external-map)
 
-(define-key km/external-map "w" 'woman)
+(define-key km/external-map "m" 'helm-man-woman)
 (define-key km/external-map "i" 'ispell-buffer)
 
 
