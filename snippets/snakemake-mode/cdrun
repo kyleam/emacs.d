@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: cdrun
+# key: cd
+# --
+'cd $(dirname {${1:input[0]}}) && ./$(basename {$1})'
