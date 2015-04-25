@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: random number
+# key: rnum
+# --
+`(random 4294967295)`$0
