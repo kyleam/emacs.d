@@ -29,6 +29,10 @@
   (magit-backup-mode -1))
 
 (after 'git-commit
+  (add-hook 'git-commit-setup-hook
+            (lambda ()
+              (add-hook 'with-editor-pre-finish-hook
+                        'git-commit-save-message nil t)))
   (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
 
 (defun km/magit-auto-commit ()
