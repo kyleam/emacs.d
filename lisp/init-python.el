@@ -96,6 +96,19 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     (goto-char pos)
     n))
 
+(defvar km/python-shell-current-string nil)
+(defun km/python-shell-send-set-string (set)
+  "Send previously set string to Python shell.
+If a string has not been set previously or SET is non-nil, prompt
+for a new string."
+  (interactive "P")
+  (when (or set (not km/python-shell-current-string))
+      (let ((initial (and (use-region-p)
+                          (buffer-substring-no-properties
+                           (region-beginning) (region-end)))))
+        (setq km/python-shell-current-string (read-string "Python command: " initial))))
+  (python-shell-send-string km/python-shell-current-string))
+
 (defun km/python-indent-post-self-insert-function ()
   "Adjust indentation after insert of specfic characters.
 This is taken from `python-indent-post-self-insert-function'.
@@ -128,6 +141,8 @@ being turned on."
   ;; Rebind `python-shell-send-buffer'.
   (define-key python-mode-map (kbd "C-c C-c")
     'km/python-shell-send-function-or-paragraph-and-step)
+
+  (define-key python-mode-map (kbd "C-c C-d") 'km/python-shell-send-set-string)
 
   ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
   (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
