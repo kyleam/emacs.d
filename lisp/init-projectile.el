@@ -49,8 +49,14 @@ Interactive arguments are processed according to
     (file-relative-name it (projectile-project-root))))
 
 (defun km/projectile-copy-project-filename-as-kill ()
+  "Copy name of project file.
+If point is on a file, copy this as the file name.  Otherwise,
+use the name of the current file."
   (interactive)
-  (let ((fname (km/project-filename-at-point)))
+  (-when-let (fname (or (km/project-filename-at-point)
+                        (and buffer-file-name
+                             (file-relative-name buffer-file-name
+                                                 (projectile-project-root)))))
     (if (eq last-command 'kill-region)
         (kill-append fname nil)
       (kill-new fname))
