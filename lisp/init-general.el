@@ -11,6 +11,8 @@
 
 (setq set-mark-command-repeat-pop t)
 
+(setq recenter-positions '(top middle bottom))
+
 ;; This is intentionally not loaded.
 (setq custom-file "~/.emacs.d/.custom.el")
 
