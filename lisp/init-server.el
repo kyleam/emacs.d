@@ -13,6 +13,7 @@
    ((string= server "mail")
     (setq mode-line-misc-info (cons " [Mail] " mode-line-misc-info))
     (key-chord-define-global "jg" 'km/mail-map)
+    (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
     (setq save-abbrevs nil))))
 
 (provide 'init-server)
