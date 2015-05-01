@@ -537,6 +537,55 @@ displayed in the agenda."
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
+(defvar km/org-refile-list-item-tag "bref"
+  "Tag marking heading with list that can be refiled to.")
+
+(defun km/org-refile-list-item (&optional copy)
+  "Refile list item to a heading.
+
+Consider targets to be headings with the tag
+`km/org-refile-list-item-tag' in any file listed in
+`org-refile-targets'.
+
+The item is dropped directly under the heading, after any
+planning information or property drawers.  No attempt is made to
+make sure that it is part of any previous list.
+
+With prefix argument COPY, the item is not deleted from the
+original list."
+  (interactive "P")
+  (unless (org-at-item-p)
+    (user-error "Not at an item"))
+  (let* ((beg (save-excursion (beginning-of-line) (point-marker)))
+         (end (save-excursion
+                (goto-char
+                 (nth 6 (assoc (marker-position beg) (org-list-struct))))
+                (point-marker)))
+         (item (buffer-substring-no-properties beg end))
+         (ftargets (mapcar #'car org-refile-targets))
+         (org-refile-targets (mapcar
+                              (lambda (f)
+                                (cons f (cons :tag km/org-refile-list-item-tag)))
+                              ftargets))
+         (loc (org-refile-get-location "Bullet heading"))
+         (fname (nth 1 loc))
+         (heading-pos (nth 3 loc)))
+    (with-current-buffer (or (find-buffer-visiting fname)
+                             (find-file-noselect fname))
+      (org-with-wide-buffer
+       (goto-char heading-pos)
+       (forward-line)
+       (while (and (not (eobp))
+                   (memq (org-element-type (org-element-at-point))
+                         '(planning property-drawer node-property)))
+         (forward-line))
+       (insert item)
+       (org-update-checkbox-count-maybe)))
+    (goto-char beg)
+    (unless copy
+      (delete-region beg end)
+      (org-update-checkbox-count-maybe))))
+
 (defvar km/org-refile-dwim-maxlevel 2)
 
 (defun km/org-refile-dwim ()
@@ -599,6 +648,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 
 (define-key km/global-org-map "w" 'org-refile-goto-last-stored)
 (define-key km/org-prefix-map "w" 'km/org-refile-to-other-org-buffer)
+(define-key km/org-prefix-map "i" 'km/org-refile-list-item)
 
 (after 'org
   (define-key org-mode-map [remap org-refile] 'km/org-refile-dwim)
