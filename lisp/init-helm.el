@@ -4,6 +4,7 @@
 
 (setq helm-split-window-in-side-p t
       helm-move-to-line-cycle-in-source t
+      helm-ff-file-name-history-use-recentf t
       helm-ff-skip-boring-files t)
 
 (setq helm-man-or-woman-function #'woman)
