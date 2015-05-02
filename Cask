@@ -48,7 +48,6 @@
 (depends-on "poporg")
 (depends-on "projectile")
 (depends-on "s")
-(depends-on "smex")
 (depends-on "stan-mode")
 (depends-on "stan-snippets")
 (depends-on "stekene-theme")
