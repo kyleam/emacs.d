@@ -1,6 +1,9 @@
 
 (require 'uniquify)
 
+(add-to-list 'load-path "~/src/emacs/nlines/")
+(require 'nlines-autoloads)
+
 (setq require-final-newline t)
 
 (defun km/rename-current-buffer-file ()
