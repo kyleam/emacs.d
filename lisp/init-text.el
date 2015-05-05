@@ -39,17 +39,16 @@ If a columnified buffer already exists, just switch to it."
                            ((> (prefix-numeric-value current-prefix-arg) 4)
                             (read-string "Delimiter: "))
                            (t nil))))
-  (let* ((bufname (buffer-name))
-         (output-buffer-name (concat "*cols: " bufname "*"))
+  (unless buffer-file-name
+    (user-error "Buffer not visiting a file"))
+  (let* ((output-buffer-name (concat "*cols: " (buffer-name) "*"))
          (output-buffer (get-buffer output-buffer-name))
          (fname (file-relative-name buffer-file-name))
-         (col-args '("-t")))
+         (args (cons "--table"
+                     (and delim (list "--separator" delim)))))
     (unless output-buffer
       (setq output-buffer (get-buffer-create output-buffer-name))
-      (when delim
-        (add-to-list 'col-args (format "-s'%s'" delim)))
-      (apply 'call-process "column" fname output-buffer nil
-             col-args))
+      (apply #'call-process "column" fname output-buffer nil args))
     (switch-to-buffer output-buffer)))
 
 (provide 'init-text)
