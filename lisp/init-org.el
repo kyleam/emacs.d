@@ -695,6 +695,10 @@ beginning of the link."
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
+(defvar km/org-md-fill-column fill-column
+  "Fill column for exported markdown.
+This is a separate variable instead of `fill-column' to allow it
+to be easily overriden.")
 
 (defun km/org-md--fill-string (contents)
   "Use `org-ascii--fill-string' to fill ox-md paragraphs."
@@ -703,6 +707,11 @@ beginning of the link."
 
 (after 'ox-md
   (advice-add 'org-md-paragraph :filter-return #'km/org-md--fill-string))
+
+(defun km/org-md-export-unfilled-buffer ()
+  (interactive)
+  (let ((km/org-md-fill-column (point-max)))
+    (org-md-export-as-markdown)))
 
 
 ;;; Org Babel
