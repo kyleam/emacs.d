@@ -135,36 +135,30 @@ entering `ch' is equivalent to `*.[ch]'.")
 Format of each element should be (CHARACTER EXTENSION DOC). DOC
 is not required.")
 
-(defun km/scratch-find-file (erase)
+(defun km/scratch-find-file (&optional pwd)
   "Find scratch buffer.
 
 Prompt with characters from `km/find-scratch-buffers' to
 determine the extension of the scratch file.
 
-With prefix argument ERASE, delete contents of buffer."
+With prefix argument PWD, find the scratch file in
+`default-directory' instead of /tmp."
   (interactive "P")
-  (switch-to-buffer (km/scratch--find-file-no-select erase)))
+  (switch-to-buffer (km/scratch--find-file-no-select pwd)))
 
-(defun km/scratch-find-file-other-window (erase)
+(defun km/scratch-find-file-other-window (&optional pwd)
     "Like `km/find-scratch-file', but open buffer in another window."
   (interactive "P")
-  (switch-to-buffer-other-window (km/scratch--find-file-no-select erase)))
+  (switch-to-buffer-other-window (km/scratch--find-file-no-select pwd)))
 
-(defun km/scratch--find-file-no-select (erase)
-  (let ((scratch-buffer
-         (find-file-noselect (km/scratch--get-file-name))))
-    (when erase
-      (with-current-buffer scratch-buffer
-        (erase-buffer)))
-    scratch-buffer))
+(defun km/scratch--find-file-no-select (pwd)
+  (find-file-noselect (km/scratch--get-file-name pwd)))
 
-;; This is based off of Projectile's commander.
-(defun km/scratch--get-file-name ()
-  (-let* ((choices (-map #'car km/find-scratch-buffers))
-          (prompt (concat "Scratch buffer [" choices "]: "))
-          (ch (read-char-choice prompt choices))
-          ((_ ext _) (assq ch km/find-scratch-buffers)))
-    (concat "/tmp/scratch" ext)))
+(defun km/scratch--get-file-name (pwd)
+  (let* ((choices (mapcar #'car km/find-scratch-buffers))
+         (ch (read-char-choice (concat "[" choices "]") choices))
+         (ext (cadr (assq ch km/find-scratch-buffers))))
+    (concat (if pwd default-directory "/tmp/") "scratch" ext)))
 
 (global-set-key (kbd "C-c s") 'km/scratch-find-file)
 (define-key ctl-x-4-map "s" 'km/scratch-find-file-other-window)
