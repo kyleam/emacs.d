@@ -695,6 +695,15 @@ beginning of the link."
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
+
+(defun km/org-md--fill-string (contents)
+  "Use `org-ascii--fill-string' to fill ox-md paragraphs."
+  (org-ascii--fill-string contents km/org-md-fill-column
+                          nil))
+
+(after 'ox-md
+  (advice-add 'org-md-paragraph :filter-return #'km/org-md--fill-string))
+
 
 ;;; Org Babel
 
