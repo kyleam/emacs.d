@@ -128,46 +128,45 @@ After deleting checked items, move to the first item of the list.
 If there are no items of the list remaining, move to the parent
 heading."
   (interactive)
-  (let ((el (org-element-lineage (org-element-context) '(plain-list) t)))
-    (unless el
-      (user-error "Point is not within a plain list"))
-    (let* ((beg (org-element-property :begin el))
-           ;; Check maximum point because, if narrowed to a heading,
-           ;; org-element can return a point beyond this.
-           (end (min (org-element-property :end el) (point-max)))
-           (struct (org-element-property :structure el))
-           (list-level (org-list-get-ind beg struct))
-           (deleted-count 0)
-           (text (buffer-substring beg end))
-           new-text)
-      (with-temp-buffer
-        (insert text)
-        (let ((offset (1- beg))
-              (pmax (point-max))
-              level box bpos epos)
-          (dolist (item (reverse struct))
-            (setq level (nth 1 item)
-                  box (nth 4 item)
-                  bpos (- (nth 0 item) offset)
-                  ;; Minimum check here is for the same reason as
-                  ;; above with `end'.  This only comes into play for
-                  ;; the last item.
-                  epos (min (- (nth 6 item) offset) pmax))
-            (when (and (= list-level level)
-                       (string= box "[X]"))
-              (delete-region bpos epos)
-              (setq deleted-count (1+ deleted-count)))))
-        (setq new-text (buffer-string)))
-      (if (= deleted-count 0)
-          (message "No checked boxes found")
-        (delete-region beg end)
-        (goto-char beg)
-        (insert new-text)
-        (goto-char beg)
-        (unless (eq (car (org-element-at-point)) 'plain-list)
-          (outline-previous-heading))
-        (org-update-checkbox-count-maybe)
-        (message "Deleted %s item(s)" deleted-count)))))
+  (let* ((el (or (org-element-lineage (org-element-context) '(plain-list) t)
+                 (user-error "Point is not within a plain list")))
+         (beg (org-element-property :begin el))
+         ;; Check maximum point because, if narrowed to a heading,
+         ;; org-element can return a point beyond this.
+         (end (min (org-element-property :end el) (point-max)))
+         (struct (org-element-property :structure el))
+         (list-level (org-list-get-ind beg struct))
+         (deleted-count 0)
+         (text (buffer-substring beg end))
+         new-text)
+    (with-temp-buffer
+      (insert text)
+      (let ((offset (1- beg))
+            (pmax (point-max))
+            level box bpos epos)
+        (dolist (item (reverse struct))
+          (setq level (nth 1 item)
+                box (nth 4 item)
+                bpos (- (nth 0 item) offset)
+                ;; Minimum check here is for the same reason as
+                ;; above with `end'.  This only comes into play for
+                ;; the last item.
+                epos (min (- (nth 6 item) offset) pmax))
+          (when (and (= list-level level)
+                     (string= box "[X]"))
+            (delete-region bpos epos)
+            (setq deleted-count (1+ deleted-count)))))
+      (setq new-text (buffer-string)))
+    (if (= deleted-count 0)
+        (message "No checked boxes found")
+      (delete-region beg end)
+      (goto-char beg)
+      (insert new-text)
+      (goto-char beg)
+      (unless (eq (car (org-element-at-point)) 'plain-list)
+        (outline-previous-heading))
+      (org-update-checkbox-count-maybe)
+      (message "Deleted %s item(s)" deleted-count))))
 
 (defmacro km/org--save-pos-on-sort (&rest body)
   "Try to return to the orginal position after sorting.
