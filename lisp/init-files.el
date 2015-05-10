@@ -124,14 +124,14 @@ entering `ch' is equivalent to `*.[ch]'.")
 
 (defvar km/find-scratch-buffers
   '((?e ".el"  "Elisp")
-    (?p ".py"  "Python")
-    (?s ".sh"  "Shell")
-    (?r ".r"   "R")
     (?h ".hs"  "Haskell")
-    (?o ".org" "Org")
     (?m ".md"  "Markdown")
-    (?t ".txt" "Text")
-    (?n ""     "No mode"))
+    (?n ""     "No mode")
+    (?o ".org" "Org")
+    (?p ".py"  "Python")
+    (?r ".r"   "R")
+    (?s ".sh"  "Shell")
+    (?t ".txt" "Text"))
   "List of scratch buffers.
 Format of each element should be (CHARACTER EXTENSION DOC). DOC
 is not required.")
