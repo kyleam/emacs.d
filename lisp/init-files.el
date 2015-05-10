@@ -130,6 +130,7 @@ entering `ch' is equivalent to `*.[ch]'.")
     (?h ".hs"  "Haskell")
     (?o ".org" "Org")
     (?m ".md"  "Markdown")
+    (?t ".txt" "Text")
     (?n ""     "No mode"))
   "List of scratch buffers.
 Format of each element should be (CHARACTER EXTENSION DOC). DOC
