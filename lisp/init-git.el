@@ -178,6 +178,15 @@ and 'squash!' titles."
         (goto-char (apply #'max commit-pts))
       (message "No matching commits found"))))
 
+(defun km/magit-checkout-file (rev file)
+  "Checkout FILE from revision REV.
+\n(git checkout REV -- file)"
+  (interactive
+   (let ((rev (magit-read-branch-or-commit "Revision")))
+     (list rev (magit-read-file-from-rev rev "File"))))
+  (let ((default-directory (magit-get-top-dir)))
+    (magit-run-git "checkout" rev "--" file)))
+
 (defun km/magit-pin-file (&optional other-rev)
   "Pin this file to the current revision.
 
@@ -251,6 +260,7 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key km/git-map "c" 'km/magit-show-commit-under-point)
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
+  (define-key km/git-map "f" 'km/magit-checkout-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
   (define-key km/git-map "u" 'km/magit-auto-commit))
