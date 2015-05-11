@@ -123,6 +123,35 @@ without requiring confirmation.
   (interactive)
   (magit-run-git "checkout" "-"))
 
+(defun km/magit-list-recent-refs (n &optional remote)
+  "List N recent refs.
+If REMOTE is non-nil, limit to remote refs."
+  (magit-git-lines
+   "for-each-ref" "--sort=-committerdate" "--format=%(refname:short)"
+   (format "--count=%s" n)
+   (if remote "refs/remotes" "refs")))
+
+(defun km/magit-checkout-recent-ref (n)
+  "Checkout branch from N recent refs.
+Refs are sorted by committer date."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         5)))
+  (magit-run-git "checkout"
+                 (magit-completing-read
+                  "Ref" (km/magit-list-recent-refs n))))
+
+(defun km/magit-checkout-track-recent-ref (n)
+  "Create and checkout a local tracking branch.
+Listed refs are limited to N most recent, sorted by committer
+date."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         5)))
+  (magit-run-git "checkout" "-t"
+                 (magit-completing-read
+                  "Ref" (km/magit-list-recent-refs n 'remote))))
+
 (defun km/magit-checkout-master ()
   "Checkout master branch.
 \n(git checkout master)"
@@ -310,6 +339,10 @@ the file name if NO-DIRECTORY is non-nil."
     'km/magit-delete-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
     ?m "Checkout master" 'km/magit-checkout-master)
+  (magit-define-popup-action 'magit-branch-popup
+    ?n "Checkou recent ref" 'km/magit-checkout-recent-ref)
+  (magit-define-popup-action 'magit-branch-popup
+    ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
   (magit-define-popup-action 'magit-branch-popup
     ?p "Checkout previous" 'km/magit-checkout-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
