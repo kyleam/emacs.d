@@ -430,8 +430,8 @@ called through the speed command interface."
          "* %?%i" :prepend t)
         ("v" "Visit" checkitem (file+headline "~/notes/tasks.org" "Visit")
          "- [ ] %?%i\n" :prepend t)
-        ("r" "Revisit" entry (file+headline "~/notes/tasks.org" "Revisit")
-         "* TODO %?%i" :prepend t)
+        ("r" "Revisit" checkitem (file+headline "~/notes/tasks.org" "Revisit")
+         "- [ ] %?%i\n" :prepend t)
         ;; Link counterparts
         ("T" "task link" entry (file+headline "~/notes/tasks.org" "Inbox")
          "* TODO %?%i\n\n%a" :prepend t)
