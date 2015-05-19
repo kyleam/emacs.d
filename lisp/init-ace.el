@@ -11,9 +11,13 @@
 (defun km/ace-link-dired ()
   "Ace jump to files in dired buffers."
   (interactive)
-  (ali-generic
-      (km/ali--dired-collect-references)
-    (org-open-file (dired-get-filename))))
+  (let ((res (avy--with-avy-keys km/ace-link-dired
+               (avy--process
+                (km/ali--dired-collect-references)
+                #'avy--overlay-pre))))
+    (when res
+      (goto-char res)
+      (org-open-file (dired-get-filename)))))
 
 (defun km/ali--dired-collect-references ()
   (let ((end (window-end))
