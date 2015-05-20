@@ -181,6 +181,7 @@ touches."
 (define-key km/editing-map "i" 'iedit-mode)
 
 (electric-indent-mode -1)
+(electric-pair-mode 1)
 (whole-line-or-region-mode)
 
 
