@@ -17,6 +17,7 @@
 (require 'orgit)
 
 (setq magit-restore-window-configuration t
+      magit-revert-buffers t
       magit-delete-by-moving-to-trash nil
       magit-log-show-margin nil)
 
