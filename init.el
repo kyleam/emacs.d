@@ -19,6 +19,7 @@
 (require 'init-diminish)
 
 (require 'init-org)
+(require 'init-helm)
 
 (require 'init-files)
 (require 'init-buffers)
@@ -44,8 +45,6 @@
 (require 'init-git)
 (require 'init-projectile)
 (require 'init-snakemake)
-
-(require 'init-helm)
 
 (require 'init-external)
 
