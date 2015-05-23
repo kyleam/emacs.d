@@ -11,7 +11,7 @@
 ;;; Magit
 
 (add-to-list 'load-path "~/src/emacs/magit/")
-(require 'magit-autoloads)
+(require 'magit)
 
 (add-to-list 'load-path "~/src/emacs/orgit/")
 (require 'orgit)
@@ -212,7 +212,7 @@ and 'squash!' titles."
   (interactive
    (let ((rev (magit-read-branch-or-commit "Revision")))
      (list rev (magit-read-file-from-rev rev "File"))))
-  (let ((default-directory (magit-get-top-dir)))
+  (magit-with-toplevel
     (magit-run-git "checkout" rev "--" file)))
 
 (defun km/magit-pin-file (&optional other-rev)
