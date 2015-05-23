@@ -2,8 +2,7 @@
 (require 'helm)
 (require 'helm-config)
 
-(setq helm-split-window-in-side-p t
-      helm-move-to-line-cycle-in-source t
+(setq helm-move-to-line-cycle-in-source t
       helm-ff-newfile-prompt-p nil
       helm-ff-file-name-history-use-recentf t
       helm-ff-skip-boring-files t)
