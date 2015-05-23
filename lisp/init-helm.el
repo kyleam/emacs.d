@@ -9,6 +9,11 @@
 
 (setq helm-man-or-woman-function #'woman)
 
+(defun km/helm-display-buffer ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-quit-and-execute-action #'display-buffer)))
+
 (defun km/helm-ff-org-open-file ()
   "Run `org-open-file' from `helm-source-find-files'."
   (interactive)
@@ -19,7 +24,9 @@
 (global-set-key (kbd "C-x c") nil)
 
 (after 'helm-files
-  (define-key helm-find-files-map (kbd "C-c x") 'km/helm-ff-org-open-file))
+  (define-key helm-find-files-map (kbd "C-c x") 'km/helm-ff-org-open-file)
+  ;; Overrides `helm-buffer-switch-other-frame'.
+  (define-key helm-buffer-map (kbd "C-c C-o") 'km/helm-display-buffer))
 
 (define-key helm-map ";" 'helm-maybe-exit-minibuffer)
 
