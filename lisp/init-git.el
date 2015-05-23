@@ -25,9 +25,7 @@
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (add-hook 'magit-status-mode-hook 'delete-other-windows)
 (after 'magit
-  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
-
-  (magit-backup-mode -1))
+  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags))
 
 (after 'git-commit
   (add-hook 'git-commit-setup-hook
