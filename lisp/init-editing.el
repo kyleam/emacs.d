@@ -14,6 +14,9 @@
 
 (setq flyspell-auto-correct-binding (kbd "C-c e ;"))
 
+(after 'flyspell
+  (define-key flyspell-mode-map (kbd "C-.") nil))
+
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
