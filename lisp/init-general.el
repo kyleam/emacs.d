@@ -31,17 +31,6 @@
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 
-(defun km/imenu (rescan)
-  "Call `imenu', rescanning if RESCAN is non-nil."
-  (interactive "P")
-  (when (and rescan
-             ;; No need to rescan if imenu hasn't been autoloaded yet.
-             (fboundp 'imenu--cleanup))
-    ;; Taken from `imenu-choose-buffer-index'.
-    (imenu--cleanup)
-    (setq imenu--index-alist nil))
-  (call-interactively #'helm-imenu))
-
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.
 (defmacro after (mode &rest body)
@@ -54,7 +43,7 @@
 (global-set-key (kbd "C-h 4 ;") 'find-function-other-window)
 
 
-(global-set-key (kbd "C-c l") 'km/imenu)
+(global-set-key (kbd "C-c l") 'helm-imenu)
 
 ;; Disable `suspend-frame' binding.
 (global-set-key (kbd "C-x C-z") nil)
