@@ -618,7 +618,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   "URL to search for PMID.")
 
 (defun km/org-pmid-open (path)
-  "Seacrh for PMID at `km/org-pmid-search-url'."
+  "Search for PMID at `km/org-pmid-search-url'."
   (browse-url (format km/org-pmid-search-url path)))
 
 (defvar km/org-store-link-hook nil
