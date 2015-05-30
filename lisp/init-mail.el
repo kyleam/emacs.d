@@ -297,6 +297,9 @@ has an effect if Gnus is not currently open."
 (setq notmuch-fcc-dirs nil
       notmuch-search-oldest-first nil)
 
+(add-to-list 'notmuch-saved-searches
+             '(:name "today" :query "date:today.." :key "."))
+
 (add-hook 'km/org-store-link-hook 'km/gnus-goto-message-in-notmuch)
 
 (defun km/notmuch-file-to-group (file)
