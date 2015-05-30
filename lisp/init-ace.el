@@ -1,10 +1,6 @@
-;;; Ace Jump
+;;; Avy
 
-(setq ace-jump-mode-scope 'frame)
-
-(key-chord-define-global "jf" 'ace-jump-mode)
-
-(setq ace-jump-mode-move-keys (loop for i from ?a to ?z collect i))
+(key-chord-define-global "jf" 'avy-goto-subword-1)
 
 ;;; Ace Link
 

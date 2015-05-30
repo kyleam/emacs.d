@@ -599,9 +599,9 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   (add-to-list 'org-speed-commands-user '("w" . km/org-refile-dwim)))
 
 (after 'org-agenda
-  ;; Free up 'j' for `ace-jump-mode'.
+  ;; Free up 'j' for `avy-goto-subword-1'.
   (define-key org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date)
-  (define-key org-agenda-mode-map "j" 'ace-jump-mode))
+  (define-key org-agenda-mode-map "j" 'avy-goto-subword-1))
 
 
 ;;; Links

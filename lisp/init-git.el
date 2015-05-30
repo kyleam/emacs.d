@@ -281,9 +281,9 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
   (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
 
-  (define-key magit-log-mode-map "j" 'ace-jump-mode)
-  (define-key magit-refs-mode-map "j" 'ace-jump-mode)
-  (define-key magit-cherry-mode-map "j" 'ace-jump-mode)
+  (define-key magit-log-mode-map "j" 'avy-goto-subword-1)
+  (define-key magit-refs-mode-map "j" 'avy-goto-subword-1)
+  (define-key magit-cherry-mode-map "j" 'avy-goto-subword-1)
 
   (define-key km/git-map "c" 'km/magit-show-commit-under-point)
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)

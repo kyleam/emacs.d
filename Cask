@@ -6,6 +6,7 @@
 (depends-on "ace-window")
 (depends-on "auctex")
 (depends-on "auto-complete")
+(depends-on "avy")
 (depends-on "boxquote")
 (depends-on "dash")
 (depends-on "diminish")

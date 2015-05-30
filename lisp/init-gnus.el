@@ -94,11 +94,10 @@ is off."
 (setq gnus-thread-hide-subtree t
       gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-number))
 
-(add-hook 'gnus-summary-mode-hook 'km/gnus-setup-local-ace-jump)
-
-(defun km/gnus-setup-local-ace-jump ()
-  (add-hook 'ace-jump-mode-end-hook (lambda () (gnus-summary-scroll-up 0))
-            nil t))
+(defun km/gnus-avy-goto-subword-and-select ()
+  (interactive)
+  (call-interactively #'avy-goto-subword-1)
+  (gnus-summary-scroll-up 0))
 
 (defun km/gnus-follow-last-message-link (copy)
   "Follow shr link at bottom of message.
@@ -173,7 +172,7 @@ to group buffer instead of moving to next group."
 ;; 'S p'.
 (define-key gnus-summary-mode-map "c" 'km/gnus-summary-catchup)
 (define-key gnus-summary-mode-map "e" 'gnus-summary-scroll-up)
-(define-key gnus-summary-mode-map "j" 'ace-jump-mode)
+(define-key gnus-summary-mode-map "j" 'km/gnus-avy-goto-subword-and-select)
 
 (define-key gnus-article-mode-map
   (kbd "C-c l") 'km/gnus-follow-last-message-link)
