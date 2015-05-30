@@ -347,7 +347,7 @@ has an effect if Gnus is not currently open."
 
 (define-key notmuch-hello-mode-map "o" 'km/ace-link-widget)
 
-(define-key km/mail-map "n" 'notmuch-search)
+(define-key km/mail-map "n" 'notmuch)
 
 (define-prefix-command 'km/notmuch-show-prefix-map)
 (define-key notmuch-show-mode-map (kbd "C-c m") 'km/notmuch-show-prefix-map)
