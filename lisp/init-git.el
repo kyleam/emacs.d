@@ -235,7 +235,7 @@ buffer."
         (fname (and (or buffer-file-name
                         (user-error "Buffer not visiting file"))
                     (file-relative-name buffer-file-name
-                                        (magit-get-top-dir)))))
+                                        (magit-toplevel)))))
     (magit-find-file rev fname)
     (unless other-rev (goto-char pos))))
 
@@ -257,7 +257,7 @@ By default, the path for the file name is relative to the top
 directory of the repository.  Remove the directory component from
 the file name if NO-DIRECTORY is non-nil."
   (interactive "P")
-  (let* ((default-directory (magit-get-top-dir))
+  (let* ((default-directory (magit-toplevel))
          (files (magit-staged-files))
          (file (if (= 1 (length files))
                    (car files)
