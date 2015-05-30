@@ -53,5 +53,5 @@
 (when (file-exists-p (expand-file-name "init-untracked.el" km/init-lisp-dir))
   (require 'init-untracked))
 
-(require 'init-gnus)
+(require 'init-mail)
 (require 'init-server)

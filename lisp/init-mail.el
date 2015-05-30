@@ -347,4 +347,4 @@ has an effect if Gnus is not currently open."
 (define-key km/notmuch-show-prefix-map "i"
   'km/notmuch-show-copy-message-id-as-kill)
 
-(provide 'init-gnus)
+(provide 'init-mail)
