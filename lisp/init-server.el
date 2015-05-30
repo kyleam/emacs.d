@@ -7,7 +7,9 @@
 (let ((server (daemonp)))
   (cond
    ((string= server "default")
+    ;; Remove all mail map bindings except notmuch.
     (global-set-key (kbd "C-x m") nil)
+    (global-set-key (kbd "C-x m n") 'notmuch)
     (setq save-abbrevs 'silently
           bookmark-save-flag 1))
    ((string= server "mail")
