@@ -1,6 +1,7 @@
 (setq python-fill-docstring-style 'pep-257-nn)
 
-(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter "ipython"
+      python-shell-prompt-detect-enabled nil)
 
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
