@@ -289,6 +289,7 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "f" 'km/magit-checkout-file)
+  (define-key km/git-map "l" 'magit-log-buffer-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
   (define-key km/git-map "u" 'km/magit-auto-commit))
