@@ -368,4 +368,36 @@ the file name if NO-DIRECTORY is non-nil."
   (setq magit-annex-all-action-arguments
         (delete "--auto" magit-annex-all-action-arguments)))
 
+
+;;; Other git
+
+(defun km/git-shorten-hash-at-point (&optional n)
+  "Shorten hash at point to N characters.
+N defaults to 10 and can be controlled by a numeric prefix
+argument."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         10)))
+  (cond
+   ((< n 4)
+    (user-error "Hash must be at least 4 characters"))
+   ((>= n 40)
+    (user-error "Full hashes are 40 characters"))
+   ((> n 30)
+    (message "That doesn't seem incredibly useful, but OK")))
+  (let ((offset (- (skip-chars-backward "A-z0-9"))))
+    (if (looking-at "\\b[A-z0-9]\\{5,40\\}\\b")
+        (let ((hash-len (- (match-end 0) (match-beginning 0)))
+              (hash (match-string 0)))
+          (when (< hash-len n)
+            (user-error "Desired hash length is greater than current"))
+          (replace-match (substring hash 0 n) 'fixedcase)
+          (when (< offset n)
+            (skip-chars-backward "A-z0-9")
+            (goto-char (+ (point) offset))))
+      (goto-char (+ (point) offset))
+      (user-error "No hash found at point"))))
+
+(define-key km/git-map "n" 'km/git-shorten-hash-at-point)
+
 (provide 'init-git)
