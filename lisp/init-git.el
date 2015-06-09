@@ -42,20 +42,22 @@ a proper commit."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
-(defun km/magit-show-commit-under-point ()
-  "Pass text at point as commit to `magit-show-commit'.
-This is useful for commit IDs in files and log messages."
-  (interactive)
-  (--when-let (thing-at-point 'word)
-    (magit-show-commit it)))
-
-(defun km/magit-show-project-commit-under-point ()
-  "Show commit under point for a selected project."
-  (interactive)
-  (--when-let (thing-at-point 'word)
-    (let ((projectile-switch-project-action
-           (lambda () (magit-show-commit it))))
-      (projectile-switch-project))))
+(defun km/magit-show-commit-at-point (&optional choose-project)
+  "Show commit point.
+If there is no current project or if the prefix argument
+CHOOSE-PROJECT is non-nil, prompt for the project name."
+  (interactive "P")
+  (if (save-excursion (skip-chars-backward "A-z0-9")
+                      (looking-at "\\b[A-z0-9]\\{4,40\\}\\b"))
+      (let* ((hash (match-string-no-properties 0))
+             (project
+              (and (or choose-project
+                       (not (projectile-project-p)))
+                   (completing-read "Project: "
+                                    (projectile-relevant-known-projects))))
+             (default-directory (or project default-directory)))
+        (magit-show-commit hash))
+    (user-error "No hash found at point")))
 
 (defun km/magit-commit-extend-all ()
   "Run `magit-commit-extend' with '--all' flag.
@@ -285,8 +287,7 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key magit-refs-mode-map "j" 'avy-goto-subword-1)
   (define-key magit-cherry-mode-map "j" 'avy-goto-subword-1)
 
-  (define-key km/git-map "c" 'km/magit-show-commit-under-point)
-  (define-key km/git-map "C" 'km/magit-show-project-commit-under-point)
+  (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "f" 'km/magit-checkout-file)
   (define-key km/git-map "l" 'magit-log-buffer-file)
