@@ -175,6 +175,11 @@ to group buffer instead of moving to next group."
 (define-key gnus-summary-mode-map "j" 'km/gnus-avy-goto-subword-and-select)
 (define-key gnus-summary-mode-map "o" 'km/ace-link-widget)
 
+;; Allow `km/ace-link-widget' binding to work even when on shr widget.
+(after 'shr
+  (define-key shr-map "o" nil)
+  (define-key shr-map "O" 'shr-save-contents))
+
 (define-key gnus-article-mode-map
   (kbd "C-c l") 'km/gnus-follow-last-message-link)
 (define-key gnus-article-mode-map "e" 'km/shr-browse-url-and-goto-next)
