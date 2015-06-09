@@ -17,14 +17,15 @@
 (defun km/snakemake-compile-project-file (jobs)
   "Run Snakemake to produce project file at point.
 The numeric prefix JOBS controls the number of jobs that
-Snakemake runs (defaults to 1). If JOBS is zero, perform a dry
-run."
+Snakemake runs (defaults to 1).  If JOBS is zero, perform a dry
+run.  If JOBS is negative, just touch the output files."
   (interactive "p")
   (let* ((fname (or (km/project-filename-at-point)
                     (read-file-name "File: ")))
-         (job-flag (if (zerop jobs)
-                       " -n "
-                     (format " -j%s " jobs)))
+         (job-flag (cond
+                    ((> jobs 0) (format " -j%s " jobs))
+                    ((zerop jobs) " -n ")
+                    (t " -t ")))
          (compile-command (concat (snakemake-compile-command) job-flag
                                   fname))
          (default-directory (projectile-project-root)))
