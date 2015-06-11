@@ -505,7 +505,10 @@ displayed in the agenda."
 (after 'org-agenda
   ;; Bind `org-agenda-follow-mode' to same key as
   ;; `next-error-follow-minor-mode'.
-  (define-key org-agenda-mode-map (kbd "C-c C-f")  'org-agenda-follow-mode))
+  (define-key org-agenda-mode-map (kbd "C-c C-f") 'org-agenda-follow-mode)
+  ;; Free up 'j' for `avy-goto-subword-1'.
+  (define-key org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date)
+  (define-key org-agenda-mode-map "j" 'avy-goto-subword-1))
 
 
 ;;; Refiling
@@ -597,11 +600,6 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 (after 'org
   (define-key org-mode-map [remap org-refile] 'km/org-refile-dwim)
   (add-to-list 'org-speed-commands-user '("w" . km/org-refile-dwim)))
-
-(after 'org-agenda
-  ;; Free up 'j' for `avy-goto-subword-1'.
-  (define-key org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date)
-  (define-key org-agenda-mode-map "j" 'avy-goto-subword-1))
 
 
 ;;; Links
