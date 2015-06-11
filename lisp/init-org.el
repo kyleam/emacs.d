@@ -496,6 +496,11 @@ displayed in the agenda."
            (org-agenda-text-search-extra-files :maxlevel . 3))))
     (org-refile '(4))))
 
+(defun km/org-agenda-avy-goto-subword-1 ()
+  (interactive)
+  (call-interactively #'km/avy-goto-subword-1)
+  (org-agenda-do-context-action))
+
 (define-key km/global-org-map "a" 'org-agenda)
 (define-key km/global-org-map "c" 'org-capture)
 (define-key km/global-org-map "j" 'km/org-goto-agenda-heading)
@@ -506,9 +511,9 @@ displayed in the agenda."
   ;; Bind `org-agenda-follow-mode' to same key as
   ;; `next-error-follow-minor-mode'.
   (define-key org-agenda-mode-map (kbd "C-c C-f") 'org-agenda-follow-mode)
-  ;; Free up 'j' for `avy-goto-subword-1'.
+  ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
   (define-key org-agenda-mode-map (kbd "C-j") 'org-agenda-goto-date)
-  (define-key org-agenda-mode-map "j" 'avy-goto-subword-1))
+  (define-key org-agenda-mode-map "j" 'km/org-agenda-avy-goto-subword-1))
 
 
 ;;; Refiling
