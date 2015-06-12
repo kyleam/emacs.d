@@ -45,8 +45,13 @@ Interactive arguments are processed according to
 
 (defun km/project-filename-at-point ()
   "Return file name relative to `projectile-project-root'."
-  (--when-let (thing-at-point 'filename)
-    (file-relative-name it (projectile-project-root))))
+  (let* ((el (and (derived-mode-p 'org-mode)
+                  (org-element-lineage (org-element-context) '(link) t)))
+         (fname (or (and (eq (org-element-type el) 'link)
+                         (org-element-property :path el))
+                    (thing-at-point 'filename))))
+    (when fname
+      (file-relative-name fname (projectile-project-root)))))
 
 (defun km/projectile-copy-project-filename-as-kill ()
   "Copy name of project file.
