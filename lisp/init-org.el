@@ -637,14 +637,14 @@ The hook functions and `org-store-link' are called within a
     (run-hooks 'km/org-store-link-hook)
     (call-interactively 'org-store-link)))
 
-(defun km/org-open-link-directory ()
+(defun km/org-link-dired-jump ()
   "Open Dired for directory of file link at point."
   (interactive)
   (let ((el (org-element-lineage (org-element-context) '(link) t)))
     (unless (and el (equal (org-element-property :type el) "file"))
       (user-error "Not on file link"))
-    (dired (file-name-directory
-            (org-element-property :path el)))))
+    (dired-jump 'other-window
+                (expand-file-name (org-element-property :path el)))))
 
 (after 'org-link-edit
   (defun km/org-link-edit-slurp-link ()
@@ -665,7 +665,7 @@ beginning of the link."
           (goto-char beg)
           slurped)))))
 
-(define-key km/org-prefix-map "d" 'km/org-open-link-directory)
+(define-key km/org-prefix-map "d" 'km/org-link-dired-jump)
 (define-key km/global-org-map "l" 'km/org-store-link)
 
 (define-key km/org-prefix-map "."
