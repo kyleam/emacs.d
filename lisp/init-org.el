@@ -799,10 +799,13 @@ to be easily overriden.")
 (defun km/org-open-file-at-point ()
   "Open file at point with `org-open-file'."
   (interactive)
-  (let ((file (thing-at-point 'filename)))
-    (if (and file (file-exists-p file))
-        (org-open-file file)
-      (user-error "No file at point"))))
+  (if (and (derived-mode-p 'org-mode)
+           (org-element-lineage (org-element-context) '(link) t))
+      (org-open-at-point)
+    (let ((file (thing-at-point 'filename)))
+      (if (and file (file-exists-p file))
+          (org-open-file file)
+        (user-error "No file at point")))))
 
 (defun km/org-open-file ()
   "Interactive version of `org-open-file'."
