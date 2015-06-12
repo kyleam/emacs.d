@@ -163,8 +163,8 @@ touches."
 (key-chord-define-global "jx" 'km/toggle-line-or-region-comment)
 (key-chord-define-global "qp" 'fill-paragraph)
 
-(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-other-window)
-(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)
+(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-indirect-other-window)
+(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-indirect-other-window)
 (define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
 
 (define-key narrow-map "c" 'km/narrow-to-comment-heading)
