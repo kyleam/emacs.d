@@ -6,17 +6,18 @@
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
+(add-hook 'python-mode-hook 'km/python-set-local-vars)
 (add-hook 'python-mode-hook
           (lambda ()
             (add-hook
              'post-self-insert-hook
              #'km/python-indent-post-self-insert-function 'append 'local)))
 
-(defun km/python-hook ()
+
+(defun km/python-set-local-vars ()
   ;; Stop semantic from taking over imenu.
   (setq imenu-create-index-function #'python-imenu-create-index)
   (set (make-local-variable 'compile-command) "py.test"))
-(add-hook 'python-mode-hook 'km/python-hook)
 
 (defun km/toggle-ipython-shell ()
   "Switch between using python and IPython for interactive shell."
