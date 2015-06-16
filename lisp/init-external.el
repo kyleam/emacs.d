@@ -258,6 +258,26 @@ Otherwise, if ARG is non-nil, prompt with buffers from
      [simple-query "wikipedia.org"
                    "wikipedia.org/wiki/" ""])))
 
-(define-key km/external-map  "j" 'webjump)
+(defun km/webjump-read-string (prompt)
+  "Like `webjump-read-string', but set default."
+  (let* ((default (if (use-region-p)
+                      (buffer-substring-no-properties
+                       (region-beginning) (region-end))
+                    (thing-at-point 'symbol)))
+         (prompt (if default
+                     (format "%s (%s): " prompt default)
+                   (concat prompt ": ")))
+         (input (read-string prompt nil nil default)))
+    (unless (webjump-null-or-blank-string-p input)
+      (substring-no-properties input))))
+
+(defun km/webjump ()
+  "Run`webjump' with symbol at point or region as default query.
+This affects only sites in the `simple-query' format."
+  (interactive)
+  (cl-letf (((symbol-function 'webjump-read-string) #'km/webjump-read-string))
+    (call-interactively #'webjump)))
+
+(define-key km/external-map  "j" 'km/webjump)
 
 (provide 'init-external)
