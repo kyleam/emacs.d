@@ -25,6 +25,7 @@
 
 (after 'helm-files
   (define-key helm-find-files-map (kbd "C-c x") 'km/helm-ff-org-open-file)
+  (define-key helm-generic-files-map (kbd "C-c x") 'km/helm-ff-org-open-file)
   ;; Overrides `helm-buffer-switch-other-frame'.
   (define-key helm-buffer-map (kbd "C-c C-o") 'km/helm-display-buffer))
 
