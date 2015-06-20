@@ -107,13 +107,11 @@ With prefix argument COPY, just copy the link."
   (with-current-buffer gnus-article-buffer
     (save-excursion
       (goto-char (point-max))
-      (shr-previous-link)
+      (widget-forward -1)
       (if copy
-          (shr-copy-url)
-        ;; Cannot use `shr-browse-url' directly because the
-        ;; `mouse-set-point' call moves point.
-        (browse-url
-         (get-text-property (point) 'shr-url))))))
+          (kill-new (or (get-text-property (point) 'gnus-string)
+                        (get-text-property (point) 'shr-url)))
+        (widget-button-press (point))))))
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
