@@ -84,38 +84,15 @@ The repeater is removed from the original subtree."
   (interactive)
   (save-excursion
     (org-back-to-heading)
-    (let* ((heading (org-element-at-point))
-           (tree-begin (org-element-property :begin heading))
-           (tree-end (org-element-property :end heading))
-           (tree (buffer-substring tree-begin tree-end))
-           (deadline (org-element-property :deadline heading))
-           (deadline-end (org-element-property :end deadline))
-           (repeat-val (org-element-property :repeater-value deadline))
-           (repeat-unit (org-element-property :repeater-unit deadline))
-           new-tree)
-      (cond
-       ((not deadline) (user-error "Heading doesn't have deadline"))
-       ((not repeat-val) (user-error "Deadline isn't repeating"))
-       ((eq repeat-unit 'week)
-        ;; `org-timestamp-change' doesn't recognize weeks.
-        (setq repeat-val (* repeat-val 7)
-              repeat-unit 'day)))
-      ;; Make new tree with repeater shifted one cycle.
-      (with-temp-buffer
-        (insert tree)
-        (goto-char (point-min))
-        (re-search-forward org-ts-regexp)
-        (org-timestamp-change repeat-val repeat-unit)
-        (setq new-tree (buffer-string)))
-      ;; Insert new tree with shifted repeater.
-      (goto-char tree-end)
-      (insert new-tree)
-      ;; Remove the repeater from the original tree.
-      (goto-char tree-begin)
-      (re-search-forward
-       ;; Regexp taken from `org-clone-subtree-with-time-shift'.
-       "<[^<>\n]+\\( +[.+]?\\+[0-9]+[hdwmy]\\)" deadline-end)
-      (delete-region (match-beginning 1) (match-end 1)))))
+    (let ((repeater
+           (and (re-search-forward
+                 ;; Regexp taken from `org-clone-subtree-with-time-shift'.
+                 "<[^<>\n]+ +\\([.+]?\\+[0-9]+[hdwmy]\\)"
+                 (save-excursion (org-end-of-subtree)) t)
+                (match-string-no-properties 1))))
+      (unless repeater
+        (user-error "Subtree does not have repeater"))
+      (org-clone-subtree-with-time-shift 0 repeater))))
 
 (defun km/org-delete-checked-items ()
   "Delete checked items.
