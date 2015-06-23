@@ -151,7 +151,7 @@ touches."
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
-(global-set-key (kbd "C-;") 'er/expand-region)
+(global-set-key (kbd "C-.") 'er/expand-region)
 
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)

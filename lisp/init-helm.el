@@ -29,8 +29,6 @@
   ;; Overrides `helm-buffer-switch-other-frame'.
   (define-key helm-buffer-map (kbd "C-c C-o") 'km/helm-display-buffer))
 
-(define-key helm-map ";" 'helm-maybe-exit-minibuffer)
-
 (key-chord-define-global "jc" 'helm-find-files)
 (key-chord-define-global "jt" 'helm-mini)
 (key-chord-define-global "kx" 'helm-M-x)
