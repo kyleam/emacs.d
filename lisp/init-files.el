@@ -42,6 +42,14 @@
       (setq file (concat "/sudo:root@localhost:" file)))
     (find-file file)))
 
+(defun km/dired-jump-file-at-point ()
+  "Run `dired-jump' on file at point."
+  (interactive)
+  (let ((file (thing-at-point 'filename)))
+    (if (and file (file-exists-p file))
+        (dired-jump 'other-window (expand-file-name file))
+      (user-error "No file at point"))))
+
 (defun km/write-file ()
   "Run `write-file'.
 Use the current file name as initial input of prompt."
@@ -59,6 +67,7 @@ Use the current file name as initial input of prompt."
 (define-prefix-command 'km/file-map)
 (global-set-key (kbd "C-c f") 'km/file-map)
 
+(define-key km/file-map "j" 'km/dired-jump-file-at-point)
 (define-key km/file-map "R" 'km/find-file-as-root)
 (define-key km/file-map "n" 'km/rename-current-buffer-file)
 (define-key km/file-map "l" 'nlines-run-command)
