@@ -29,7 +29,7 @@
  '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
  '(org-agenda-structure ((t (:foreground "gray40"))))
  '(org-agenda-date ((t (:inherit default))))
- '(org-scheduled ((t (:inherit font-lock-string-face))))
+ '(org-scheduled ((t (:inherit org-scheduled-today))))
  '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
  '(gnus-group-mail-1-empty ((t (:inherit font-lock-string-face))))
  '(gnus-group-mail-2-empty ((t (:inherit font-lock-function-name-face))))
