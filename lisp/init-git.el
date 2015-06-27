@@ -10,7 +10,7 @@
 
 ;;; Magit
 
-(add-to-list 'load-path "~/src/emacs/magit/")
+(add-to-list 'load-path "~/src/emacs/magit/lisp/")
 (require 'magit)
 
 (add-to-list 'load-path "~/src/emacs/orgit/")
