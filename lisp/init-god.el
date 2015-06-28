@@ -24,7 +24,13 @@
 
 (add-hook 'god-mode-enabled-hook (lambda ()
                                    (when view-mode
-                                     (view-mode -1))))
+                                     (view-mode -1))
+                                   (when (derived-mode-p 'emacs-lisp-mode)
+                                     (lispy-mode -1))))
+
+(add-hook 'god-mode-disabled-hook (lambda ()
+                                    (when (derived-mode-p 'emacs-lisp-mode)
+                                      (lispy-mode 1))))
 
 (add-hook 'god-mode-enabled-hook 'km/god-update-cursor)
 (add-hook 'god-mode-disabled-hook 'km/god-update-cursor)
