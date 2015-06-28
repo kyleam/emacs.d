@@ -9,6 +9,8 @@
 (setq god-exempt-major-modes
       (append km/god-exempt-major-modes god-exempt-major-modes))
 
+(add-to-list 'god-exempt-predicates #'km/god-magit-mode-p)
+
 (add-hook 'view-mode-hook (lambda ()
                             (if view-mode
                                 (god-local-mode-pause)
