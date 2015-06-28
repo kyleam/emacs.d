@@ -1,15 +1,7 @@
 (require 'god-mode)
 
-(defvar km/god-exempt-major-modes
-  '(gnus-group-mode
-    gnus-summary-mode
-    gnus-article-mode
-    message-mode))
-
-(setq god-exempt-major-modes
-      (append km/god-exempt-major-modes god-exempt-major-modes))
-
 (add-to-list 'god-exempt-predicates #'km/god-magit-mode-p)
+(add-to-list 'god-exempt-predicates #'km/god-gnus-p)
 
 (add-hook 'view-mode-hook (lambda ()
                             (if view-mode
@@ -39,6 +31,13 @@
   (or global-git-commit-mode
       (god-mode-child-of-p major-mode 'magit-popup-mode)
       (god-mode-child-of-p major-mode 'magit-mode)))
+
+(defun km/god-gnus-p ()
+  "Return non-nil if a Gnus-related mode is enabled."
+  (derived-mode-p 'gnus-group-mode
+                  'gnus-summary-mode
+                  'gnus-article-mode
+                  'message-mode))
 
 (global-set-key (kbd "C-c d") 'god-local-mode)
 
