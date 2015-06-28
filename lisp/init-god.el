@@ -4,16 +4,10 @@
   '(gnus-group-mode
     gnus-summary-mode
     gnus-article-mode
-    message-mode
-    magit-popup-mode
-    magit-popup-sequence-mode))
+    message-mode))
 
 (setq god-exempt-major-modes
       (append km/god-exempt-major-modes god-exempt-major-modes))
-
-;; `god-exempt-major-modes' can't be used here because buffer is in
-;; `text mode'.
-(add-hook 'git-commit-setup-hook (lambda () (god-local-mode -1)))
 
 (add-hook 'view-mode-hook (lambda ()
                             (if view-mode
@@ -37,6 +31,12 @@
 
 (defun km/god-update-cursor ()
   (setq cursor-type (if god-local-mode 'bar 'box)))
+
+(defun km/god-magit-mode-p ()
+  "Return non-nil if a Magit-related mode is enabled."
+  (or global-git-commit-mode
+      (god-mode-child-of-p major-mode 'magit-popup-mode)
+      (god-mode-child-of-p major-mode 'magit-mode)))
 
 (global-set-key (kbd "C-c d") 'god-local-mode)
 
