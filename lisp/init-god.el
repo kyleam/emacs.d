@@ -1,6 +1,5 @@
 (require 'god-mode)
 
-(add-to-list 'god-exempt-predicates #'km/god-magit-mode-p)
 (add-to-list 'god-exempt-predicates #'km/god-gnus-p)
 
 (add-hook 'view-mode-hook (lambda ()
@@ -25,12 +24,6 @@
 
 (defun km/god-update-cursor ()
   (setq cursor-type (if god-local-mode 'bar 'box)))
-
-(defun km/god-magit-mode-p ()
-  "Return non-nil if a Magit-related mode is enabled."
-  (or global-git-commit-mode
-      (god-mode-child-of-p major-mode 'magit-popup-mode)
-      (god-mode-child-of-p major-mode 'magit-mode)))
 
 (defun km/god-gnus-p ()
   "Return non-nil if a Gnus-related mode is enabled."
