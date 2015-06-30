@@ -306,7 +306,7 @@ the file name if NO-DIRECTORY is non-nil."
 ;;; Magit popups
 
 (setq magit-popup-show-help-echo nil
-      magit-popup-show-help-section nil
+      magit-popup-show-common-commands nil
       magit-popup-use-prefix-argument 'default)
 
 (after 'magit
