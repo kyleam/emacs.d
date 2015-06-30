@@ -288,6 +288,7 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key magit-cherry-mode-map "j" 'km/avy-goto-subword-1)
 
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
+  (define-key km/git-map "d" 'magit-dispatch-popup)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "f" 'km/magit-checkout-file)
   (define-key km/git-map "l" 'magit-log-buffer-file)
