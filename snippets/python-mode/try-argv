@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: try argv
+# key: targv
+# --
+try:
+    _, $1 = sys.argv
+except ValueError:
+    sys.exit(__doc__)
+
+$0

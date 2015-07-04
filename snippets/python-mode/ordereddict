@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ordereddict
+# key: od
+# group: imports
+# --
+from collections import OrderedDict
+$0

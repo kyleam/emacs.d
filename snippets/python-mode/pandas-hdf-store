@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Pandas HDF5 store
+# key: pdhs
+# --
+with pd.HDFStore($1) as store:
+    $0
