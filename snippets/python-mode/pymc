@@ -2,5 +2,5 @@
 # key: pm
 # group: imports
 # --
-import pymc as pm
+import pymc3 as pm
 $0

@@ -3,7 +3,7 @@
 # key: pmf
 # expand-env: ((yas-indent-line 'fixed))
 # --
-import pymc as pm
+import pymc3 as pm
 
 with pm.Model() as model:
     $0
