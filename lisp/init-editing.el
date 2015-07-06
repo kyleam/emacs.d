@@ -185,7 +185,6 @@ touches."
 
 (electric-indent-mode -1)
 (electric-pair-mode 1)
-(whole-line-or-region-mode)
 
 
 ;;; Buffer cleanup
