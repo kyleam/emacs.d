@@ -241,6 +241,16 @@ buffer."
     (magit-find-file rev fname)
     (unless other-rev (goto-char pos))))
 
+(defun km/magit-revfile-reset (&optional checkout)
+  "Reset to revision from current revfile.
+If checkout is non-nil, checkout file instead."
+  (interactive "P")
+  (unless (and magit-buffer-refname magit-buffer-file-name)
+    (user-error "Not in Magit revfile buffer"))
+  (magit-with-toplevel
+    (magit-run-git (if checkout "checkout" "reset")
+                   magit-buffer-refname "--" magit-buffer-file-name)))
+
 (defun km/magit-insert-staged-file (&optional no-directory)
   "Select staged file to insert.
 This is useful for referring to file names in commit messages.
@@ -283,7 +293,8 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key km/git-map "l" 'magit-log-buffer-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
-  (define-key km/git-map "u" 'km/magit-auto-commit))
+  (define-key km/git-map "u" 'km/magit-auto-commit)
+  (define-key km/git-map "v" 'km/magit-revfile-reset))
 
 (after 'magit-log
   (define-key magit-log-select-mode-map "."
