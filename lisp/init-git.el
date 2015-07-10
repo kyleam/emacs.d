@@ -208,14 +208,20 @@ and 'squash!' titles."
         (goto-char (apply #'max commit-pts))
       (message "No matching commits found"))))
 
-(defun km/magit-checkout-file (rev file)
-  "Checkout FILE from revision REV.
-\n(git checkout REV -- file)"
+(defun km/magit-reset-file (rev file &optional checkout)
+  "Reset FILE from revision REV.
+
+If prefix argument CHECKOUT is non-nil, checkout FILE from REV
+instead.
+
+\(git reset REV -- FILE)
+\(git checkout REV -- FILE)"
   (interactive
    (let ((rev (magit-read-branch-or-commit "Revision")))
-     (list rev (magit-read-file-from-rev rev "File"))))
+     (list rev (magit-read-file-from-rev rev "File") current-prefix-arg)))
   (magit-with-toplevel
-    (magit-run-git "checkout" rev "--" file)))
+    (magit-run-git (if checkout "checkout" "reset")
+                   rev "--" file)))
 
 (defun km/magit-pin-file (&optional other-rev)
   "Pin this file to the current revision.
@@ -289,7 +295,7 @@ the file name if NO-DIRECTORY is non-nil."
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "d" 'magit-dispatch-popup)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
-  (define-key km/git-map "f" 'km/magit-checkout-file)
+  (define-key km/git-map "f" 'km/magit-reset-file)
   (define-key km/git-map "l" 'magit-log-buffer-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
