@@ -342,7 +342,7 @@ the file name if NO-DIRECTORY is non-nil."
   (magit-define-popup-action 'magit-branch-popup
     ?m "Checkout master" 'km/magit-checkout-master)
   (magit-define-popup-action 'magit-branch-popup
-    ?n "Checkou recent ref" 'km/magit-checkout-recent-ref)
+    ?n "Checkout recent ref" 'km/magit-checkout-recent-ref)
   (magit-define-popup-action 'magit-branch-popup
     ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
   (magit-define-popup-action 'magit-branch-popup
