@@ -241,17 +241,6 @@ buffer."
     (magit-find-file rev fname)
     (unless other-rev (goto-char pos))))
 
-(defun km/git-rebase-show-commit ()
-  "Show the commit on the current line if any.
-Unlike `git-rebase-show-commit', display (but don't switch to)
-the commit buffer. And no dinging."
-  (interactive)
-  (save-excursion
-    (goto-char (line-beginning-position))
-    (--if-let (and (looking-at git-rebase-line)
-                   (match-string 2))
-        (magit-show-commit it t))))
-
 (defun km/magit-insert-staged-file (&optional no-directory)
   "Select staged file to insert.
 This is useful for referring to file names in commit messages.
@@ -299,9 +288,6 @@ the file name if NO-DIRECTORY is non-nil."
 (after 'magit-log
   (define-key magit-log-select-mode-map "."
     'km/magit-log-select-guess-fixup-commit))
-
-(after 'git-rebase
-  (define-key git-rebase-mode-map "\s" 'km/git-rebase-show-commit))
 
 
 ;;; Magit popups
