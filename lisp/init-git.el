@@ -259,14 +259,22 @@ If checkout is non-nil, checkout file instead."
 
 (defun km/magit-insert-staged-file (&optional no-directory)
   "Select staged file to insert.
+
 This is useful for referring to file names in commit messages.
 By default, the path for the file name is relative to the top
 directory of the repository.  Remove the directory component from
-the file name if NO-DIRECTORY is non-nil."
+the file name if NO-DIRECTORY is non-nil.
+
+If there are no staged files, look instead at files that changed
+in HEAD.  These rules will usually offer the files of interest
+while commiting, but this is not the case if you are amending a
+commit with the \"--only\" flag and have staged files (i.e., this
+command will still offer the staged files)."
   (interactive "P")
   (unless (magit-toplevel)
     (user-error "Not in git repo"))
-  (let* ((files (magit-staged-files))
+  (let* ((files (or (magit-staged-files)
+                    (magit-changed-files "HEAD")))
          (file (if (= 1 (length files))
                    (car files)
                  (completing-read "Staged file: " files nil t))))
