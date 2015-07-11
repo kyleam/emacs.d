@@ -264,12 +264,12 @@ By default, the path for the file name is relative to the top
 directory of the repository.  Remove the directory component from
 the file name if NO-DIRECTORY is non-nil."
   (interactive "P")
-  (let* ((default-directory (magit-toplevel))
-         (files (magit-staged-files))
+  (unless (magit-toplevel)
+    (user-error "Not in git repo"))
+  (let* ((files (magit-staged-files))
          (file (if (= 1 (length files))
                    (car files)
-                 (completing-read "Staged file: " (magit-staged-files)
-                                  nil t))))
+                 (completing-read "Staged file: " files nil t))))
     (insert (if no-directory (file-name-nondirectory file) file))))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
