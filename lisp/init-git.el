@@ -271,14 +271,15 @@ while commiting, but this is not the case if you are amending a
 commit with the \"--only\" flag and have staged files (i.e., this
 command will still offer the staged files)."
   (interactive "P")
-  (unless (magit-toplevel)
-    (user-error "Not in git repo"))
-  (let* ((files (or (magit-staged-files)
-                    (magit-changed-files "HEAD")))
-         (file (if (= 1 (length files))
-                   (car files)
-                 (completing-read "Staged file: " files nil t))))
-    (insert (if no-directory (file-name-nondirectory file) file))))
+  (magit-with-toplevel
+    (let* ((files (or (magit-staged-files)
+                      (magit-changed-files "HEAD^..HEAD")))
+           (file (cl-case (length files)
+                   (1 (car files))
+                   (0 (error "No files found"))
+                   (t
+                    (completing-read "Staged file: " files nil t)))))
+      (insert (if no-directory (file-name-nondirectory file) file)))))
 
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
