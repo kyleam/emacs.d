@@ -749,18 +749,9 @@ to be easily overriden.")
 
 ;;; Org in other modes
 
-(after 'git-commit
-  (add-hook 'git-commit-setup-hook 'km/load-orgstruct))
-
 (add-hook 'next-error-hook (lambda ()
                              (when (eq major-mode 'org-mode)
                                (org-show-context))))
-
-(add-hook 'message-mode-hook 'km/load-orgstruct)
-
-(defun km/load-orgstruct ()
-  (turn-on-orgstruct++)
-  (turn-on-orgtbl))
 
 (after 'poporg
   (define-key poporg-mode-map (kbd "C-c C-c") 'poporg-edit-exit))
