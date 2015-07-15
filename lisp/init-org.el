@@ -57,6 +57,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.org.txt\\'" . org-mode))
 
+(add-hook 'next-error-hook (lambda ()
+                             (when (eq major-mode 'org-mode)
+                               (org-show-context))))
+
 (defun km/org-tree-to-indirect-buffer (&optional arg)
   "Run `org-tree-to-indirect-buffer', keeping previous buffer.
 By default, `org-tree-to-indirect-buffer' deletes the previous
@@ -358,9 +362,13 @@ called through the speed command interface."
 
 (define-key km/global-org-map "b" 'org-iswitchb)
 (define-key km/global-org-map "o" 'org-open-at-point-global)
+(define-key km/global-org-map "p" 'poporg-dwim)
 (define-key km/global-org-map "s" 'org-save-all-org-buffers)
 
 (define-key ctl-x-4-map "o" 'km/org-switch-to-buffer-other-window)
+
+(after 'poporg
+  (define-key poporg-mode-map (kbd "C-c C-c") 'poporg-edit-exit))
 
 
 ;;; Agenda
@@ -745,18 +753,6 @@ to be easily overriden.")
 :PROPERTIES:
 :EMAIL: %(org-contacts-template-email)
 :END:"))
-
-
-;;; Org in other modes
-
-(add-hook 'next-error-hook (lambda ()
-                             (when (eq major-mode 'org-mode)
-                               (org-show-context))))
-
-(after 'poporg
-  (define-key poporg-mode-map (kbd "C-c C-c") 'poporg-edit-exit))
-
-(define-key km/global-org-map "p" 'poporg-dwim)
 
 
 ;;; Org open file
