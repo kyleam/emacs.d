@@ -287,6 +287,9 @@ command will still offer the staged files)."
                     (completing-read "Staged file: " files nil t)))))
       (insert (if no-directory (file-name-nondirectory file) file)))))
 
+(defun km/magit-shorten-hash (hash)
+  (magit-rev-parse (format "--short=%s" (magit-abbrev-length)) hash))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -392,11 +395,16 @@ command will still offer the staged files)."
 
 (defun km/git-shorten-hash-at-point (&optional n)
   "Shorten hash at point to N characters.
-N defaults to 10 and can be controlled by a numeric prefix
+
+N defaults to `magit-abbrev-length'.  If the commit belongs to
+the current repo and the hash is ambiguous, the hash is extended
+as needed.
+
+To explicitly set the hash length, use a numeric prefix
 argument."
   (interactive (list (or (and current-prefix-arg
                               (prefix-numeric-value current-prefix-arg))
-                         10)))
+                         (magit-abbrev-length))))
   (cond
    ((< n 4)
     (user-error "Hash must be at least 4 characters"))
@@ -410,7 +418,9 @@ argument."
               (hash (match-string 0)))
           (when (< hash-len n)
             (user-error "Desired hash length is greater than current"))
-          (replace-match (substring hash 0 n) 'fixedcase)
+          (replace-match (or (km/magit-shorten-hash hash)
+                             (substring hash 0 n))
+                         'fixedcase)
           (when (< offset n)
             (skip-chars-backward "A-z0-9")
             (goto-char (+ (point) offset))))
