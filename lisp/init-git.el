@@ -324,6 +324,73 @@ argument."
       (goto-char (+ (point) offset))
       (user-error "No hash found at point"))))
 
+(defvar km/magit-copy-hook
+  '(km/magit-copy-commit-citation
+    km/magit-copy-commit-message
+    km/magit-copy-region-hunk
+    km/magit-copy-hunk)
+  "Functions tried by `km/magit-copy-as-kill'.
+These will be given one argument (the current prefix value) and
+should succeed by copying and returning non-nil or fail by
+returning nil.")
+
+(defun km/magit-copy-commit-citation (&optional arg)
+  "Copy reference to commit from header section.
+Format the reference as '<hash>, (\"<subject>\", <date>)'."
+  (magit-section-when headers
+    (let ((hash (km/magit-shorten-hash (car magit-refresh-args)))
+          (date (format-time-string
+                 "%Y-%m-%d"
+                 (save-excursion
+                   (goto-char (magit-section-start it))
+                   (re-search-forward "AuthorDate: ")
+                   (date-to-time (buffer-substring-no-properties
+                                  (point) (point-at-eol))))))
+          (subject (save-excursion
+                     (goto-char
+                      (magit-section-start
+                       (-first (lambda (sec)
+                                 (eq (magit-section-type sec) 'message))
+                               (magit-section-children it))))
+                     (buffer-substring-no-properties
+                      (+ 4 (point)) (point-at-eol)))))
+      (kill-new (message "%s (\"%s\", %s)" hash subject date)))))
+
+(defun km/magit-copy-commit-message (&optional arg)
+  (magit-section-when message
+    (kill-new (replace-regexp-in-string
+                    "^    " ""
+                    (buffer-substring-no-properties (magit-section-start it)
+                                                    (magit-section-end it))))))
+
+(defun km/magit-copy-region-hunk (&optional no-column)
+  (when (magit-section-internal-region-p)
+    (magit-section-when hunk
+      (deactivate-mark)
+      (let ((text (buffer-substring-no-properties
+                   (region-beginning) (region-end))))
+        (kill-new (if no-column
+                      (replace-regexp-in-string "^[ \\+\\-]" "" text)
+                    text))))))
+
+(defun km/magit-copy-hunk (&optional arg)
+  (magit-section-when hunk
+    (let ((start (save-excursion (goto-char (magit-section-start it))
+                                 (1+ (point-at-eol)))))
+      (kill-new (buffer-substring-no-properties
+                 start (magit-section-end it))))))
+
+(defun km/magit-copy-as-kill ()
+  "Try `km/magit-copy-hook' before calling `magit-copy-as-kill'.
+With a prefix argument of -1, always call `magit-copy-as-kill'.
+Otherwise, the current prefix argument is passed to each hook
+function."
+  (interactive)
+  (or (unless (= (prefix-numeric-value current-prefix-arg) -1)
+        (run-hook-with-args-until-success
+         'km/magit-copy-hook current-prefix-arg))
+      (magit-copy-as-kill)))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -335,6 +402,7 @@ argument."
   (define-key magit-mode-map (kbd "C-x 4 a") nil)
   (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
   (define-key magit-mode-map "Q" 'km/magit-mode-bury-all-windows)
+  (define-key magit-mode-map (kbd "C-w") 'km/magit-copy-as-kill)
 
   ;; `magit-diff-visit-file-worktree' is also on C-RET.
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
