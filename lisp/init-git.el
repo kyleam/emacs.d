@@ -290,6 +290,40 @@ command will still offer the staged files)."
 (defun km/magit-shorten-hash (hash)
   (magit-rev-parse (format "--short=%s" (magit-abbrev-length)) hash))
 
+(defun km/magit-shorten-hash-at-point (&optional n)
+  "Shorten hash at point to N characters.
+
+N defaults to `magit-abbrev-length'.  If the commit belongs to
+the current repo and the hash is ambiguous, the hash is extended
+as needed.
+
+To explicitly set the hash length, use a numeric prefix
+argument."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         (magit-abbrev-length))))
+  (cond
+   ((< n 4)
+    (user-error "Hash must be at least 4 characters"))
+   ((>= n 40)
+    (user-error "Full hashes are 40 characters"))
+   ((> n 30)
+    (message "That doesn't seem incredibly useful, but OK")))
+  (let ((offset (- (skip-chars-backward "A-z0-9"))))
+    (if (looking-at "\\b[A-z0-9]\\{5,40\\}\\b")
+        (let ((hash-len (- (match-end 0) (match-beginning 0)))
+              (hash (match-string 0)))
+          (when (< hash-len n)
+            (user-error "Desired hash length is greater than current"))
+          (replace-match (or (km/magit-shorten-hash hash)
+                             (substring hash 0 n))
+                         'fixedcase)
+          (when (< offset n)
+            (skip-chars-backward "A-z0-9")
+            (goto-char (+ (point) offset))))
+      (goto-char (+ (point) offset))
+      (user-error "No hash found at point"))))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -314,6 +348,7 @@ command will still offer the staged files)."
   (define-key km/git-map "d" 'magit-dispatch-popup)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "f" 'km/magit-reset-file)
+  (define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
   (define-key km/git-map "l" 'magit-log-buffer-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
@@ -389,44 +424,5 @@ command will still offer the staged files)."
 (after 'magit-annex
   (setq magit-annex-all-action-arguments
         (delete "--auto" magit-annex-all-action-arguments)))
-
-
-;;; Other git
-
-(defun km/git-shorten-hash-at-point (&optional n)
-  "Shorten hash at point to N characters.
-
-N defaults to `magit-abbrev-length'.  If the commit belongs to
-the current repo and the hash is ambiguous, the hash is extended
-as needed.
-
-To explicitly set the hash length, use a numeric prefix
-argument."
-  (interactive (list (or (and current-prefix-arg
-                              (prefix-numeric-value current-prefix-arg))
-                         (magit-abbrev-length))))
-  (cond
-   ((< n 4)
-    (user-error "Hash must be at least 4 characters"))
-   ((>= n 40)
-    (user-error "Full hashes are 40 characters"))
-   ((> n 30)
-    (message "That doesn't seem incredibly useful, but OK")))
-  (let ((offset (- (skip-chars-backward "A-z0-9"))))
-    (if (looking-at "\\b[A-z0-9]\\{5,40\\}\\b")
-        (let ((hash-len (- (match-end 0) (match-beginning 0)))
-              (hash (match-string 0)))
-          (when (< hash-len n)
-            (user-error "Desired hash length is greater than current"))
-          (replace-match (or (km/magit-shorten-hash hash)
-                             (substring hash 0 n))
-                         'fixedcase)
-          (when (< offset n)
-            (skip-chars-backward "A-z0-9")
-            (goto-char (+ (point) offset))))
-      (goto-char (+ (point) offset))
-      (user-error "No hash found at point"))))
-
-(define-key km/git-map "n" 'km/git-shorten-hash-at-point)
 
 (provide 'init-git)
