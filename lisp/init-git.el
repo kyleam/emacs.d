@@ -233,19 +233,24 @@ changed since the current commit.
 
 If OTHER-REV is non-nil, prompt for another revision instead of
 the current.  In this case, keep point at the beginning of the
-buffer."
+buffer.
+
+If buffer is already a revision buffer, then find the working
+tree copy instead."
   (interactive "P")
-  (let ((pos (point))
-        (rev (if other-rev
-                 (magit-read-branch-or-commit "Find file from revision")
-               (or (magit-get-current-branch)
-                   (magit-rev-parse "HEAD"))))
-        (fname (and (or buffer-file-name
-                        (user-error "Buffer not visiting file"))
-                    (file-relative-name buffer-file-name
-                                        (magit-toplevel)))))
-    (magit-find-file rev fname)
-    (unless other-rev (goto-char pos))))
+  (magit-with-toplevel
+    (let* ((pos (point))
+           (rev (cond (other-rev
+                       (magit-read-branch-or-commit "Find file from revision"))
+                      ((not magit-buffer-file-name)
+                       (or (magit-get-current-branch)
+                           (magit-rev-parse "HEAD")))))
+           (fname (file-relative-name
+                   (or buffer-file-name
+                       magit-buffer-file-name
+                       (user-error "Buffer not visiting file")))))
+      (if rev (magit-find-file rev fname) (find-file fname))
+      (goto-char pos))))
 
 (defun km/magit-revfile-reset (&optional checkout)
   "Reset to revision from current revfile.
