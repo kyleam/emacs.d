@@ -233,14 +233,14 @@ This may not correspond to same content if text before point has
 changed since the current commit.
 
 If OTHER-REV is non-nil, prompt for another revision instead of
-the current.  In this case, keep point at the beginning of the
-buffer.
-
-If buffer is already a revision buffer, then find the working
-tree copy instead."
+the current.  If buffer is already a revision buffer, then find
+the working tree copy instead.  In both these cases, point may
+not land in a reasonable location depending on how the content of
+the file has changed."
   (interactive "P")
   (magit-with-toplevel
-    (let* ((pos (point))
+    (let* ((line (+ (if (bolp) 1 0) (count-lines 1 (point))))
+           (col (current-column))
            (rev (cond (other-rev
                        (magit-read-branch-or-commit "Find file from revision"))
                       ((not magit-buffer-file-name)
@@ -251,7 +251,9 @@ tree copy instead."
                        magit-buffer-file-name
                        (user-error "Buffer not visiting file")))))
       (if rev (magit-find-file rev fname) (find-file fname))
-      (goto-char pos))))
+      (goto-char (point-min))
+      (forward-line (1- line))
+      (move-to-column col))))
 
 (defun km/magit-revfile-reset (&optional checkout)
   "Reset to revision from current revfile.
