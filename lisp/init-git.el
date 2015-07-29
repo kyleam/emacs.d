@@ -457,6 +457,9 @@ function."
   (magit-define-popup-action 'magit-merge-popup
     ?u "Merge upstream" 'km/magit-ff-merge-upstream)
 
+  (magit-define-popup-action 'magit-diff-popup
+    ?e "Edit options" 'magit-diff-refresh-popup)
+
   (magit-define-popup-action 'magit-branch-popup
     ?c "Create & checkout from current"
     'km/magit-branch-and-checkout-from-current)
