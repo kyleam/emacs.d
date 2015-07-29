@@ -498,4 +498,33 @@ function."
   (setq magit-annex-all-action-arguments
         (delete "--auto" magit-annex-all-action-arguments)))
 
+
+;;; Other git
+
+(define-key km/git-map "m"
+  (defhydra hydra-smerge (:hint nil)
+    "
+_b_ keep base    _d_ diff     _n_ next
+_m_ keep mine    _e_ ediff    _p_ previous
+_o_ keep other   _h_ refine
+_a_ keep all
+\n"
+    ("b" smerge-keep-base)
+    ("m" smerge-keep-mine)
+    ("o" smerge-keep-other)
+    ("a" smerge-keep-all)
+    ("n" smerge-next)
+    ("p" smerge-prev)
+    ("h" smerge-refine)
+    ("e" smerge-ediff :color blue)
+    ("d" (call-interactively
+          (pcase (read-char-choice
+                  "< base-mine, > base-other, = mine-other"
+                  (list ?< ?> ?=))
+            (?< #'smerge-diff-base-mine)
+            (?> #'smerge-diff-base-other)
+            (?= #'smerge-diff-mine-other))))
+    ("l" recenter-top-bottom "recenter")
+    ("u" undo "undo")))
+
 (provide 'init-git)
