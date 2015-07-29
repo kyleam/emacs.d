@@ -667,9 +667,6 @@ beginning of the link."
 ;;; Export
 
 (after 'org
-  ;; Avoid conflict when amsmath is loaded.
-  (setcar (rassoc '("wasysym" t) org-latex-default-packages-alist)
-          "nointegrals")
   (add-to-list 'org-latex-packages-alist '("" "amsmath" t)))
 
 (after 'ox-latex
