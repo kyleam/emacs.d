@@ -330,6 +330,7 @@ argument."
 (defvar km/magit-copy-hook
   '(km/magit-copy-commit-citation
     km/magit-copy-commit-message
+    km/magit-copy-region-commits
     km/magit-copy-region-hunk
     km/magit-copy-hunk)
   "Functions tried by `km/magit-copy-as-kill'.
@@ -358,6 +359,13 @@ Format the reference as '<hash>, (\"<subject>\", <date>)'."
                      (buffer-substring-no-properties
                       (+ 4 (point)) (point-at-eol)))))
       (kill-new (message "%s (\"%s\", %s)" hash subject date)))))
+
+(defun km/magit-copy-region-commits (&optional arg)
+  (--when-let (magit-region-values 'commit)
+    (deactivate-mark)
+    (kill-new
+     (mapconcat #'identity it
+                (if arg (read-string "Separator: ") ", ")))))
 
 (defun km/magit-copy-commit-message (&optional arg)
   (magit-section-when message
