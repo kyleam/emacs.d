@@ -510,6 +510,8 @@ function."
 
 ;;; Other git
 
+(setq smerge-diff-switches '("-d" "-b" "-u"))
+
 (define-key km/git-map "m"
   (defhydra hydra-smerge (:hint nil)
     "
