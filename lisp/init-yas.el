@@ -3,6 +3,12 @@
 
 (setq yas-fallback-behavior nil)
 
+(defvar km/personal-snippets
+  (file-name-as-directory (expand-file-name "psnippets" user-emacs-directory)))
+
+(when (file-exists-p km/personal-snippets)
+  (add-to-list 'yas-snippet-dirs km/personal-snippets))
+
 (define-key yas-minor-mode-map (kbd "C-c i") 'yas-expand)
 ;; Remove commands with 'C-c &' prefix, which conflicts with
 ;; `org-mark-ring-goto' binding'
