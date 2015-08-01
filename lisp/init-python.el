@@ -13,11 +13,16 @@
              'post-self-insert-hook
              #'km/python-indent-post-self-insert-function 'append 'local)))
 
-
 (defun km/python-set-local-vars ()
+  (setq outline-regexp "####* ")
+  (setq outline-level 'km/python-outline-level)
   ;; Stop semantic from taking over imenu.
   (setq imenu-create-index-function #'python-imenu-create-index)
   (set (make-local-variable 'compile-command) "py.test"))
+
+(defun km/python-outline-level ()
+  (and (looking-at (concat "^" outline-regexp))
+       (- (match-end 0) (match-beginning 0) 3)))
 
 (defun km/toggle-ipython-shell ()
   "Switch between using python and IPython for interactive shell."
