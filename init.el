@@ -28,6 +28,7 @@
 (require 'init-view)
 
 (require 'init-editing)
+(require 'init-outline)
 (require 'init-god)
 
 (require 'init-text)
