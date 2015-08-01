@@ -31,8 +31,8 @@
   "Press a widget that is visible in the current buffer.
 This can be used in place of `ace-link-gnus' and has the
 advantage of working for gwene buffers in addition to normal mail
-buffers working to normal mail buffers because it doesn't rely on
-the 'gnus-string' text property."
+buffers because it doesn't rely on the 'gnus-string' text
+property."
   (interactive)
   (when (eq major-mode 'gnus-summary-mode)
     (gnus-summary-widget-forward 1))
