@@ -1,4 +1,6 @@
 
+(setq lispy-no-permanent-semantic t)
+
 (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 (add-hook 'emacs-lisp-mode-hook 'km/elisp-set-outline-vars)
 ;; This likely breaks lispy's outline functions, but I don't use them.
