@@ -35,6 +35,8 @@
 
 (define-key search-map "k" 'helm-swoop)
 
+(global-set-key (kbd "C-h a") 'helm-apropos)
+
 (helm-mode 1)
 
 (provide 'init-helm)
