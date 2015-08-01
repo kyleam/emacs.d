@@ -4,7 +4,8 @@
 (add-to-list 'load-path "~/src/emacs/nlines/")
 (require 'nlines-autoloads)
 
-(setq require-final-newline t)
+(setq require-final-newline t
+      ffap-machine-p-known 'reject)
 
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
