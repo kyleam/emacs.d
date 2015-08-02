@@ -266,6 +266,17 @@ If checkout is non-nil, checkout file instead."
     (magit-run-git (if checkout "checkout" "reset")
                    magit-buffer-refname "--" magit-buffer-file-name)))
 
+(defun km/magit-find-recently-changed-file (n)
+  "Find a file that changed from \"HEAD~N..HEAD\".
+N defaults to 20."
+  (interactive "p")
+  (unless current-prefix-arg (setq n 10))
+  (magit-with-toplevel
+    (find-file (magit-completing-read
+                "File"
+                (magit-changed-files (format "HEAD~%s..HEAD" n))
+                nil t))))
+
 (defun km/magit-insert-staged-file (&optional no-directory)
   "Select staged file to insert.
 
@@ -430,6 +441,7 @@ function."
   (define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
   (define-key km/git-map "l" 'magit-log-buffer-file)
   (define-key km/git-map "p" 'km/magit-pin-file)
+  (define-key km/git-map "r" 'km/magit-find-recently-changed-file)
   (define-key km/git-map "s" 'km/magit-insert-staged-file)
   (define-key km/git-map "u" 'km/magit-auto-commit)
   (define-key km/git-map "v" 'km/magit-revfile-reset))
