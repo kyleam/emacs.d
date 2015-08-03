@@ -450,6 +450,7 @@ function."
   (define-prefix-command 'km/magit-map)
   (define-key magit-mode-map "." 'km/magit-map)
   (define-key km/magit-map "c" 'km/magit-find-commit-file)
+  (define-key km/magit-map "g" 'km/git-map)
 
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "d" 'magit-dispatch-popup)
