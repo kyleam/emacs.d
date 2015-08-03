@@ -17,7 +17,8 @@
 
 ;;; Shells
 
-(setq shell-command-switch "-ic")
+(setq shell-file-name "/bin/bash")
+(setq shell-command-switch "-c")
 
 (defvar km/terminal "urxvt")
 
