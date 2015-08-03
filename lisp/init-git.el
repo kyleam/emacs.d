@@ -277,6 +277,19 @@ N defaults to 20."
                 (magit-changed-files (format "HEAD~%s..HEAD" n))
                 nil t))))
 
+(defun km/magit-find-commit-file (commit)
+  "Find file changed in COMMIT."
+  (interactive (list (or (magit-branch-or-commit-at-point)
+                         (and (derived-mode-p 'magit-revision-mode)
+                              (car magit-refresh-args))
+                         (magit-read-branch-or-commit "Commit"))))
+  (let ((files (magit-changed-files (format "%s~..%s" commit commit))))
+    (find-file
+     (cl-case (length files)
+       (0 (user-error "No changed files in %s" commit))
+       (1 (car files))
+       (t (magit-completing-read "File" files nil t))))))
+
 (defun km/magit-insert-staged-file (&optional no-directory)
   "Select staged file to insert.
 
@@ -433,6 +446,10 @@ function."
   (define-key magit-log-mode-map "j" 'km/avy-goto-subword-1)
   (define-key magit-refs-mode-map "j" 'km/avy-goto-subword-1)
   (define-key magit-cherry-mode-map "j" 'km/avy-goto-subword-1)
+
+  (define-prefix-command 'km/magit-map)
+  (define-key magit-mode-map "." 'km/magit-map)
+  (define-key km/magit-map "c" 'km/magit-find-commit-file)
 
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "d" 'magit-dispatch-popup)
