@@ -259,7 +259,7 @@ the file has changed."
 
 (defun km/magit-revfile-reset (&optional checkout)
   "Reset to revision from current revfile.
-If checkout is non-nil, checkout file instead."
+If CHECKOUT is non-nil, checkout file instead."
   (interactive "P")
   (unless (and magit-buffer-refname magit-buffer-file-name)
     (user-error "Not in Magit revfile buffer"))
