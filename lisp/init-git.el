@@ -133,7 +133,7 @@ If REMOTE is non-nil, limit to remote refs."
   (magit-git-lines
    "for-each-ref" "--sort=-committerdate" "--format=%(refname:short)"
    (format "--count=%s" n)
-   (if remote "refs/remotes" "refs")))
+   (if remote "refs/remotes" "refs/heads")))
 
 (defun km/magit-checkout-recent-ref (n)
   "Checkout branch from N recent refs.
