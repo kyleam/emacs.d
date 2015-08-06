@@ -567,6 +567,7 @@ _a_ keep all
             (?> #'smerge-diff-base-other)
             (?= #'smerge-diff-mine-other))))
     ("l" recenter-top-bottom "recenter")
-    ("u" undo "undo")))
+    ("u" undo "undo")
+    ("q" nil "quit")))
 
 (provide 'init-git)
