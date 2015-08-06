@@ -14,6 +14,13 @@
   (with-helm-alive-p
     (helm-quit-and-execute-action #'display-buffer)))
 
+(defun km/helm-display-file ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-quit-and-execute-action
+     (lambda (f)
+       (display-buffer (find-file-noselect f))))))
+
 (defun km/helm-ff-org-open-file ()
   "Run `org-open-file' from `helm-source-find-files'."
   (interactive)
@@ -26,6 +33,9 @@
 (after 'helm-files
   (define-key helm-find-files-map (kbd "C-c x") 'km/helm-ff-org-open-file)
   (define-key helm-generic-files-map (kbd "C-c x") 'km/helm-ff-org-open-file)
+  ;; Overrides `helm-ff-run-switch-other-frame'.
+  (define-key helm-find-files-map (kbd "C-c C-o") 'km/helm-display-file)
+  (define-key helm-generic-files-map (kbd "C-c C-o") 'km/helm-display-file)
   ;; Overrides `helm-buffer-switch-other-frame'.
   (define-key helm-buffer-map (kbd "C-c C-o") 'km/helm-display-buffer))
 
