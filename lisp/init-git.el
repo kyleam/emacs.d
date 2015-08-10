@@ -500,6 +500,9 @@ function."
   (magit-define-popup-action 'magit-diff-popup
     ?e "Edit options" 'magit-diff-refresh-popup)
 
+  (magit-define-popup-action 'magit-log-popup
+    ?e "Edit options" 'magit-log-refresh-popup)
+
   (magit-define-popup-action 'magit-branch-popup
     ?c "Create & checkout from current"
     'km/magit-branch-and-checkout-from-current)
