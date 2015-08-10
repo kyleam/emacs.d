@@ -2,7 +2,16 @@
 
 (require 'avy)
 
-(key-chord-define-global "jf" 'avy-goto-subword-1)
+(defun km/avy-goto-subword-1 (char arg)
+  "Like `avy-goto-subword-1', but don't consider invisible text."
+  (interactive (list (read-char "char: ") current-prefix-arg))
+  (avy--with-avy-keys avy-goto-subword-1
+    (let ((char (downcase char)))
+      (avy-goto-subword-0
+       arg (lambda () (and (not (invisible-p (point)))
+                           (eq (downcase (char-after)) char)))))))
+
+(key-chord-define-global "jf" 'km/avy-goto-subword-1)
 
 ;;; Ace Link
 

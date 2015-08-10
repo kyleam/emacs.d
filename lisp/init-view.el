@@ -6,7 +6,7 @@
   (define-key view-mode-map "b" 'backward-word)
   (define-key view-mode-map "]" 'forward-paragraph)
   (define-key view-mode-map "[" 'backward-paragraph)
-  (define-key view-mode-map "j" 'avy-goto-subword-1))
+  (define-key view-mode-map "j" 'km/avy-goto-subword-1))
 
 (key-chord-define-global "hq" 'view-mode)
 
