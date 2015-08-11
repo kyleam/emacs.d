@@ -57,7 +57,8 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
       (let* ((hash (match-string-no-properties 0))
              (project
               (and (or choose-project
-                       (not (projectile-project-p)))
+                       (not (projectile-project-p))
+                       (not (magit-rev-verify (concat hash "^{commit}"))))
                    (completing-read "Project: "
                                     (projectile-relevant-known-projects))))
              (default-directory (or project default-directory)))
