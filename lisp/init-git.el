@@ -24,6 +24,8 @@
       magit-log-section-arguments nil
       magit-log-show-margin nil)
 
+(setq git-commit-finish-query-functions nil)
+
 (add-hook 'magit-find-file-hook 'view-mode)
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (add-hook 'magit-status-mode-hook 'delete-other-windows)
