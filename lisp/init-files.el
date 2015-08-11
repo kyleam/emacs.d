@@ -46,7 +46,10 @@
 (defun km/dired-jump-file-at-point ()
   "Run `dired-jump' on file at point."
   (interactive)
-  (let ((file (thing-at-point 'filename)))
+  (let ((file (or (and (use-region-p)
+                       (buffer-substring-no-properties
+                        (region-beginning) (region-end)))
+                  (thing-at-point 'filename))))
     (if (and file (file-exists-p file))
         (dired-jump 'other-window (expand-file-name file))
       (user-error "No file at point"))))
