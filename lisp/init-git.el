@@ -543,7 +543,7 @@ function."
 ;;; Magit Annex
 
 (add-to-list 'load-path "~/src/emacs/magit-annex/")
-(require 'magit-annex-autoloads)
+(require 'magit-annex)
 
 (setq magit-annex-unused-open-function #'org-open-file)
 
