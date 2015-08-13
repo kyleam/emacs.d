@@ -17,7 +17,7 @@
 (require 'orgit)
 
 (setq magit-restore-window-configuration t
-      magit-revert-buffers t
+      magit-revert-buffers 'silent
       magit-push-always-verify nil
       magit-delete-by-moving-to-trash nil
       magit-diff-auto-show-delay 0.1
