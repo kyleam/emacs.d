@@ -199,8 +199,6 @@ to group buffer instead of moving to next group."
 
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       message-sendmail-envelope-from 'header
-      message-citation-line-function 'message-insert-formatted-citation-line
-      message-citation-line-format "%f wrote:"
       message-kill-buffer-on-exit t
       footnote-section-tag "")
 
