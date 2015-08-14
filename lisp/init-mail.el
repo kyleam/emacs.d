@@ -163,8 +163,9 @@ to group buffer instead of moving to next group."
   (shr-browse-url)
   (shr-next-link))
 
-(define-key gnus-summary-mode-map
-  (kbd "C-c l") 'km/gnus-follow-last-message-link)
+;; This overrides `gnus-summary-goto-last-article', which is also
+;; bound to 'G l'.
+(define-key gnus-summary-mode-map "l" 'km/gnus-follow-last-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
