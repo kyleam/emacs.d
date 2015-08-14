@@ -509,6 +509,8 @@ function."
 
   (magit-define-popup-switch 'magit-log-popup
     ?p "First parent" "--first-parent")
+  (magit-define-popup-switch 'magit-log-popup
+    ?t "Date order" "--date-order")
 
   (magit-define-popup-action 'magit-log-popup
     ?e "Edit options" 'magit-log-refresh-popup)
