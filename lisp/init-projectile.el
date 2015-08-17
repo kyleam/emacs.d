@@ -5,6 +5,8 @@
       projectile-completion-system 'helm
       projectile-use-git-grep t)
 
+(projectile-register-project-type 'snakemake '("Snakefile") "snakemake -p" "")
+
 (defun km/projectile-switch-project (&optional arg)
   "Switch to a project.
 
