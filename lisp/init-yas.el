@@ -9,6 +9,11 @@
 (when (file-exists-p km/personal-snippets)
   (add-to-list 'yas-snippet-dirs km/personal-snippets))
 
+(defun km/yas-with-comment (str)
+  (concat comment-start
+          (unless (s-ends-with? " " comment-start) " ")
+          str comment-end))
+
 (define-key yas-minor-mode-map (kbd "C-c i") 'yas-expand)
 ;; Remove commands with 'C-c &' prefix, which conflicts with
 ;; `org-mark-ring-goto' binding'

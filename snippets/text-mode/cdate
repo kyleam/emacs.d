@@ -1,4 +1,4 @@
 # -*- mode: snippet -*-
 # key: cdate
 # --
-`(yas-with-comment (concat " " (format-time-string "%Y-%m-%d")))`
+`(km/yas-with-comment (format-time-string "%Y-%m-%d"))`

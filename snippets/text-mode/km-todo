@@ -2,4 +2,4 @@
 # key: kt
 # Copied over from text-mode/TODO.
 # --
-`(yas-with-comment " kTODO: ")`
+`(km/yas-with-comment "kTODO: ")`
