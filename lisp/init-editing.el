@@ -153,6 +153,8 @@ touches."
 
 (global-set-key (kbd "C-.") 'er/expand-region)
 
+(global-set-key [remap kill-ring-save] 'easy-kill)
+
 ;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
 (global-set-key (kbd "C-z") 'zap-to-char)
 (global-set-key (kbd "M-z") 'zap-up-to-char)

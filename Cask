@@ -12,6 +12,7 @@
 (depends-on "diminish")
 (depends-on "dired-narrow")
 (depends-on "dired-subtree")
+(depends-on "easy-kill")
 (depends-on "ess")
 (depends-on "expand-region")
 (depends-on "flx")
