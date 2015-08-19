@@ -54,6 +54,7 @@
  '(font-lock-keyword-face ((t (:foreground "gray33")))))
 
 (custom-set-faces
+ '(Info-quoted ((t (:inherit default))))
  '(dired-subtree-depth-1-face ((t (:background "gray80"))))
  '(dired-subtree-depth-2-face ((t (:background "gray90"))))
  '(dired-subtree-depth-3-face ((t (:background "gray95")))))
