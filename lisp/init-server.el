@@ -13,7 +13,9 @@
     (setq save-abbrevs 'silently
           bookmark-save-flag 1))
    ((string= server "mail")
-    (setq mode-line-misc-info (cons " [Mail] " mode-line-misc-info))
+    (setq mode-line-misc-info
+          (cons (propertize " [Mail] " 'face 'font-lock-doc-face)
+                mode-line-misc-info))
     (key-chord-define-global "jg" 'km/mail-map)
     (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
     (setq save-abbrevs nil))))
