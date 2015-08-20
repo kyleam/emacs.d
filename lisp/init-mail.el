@@ -240,58 +240,6 @@ paragraph."
 (define-key message-mode-map (kbd "C-c m s") 'km/snip-mail-quote)
 
 
-;;; Select and bury
-
-;; Modified from http://www.xsteve.at/prg/gnus/
-
-(defun km/gnus-select-or-bury (&optional plugged)
-  "Start, select, or bury gnus.
-Prefix argument PLUGGED is passed to `gnus-unbury'."
-  (interactive "P")
-  (if (km/gnus-bufferp (current-buffer))
-      (km/gnus-bury)
-    (km/gnus-unbury plugged)))
-
-(defvar km/gnus-window-configuration nil)
-
-(defun km/gnus-unbury (&optional plugged)
-  "Unbury Gnus-related buffers.
-If PLUGGED is non-nil, start Gnus in a plugged state.  This only
-has an effect if Gnus is not currently open."
-  (cond
-   (km/gnus-window-configuration
-    (set-window-configuration km/gnus-window-configuration))
-   ((get-buffer "*Group*")
-    (delete-other-windows)
-    (pop-to-buffer-same-window "*Group*"))
-   (t
-    (setq gnus-plugged plugged)
-    (gnus)))
-  (setq km/gnus-window-configuration nil))
-
-(defun km/gnus-bury ()
-  (when (km/gnus-bufferp (current-buffer))
-    (setq km/gnus-window-configuration (current-window-configuration))
-    (--each (km/gnus-buffer-list)
-      (if (eq (current-buffer) it)
-          (progn
-            (delete-other-windows)
-            (bury-buffer))
-        (bury-buffer it)))))
-
-(defun km/gnus-bufferp (buffer)
-  (with-current-buffer buffer
-    (derived-mode-p 'gnus-group-mode
-                    'gnus-summary-mode
-                    'gnus-article-mode
-                    'message-mode)))
-
-(defun km/gnus-buffer-list ()
-  (-filter #'km/gnus-bufferp (buffer-list)))
-
-(define-key km/mail-map "b" 'km/gnus-select-or-bury)
-
-
 ;;; Notmuch
 
 (require 'notmuch)
