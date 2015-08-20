@@ -293,7 +293,6 @@ paragraph."
   (kill-new (message "%s" (notmuch-show-get-message-id))))
 
 (define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
-(define-key gnus-group-mode-map "GG" 'notmuch-search)
 
 (define-key notmuch-hello-mode-map "o" 'km/ace-link-widget)
 
