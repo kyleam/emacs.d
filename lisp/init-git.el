@@ -507,6 +507,9 @@ function."
   (magit-define-popup-action 'magit-diff-popup
     ?e "Edit options" 'magit-diff-refresh-popup)
 
+  (magit-define-popup-action 'magit-stash-popup
+    ?s "Snapshot" 'magit-snapshot)
+
   (magit-define-popup-switch 'magit-log-popup
     ?p "First parent" "--first-parent")
   (magit-define-popup-switch 'magit-log-popup
