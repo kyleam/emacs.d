@@ -227,7 +227,7 @@ instead.
 \(git reset REV -- FILE)
 \(git checkout REV -- FILE)"
   (interactive
-   (let ((rev (magit-read-branch-or-commit "Revision")))
+   (let ((rev (magit-read-branch-or-commit "Revision" magit-buffer-revision)))
      (list rev (magit-read-file-from-rev rev "File") current-prefix-arg)))
   (magit-with-toplevel
     (magit-run-git (if checkout "checkout" "reset")
