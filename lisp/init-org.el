@@ -711,31 +711,6 @@ to be easily overriden.")
    (emacs-lisp . t)
    (latex . t)))
 
-(defun km/org-babel-delete-all-results ()
-  "Delete Org babel result blocks."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((res-regex (rx line-start "#+RESULTS"
-                         (zero-or-one "[" (one-or-more alnum)
-                                      (zero-or-one "...") "]")
-                         ":" line-end)))
-      (while (re-search-forward res-regex nil t)
-        (let ((res-beg (point-at-bol)))
-          (forward-line)
-          (cond
-           ((looking-at-p "^#\\+begin_example$")
-            (re-search-forward "^#\\+end_example$")
-            (delete-region res-beg (point)))
-           ((looking-at-p "^: ")
-            (re-search-forward "^[^:]")
-            (delete-region res-beg (point)))
-           (t
-            (forward-line -1)
-            (delete-region res-beg (point-at-eol)))))
-        (when (looking-at-p "^\\s-$")
-          (delete-blank-lines))))))
-
 
 ;;; Org Contacts
 
