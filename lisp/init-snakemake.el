@@ -46,4 +46,7 @@ run.  If JOBS is negative, just touch the output files."
   (define-key km/compile-map "p"
     'km/snakemake-compile-project-file))
 
+(after 'dired
+  (define-key dired-mode-map "b" 'km/snakemake-compile-project-file))
+
 (provide 'init-snakemake)
