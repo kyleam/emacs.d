@@ -7,6 +7,15 @@
 (setq require-final-newline t
       ffap-machine-p-known 'reject)
 
+(after 'mailcap
+  (mailcap-parse-mailcaps)
+  (pcase-dolist (`(_ . ,info)
+                 (cdr (assoc-string "application" mailcap-mime-data)))
+    ;; Instead of deleting doc-view-mode entry, just make its test
+    ;; always fail.
+    (when (eq (cdr (assq 'viewer info)) 'doc-view-mode)
+      (setf (cdr (assq 'test info)) (lambda (&rest _) nil)))))
+
 (defun km/rename-current-buffer-file ()
   "Rename current buffer and file it is visiting."
   (interactive)
