@@ -27,33 +27,21 @@
 
 (put 'org-goto-max-level 'safe-local-variable #'integerp)
 
-(setq org-structure-template-alist
-      '(("p" "#+property: " "")
-        ("o" "#+options: " "")
-        ("d" "#+date: " "")
-        ("t" "#+title: " "")
-        ("S" "#+setupfile: ?" "")
-        ("n" "#+begin_note\n  ?\n#+end_note" "<note>\n?\n</note>")
-        ("w" "#+begin_note\n  ?\n#+end_note" "<note>\n?\n</note>")
-        ("C" "#+caption: " "")
-        ("b" "#+label: " "")
-        ("r" "#+attr_latex: " "")
-        ("R" "#+attr_html: " "")
-        ;; Lower case versions of defaults
-        ("s" "#+begin_src ?\n  \n#+end_src" "<src lang=\"?\">\n\n</src>")
-        ("e" "#+begin_example\n  ?\n#+end_example" "<example>\n?\n</example>")
-        ("q" "#+begin_quote\n  ?\n#+end_quote" "<quote>\n?\n</quote>")
-        ("v" "#+begin_versen  ?\n#+end_verse" "<verse>\n?\n</verse>")
-        ("V" "#+begin_verbatim\n  ?\n#+end_verbatim" "<verbatim>\n?\n</verbatim>")
-        ("c" "#+begin_center\n  ?\n#+end_center" "<center>\n?\n</center>")
-        ("l" "#+begin_latex\n  ?\n#+end_latex" "<literal style=\"latex\">\n?\n</literal>")
-        ("L" "#+latex: " "<literal style=\"latex\">?</literal>")
-        ("h" "#+begin_html\n  ?\n#+end_html" "<literal style=\"html\">\n?\n</literal>")
-        ("H" "#+html: " "<literal style=\"html\">?</literal>")
-        ("a" "#+begin_ascii\n  ?\n#+end_ascii" "")
-        ("A" "#+ascii: " "")
-        ("i" "#+index: ?" "#+index: ?")
-        ("I" "#+include: %file ?" "<include file=%file markup=\"?\">")))
+(after 'org
+  (setq org-structure-template-alist
+        (append '(("p" "#+property: ")
+                  ("o" "#+options: ")
+                  ("d" "#+date: ")
+                  ("t" "#+title: ")
+                  ("S" "#+setupfile: ?")
+                  ("n" "#+name: ")
+                  ("w" "#+begin_note\n  ?\n#+end_note")
+                  ("C" "#+caption: ")
+                  ("b" "#+label: ")
+                  ("r" "#+attr_latex: ")
+                  ("R" "#+attr_html: "))
+                (mapcar (lambda (i) (list (car i) (downcase (cadr i))))
+                        org-structure-template-alist))))
 
 (add-to-list 'auto-mode-alist '("\\.org.txt\\'" . org-mode))
 
