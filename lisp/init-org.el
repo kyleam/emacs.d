@@ -471,7 +471,8 @@ displayed in the agenda."
 
 (defun km/org-agenda-avy-goto-subword-1 ()
   (interactive)
-  (call-interactively #'avy-goto-subword-1)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
   (org-agenda-do-context-action))
 
 (define-key km/global-org-map "a" 'org-agenda)

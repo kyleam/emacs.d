@@ -79,7 +79,8 @@ is off."
 
 (defun km/gnus-avy-goto-subword-and-select ()
   (interactive)
-  (call-interactively #'avy-goto-subword-1)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
   (gnus-summary-scroll-up 0))
 
 (defun km/gnus-follow-last-message-link (copy)
