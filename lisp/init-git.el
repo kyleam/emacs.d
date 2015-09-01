@@ -459,6 +459,7 @@ function."
   (define-key km/magit-map "g" 'km/git-map)
 
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
+  (define-key km/git-map "c" 'km/magit-copy-commit-summary)
   (define-key km/git-map "d" 'magit-dispatch-popup)
   (define-key km/git-map "e" 'km/magit-commit-extend-all)
   (define-key km/git-map "f" 'km/magit-reset-file)
