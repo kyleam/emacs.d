@@ -235,44 +235,9 @@ paragraph."
 (add-to-list 'notmuch-saved-searches
              '(:name "today" :query "date:today.." :key "."))
 
-(defun km/notmuch-file-to-group (file)
-  "Calculate the Gnus group name from the given file name."
-  (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
-    (setq group (replace-regexp-in-string ".*/mail/" "nnimap+dov:" group))
-    (setq group (replace-regexp-in-string "/$" "" group))
-    (if (string-match ":$" group)
-        (concat group "INBOX")
-      (replace-regexp-in-string ":\\." ":" group))))
-
-(defun km/notmuch-goto-message-in-gnus ()
-  "Open a summary buffer containing the current notmuch article."
-  (interactive)
-  (let ((group (km/notmuch-file-to-group (notmuch-show-get-filename)))
-        (message-id (replace-regexp-in-string
-                     "^id:" "" (notmuch-show-get-message-id))))
-    (setq message-id (replace-regexp-in-string "\"" "" message-id))
-    (if (and group message-id)
-        (progn
-          (switch-to-buffer "*Group*")
-          (org-gnus-follow-link group message-id))
-      (message "Couldn't get relevant infos for switching to Gnus."))))
-
-(defun km/gnus-goto-message-in-notmuch ()
-  "Show message in notmuch."
-  (interactive)
-  (when (and (memq major-mode '(gnus-summary-mode gnus-article-mode))
-             (string= (cadr (gnus-find-method-for-group gnus-newsgroup-name))
-                      "dov"))
-    (let* ((header (with-current-buffer gnus-summary-buffer
-                     (gnus-summary-article-header)))
-           (message-id (org-remove-angle-brackets (mail-header-id header))))
-      (notmuch-show (concat "id:" message-id)))))
-
 (defun km/notmuch-show-copy-message-id-as-kill ()
   (interactive)
   (kill-new (message "%s" (notmuch-show-get-message-id))))
-
-(define-key notmuch-show-mode-map (kbd "C-c C-c") 'km/notmuch-goto-message-in-gnus)
 
 (define-key notmuch-hello-mode-map "o" 'km/ace-link-widget)
 
