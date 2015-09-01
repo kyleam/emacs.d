@@ -461,6 +461,8 @@ function."
   (define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
   (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
 
+  (define-key magit-process-mode-map (kbd "C-c C-k") 'magit-process-kill)
+
   (define-prefix-command 'km/magit-map)
   (define-key magit-mode-map "." 'km/magit-map)
   (define-key km/magit-map "c" 'km/magit-find-commit-file)
