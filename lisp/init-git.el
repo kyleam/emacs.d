@@ -381,10 +381,14 @@ COMMIT."
                       (magit-tag-at-point))))
      (list (or (and (not current-prefix-arg) atpoint)
                (magit-read-branch-or-commit "Commit" atpoint)))))
-  (cl-destructuring-bind (hash subject date)
-      (magit-git-lines "show" "-s" "--date=short"
-                       "--format=%h\n%s\n%ad" commit)
-    (kill-new (message "%s (\"%s\", %s)" hash subject date))))
+  (if (magit-rev-verify (concat commit "^{commit}"))
+      (kill-new (message
+                 ;; Using `magit-git-string' instead of
+                 ;; `magit-rev-format' to pass --date flag.
+                 (magit-git-string "show" "-s" "--date=short"
+                                   "--format=%h (\"%s\", %ad)"
+                                   commit "--")))
+    (user-error "%s does not exist" commit)))
 
 (defun km/magit-copy-commit-summary-from-header (&optional arg)
   (magit-section-when headers
