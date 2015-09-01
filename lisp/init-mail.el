@@ -24,19 +24,6 @@
 
 (add-hook 'kill-emacs-hook 'gnus-grace-exit-before-kill-emacs)
 
-(defun km/sync-mail ()
-  (interactive)
-  (let ((buf (get-buffer-create "*Mail sync*"))
-        (default-directory "~/")
-        (process "mail-sync"))
-    (with-current-buffer buf
-      (view-mode 1)
-      (goto-char (point-max)))
-    (display-buffer buf)
-    (if (process-live-p process)
-        (message "Mail sync process is already running")
-      (start-process process buf "sync-mail"))))
-
 ;; http://www.emacswiki.org/emacs/GnusSync
 (defun gnus-grace-exit-before-kill-emacs ()
   (if (and (fboundp 'gnus-alive-p)
@@ -50,7 +37,6 @@
 (define-key km/mail-map "g" 'gnus)
 (define-key km/mail-map "p" 'gnus-plugged)
 (define-key km/mail-map "u" 'gnus-unplugged)
-(define-key km/mail-map "s" 'km/sync-mail)
 
 
 ;;; Gnus group buffer
