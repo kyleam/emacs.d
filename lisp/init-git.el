@@ -432,6 +432,14 @@ function."
          'km/magit-copy-hook current-prefix-arg))
       (magit-copy-as-kill)))
 
+(defun km/magit-avy-goto-subword-1 ()
+  "Like `km/avy-goto-subword-1', but maybe show commit and limit to window."
+  (interactive)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
+  (when (derived-mode-p 'magit-log-mode)
+    (magit-diff-show-or-scroll-up)))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -449,9 +457,9 @@ function."
   (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
   (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
 
-  (define-key magit-log-mode-map "j" 'km/avy-goto-subword-1)
-  (define-key magit-refs-mode-map "j" 'km/avy-goto-subword-1)
-  (define-key magit-cherry-mode-map "j" 'km/avy-goto-subword-1)
+  (define-key magit-log-mode-map "j" 'km/magit-avy-goto-subword-1)
+  (define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
+  (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
 
   (define-prefix-command 'km/magit-map)
   (define-key magit-mode-map "." 'km/magit-map)
