@@ -360,7 +360,7 @@ argument."
       (user-error "No hash found at point"))))
 
 (defvar km/magit-copy-hook
-  '(km/magit-copy-commit-citation-from-header
+  '(km/magit-copy-commit-summary-from-header
     km/magit-copy-commit-message
     km/magit-copy-region-commits
     km/magit-copy-region-hunk
@@ -370,7 +370,7 @@ These will be given one argument (the current prefix value) and
 should succeed by copying and returning non-nil or fail by
 returning nil.")
 
-(defun km/magit-copy-commit-citation (commit)
+(defun km/magit-copy-commit-summary (commit)
   "Copy a citation for the COMMIT at point.
 Format the reference as '<hash>, (\"<subject>\", <date>)'.  If
 there is no commit at point or with a prefix argument, prompt for
@@ -386,9 +386,9 @@ COMMIT."
                        "--format=%h\n%s\n%ad" commit)
     (kill-new (message "%s (\"%s\", %s)" hash subject date))))
 
-(defun km/magit-copy-commit-citation-from-header (&optional arg)
+(defun km/magit-copy-commit-summary-from-header (&optional arg)
   (magit-section-when headers
-    (km/magit-copy-commit-citation (car magit-refresh-args))))
+    (km/magit-copy-commit-summary (car magit-refresh-args))))
 
 (defun km/magit-copy-region-commits (&optional arg)
   (--when-let (magit-region-values 'commit)
