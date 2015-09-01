@@ -42,6 +42,7 @@
 ;;; Gnus group buffer
 
 (setq gnus-topic-display-empty-topics nil
+      gnus-group-line-format "%M\%S\%p\%P\%5y:%B%(%G%)\n"
       gnus-group-list-inactive-groups nil)
 
 (setq gnus-group-use-permanent-levels t)
