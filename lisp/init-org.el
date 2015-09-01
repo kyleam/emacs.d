@@ -597,19 +597,6 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   "Search for PMID at `km/org-pmid-search-url'."
   (browse-url (format km/org-pmid-search-url path)))
 
-(defvar km/org-store-link-hook nil
-  "Hook run before by `km/org-store-link-hook'.
-These are run within a `save-window-excursion' block.")
-
-(defun km/org-store-link ()
-  "Run `km/org-store-link-hook' before `org-store-link'.
-The hook functions and `org-store-link' are called within a
-`save-window-excursion' block."
-  (interactive)
-  (save-window-excursion
-    (run-hooks 'km/org-store-link-hook)
-    (call-interactively 'org-store-link)))
-
 (defun km/org-link-dired-jump ()
   "Open Dired for directory of file link at point."
   (interactive)
@@ -639,7 +626,7 @@ beginning of the link."
           slurped)))))
 
 (define-key km/org-prefix-map "d" 'km/org-link-dired-jump)
-(define-key km/global-org-map "l" 'km/org-store-link)
+(define-key km/global-org-map "l" 'org-store-link)
 
 (define-key km/org-prefix-map "."
   (defhydra hydra-org-link-edit ()

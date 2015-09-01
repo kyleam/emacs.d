@@ -235,8 +235,6 @@ paragraph."
 (add-to-list 'notmuch-saved-searches
              '(:name "today" :query "date:today.." :key "."))
 
-(add-hook 'km/org-store-link-hook 'km/gnus-goto-message-in-notmuch)
-
 (defun km/notmuch-file-to-group (file)
   "Calculate the Gnus group name from the given file name."
   (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
