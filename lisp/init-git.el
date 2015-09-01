@@ -360,7 +360,7 @@ argument."
       (user-error "No hash found at point"))))
 
 (defvar km/magit-copy-hook
-  '(km/magit-copy-commit-citation
+  '(km/magit-copy-commit-citation-from-header
     km/magit-copy-commit-message
     km/magit-copy-region-commits
     km/magit-copy-region-hunk
@@ -370,27 +370,25 @@ These will be given one argument (the current prefix value) and
 should succeed by copying and returning non-nil or fail by
 returning nil.")
 
-(defun km/magit-copy-commit-citation (&optional arg)
-  "Copy reference to commit from header section.
-Format the reference as '<hash>, (\"<subject>\", <date>)'."
+(defun km/magit-copy-commit-citation (commit)
+  "Copy a citation for the COMMIT at point.
+Format the reference as '<hash>, (\"<subject>\", <date>)'.  If
+there is no commit at point or with a prefix argument, prompt for
+COMMIT."
+  (interactive
+   (let ((atpoint (or (and magit-blame-mode (magit-blame-chunk-get :hash))
+                      (magit-branch-or-commit-at-point)
+                      (magit-tag-at-point))))
+     (list (or (and (not current-prefix-arg) atpoint)
+               (magit-read-branch-or-commit "Commit" atpoint)))))
+  (cl-destructuring-bind (hash subject date)
+      (magit-git-lines "show" "-s" "--date=short"
+                       "--format=%h\n%s\n%ad" commit)
+    (kill-new (message "%s (\"%s\", %s)" hash subject date))))
+
+(defun km/magit-copy-commit-citation-from-header (&optional arg)
   (magit-section-when headers
-    (let ((hash (km/magit-shorten-hash (car magit-refresh-args)))
-          (date (format-time-string
-                 "%Y-%m-%d"
-                 (save-excursion
-                   (goto-char (magit-section-start it))
-                   (re-search-forward "AuthorDate: ")
-                   (date-to-time (buffer-substring-no-properties
-                                  (point) (point-at-eol))))))
-          (subject (save-excursion
-                     (goto-char
-                      (magit-section-start
-                       (-first (lambda (sec)
-                                 (eq (magit-section-type sec) 'message))
-                               (magit-section-children it))))
-                     (buffer-substring-no-properties
-                      (+ 4 (point)) (point-at-eol)))))
-      (kill-new (message "%s (\"%s\", %s)" hash subject date)))))
+    (km/magit-copy-commit-citation (car magit-refresh-args))))
 
 (defun km/magit-copy-region-commits (&optional arg)
   (--when-let (magit-region-values 'commit)
