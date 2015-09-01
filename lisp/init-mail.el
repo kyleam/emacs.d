@@ -16,10 +16,6 @@
       gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
       gnus-confirm-mail-reply-to-news t)
 
-(setq imap-shell-program "/usr/lib/dovecot/imap -c ~/.dovecotrc"
-      gnus-select-method '(nnimap "dov" (nnimap-stream shell))
-      gnus-secondary-select-methods '((nntp "news.gmane.org")))
-
 (setq gnus-agent-go-online t
       gnus-agent-synchronize-flags t)
 
