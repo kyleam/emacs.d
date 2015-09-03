@@ -69,12 +69,18 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
         (magit-show-commit hash))
     (user-error "No hash found at point")))
 
-(defun km/magit-commit-extend-all ()
-  "Run `magit-commit-extend' with '--all' flag.
-This can easily be done from the popup menu but is put into a
-function for calling from outside Magit buffers."
+(defun km/magit-commit-extend-with-file ()
+  "Extend last commit with changes in the current file."
   (interactive)
-  (magit-commit-extend '("--all")))
+  (let ((file (or (buffer-file-name (buffer-base-buffer))
+                  (user-error "Not visiting file"))))
+    (cond ((magit-anything-staged-p)
+           (user-error "There are already staged changes"))
+          ((member (magit-file-relative-name file) (magit-modified-files))
+           (magit-stage-file file)
+           (magit-commit-extend))
+          (t
+           (message "No changes to %s" file)))))
 
 (defun km/magit-ff-merge-upstream ()
   "Perform fast-forward merge of upstream branch.
@@ -495,7 +501,7 @@ prompt for REV-A."
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "c" 'km/magit-copy-commit-summary)
   (define-key km/git-map "d" 'magit-dispatch-popup)
-  (define-key km/git-map "e" 'km/magit-commit-extend-all)
+  (define-key km/git-map "e" 'km/magit-commit-extend-with-file)
   (define-key km/git-map "f" 'km/magit-reset-file)
   (define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
   (define-key km/git-map "l" 'magit-log-buffer-file)
