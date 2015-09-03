@@ -196,33 +196,6 @@ to group buffer instead of moving to next group."
                                (message-field-value "From")))
     (user-error "Not sending message")))
 
-;; Modified from
-;; http://emacs-fu.blogspot.com/2008/12/some-simple-tricks-boxquote-footnote.html.
-(defun km/snip-mail-quote (beg end &optional number quote-char)
-  "Replace region lines with \"[...]\".
-If prefix argument NUMBER is non-nil, add the number of lines
-that were snipped.  The default QUOTE-CHAR is \">\".  Place text
-following the snipped lines on a new line, and file the resulting
-paragraph."
-  (interactive "r\nP")
-  (let ((nlines (count-lines beg end))
-        (quote-char (or quote-char ">")))
-    (delete-region beg end)
-    (if number
-        (insert (format "[%d line%s ...]" nlines (if (= 1 nlines) "" "s")))
-      (insert (format "[...]")))
-    (search-backward "[")
-    (unless (bolp)
-      (newline))
-    (search-forward "]")
-    (unless (eolp)
-      (newline)
-      (insert quote-char)
-      (just-one-space)
-      (fill-paragraph))))
-
-(define-key message-mode-map (kbd "C-c m s") 'km/snip-mail-quote)
-
 
 ;;; Notmuch
 
