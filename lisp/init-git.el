@@ -487,6 +487,16 @@ prompt for REV-A."
                "" "NOT ")
            rev-b))
 
+(defun km/magit-refs-toggle-tags ()
+  "Toggle showing tags in `magit-refs-mode'.
+This only affects the current buffer and is useful if you do not
+show tags by default."
+  (interactive)
+  (if (memq 'magit-insert-tags magit-refs-sections-hook)
+      (remove-hook 'magit-refs-sections-hook 'magit-insert-tags t)
+    (add-hook 'magit-refs-sections-hook 'magit-insert-tags t t))
+  (magit-refresh-buffer))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -507,6 +517,8 @@ prompt for REV-A."
   (define-key magit-log-mode-map "j" 'km/magit-avy-goto-subword-1)
   (define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
   (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
+
+  (define-key magit-refs-mode-map (kbd "C-c C-t") 'km/magit-refs-toggle-tags)
 
   (define-key magit-process-mode-map (kbd "C-c C-k") 'magit-process-kill)
 
