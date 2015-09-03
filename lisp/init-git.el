@@ -514,6 +514,18 @@ prompt for REV-A."
   (define-key km/magit-map "c" 'km/magit-find-commit-file)
   (define-key km/magit-map "g" 'km/git-map)
 
+  (define-prefix-command 'km/magit-wip-map)
+  (define-key km/git-map "w" 'km/magit-wip-map)
+  (define-key km/magit-wip-map "a" 'magit-wip-after-apply-mode)
+  (define-key km/magit-wip-map "b" 'magit-wip-before-change-mode)
+  (define-key km/magit-wip-map "c" 'magit-wip-commit)
+  (define-key km/magit-wip-map "f" 'magit-wip-commit-buffer-file)
+  (define-key km/magit-wip-map "l" 'magit-wip-log-current)
+  (define-key km/magit-wip-map "o" 'magit-wip-log)
+  (define-key km/magit-wip-map "s" 'magit-wip-after-save-mode)
+  (define-key km/magit-wip-map "S" 'magit-wip-after-save-local-mode)
+  (define-key km/magit-wip-map "w" 'km/magit-commit-wip-with-file)
+
   (define-key km/git-map "." 'km/magit-show-commit-at-point)
   (define-key km/git-map "c" 'km/magit-copy-commit-summary)
   (define-key km/git-map "d" 'magit-dispatch-popup)
