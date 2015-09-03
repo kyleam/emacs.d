@@ -127,8 +127,9 @@ without requiring confirmation.
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
-  (let ((remote (magit-read-remote "Remote")))
-    (magit-run-git-async "push" "-v" remote "--all")))
+  (magit-run-git-async "push" "-v"
+                       (magit-read-remote "Remote")
+                       "--all"))
 
 (defun km/magit-push-head (remote &optional args)
   "Push current branch to same name on remote.
