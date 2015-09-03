@@ -394,8 +394,8 @@ returning nil.")
 
 (defun km/magit-copy-commit-summary (commit)
   "Copy a citation for the COMMIT at point.
-Format the reference as '<hash>, (\"<subject>\", <date>)'.  If
-there is no commit at point or with a prefix argument, prompt for
+Format the reference as '<hash>, (<subject>, <date>)'.  If there
+is no commit at point or with a prefix argument, prompt for
 COMMIT."
   (interactive
    (let ((atpoint (or (and magit-blame-mode (magit-blame-chunk-get :hash))
@@ -408,7 +408,7 @@ COMMIT."
                  ;; Using `magit-git-string' instead of
                  ;; `magit-rev-format' to pass --date flag.
                  (magit-git-string "show" "-s" "--date=short"
-                                   "--format=%h (\"%s\", %ad)"
+                                   "--format=%h (%s, %ad)"
                                    commit "--")))
     (user-error "%s does not exist" commit)))
 
