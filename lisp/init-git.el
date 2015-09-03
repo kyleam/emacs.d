@@ -82,6 +82,22 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
           (t
            (message "No changes to %s" file)))))
 
+(defun km/magit-commit-wip-with-file ()
+  "Make a WIP commit for the current file.
+Unlike `magit-wip-*' commands, this commit is made to the current
+branch."
+  (interactive)
+  (let ((file (or (buffer-file-name (buffer-base-buffer))
+                  (user-error "Not visiting file"))))
+    (cond ((magit-anything-staged-p)
+           (user-error "There are already staged changes"))
+          ((member (magit-file-relative-name file) (magit-modified-files))
+           (magit-stage-file file)
+           (magit-run-git "commit" (format "--message=WIP %s"
+                                           (magit-file-relative-name file))))
+          (t
+           (message "No changes to %s" file)))))
+
 (defun km/magit-ff-merge-upstream ()
   "Perform fast-forward merge of upstream branch.
 \n(git merge --no-edit --ff-only <upstream>)"
