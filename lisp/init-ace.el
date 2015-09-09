@@ -3,6 +3,7 @@
 (require 'avy)
 
 (key-chord-define-global "jf" 'avy-goto-subword-1)
+(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)
 
 ;;; Ace Link
 
