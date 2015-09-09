@@ -83,11 +83,12 @@ all other words unless they are protected by brackets."
     (let* ((text-bounds (cdr (bibtex-search-forward-field "author" t)))
            (beg (car text-bounds))
            (end (cadr text-bounds)))
-      (goto-char beg)
-      (while (re-search-forward "\\(\\s-+\\) and" end t)
-        (replace-match "" nil nil nil 1))
-      (goto-char beg)
-      (fill-paragraph))))
+      (when text-bounds
+        (goto-char beg)
+        (while (re-search-forward "\\(\\s-+\\) and" end t)
+          (replace-match "" nil nil nil 1))
+        (goto-char beg)
+        (fill-paragraph)))))
 
 (defun km/bibtex-pages-use-double-hyphen ()
   "Use double hyphen for page range."
