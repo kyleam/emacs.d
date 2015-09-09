@@ -33,15 +33,13 @@
 (add-hook 'magit-find-file-hook 'view-mode)
 ;; http://whattheemacsd.com/setup-magit.el-01.html
 (add-hook 'magit-status-mode-hook 'delete-other-windows)
-(after 'magit
-  (remove-hook 'magit-refs-sections-hook 'magit-insert-tags))
+(remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
 
-(after 'git-commit
-  (add-hook 'git-commit-setup-hook
-            (lambda ()
-              (add-hook 'with-editor-pre-finish-hook
-                        'git-commit-save-message nil t)))
-  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))
+(add-hook 'git-commit-setup-hook
+          (lambda ()
+            (add-hook 'with-editor-pre-finish-hook
+                      'git-commit-save-message nil t)))
+(add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
@@ -502,59 +500,57 @@ show tags by default."
 
 (key-chord-define-global "jg" 'magit-status)
 
-(after 'magit
-  ;; Remove `magit-add-change-log-entry-other-window', which overrides
-  ;; my binding for `km/zsh-ansi-term-other-window'.
-  (define-key magit-mode-map (kbd "C-x 4 a") nil)
-  (define-key magit-mode-map "N" 'km/magit-stage-file-intent)
-  (define-key magit-mode-map "Q" 'km/magit-mode-bury-all-windows)
-  (define-key magit-mode-map (kbd "C-w") 'km/magit-copy-as-kill)
+;; Remove `magit-add-change-log-entry-other-window', which overrides
+;; my binding for `km/zsh-ansi-term-other-window'.
+(define-key magit-mode-map (kbd "C-x 4 a") nil)
+(define-key magit-mode-map "N" 'km/magit-stage-file-intent)
+(define-key magit-mode-map "Q" 'km/magit-mode-bury-all-windows)
+(define-key magit-mode-map (kbd "C-w") 'km/magit-copy-as-kill)
 
-  ;; `magit-diff-visit-file-worktree' is also on C-RET.
-  (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
-  (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
+;; `magit-diff-visit-file-worktree' is also on C-RET.
+(define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
+(define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
 
-  (define-key magit-log-mode-map "j" 'km/magit-avy-goto-subword-1)
-  (define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
-  (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
+(define-key magit-log-mode-map "j" 'km/magit-avy-goto-subword-1)
+(define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
+(define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
 
-  (define-key magit-refs-mode-map (kbd "C-c C-t") 'km/magit-refs-toggle-tags)
+(define-key magit-refs-mode-map (kbd "C-c C-t") 'km/magit-refs-toggle-tags)
 
-  (define-key magit-process-mode-map (kbd "C-c C-k") 'magit-process-kill)
+(define-key magit-process-mode-map (kbd "C-c C-k") 'magit-process-kill)
 
-  (define-prefix-command 'km/magit-map)
-  (define-key magit-mode-map "." 'km/magit-map)
-  (define-key km/magit-map "c" 'km/magit-find-commit-file)
-  (define-key km/magit-map "g" 'km/git-map)
+(define-prefix-command 'km/magit-map)
+(define-key magit-mode-map "." 'km/magit-map)
+(define-key km/magit-map "c" 'km/magit-find-commit-file)
+(define-key km/magit-map "g" 'km/git-map)
 
-  (define-prefix-command 'km/magit-wip-map)
-  (define-key km/git-map "w" 'km/magit-wip-map)
-  (define-key km/magit-wip-map "a" 'magit-wip-after-apply-mode)
-  (define-key km/magit-wip-map "b" 'magit-wip-before-change-mode)
-  (define-key km/magit-wip-map "c" 'magit-wip-commit)
-  (define-key km/magit-wip-map "f" 'magit-wip-commit-buffer-file)
-  (define-key km/magit-wip-map "l" 'magit-wip-log-current)
-  (define-key km/magit-wip-map "o" 'magit-wip-log)
-  (define-key km/magit-wip-map "s" 'magit-wip-after-save-mode)
-  (define-key km/magit-wip-map "S" 'magit-wip-after-save-local-mode)
-  (define-key km/magit-wip-map "w" 'km/magit-commit-wip-with-file)
+(define-prefix-command 'km/magit-wip-map)
+(define-key km/git-map "w" 'km/magit-wip-map)
+(define-key km/magit-wip-map "a" 'magit-wip-after-apply-mode)
+(define-key km/magit-wip-map "b" 'magit-wip-before-change-mode)
+(define-key km/magit-wip-map "c" 'magit-wip-commit)
+(define-key km/magit-wip-map "f" 'magit-wip-commit-buffer-file)
+(define-key km/magit-wip-map "l" 'magit-wip-log-current)
+(define-key km/magit-wip-map "o" 'magit-wip-log)
+(define-key km/magit-wip-map "s" 'magit-wip-after-save-mode)
+(define-key km/magit-wip-map "S" 'magit-wip-after-save-local-mode)
+(define-key km/magit-wip-map "w" 'km/magit-commit-wip-with-file)
 
-  (define-key km/git-map "." 'km/magit-show-commit-at-point)
-  (define-key km/git-map "c" 'km/magit-copy-commit-summary)
-  (define-key km/git-map "d" 'magit-dispatch-popup)
-  (define-key km/git-map "e" 'km/magit-commit-extend-with-file)
-  (define-key km/git-map "f" 'km/magit-reset-file)
-  (define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
-  (define-key km/git-map "l" 'magit-log-buffer-file)
-  (define-key km/git-map "p" 'km/magit-pin-file)
-  (define-key km/git-map "r" 'km/magit-find-recently-changed-file)
-  (define-key km/git-map "s" 'km/magit-insert-staged-file)
-  (define-key km/git-map "u" 'km/magit-auto-commit)
-  (define-key km/git-map "v" 'km/magit-revfile-reset))
+(define-key km/git-map "." 'km/magit-show-commit-at-point)
+(define-key km/git-map "c" 'km/magit-copy-commit-summary)
+(define-key km/git-map "d" 'magit-dispatch-popup)
+(define-key km/git-map "e" 'km/magit-commit-extend-with-file)
+(define-key km/git-map "f" 'km/magit-reset-file)
+(define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
+(define-key km/git-map "l" 'magit-log-buffer-file)
+(define-key km/git-map "p" 'km/magit-pin-file)
+(define-key km/git-map "r" 'km/magit-find-recently-changed-file)
+(define-key km/git-map "s" 'km/magit-insert-staged-file)
+(define-key km/git-map "u" 'km/magit-auto-commit)
+(define-key km/git-map "v" 'km/magit-revfile-reset)
 
-(after 'magit-log
-  (define-key magit-log-select-mode-map "."
-    'km/magit-log-select-guess-fixup-commit))
+(define-key magit-log-select-mode-map "."
+  'km/magit-log-select-guess-fixup-commit)
 
 
 ;;; Magit popups
@@ -563,66 +559,65 @@ show tags by default."
       magit-popup-show-common-commands nil
       magit-popup-use-prefix-argument 'default)
 
-(after 'magit
-  (setq magit-branch-arguments
-        (delete "--track" magit-branch-arguments))
+(setq magit-branch-arguments
+      (delete "--track" magit-branch-arguments))
 
-  (define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
-  (define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
+(define-key magit-popup-mode-map (kbd "SPC <t>") 'magit-invoke-popup-switch)
+(define-key magit-popup-mode-map (kbd "SPC SPC <t>") 'magit-invoke-popup-option)
 
-  (setq magit-patch-popup
-        (plist-put magit-patch-popup :use-prefix 'popup))
+(setq magit-patch-popup
+      (plist-put magit-patch-popup :use-prefix 'popup))
 
-  (magit-define-popup-action 'magit-commit-popup
-    ?u "Auto commit" 'km/magit-auto-commit)
+(magit-define-popup-action 'magit-commit-popup
+  ?u "Auto commit" 'km/magit-auto-commit)
 
-  (magit-define-popup-action 'magit-push-popup
-    ?a "Push all" 'km/magit-push-all)
-  (magit-define-popup-action 'magit-push-popup
-    ?h "Push HEAD" 'km/magit-push-head)
+(magit-define-popup-action 'magit-push-popup
+  ?a "Push all" 'km/magit-push-all)
+(magit-define-popup-action 'magit-push-popup
+  ?h "Push HEAD" 'km/magit-push-head)
 
-  (magit-define-popup-action 'magit-merge-popup
-    ?u "Merge upstream" 'km/magit-ff-merge-upstream)
+(magit-define-popup-action 'magit-merge-popup
+  ?u "Merge upstream" 'km/magit-ff-merge-upstream)
 
-  (magit-define-popup-action 'magit-diff-popup
-    ?e "Edit options" 'magit-diff-refresh-popup)
+(magit-define-popup-action 'magit-diff-popup
+  ?e "Edit options" 'magit-diff-refresh-popup)
 
-  (magit-define-popup-action 'magit-stash-popup
-    ?s "Snapshot" 'magit-snapshot)
+(magit-define-popup-action 'magit-stash-popup
+  ?s "Snapshot" 'magit-snapshot)
 
-  (magit-define-popup-switch 'magit-log-popup
-    ?p "First parent" "--first-parent")
-  (magit-define-popup-switch 'magit-log-popup
-    ?t "Date order" "--date-order")
+(magit-define-popup-switch 'magit-log-popup
+  ?p "First parent" "--first-parent")
+(magit-define-popup-switch 'magit-log-popup
+  ?t "Date order" "--date-order")
 
-  (magit-define-popup-action 'magit-log-popup
-    ?e "Edit options" 'magit-log-refresh-popup)
+(magit-define-popup-action 'magit-log-popup
+  ?e "Edit options" 'magit-log-refresh-popup)
 
-  (magit-define-popup-action 'magit-branch-popup
-    ?c "Create & checkout from current"
-    'km/magit-branch-and-checkout-from-current)
-  (magit-define-popup-action 'magit-branch-popup
-    ?C "Create" 'magit-branch)
-  (magit-define-popup-action 'magit-branch-popup
-    ?l "Delete previous branch"
-    'km/magit-delete-previous-branch)
-  (magit-define-popup-action 'magit-branch-popup
-    ?m "Checkout master" 'km/magit-checkout-master)
-  (magit-define-popup-action 'magit-branch-popup
-    ?n "Checkout recent ref" 'km/magit-checkout-recent-ref)
-  (magit-define-popup-action 'magit-branch-popup
-    ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
-  (magit-define-popup-action 'magit-branch-popup
-    ?p "Checkout previous" 'km/magit-checkout-previous-branch)
-  (magit-define-popup-action 'magit-branch-popup
-    ?s "Backup current branch" 'km/magit-backup-branch)
-  (magit-define-popup-action 'magit-branch-popup
-    ?t "Local tracking" 'km/magit-checkout-local-tracking)
+(magit-define-popup-action 'magit-branch-popup
+  ?c "Create & checkout from current"
+  'km/magit-branch-and-checkout-from-current)
+(magit-define-popup-action 'magit-branch-popup
+  ?C "Create" 'magit-branch)
+(magit-define-popup-action 'magit-branch-popup
+  ?l "Delete previous branch"
+  'km/magit-delete-previous-branch)
+(magit-define-popup-action 'magit-branch-popup
+  ?m "Checkout master" 'km/magit-checkout-master)
+(magit-define-popup-action 'magit-branch-popup
+  ?n "Checkout recent ref" 'km/magit-checkout-recent-ref)
+(magit-define-popup-action 'magit-branch-popup
+  ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
+(magit-define-popup-action 'magit-branch-popup
+  ?p "Checkout previous" 'km/magit-checkout-previous-branch)
+(magit-define-popup-action 'magit-branch-popup
+  ?s "Backup current branch" 'km/magit-backup-branch)
+(magit-define-popup-action 'magit-branch-popup
+  ?t "Local tracking" 'km/magit-checkout-local-tracking)
 
-  (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
-    "Set '--no-ff' flag when running `magit-merge-editmsg'."
-    (let ((args '("--no-ff")))
-      ad-do-it)))
+(defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
+  "Set '--no-ff' flag when running `magit-merge-editmsg'."
+  (let ((args '("--no-ff")))
+    ad-do-it))
 
 
 ;;; Magit Annex
@@ -632,9 +627,8 @@ show tags by default."
 
 (setq magit-annex-unused-open-function #'org-open-file)
 
-(after 'magit-annex
-  (setq magit-annex-all-action-arguments
-        (delete "--auto" magit-annex-all-action-arguments)))
+(setq magit-annex-all-action-arguments
+      (delete "--auto" magit-annex-all-action-arguments))
 
 
 ;;; Other git
