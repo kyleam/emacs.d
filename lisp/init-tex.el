@@ -1,7 +1,8 @@
 
 (setq reftex-default-bibliography '("refs.bib"))
 
-(setq font-latex-fontify-sectioning 'color)
+(setq font-latex-fontify-sectioning 'color
+      TeX-electric-math '("$" . "$"))
 
 (put 'LaTeX-narrow-to-environment 'disabled nil)
 
