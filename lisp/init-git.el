@@ -343,8 +343,8 @@ command will still offer the staged files)."
                     (completing-read "Staged file: " files nil t)))))
       (insert (if no-directory (file-name-nondirectory file) file)))))
 
-(defun km/magit-shorten-hash (hash)
-  (magit-rev-parse (format "--short=%s" (magit-abbrev-length)) hash))
+(defun km/magit-shorten-hash (hash &optional n)
+  (magit-rev-parse (format "--short=%s" (or n (magit-abbrev-length))) hash))
 
 (defun km/magit-shorten-hash-at-point (&optional n)
   "Shorten hash at point to N characters.
@@ -371,8 +371,7 @@ argument."
               (hash (match-string 0)))
           (when (< hash-len n)
             (user-error "Desired hash length is greater than current"))
-          (replace-match (or (km/magit-shorten-hash hash)
-                             (substring hash 0 n))
+          (replace-match (km/magit-shorten-hash hash n)
                          'fixedcase)
           (when (< offset n)
             (skip-chars-backward "A-z0-9")
