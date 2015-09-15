@@ -70,12 +70,12 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
 (defun km/magit-commit-extend-with-file ()
   "Extend last commit with changes in the current file."
   (interactive)
-  (let ((file (or (buffer-file-name (buffer-base-buffer))
-                  (user-error "Not visiting file"))))
+  (let ((file (or (magit-current-file)
+                  (user-error "No current file"))))
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
-          ((member (magit-file-relative-name file) (magit-modified-files))
-           (magit-stage-file file)
+          ((member file (magit-modified-files))
+           (magit-with-toplevel (magit-stage-file file))
            (magit-commit-extend))
           (t
            (message "No changes to %s" file)))))
@@ -85,14 +85,13 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
 Unlike `magit-wip-*' commands, this commit is made to the current
 branch."
   (interactive)
-  (let ((file (or (buffer-file-name (buffer-base-buffer))
-                  (user-error "Not visiting file"))))
+  (let ((file (or (magit-current-file)
+                  (user-error "No current file"))))
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
-          ((member (magit-file-relative-name file) (magit-modified-files))
-           (magit-stage-file file)
-           (magit-run-git "commit" (format "--message=WIP %s"
-                                           (magit-file-relative-name file))))
+          ((member file (magit-modified-files))
+           (magit-with-toplevel (magit-stage-file file))
+           (magit-run-git "commit" (concat "--message=WIP " file)))
           (t
            (message "No changes to %s" file)))))
 
