@@ -128,7 +128,7 @@ point.  The link is opened using the settings of
   "Copy DOI at point to kill ring."
   (interactive)
   (-when-let (doi (km/doi-at-point))
-    (kill-new (message "%s" (concat "doi:" doi)))))
+    (kill-new (message (concat "doi:" doi)))))
 
 (defun km/doi-at-point ()
   "Return DOI at point."

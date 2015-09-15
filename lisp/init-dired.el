@@ -163,7 +163,7 @@ relative to DIRECTORY."
     (if (eq last-command 'kill-region)
         (kill-append string nil)
       (kill-new string))
-    (message "%s" string)))
+    (message string)))
 
 (defun km/other-default-directory ()
   "Get `default-directory' for result of `(other-window 1)'."

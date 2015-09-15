@@ -212,7 +212,7 @@ to group buffer instead of moving to next group."
 
 (defun km/notmuch-show-copy-message-id-as-kill ()
   (interactive)
-  (kill-new (message "%s" (notmuch-show-get-message-id))))
+  (kill-new (message (notmuch-show-get-message-id))))
 
 (define-key notmuch-hello-mode-map "o" 'km/ace-link-widget)
 
