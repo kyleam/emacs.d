@@ -74,7 +74,8 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
                   (user-error "No current file"))))
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
-          ((member file (magit-modified-files))
+          ((member file (nconc (magit-untracked-files)
+                               (magit-modified-files)))
            (magit-with-toplevel (magit-stage-file file))
            (magit-commit-extend))
           (t
@@ -89,7 +90,8 @@ branch."
                   (user-error "No current file"))))
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
-          ((member file (magit-modified-files))
+          ((member file (nconc (magit-untracked-files)
+                               (magit-modified-files)))
            (magit-with-toplevel (magit-stage-file file))
            (magit-run-git "commit" (concat "--message=WIP " file)))
           (t
