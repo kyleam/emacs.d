@@ -21,6 +21,7 @@
       magit-push-always-verify nil
       magit-delete-by-moving-to-trash nil
       magit-diff-auto-show-delay 0.1
+      magit-revision-show-gravatars nil
       magit-log-section-arguments nil
       magit-log-show-margin nil)
 
