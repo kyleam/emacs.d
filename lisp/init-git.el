@@ -139,8 +139,11 @@ without requiring confirmation.
   "Create and checkout a local tracking branch for REMOTE-BRANCH.
 \n(git checkout -t REMOTE-BRANCH\)"
   (interactive
-   (list (magit-completing-read "Remote branch"
-                                (magit-list-remote-branch-names))))
+   (list (let ((branches (magit-list-remote-branch-names)))
+           (magit-completing-read
+            "Remote branch" branches nil t nil nil
+            (car (member (magit-branch-or-commit-at-point)
+                         branches))))))
   (magit-run-git "checkout" "-t" remote-branch))
 
 (defun km/magit-delete-previous-branch (&optional force)
