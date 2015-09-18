@@ -17,6 +17,7 @@
 (require 'orgit)
 
 (setq magit-restore-window-configuration t
+      magit-bury-buffer-function 'magit-restore-window-configuration
       magit-revert-buffers 'silent
       magit-push-always-verify nil
       magit-delete-by-moving-to-trash nil
