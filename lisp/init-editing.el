@@ -185,6 +185,7 @@ touches."
 (define-key km/editing-map "f" 'km/fill-surrounding-indented)
 (define-key km/editing-map "i" 'iedit-mode)
 (define-key km/editing-map "u" 'km/unfill-paragraph)
+(define-key km/editing-map "w" 'ispell-word)
 
 (electric-indent-mode -1)
 (electric-pair-mode 1)
