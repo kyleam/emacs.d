@@ -19,6 +19,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-doi-leader)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-set-coding-system)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-entry-space)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-entry)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -106,6 +107,13 @@ to
     (bibtex-beginning-of-entry)
     (when (looking-at "@\\w+\\(\\s-+\\)")
       (replace-match "" nil nil nil 1))))
+
+(defun km/bibtex-downcase-entry ()
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (when (looking-at "^@\\([^{]+\\){")
+      (replace-match (downcase (match-string-no-properties 1))
+                     'fixedcase nil nil 1))))
 
 (defun km/bibtex-pages-use-double-hyphen ()
   "Use double hyphen for page range."
