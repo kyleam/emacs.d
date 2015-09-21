@@ -17,6 +17,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-single-space-author-list)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-pages-use-double-hyphen)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-doi-leader)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-set-coding-system)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -89,6 +90,9 @@ all other words unless they are protected by brackets."
           (replace-match "" nil nil nil 1))
         (goto-char beg)
         (fill-paragraph)))))
+
+(defun km/bibtex-set-coding-system ()
+  (set-buffer-file-coding-system 'utf-8))
 
 (defun km/bibtex-pages-use-double-hyphen ()
   "Use double hyphen for page range."
