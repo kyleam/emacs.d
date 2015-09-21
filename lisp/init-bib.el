@@ -45,7 +45,6 @@ the next article you read will have \"athwart\" in the title.")
 Change words in `km/bibtex-unimportant-title-words' to lower
 case, unless the word is the first word in the title.  Capitalize
 all other words unless they are protected by brackets."
-  (interactive)
   (save-excursion
     (bibtex-beginning-of-entry)
     (let* ((text-bounds (cdr (bibtex-search-forward-field "title" t)))
@@ -79,7 +78,6 @@ all other words unless they are protected by brackets."
 
 (defun km/bibtex-single-space-author-list ()
   "Convert multiple spaces in author list to single space."
-  (interactive)
   (save-excursion
     (bibtex-beginning-of-entry)
     (let* ((text-bounds (cdr (bibtex-search-forward-field "author" t)))
@@ -111,7 +109,6 @@ to
 
 (defun km/bibtex-pages-use-double-hyphen ()
   "Use double hyphen for page range."
-  (interactive)
   (save-excursion
     (bibtex-beginning-of-entry)
     (let* ((text-bounds (cdr (bibtex-search-forward-field "pages" t)))
@@ -124,7 +121,6 @@ to
 
 (defun km/bibtex-remove-doi-leader ()
   "Remove leading part (http:...) of doi URL."
-  (interactive)
   (save-excursion
     (bibtex-beginning-of-entry)
     (let* ((text-bounds (cdr (bibtex-search-forward-field "doi" t)))
