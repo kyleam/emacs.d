@@ -20,6 +20,8 @@
       gnus-agent-synchronize-flags t)
 
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
+(setq gnus-inhibit-images t)
+
 (setq gnus-interactive-exit nil)
 
 (add-hook 'kill-emacs-hook 'gnus-grace-exit-before-kill-emacs)
