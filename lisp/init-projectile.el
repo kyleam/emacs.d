@@ -67,7 +67,7 @@ use the name of the current file."
     (if (eq last-command 'kill-region)
         (kill-append fname nil)
       (kill-new fname))
-    (message fname)))
+    (message "%s" fname)))
 
 (defvar km/projectile-project-saved-thing nil
   "Property list of saved thing for projects.
