@@ -9,7 +9,8 @@
 (setq gnus-startup-file (expand-file-name "newsrc" gnus-home-directory)
       gnus-init-file (expand-file-name "gnus" gnus-home-directory)
       gnus-save-newsrc-file nil
-      gnus-read-newsrc-file nil)
+      gnus-read-newsrc-file nil
+      gnus-inhibit-startup-message t)
 
 (setq sendmail-program "/usr/bin/msmtp"
       gnus-gcc-mark-as-read t
