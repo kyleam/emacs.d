@@ -528,6 +528,7 @@ show tags by default."
 (define-key magit-mode-map "." 'km/magit-map)
 (define-key km/magit-map "c" 'km/magit-find-commit-file)
 (define-key km/magit-map "g" 'km/git-map)
+(define-key km/magit-map "r" 'magit-rename-buffer)
 
 (define-prefix-command 'km/magit-wip-map)
 (define-key km/git-map "w" 'km/magit-wip-map)
