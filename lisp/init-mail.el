@@ -205,8 +205,6 @@ to group buffer instead of moving to next group."
 (require 'notmuch)
 (require 'org-notmuch)
 
-(setq org-gnus-prefer-web-links t)
-
 (setq notmuch-fcc-dirs nil
       notmuch-search-oldest-first nil)
 
