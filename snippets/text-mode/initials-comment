@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: initials comment
+# key: ic
+# --
+`(km/yas-with-comment "KM: ")`
