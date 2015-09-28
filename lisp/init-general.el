@@ -4,7 +4,7 @@
       visible-bell t
       enable-recursive-minibuffers t)
 
-(setq tramp-default-method "ssh")
+(setq tramp-default-method "sshx")
 
 (setq-default indicate-empty-lines t
               indent-tabs-mode nil)
