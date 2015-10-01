@@ -92,19 +92,48 @@ is off."
   (with-current-buffer gnus-summary-buffer
     (save-window-excursion (gnus-summary-select-article))))
 
-(defun km/gnus-follow-last-message-link (copy)
-  "Follow shr link at bottom of message.
-With prefix argument COPY, just copy the link."
-  (interactive "P")
-  (km/gnus-summary-set-current-article)
+(defun km/gnus--last-message-link ()
   (with-current-buffer gnus-article-buffer
     (save-excursion
       (goto-char (point-max))
       (widget-forward -1)
-      (if copy
-          (kill-new (or (get-text-property (point) 'gnus-string)
-                        (get-text-property (point) 'shr-url)))
-        (widget-button-press (point))))))
+      (kill-new (or (get-text-property (point) 'gnus-string)
+                    (get-text-property (point) 'shr-url))))))
+
+(defun km/gnus--gmane-link (&optional perma)
+  (with-current-buffer gnus-original-article-buffer
+    (-when-let* ((blink (message-field-value "Archived-At"))
+                 (link (or (and (string-match "\\`<\\(.*\\)>\\'" blink)
+                                (match-string 1 blink))
+                           blink)))
+      (if perma
+          link
+        (replace-regexp-in-string "\\`http://permalink\.gmane\.org/"
+                                    "http://thread.gmane.org/"
+                                    link)))))
+
+(defun km/gnus-copy-gmane-link-as-kill (&optional perma)
+  (interactive "P")
+  (km/gnus-summary-set-current-article)
+  (with-current-buffer gnus-original-article-buffer
+    (--when-let (km/gnus--gmane-link perma)
+      (kill-new (message it)))))
+
+(defun km/gnus-copy-message-link (follow)
+  "Copy link for current message.
+If it has an \"Archived-At\" header, use that.  Otherwise, get
+the link from the last widget in the buffer.  With prefix
+argument FOLLOW, follow link instead of copying it."
+  (interactive "P")
+  (km/gnus-summary-set-current-article)
+  (with-current-buffer gnus-original-article-buffer
+    (save-excursion
+      (--when-let (or (km/gnus--gmane-link)
+                      (km/gnus--last-message-link))
+        (funcall (if follow
+                     #'browse-url
+                   (lambda (s) (kill-new (message s))))
+                 it)))))
 
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
@@ -133,17 +162,6 @@ to group buffer instead of moving to next group."
   (let ((gnus-auto-select-next (unless no-next 'quietly)))
     (gnus-summary-catchup-and-exit nil t)))
 
-(defun km/gnus-copy-gmane-link-as-kill ()
-  (interactive)
-  (km/gnus-summary-set-current-article)
-  (with-current-buffer gnus-original-article-buffer
-    (save-excursion
-      (goto-char (point-min))
-      (if (re-search-forward "Archived-At: <\\(.*\\)>")
-          (let ((link (match-string-no-properties 1)))
-            (kill-new (message "%s" link)))
-        (user-error "No link found")))))
-
 (defun km/shr-browse-url-and-goto-next ()
   "Run `shr-browse-url' followed by `shr-next-link'."
   (interactive)
@@ -152,7 +170,7 @@ to group buffer instead of moving to next group."
 
 ;; This overrides `gnus-summary-goto-last-article', which is also
 ;; bound to 'G l'.
-(define-key gnus-summary-mode-map "l" 'km/gnus-follow-last-message-link)
+(define-key gnus-summary-mode-map "l" 'km/gnus-copy-message-link)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
