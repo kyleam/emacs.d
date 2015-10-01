@@ -86,6 +86,12 @@ is off."
     (call-interactively #'avy-goto-subword-1))
   (gnus-summary-scroll-up 0))
 
+(defun km/gnus-summary-set-current-article ()
+  (unless gnus-summary-buffer
+    (user-error "No summary buffer"))
+  (with-current-buffer gnus-summary-buffer
+    (save-window-excursion (gnus-summary-select-article))))
+
 (defun km/gnus-follow-last-message-link (copy)
   "Follow shr link at bottom of message.
 With prefix argument COPY, just copy the link."
@@ -118,12 +124,6 @@ A new buffer with the patch contents is opened in another window."
       (diff-mode)
       (view-mode 1))
     (pop-to-buffer bufname)))
-
-(defun km/gnus-summary-set-current-article ()
-  (unless gnus-summary-buffer
-    (user-error "No summary buffer"))
-  (with-current-buffer gnus-summary-buffer
-    (save-window-excursion (gnus-summary-select-article))))
 
 (defun km/gnus-summary-catchup (&optional no-next)
   "Mark all articles as read.
