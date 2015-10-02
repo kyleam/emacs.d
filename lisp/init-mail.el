@@ -171,6 +171,7 @@ to group buffer instead of moving to next group."
 ;; This overrides `gnus-summary-goto-last-article', which is also
 ;; bound to 'G l'.
 (define-key gnus-summary-mode-map "l" 'km/gnus-copy-message-link)
+(define-key gnus-summary-mode-map "v" 'org-capture)
 (define-key gnus-summary-mode-map ";" 'gnus-summary-universal-argument)
 ;; This overrides `gnus-summary-post-news', which is also bound to
 ;; 'S p'.
@@ -182,13 +183,15 @@ to group buffer instead of moving to next group."
 ;; Allow `km/ace-link-widget' binding to work even when on shr widget.
 (after 'shr
   (define-key shr-map "o" nil)
-  (define-key shr-map "O" 'shr-save-contents))
+  (define-key shr-map "O" 'shr-save-contents)
+  (define-key shr-map "v" nil))
 
 (define-key gnus-article-mode-map
   (kbd "C-c l") 'km/gnus-follow-last-message-link)
 (define-key gnus-article-mode-map "e" 'km/shr-browse-url-and-goto-next)
 ;; This overrides `gnus-summary-save-article', which is also on 'O o'.
 (define-key gnus-article-mode-map "o" 'km/ace-link-widget)
+(define-key gnus-article-mode-map "v" 'org-capture)
 
 (define-prefix-command 'km/gnus-summary-prefix-map)
 (define-key gnus-summary-mode-map (kbd "C-c m") 'km/gnus-summary-prefix-map)
