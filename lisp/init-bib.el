@@ -20,6 +20,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-set-coding-system)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-entry-space)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-entry)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-keys)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -138,6 +139,15 @@ to
         (goto-char beg)
         (and (re-search-forward "http://dx.doi.org/" end t)
              (replace-match ""))))))
+
+(defun km/bibtex-downcase-keys ()
+  "Downcase keys that are all caps."
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (let (case-fold-search)
+      (while (re-search-forward "^\\s-*\\([A-Z]+\\)\\s-*=" nil t)
+        (replace-match (downcase (match-string 1)) 'fixedcase
+                       nil nil 1)))))
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
