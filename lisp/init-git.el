@@ -376,7 +376,9 @@ argument."
               (hash (match-string 0)))
           (when (< hash-len n)
             (user-error "Desired hash length is greater than current"))
-          (replace-match (km/magit-shorten-hash hash n)
+          (replace-match (or (km/magit-shorten-hash hash n)
+                             ;; We're not in a repo.
+                             (substring hash 0 n))
                          'fixedcase)
           (when (< offset n)
             (skip-chars-backward "A-z0-9")
