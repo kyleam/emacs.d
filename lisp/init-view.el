@@ -1,4 +1,3 @@
-(setq view-read-only t)
 
 (after 'view
   (define-key view-mode-map "l" 'recenter-top-bottom)
