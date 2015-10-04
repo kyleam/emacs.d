@@ -454,14 +454,14 @@ COMMIT."
 
 (defun km/magit-copy-as-kill ()
   "Try `km/magit-copy-hook' before calling `magit-copy-as-kill'.
-With a prefix argument of -1, always call `magit-copy-as-kill'.
+With a prefix argument of -1, always call `magit-copy-section-value'
 Otherwise, the current prefix argument is passed to each hook
 function."
   (interactive)
   (or (unless (= (prefix-numeric-value current-prefix-arg) -1)
         (run-hook-with-args-until-success
          'km/magit-copy-hook current-prefix-arg))
-      (magit-copy-as-kill)))
+      (magit-copy-section-value)))
 
 (defun km/magit-avy-goto-subword-1 ()
   "Like `km/avy-goto-subword-1', but maybe show commit and limit to window."
