@@ -548,11 +548,12 @@ show tags by default."
 (define-key km/git-map "d" 'magit-dispatch-popup)
 (define-key km/git-map "e" 'km/magit-commit-extend-with-file)
 (define-key km/git-map "f" 'km/magit-reset-file)
+(define-key km/git-map "i" 'km/magit-insert-staged-file)
 (define-key km/git-map "n" 'km/magit-shorten-hash-at-point)
 (define-key km/git-map "l" 'magit-log-buffer-file)
 (define-key km/git-map "p" 'km/magit-pin-file)
 (define-key km/git-map "r" 'km/magit-find-recently-changed-file)
-(define-key km/git-map "s" 'km/magit-insert-staged-file)
+(define-key km/git-map "s" 'magit-stage-file)
 (define-key km/git-map "u" 'km/magit-auto-commit)
 (define-key km/git-map "v" 'km/magit-revfile-reset)
 
