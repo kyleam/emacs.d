@@ -720,7 +720,7 @@ to be easily overriden.")
                     (thing-at-point 'filename))))
       (if (and file (file-exists-p file))
           (org-open-file file)
-        (user-error "No file at point")))))
+        (km/org-open-file)))))
 
 (defun km/org-open-file ()
   "Interactive version of `org-open-file'."
