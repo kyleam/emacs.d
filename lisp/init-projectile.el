@@ -23,6 +23,12 @@ end up in the project if the buffers are now dead."
   (let ((projectile-switch-project-action 'km/projectile-maybe-restore-thing))
     (projectile-switch-project)))
 
+(defun km/projectile-ignore-directory-p (name)
+  (or (file-remote-p name)
+      (string-prefix-p "/tmp/" name)))
+
+(setq projectile-ignored-project-function #'km/projectile-ignore-directory-p)
+
 (defun km/projectile-open-external-terminal-in-root ()
   "Run `km/open-external-terminal' in project root."
   (interactive)
