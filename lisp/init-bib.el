@@ -49,11 +49,11 @@ case, unless the word is the first word in the title.  Capitalize
 all other words unless they are protected by brackets."
   (save-excursion
     (bibtex-beginning-of-entry)
-    (let* ((text-bounds (cdr (bibtex-search-forward-field "title" t)))
-           (beg (car text-bounds))
-           (end (cadr text-bounds)))
+    (let* ((bounds (bibtex-search-forward-field "title" t))
+           (beg (bibtex-start-of-text-in-field bounds)))
       (goto-char (1- beg))
-      (while (re-search-forward "\\(\\W\\)\\(\\w+\\)\\(\\W\\)" end t)
+      (while (re-search-forward "\\(\\W\\)\\(\\w+\\)\\(\\W\\)"
+                                (bibtex-end-of-text-in-field bounds) t)
         (cond
          ((and (string= (match-string 1) "{")
                (string= (match-string 3) "}"))
@@ -82,12 +82,12 @@ all other words unless they are protected by brackets."
   "Convert multiple spaces in author list to single space."
   (save-excursion
     (bibtex-beginning-of-entry)
-    (let* ((text-bounds (cdr (bibtex-search-forward-field "author" t)))
-           (beg (car text-bounds))
-           (end (cadr text-bounds)))
-      (when text-bounds
+    (let* ((bounds (bibtex-search-forward-field "author" t))
+           (beg (bibtex-start-of-text-in-field bounds)))
+      (when bounds
         (goto-char beg)
-        (while (re-search-forward "\\(\\s-+\\) and" end t)
+        (while (re-search-forward "\\(\\s-+\\) and"
+                                  (bibtex-end-of-text-in-field bounds) t)
           (replace-match "" nil nil nil 1))
         (goto-char beg)
         (fill-paragraph)))))
@@ -120,24 +120,22 @@ to
   "Use double hyphen for page range."
   (save-excursion
     (bibtex-beginning-of-entry)
-    (let* ((text-bounds (cdr (bibtex-search-forward-field "pages" t)))
-           (beg (car text-bounds))
-           (end (cadr text-bounds)))
-      (when text-bounds
-        (goto-char beg)
-        (and (re-search-forward "[^A-z0-9]*-[^A-z0-9]*" end t)
+    (let ((bounds (bibtex-search-forward-field "pages" t)))
+      (when bounds
+        (goto-char (bibtex-start-of-text-in-field bounds))
+        (and (re-search-forward "[^A-z0-9]*-[^A-z0-9]*"
+                                (bibtex-end-of-text-in-field bounds) t)
              (replace-match "--"))))))
 
 (defun km/bibtex-remove-doi-leader ()
   "Remove leading part (http:...) of doi URL."
   (save-excursion
     (bibtex-beginning-of-entry)
-    (let* ((text-bounds (cdr (bibtex-search-forward-field "doi" t)))
-           (beg (car text-bounds))
-           (end (cadr text-bounds)))
-      (when text-bounds
-        (goto-char beg)
-        (and (re-search-forward "http://dx.doi.org/" end t)
+    (let ((bounds (bibtex-search-forward-field "doi" t)))
+      (when bounds
+        (goto-char (bibtex-start-of-text-in-field bounds))
+        (and (re-search-forward "http://dx.doi.org/"
+                                (bibtex-end-of-text-in-field bounds) t)
              (replace-match ""))))))
 
 (defun km/bibtex-downcase-keys ()
