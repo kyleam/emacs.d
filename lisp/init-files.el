@@ -63,6 +63,13 @@
         (dired-jump 'other-window (expand-file-name file))
       (user-error "No file at point"))))
 
+(defun km/touch-buffer-file ()
+  "Run touch on `buffer-file-name'."
+  (interactive)
+  (call-process "touch" nil nil nil
+                (or (buffer-file-name (buffer-base-buffer))
+                    (user-error "Not visiting file"))))
+
 (defun km/write-file ()
   "Run `write-file'.
 Use the current file name as initial input of prompt."
@@ -84,6 +91,7 @@ Use the current file name as initial input of prompt."
 (define-key km/file-map "R" 'km/find-file-as-root)
 (define-key km/file-map "n" 'km/rename-current-buffer-file)
 (define-key km/file-map "l" 'nlines-run-command)
+(define-key km/file-map "t" 'km/touch-buffer-file)
 (define-key km/file-map "v" 'view-file)
 
 
