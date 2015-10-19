@@ -65,7 +65,7 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
                    (completing-read "Project: "
                                     (projectile-relevant-known-projects))))
              (default-directory (or project default-directory)))
-        (magit-show-commit hash))
+        (magit-show-commit hash (car (magit-diff-arguments))))
     (user-error "No hash found at point")))
 
 (defun km/magit-commit-extend-with-file ()
