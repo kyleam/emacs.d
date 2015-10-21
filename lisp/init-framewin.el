@@ -38,16 +38,24 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
-(global-set-key (kbd "M-o") 'scroll-other-window)
+(defhydra hydra-window-map (:hint nil)
+  "
+_l_: Switch split   _r_: Winner redo   _o_: Scroll other
+_s_: Swap           _u_: Winner undo   _i_: Scroll other down
+\n"
+  ("l" km/switch-window-split)
+  ("s" km/swap-windows)
 
-(define-prefix-command 'km/window-map)
-(global-set-key (kbd "C-c w") 'km/window-map)
+  ("r" winner-redo)
+  ("u" winner-undo)
 
-(define-key km/window-map "f" 'make-frame)
-(define-key km/window-map "l" 'km/switch-window-split)
-(define-key km/window-map "r" 'winner-redo)
-(define-key km/window-map "s" 'km/swap-windows)
-(define-key km/window-map "u" 'winner-undo)
+  ("o" scroll-other-window)
+  ("i" scroll-other-window-down)
+
+  ("f" make-frame "new frame" :color blue)
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-c w") 'hydra-window-map/body)
 
 (key-chord-define-global "lq" 'winner-undo)
 
