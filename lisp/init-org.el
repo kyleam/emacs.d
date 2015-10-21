@@ -584,7 +584,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 ;;; Links
 
 (add-to-list 'load-path "~/src/emacs/org-link-edit/")
-(require 'org-link-edit-autoloads)
+(require 'org-link-edit)
 
 (setq org-link-search-must-match-exact-headline nil)
 
@@ -607,24 +607,23 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
     (dired-jump 'other-window
                 (expand-file-name (org-element-property :path el)))))
 
-(after 'org-link-edit
-  (defun km/org-link-edit-slurp-link ()
-    "Slurp trailing text into link.
+(defun km/org-link-edit-slurp-link ()
+  "Slurp trailing text into link.
 
   \[link\]extra  ->  \[\[linkextra\]\]
 
 After slurping, return the slurped text and move point to the
 beginning of the link."
-    (interactive)
-    (cl-multiple-value-bind (beg end link desc) (org-link-edit--get-link-data)
-      (when (progn (goto-char end) (looking-at "[^ \t\n]+"))
-        (let ((slurped (match-string-no-properties 0)))
-          (setq link (concat link slurped)
-                end (match-end 0))
-          (delete-region beg end)
-          (insert (org-make-link-string link desc))
-          (goto-char beg)
-          slurped)))))
+  (interactive)
+  (cl-multiple-value-bind (beg end link desc) (org-link-edit--get-link-data)
+    (when (progn (goto-char end) (looking-at "[^ \t\n]+"))
+      (let ((slurped (match-string-no-properties 0)))
+        (setq link (concat link slurped)
+              end (match-end 0))
+        (delete-region beg end)
+        (insert (org-make-link-string link desc))
+        (goto-char beg)
+        slurped))))
 
 (define-key km/org-prefix-map "d" 'km/org-link-dired-jump)
 (define-key km/global-org-map "l" 'org-store-link)
