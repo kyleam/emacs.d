@@ -1,4 +1,5 @@
-(setq python-fill-docstring-style 'pep-257-nn)
+(setq python-fill-docstring-style 'pep-257-nn
+      python-indent-guess-indent-offset nil)
 
 (setq python-shell-interpreter "ipython"
       python-shell-prompt-detect-enabled nil)
