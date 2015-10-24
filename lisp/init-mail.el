@@ -50,7 +50,8 @@
 
 (setq gnus-group-use-permanent-levels t)
 
-(setq gnus-group-sort-function '(km/gnus-group-sort-by-topic
+(setq gnus-group-sort-function '(gnus-group-sort-by-alphabet
+                                 km/gnus-group-sort-by-topic
                                  gnus-group-sort-by-level))
 
 (defun km/gnus-group-sort-by-topic (info1 info2)
