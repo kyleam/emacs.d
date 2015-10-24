@@ -623,6 +623,8 @@ show tags by default."
   ?s "Backup current branch" 'km/magit-backup-branch)
 (magit-define-popup-action 'magit-branch-popup
   ?t "Local tracking" 'km/magit-checkout-local-tracking)
+(magit-define-popup-action 'magit-branch-popup
+  ?v "Spin off" 'magit-branch-spinoff)
 
 (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
   "Set '--no-ff' flag when running `magit-merge-editmsg'."
