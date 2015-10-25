@@ -399,7 +399,7 @@ called through the speed command interface."
          "* TODO %?%i" :prepend t)
         ("d" "date" entry (file+headline "~/notes/calendar.org" "Inbox")
          "* %?%i" :prepend t)
-        ("m" "misc" entry (file+headline "~/notes/misc.org" "Inbox")
+        ("b" "bookmark" entry (file+headline "~/notes/bookmarks.org" "Inbox")
          "* %?%i" :prepend t)
         ("v" "Visit" checkitem (file+headline "~/notes/tasks.org" "Visit")
          "- [ ] %?%i\n" :prepend t)
@@ -410,12 +410,14 @@ called through the speed command interface."
          "* TODO %?%i\n\n%a" :prepend t)
         ("D" "date link" entry (file+headline "~/notes/calendar.org" "Inbox")
          "* %?%i\n\n%a" :prepend t)
-        ("M" "misc link" entry (file+headline "~/notes/misc.org" "Inbox")
+        ("B" "bookmark link" entry
+         (file+headline "~/notes/bookmarks.org" "Inbox")
          "* %?%i\n\n%a" :prepend t)
         ;; Clipboard
         ("x" "task clipboard" entry (file+headline "~/notes/tasks.org" "Inbox")
          "* TODO %?%i\n\n%x" :prepend t)
-        ("X" "misc clipboard" entry (file+headline "~/notes/misc.org" "Inbox")
+        ("X" "bookmark clipboard" entry
+         (file+headline "~/notes/bookmarks.org" "Inbox")
          "* %?%i\n\n%x" :prepend t)))
 
 (add-hook 'org-agenda-mode-hook 'km/org-agenda-cd-and-read-dir-locals)
