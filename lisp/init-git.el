@@ -189,6 +189,40 @@ date."
                  (magit-completing-read
                   "Ref" (km/magit-list-recent-refs n 'remote))))
 
+(defun km/magit-refs-filter-recent (n)
+  "Limit branch list to N most recent.
+Warning: I find this useful, but it's a hack that breaks
+magit-section-backward and probably other things.  Hit `g` to
+refresh the buffer, and all should be right again."
+  (interactive (list (or (and current-prefix-arg
+                              (prefix-numeric-value current-prefix-arg))
+                         5)))
+  (unless (derived-mode-p 'magit-refs-mode)
+    (user-error "Not in Magit Refs mode"))
+  (let ((sec (magit-current-section))
+        remote refs line-sec)
+    (when (eq (magit-section-type sec) 'branch)
+      (setq sec (magit-section-parent sec)))
+    (when (eq (magit-section-type sec) 'remote)
+      (setq remote (magit-section-value sec)))
+    (setq refs
+          (magit-git-lines
+           "for-each-ref" "--sort=-committerdate" "--format=%(refname:short)"
+           (format "--count=%s" n)
+           (if remote (format "refs/remotes/%s" remote) "refs/heads")))
+    (save-excursion
+      (save-restriction
+        (narrow-to-region (magit-section-content sec) (magit-section-end sec))
+        (goto-char (point-min))
+        (while (and (not (eobp))
+                    (setq line-sec (magit-current-section))
+                    (eq (magit-section-type line-sec) 'branch))
+          (if (member (magit-section-value line-sec) refs)
+              (forward-line 1)
+            (let ((inhibit-read-only t))
+              (delete-region (magit-section-start line-sec)
+                             (magit-section-end line-sec)))))))))
+
 (defun km/magit-checkout-master ()
   "Checkout master branch.
 \n(git checkout master)"
@@ -522,6 +556,8 @@ show tags by default."
 (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
 
 (define-key magit-refs-mode-map (kbd "C-c C-t") 'km/magit-refs-toggle-tags)
+
+(define-key magit-refs-mode-map (kbd "C-c C-f") 'km/magit-refs-filter-recent)
 
 (define-key magit-process-mode-map (kbd "C-c C-k") 'magit-process-kill)
 
