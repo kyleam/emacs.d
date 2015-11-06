@@ -104,6 +104,7 @@ FILES may use abbreviations defined in `grep-files-aliases', e.g.
 entering `ch' is equivalent to `*.[ch]'.")
 
 (add-hook 'grep-setup-hook 'km/grep-hide-header)
+(add-hook 'grep-mode-hook 'toggle-truncate-lines)
 
 (defun km/grep-hide-header ()
   (let ((beg (save-excursion (goto-char (point-min))
