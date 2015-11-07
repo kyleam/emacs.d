@@ -7,6 +7,8 @@
 
 (setq ispell-program-name "aspell")
 
+(setq Man-notify-method 'aggressive)
+
 (define-prefix-command 'km/external-map)
 (global-set-key (kbd "C-c z") 'km/external-map)
 
