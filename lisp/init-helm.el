@@ -7,8 +7,6 @@
       helm-ff-file-name-history-use-recentf t
       helm-ff-skip-boring-files t)
 
-(setq helm-man-or-woman-function #'woman)
-
 (defun km/helm-display-buffer ()
   (interactive)
   (with-helm-alive-p
