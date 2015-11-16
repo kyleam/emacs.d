@@ -170,6 +170,8 @@ being turned on."
   (add-to-list 'load-path km/pydoc-dir)
   (autoload 'pydoc "pydoc" nil t))
 
+(setq pydoc-make-method-buttons nil)
+
 (defvar km/pydoc-names nil
   "List of names that have been sucessfully loaded by `pydoc'.")
 
