@@ -161,4 +161,77 @@ being turned on."
 
   (define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window))
 
+
+;;; Pydoc
+
+(defvar km/pydoc-dir "~/src/emacs/pydoc/")
+
+(when (file-exists-p km/pydoc-dir)
+  (add-to-list 'load-path km/pydoc-dir)
+  (autoload 'pydoc "pydoc" nil t))
+
+(defvar km/pydoc-names nil
+  "List of names that have been sucessfully loaded by `pydoc'.")
+
+(defvar km/pydoc-names-file "~/.emacs.d/.pydoc-names"
+  "File to save `km/pydoc-names' to.")
+
+(add-hook 'pydoc-after-finish-hook #'km/pydoc-store-name)
+
+(defun km/pydoc ()
+  "Run `pydoc', prompting with `km/pydoc-names'."
+  (interactive)
+  (let* ((default-directory "~/")
+         (initial-name (and (use-region-p)
+                            (buffer-substring-no-properties
+                             (region-beginning)
+                             (region-end))))
+         (name (completing-read "Name: " km/pydoc-names nil nil
+                                initial-name)))
+    (pydoc name)))
+
+(defun km/pydoc-store-name ()
+  "Store the name for the current pydoc object."
+  (with-current-buffer (pydoc-buffer)
+    (unless (eq (plist-get pydoc-info :type) 'not-found)
+      (cl-pushnew (substring-no-properties (car (cdr help-xref-stack-item)))
+                  km/pydoc-names
+                  :test #'string=))))
+
+(defun km/pydoc-save-names-file (&optional file)
+  "Save `km/pydoc-names' to FILE.
+FILE is `km/pydoc-names-file' by default."
+  (interactive
+   (list
+    (read-file-name (format "Save file (default %s): "
+                            km/pydoc-names-file)
+                    nil km/pydoc-names-file t)))
+  (setq file (or file km/pydoc-names-file))
+  (when (file-writable-p file)
+    (with-temp-file file
+      (let (print-length)
+        (print (sort km/pydoc-names #'string-lessp)
+               (current-buffer))))))
+
+(defun km/pydoc-read-names-file (&optional file)
+  "Read `km/pydoc-names-file' from FILE.
+FILE is `km/pydoc-names-file' by default."
+  (interactive
+   (list
+    (read-file-name (format "Read file (default %s): "
+                            km/pydoc-names-file)
+                    nil km/pydoc-names-file t)))
+  (with-temp-buffer
+    (insert-file-contents (or file km/pydoc-names-file))
+    (setq km/pydoc-names (read (current-buffer)))))
+
+(after 'pydoc
+  ;; Don't shadow my `ace-link' binding.
+  (define-key pydoc-mode-map "o" #'ace-link-help))
+
+(when (file-exists-p km/pydoc-names-file)
+  (km/pydoc-read-names-file km/pydoc-names-file))
+
+(global-set-key (kbd "C-h y")  #'km/pydoc)
+
 (provide 'init-python)

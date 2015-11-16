@@ -10,6 +10,7 @@
     ;; Remove all mail map bindings except notmuch.
     (global-set-key (kbd "C-x m") nil)
     (global-set-key (kbd "C-x m n") 'notmuch)
+    (add-hook 'kill-emacs-hook #'km/pydoc-save-names-file)
     (setq save-abbrevs 'silently
           bookmark-save-flag 1))
    ((string= server "mail")
