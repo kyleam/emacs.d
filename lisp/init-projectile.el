@@ -52,14 +52,21 @@ Interactive arguments are processed according to
   (view-mode 1))
 
 (defun km/project-filename-at-point ()
-  "Return file name relative to `projectile-project-root'."
+  "Return file name relative to `projectile-project-root'.
+In the case of multiple files marked in Dired, return the file
+names separated by a space."
   (let* ((el (and (derived-mode-p 'org-mode)
                   (org-element-lineage (org-element-context) '(link) t)))
          (fname (or (and (eq (org-element-type el) 'link)
                          (org-element-property :path el))
+                    (and (derived-mode-p 'dired-mode)
+                         (dired-get-marked-files 'nodir nil))
                     (thing-at-point 'filename))))
     (when fname
-      (file-relative-name fname (projectile-project-root)))))
+      (mapconcat
+       `(lambda (f) (file-relative-name f ,(projectile-project-root)))
+       (if (listp fname) fname (list fname))
+       " "))))
 
 (defun km/projectile-copy-project-filename-as-kill ()
   "Copy name of project file.
