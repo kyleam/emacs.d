@@ -10,13 +10,14 @@
 (defun km/ace-link-dired ()
   "Ace jump to files in dired buffers."
   (interactive)
-  (let ((res (avy--with-avy-keys km/ace-link-dired
-               (avy--process
-                (km/ali--dired-collect-references)
-                #'avy--overlay-pre))))
-    (when res
-      (goto-char res)
-      (org-open-file (dired-get-filename)))))
+  (avy-with km/ace-link-dired
+    (setq avy-action
+          (lambda (pt)
+            (goto-char pt)
+            (org-open-file (dired-get-filename))))
+    (avy--process
+     (km/ali--dired-collect-references)
+     #'avy--overlay-post)))
 
 (defun km/ali--dired-collect-references ()
   (let ((end (window-end))
@@ -37,13 +38,14 @@ property."
   (interactive)
   (when (eq major-mode 'gnus-summary-mode)
     (gnus-summary-widget-forward 1))
-  (let ((res (avy--with-avy-keys km/ace-link-widget
-               (avy--process
-                (km/ali--widget-collect-references)
-                #'avy--overlay-post))))
-    (when res
-      (goto-char (1+ res))
-      (widget-button-press (point)))))
+  (avy-with km/ace-link-widget
+    (setq avy-action
+          (lambda (pt)
+            (goto-char (1+ pt))
+            (widget-button-press (point))))
+    (avy--process
+     (km/ali--widget-collect-references)
+     #'avy--overlay-post)))
 
 (defun km/ali--widget-collect-references ()
   "Collect the positions of visible widgets in buffer."
