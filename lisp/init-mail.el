@@ -98,8 +98,9 @@ is off."
     (save-excursion
       (goto-char (point-max))
       (widget-forward -1)
-      (kill-new (or (get-text-property (point) 'gnus-string)
-                    (get-text-property (point) 'shr-url))))))
+      (--when-let (or (get-text-property (point) 'gnus-string)
+                      (get-text-property (point) 'shr-url))
+        (kill-new it)))))
 
 (defun km/gnus--gmane-link (&optional perma)
   (with-current-buffer gnus-original-article-buffer
