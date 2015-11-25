@@ -80,9 +80,12 @@ DIRECTORY."
          ((= (prefix-numeric-value current-prefix-arg) 4)
           "~/")
          ((= (prefix-numeric-value current-prefix-arg) 0)
-          (--if-let (km/zsh-ansi-term-current-directories)
-              (completing-read "Directory: " it nil nil nil nil (car it))
-            (user-error "No ZSH buffers found")))
+          (let ((dirs (km/zsh-ansi-term-current-directories)))
+            (cl-case (length dirs)
+              (0 (user-error "No ZSH buffers found"))
+              (1 (car dirs))
+              (t (completing-read "Directory: " dirs
+                                  nil nil nil nil (car dirs))))))
          (t
           (read-directory-name "Directory: ")))))
 
