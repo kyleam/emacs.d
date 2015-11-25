@@ -52,11 +52,11 @@ With any other non-nil value, prompt for a directory."
          (default-directory dir))
     (cond
      ((string= (km/zsh-ansi-term-directory) dir)
-      (ansi-term "/bin/zsh" name))
+      (ansi-term "zsh" name))
      ((get-buffer full-name)
       (switch-to-buffer full-name))
      (t
-      (ansi-term "/bin/zsh" name)))))
+      (ansi-term "zsh" name)))))
 
 (defun km/zsh-toggle-ansi-term-home ()
   (interactive)
