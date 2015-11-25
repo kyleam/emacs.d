@@ -64,11 +64,13 @@ DIRECTORY."
                   (lambda (b &rest _) (get-buffer b))))
          (ansi-term "zsh" name)))))))
 
-(defun km/zsh-toggle-ansi-term-home ()
-  (interactive)
+(defun km/zsh-toggle-ansi-term-home (&optional other-window)
+  (interactive "P")
   (if (string= "*zsh*" (buffer-name))
       (bury-buffer)
-    (km/zsh-ansi-term "~/" "zsh")))
+    (let ((display-buffer-overriding-action
+           (and other-window '(nil (inhibit-same-window . t)))))
+      (km/zsh-ansi-term "~/" "zsh"))))
 
 (defun km/zsh-ansi-term-other-window (&optional directory)
   (interactive (km/zsh-ansi-term--args))
