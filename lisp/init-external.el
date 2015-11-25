@@ -55,13 +55,14 @@ DIRECTORY."
          (name (or name (concat "zsh: " dir)))
          (full-name (concat "*" name "*"))
          (default-directory dir))
-    (cond
-     ((string= (km/zsh-ansi-term-directory) dir)
-      (ansi-term "zsh" name))
-     ((get-buffer full-name)
-      (switch-to-buffer full-name))
-     (t
-      (ansi-term "zsh" name)))))
+    (pop-to-buffer-same-window
+     (cond
+      ((and (not (string= (km/zsh-ansi-term-directory) dir))
+            (get-buffer full-name)))
+      (t
+       (cl-letf (((symbol-function 'switch-to-buffer)
+                  (lambda (b &rest _) (get-buffer b))))
+         (ansi-term "zsh" name)))))))
 
 (defun km/zsh-toggle-ansi-term-home ()
   (interactive)
@@ -71,7 +72,9 @@ DIRECTORY."
 
 (defun km/zsh-ansi-term-other-window (&optional directory)
   (interactive (km/zsh-ansi-term--args))
-  (pop-to-buffer (save-window-excursion (km/zsh-ansi-term directory))))
+  (let ((display-buffer-overriding-action
+         '(nil (inhibit-same-window . t))))
+    (km/zsh-ansi-term directory)))
 
 (defun km/zsh-ansi-term--args ()
   (list (cond
