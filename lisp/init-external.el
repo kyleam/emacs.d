@@ -29,7 +29,7 @@
   (start-process "ext-term" nil km/terminal))
 (define-key km/external-map "t" 'km/open-external-terminal)
 
-(defun km/zsh-ansi-term (&optional directory)
+(defun km/zsh-ansi-term (&optional directory name)
   "Open an ansi-term buffer running ZSH in DIRECTORY.
 
 If a terminal for DIRECTORY already exists, switch to that
@@ -44,10 +44,15 @@ ZSH terminal directories.
 With a C-u prefix argument, set DIRECTORY to the user home
 directory.
 
-With any other non-nil value, prompt for a directory."
+With any other non-nil value, prompt for a directory.
+
+If NAME is non-nil, use *NAME* for the buffer name instead of
+*zsh: DIRECTORY*.  If that buffer already exists, it will be
+grabbed regardless of whether its default-directory matches
+DIRECTORY."
   (interactive (km/zsh-ansi-term--args))
   (let* ((dir (abbreviate-file-name directory))
-         (name (concat "zsh: " dir))
+         (name (or name (concat "zsh: " dir)))
          (full-name (concat "*" name "*"))
          (default-directory dir))
     (cond
@@ -60,9 +65,9 @@ With any other non-nil value, prompt for a directory."
 
 (defun km/zsh-toggle-ansi-term-home ()
   (interactive)
-  (if (string= "*zsh: ~/*" (buffer-name))
+  (if (string= "*zsh*" (buffer-name))
       (bury-buffer)
-    (km/zsh-ansi-term "~/")))
+    (km/zsh-ansi-term "~/" "zsh")))
 
 (defun km/zsh-ansi-term-other-window (&optional directory)
   (interactive (km/zsh-ansi-term--args))
