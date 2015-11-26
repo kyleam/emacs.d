@@ -62,7 +62,8 @@ DIRECTORY."
       (t
        (cl-letf (((symbol-function 'switch-to-buffer)
                   (lambda (b &rest _) (get-buffer b))))
-         (ansi-term "zsh" name)))))))
+         (ansi-term "zsh" name)))))
+    (comint-goto-process-mark)))
 
 (defun km/zsh-toggle-ansi-term-home (&optional other-window)
   (interactive "P")
