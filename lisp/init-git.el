@@ -16,9 +16,7 @@
 (add-to-list 'load-path "~/src/emacs/orgit/")
 (require 'orgit)
 
-(setq magit-restore-window-configuration t
-      magit-bury-buffer-function 'magit-restore-window-configuration
-      magit-revert-buffers 'silent
+(setq magit-revert-buffers 'silent
       magit-push-always-verify nil
       magit-delete-by-moving-to-trash nil
       magit-diff-auto-show-delay 0.1
@@ -32,8 +30,6 @@
 
 (setq git-commit-finish-query-functions nil)
 
-;; http://whattheemacsd.com/setup-magit.el-01.html
-(add-hook 'magit-status-mode-hook 'delete-other-windows)
 (remove-hook 'magit-refs-sections-hook 'magit-insert-tags)
 
 (add-hook 'git-commit-setup-hook
@@ -41,6 +37,11 @@
             (add-hook 'with-editor-pre-finish-hook
                       'git-commit-save-message nil t)))
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+
+(add-hook 'magit-post-display-buffer-hook
+          (lambda ()
+            (when (eq major-mode 'magit-status-mode)
+              (delete-other-windows))))
 
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
