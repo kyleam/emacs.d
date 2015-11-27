@@ -20,6 +20,9 @@
 (after 'flyspell
   (define-key flyspell-mode-map (kbd "C-.") nil))
 
+(put 'fill-paragraph-function 'safe-local-variable
+     (lambda (v) (equal v (lambda (_) t))))
+
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
