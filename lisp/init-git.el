@@ -637,8 +637,8 @@ show tags by default."
 (magit-define-popup-action 'magit-diff-popup
   ?e "Edit options" 'magit-diff-refresh-popup)
 
-(magit-define-popup-action 'magit-stash-popup
-  ?s "Snapshot" 'magit-snapshot)
+(magit-change-popup-key 'magit-stash-popup :action
+                        ?Z ?s)
 
 (magit-define-popup-switch 'magit-log-popup
   ?p "First parent" "--first-parent")
@@ -654,14 +654,21 @@ show tags by default."
 (magit-define-popup-action 'magit-log-popup
   ?W "Log other WIP" 'magit-wip-log)
 
+(magit-change-popup-key 'magit-branch-popup :action
+                        ?c ?o)
+(magit-change-popup-key 'magit-branch-popup :action
+                        ?n ?C)
+(magit-change-popup-key 'magit-branch-popup :action
+                        ?m ?R)
+(magit-change-popup-key 'magit-branch-popup :action
+                        ?s ?v)
+
 (magit-define-popup-action 'magit-branch-popup
   ?c "Create & checkout from current"
   'km/magit-branch-and-checkout-from-current)
+
 (magit-define-popup-action 'magit-branch-popup
-  ?C "Create" 'magit-branch)
-(magit-define-popup-action 'magit-branch-popup
-  ?l "Delete previous branch"
-  'km/magit-delete-previous-branch)
+  ?K "Delete previous branch" 'km/magit-delete-previous-branch)
 (magit-define-popup-action 'magit-branch-popup
   ?m "Checkout master" 'km/magit-checkout-master)
 (magit-define-popup-action 'magit-branch-popup
@@ -669,15 +676,13 @@ show tags by default."
 (magit-define-popup-action 'magit-branch-popup
   ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
 (magit-define-popup-action 'magit-branch-popup
-  ?p "Checkout previous" 'km/magit-checkout-previous-branch)
+  ?l "Checkout previous" 'km/magit-checkout-previous-branch)
 (magit-define-popup-action 'magit-branch-popup
   ?r "Rename branch" 'km/magit-branch-rename)
 (magit-define-popup-action 'magit-branch-popup
   ?s "Backup current branch" 'km/magit-backup-branch)
 (magit-define-popup-action 'magit-branch-popup
   ?t "Local tracking" 'km/magit-checkout-local-tracking)
-(magit-define-popup-action 'magit-branch-popup
-  ?v "Spin off" 'magit-branch-spinoff)
 
 (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
   "Set '--no-ff' flag when running `magit-merge-editmsg'."
