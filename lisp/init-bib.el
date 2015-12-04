@@ -21,6 +21,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-entry-space)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-entry)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-keys)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-author-and)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -146,6 +147,17 @@ to
       (while (re-search-forward "^\\s-*\\([A-Z]+\\)\\s-*=" nil t)
         (replace-match (downcase (match-string 1)) 'fixedcase
                        nil nil 1)))))
+
+(defun km/bibtex-downcase-author-and ()
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (let ((bounds (bibtex-search-forward-field "author" t)))
+      (when bounds
+        (goto-char (bibtex-start-of-text-in-field bounds))
+        (let (case-fold-search)
+          (while (re-search-forward "\\bAND\\b"
+                                    (bibtex-end-of-text-in-field bounds) t)
+            (replace-match (downcase (match-string 0)) 'fixedcase)))))))
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
