@@ -639,6 +639,10 @@ show tags by default."
 
 (magit-define-popup-action 'magit-log-popup
   ?e "Edit options" 'magit-log-refresh-popup)
+(magit-define-popup-action 'magit-log-popup
+  ?w "Log current WIP" 'magit-wip-log-current)
+(magit-define-popup-action 'magit-log-popup
+  ?W "Log other WIP" 'magit-wip-log)
 
 (magit-define-popup-action 'magit-branch-popup
   ?c "Create & checkout from current"
