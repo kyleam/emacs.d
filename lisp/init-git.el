@@ -149,6 +149,17 @@ without requiring confirmation.
                          branches))))))
   (magit-run-git "checkout" "-t" remote-branch))
 
+(defun km/magit-branch-rename (old new &optional force)
+  "Like `magit-branch-rename', but use old branch as initial prompt."
+  (interactive
+   (let ((branch (magit-read-local-branch "Rename branch")))
+     (list branch
+           (magit-read-string-ns (format "Rename branch '%s' to" branch)
+                                 branch)
+           current-prefix-arg)))
+  (unless (string= old new)
+    (magit-run-git-no-revert "branch" (if force "-M" "-m") old new)))
+
 (defun km/magit-delete-previous-branch (&optional force)
   "Delete previous branch.
 \n(git branch -d @{-1})"
@@ -660,6 +671,8 @@ show tags by default."
   ?N "Track recent ref" 'km/magit-checkout-track-recent-ref)
 (magit-define-popup-action 'magit-branch-popup
   ?p "Checkout previous" 'km/magit-checkout-previous-branch)
+(magit-define-popup-action 'magit-branch-popup
+  ?r "Rename branch" 'km/magit-branch-rename)
 (magit-define-popup-action 'magit-branch-popup
   ?s "Backup current branch" 'km/magit-backup-branch)
 (magit-define-popup-action 'magit-branch-popup
