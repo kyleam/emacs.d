@@ -155,6 +155,7 @@ entering `ch' is equivalent to `*.[ch]'.")
 
 (defvar km/find-scratch-buffers
   '((?e ".el"  "Elisp")
+    (?g ".scm" "Guile scheme")
     (?h ".hs"  "Haskell")
     (?m ".md"  "Markdown")
     (?n ""     "No mode")
