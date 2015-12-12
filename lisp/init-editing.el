@@ -144,12 +144,11 @@ touches."
 (defun km/occur ()
   "Call `occur' with active region or symbol at point."
   (interactive)
-  (push (if (use-region-p)
-            (buffer-substring-no-properties
-             (region-beginning)
-             (region-end))
-          (thing-at-point 'symbol))
-        regexp-history)
+  (--when-let (if (use-region-p)
+                  (buffer-substring-no-properties
+                   (region-beginning) (region-end))
+                (thing-at-point 'symbol))
+    (push it regexp-history))
   (call-interactively 'occur))
 
 (global-set-key (kbd "C-x \\") 'align-regexp)
