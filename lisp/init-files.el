@@ -111,6 +111,16 @@ entering `ch' is equivalent to `*.[ch]'.")
                              (line-beginning-position 5))))
     (narrow-to-region beg (point-max))))
 
+(defun km/grep-avy-goto-subword-1 ()
+  "Like `avy-goto-subword-1', but call `compilation-display-error'."
+  (interactive)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
+  (compilation-display-error))
+
+(after 'grep
+  (define-key grep-mode-map "j" 'km/grep-avy-goto-subword-1))
+
 (define-prefix-command 'km/file-search-map)
 (define-key km/file-map "s" 'km/file-search-map)
 
