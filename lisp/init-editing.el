@@ -151,6 +151,13 @@ touches."
     (push it regexp-history))
   (call-interactively 'occur))
 
+(defun km/occur-avy-goto-subword-1 ()
+  "Like `avy-goto-subword-1', but display occurence."
+  (interactive)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
+  (occur-mode-display-occurrence))
+
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
 (global-set-key (kbd "C-.") 'er/expand-region)
@@ -175,6 +182,7 @@ touches."
 
 (define-key occur-mode-map "n" 'next-line)
 (define-key occur-mode-map "p" 'previous-line)
+(define-key occur-mode-map "j" 'km/occur-avy-goto-subword-1)
 
 ;; Override default `occur'.
 (define-key search-map "o" 'km/occur)
