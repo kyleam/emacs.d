@@ -173,6 +173,9 @@ touches."
 
 (define-key narrow-map "c" 'km/narrow-to-comment-heading)
 
+(define-key occur-mode-map "n" 'next-line)
+(define-key occur-mode-map "p" 'previous-line)
+
 ;; Override default `occur'.
 (define-key search-map "o" 'km/occur)
 (define-key search-map "s" 'query-replace)

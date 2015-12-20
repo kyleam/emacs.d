@@ -56,9 +56,6 @@
 
 (global-set-key (kbd "C-c x") 'eval-expression)
 
-(define-key occur-mode-map "n" 'next-line)
-(define-key occur-mode-map "p" 'previous-line)
-
 (show-paren-mode)
 (global-auto-revert-mode)
 (key-chord-mode 1)
