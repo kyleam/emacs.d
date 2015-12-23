@@ -555,7 +555,6 @@ show tags by default."
 ;; Remove `magit-add-change-log-entry-other-window', which overrides
 ;; my binding for `km/zsh-ansi-term-other-window'.
 (define-key magit-mode-map (kbd "C-x 4 a") nil)
-(define-key magit-mode-map "N" 'km/magit-stage-file-intent)
 (define-key magit-mode-map "Q" 'km/magit-mode-bury-all-windows)
 (define-key magit-mode-map (kbd "C-w") 'km/magit-copy-as-kill)
 
