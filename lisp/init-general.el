@@ -60,4 +60,32 @@
 (global-auto-revert-mode)
 (key-chord-mode 1)
 
+
+;;; Set key
+
+(defvar km/setkey-command nil)
+(defvar km/setkey-last-call-time nil)
+(defvar km/setkey-seconds-timeout 600)
+
+(defun km/setkey-call ()
+  "Call `km/setkey-command'.
+When `km/setkey-command' is nil or the time since the last call
+has exceeded `km/setkey-seconds-timeout', read the command to
+call."
+  (interactive)
+  (when (or (not km/setkey-command)
+            (> (- (float-time) km/setkey-last-call-time)
+               km/setkey-seconds-timeout))
+    (setq km/setkey-command (read-command "Command: " km/setkey-command)))
+  (setq km/setkey-last-call-time (float-time))
+  (call-interactively km/setkey-command))
+
+(defun km/setkey-reset ()
+  "Reset `km/setkey-call' command."
+  (interactive)
+  (setq km/setkey-command nil
+        km/setkey-last-call-time nil))
+
+(global-set-key (kbd "C-c v") 'km/setkey-call)
+
 (provide 'init-general)
