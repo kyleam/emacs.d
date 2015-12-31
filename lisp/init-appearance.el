@@ -70,6 +70,7 @@
  '(git-timemachine-minibuffer-detail-face ((t (:inherit font-lock-doc-face))))
  '(dired-subtree-depth-1-face ((t (:background "gray80"))))
  '(dired-subtree-depth-2-face ((t (:background "gray90"))))
- '(dired-subtree-depth-3-face ((t (:background "gray95")))))
+ '(dired-subtree-depth-3-face ((t (:background "gray95"))))
+ '(whitespace-indentation ((t (:background "gray90")))))
 
 (provide 'init-appearance)
