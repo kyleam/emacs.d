@@ -122,17 +122,31 @@ entering `ch' is equivalent to `*.[ch]'.")
   (define-key grep-mode-map "j" 'km/grep-avy-goto-subword-1))
 
 (define-prefix-command 'km/file-search-map)
-(define-key km/file-map "s" 'km/file-search-map)
+(define-key km/file-map "s" 'hydra-file-search-map/body)
 
-(define-key km/file-search-map "d" 'find-grep-dired)
-(define-key km/file-search-map "D" 'find-dired)
-(define-key km/file-search-map "f" 'grep-find)
-(define-key km/file-search-map "g" 'lgrep)
-(define-key km/file-search-map "G" 'grep)
-(define-key km/file-search-map "n" 'find-name-dired)
-(define-key km/file-search-map "r" 'rgrep)
-(define-key km/file-search-map "v" 'vc-git-grep)
-(define-key km/file-search-map "z" 'zrgrep)
+(defhydra hydra-file-search-map (:hint nil :color blue)
+  "
+^^Grep             ^^Dired
+^^------------     ^^------------------
+_f_: grep-find     _d_: find-grep-dired
+_g_: lgrep         _D_: find-dired
+_G_: grep          _n_: find-name-dired
+_r_: rgrep
+_v_: vc-git-grep
+_z_: zgrep
+\n"
+  ("f" grep-find)
+  ("g" lgrep)
+  ("G" grep)
+  ("r" rgrep)
+  ("v" vc-git-grep)
+  ("z" zrgrep)
+
+  ("d" find-grep-dired)
+  ("D" find-dired)
+  ("n" find-name-dired)
+
+  ("q" nil "quit"))
 
 
 ;;; Recent files
