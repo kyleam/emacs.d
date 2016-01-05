@@ -298,4 +298,31 @@ This affects only sites in the `simple-query' format."
 
 (define-key km/external-map  "j" 'km/webjump)
 
+
+;;; Other
+
+(defun km/columnify-file (delim)
+  "Separate current file on DELIM using column program.
+
+By default, DELIM is set to \",\". With a single prefix argument,
+use whitespace as the delimiter. With two prefix arguments,
+prompt for a delimiter.
+
+If a columnified buffer already exists, just switch to it."
+  (interactive (list (cond ((not current-prefix-arg) ",")
+                           ((> (prefix-numeric-value current-prefix-arg) 4)
+                            (read-string "Delimiter: "))
+                           (t nil))))
+  (unless buffer-file-name
+    (user-error "Buffer not visiting a file"))
+  (let* ((output-buffer-name (concat "*cols: " (buffer-name) "*"))
+         (output-buffer (get-buffer output-buffer-name))
+         (fname (file-relative-name buffer-file-name))
+         (args (cons "--table"
+                     (and delim (list "--separator" delim)))))
+    (unless output-buffer
+      (setq output-buffer (get-buffer-create output-buffer-name))
+      (apply #'call-process "column" fname output-buffer nil args))
+    (switch-to-buffer output-buffer)))
+
 (provide 'init-external)

@@ -71,6 +71,31 @@ special case.
       (forward-line -1)
       (delete-blank-lines))))
 
+(defun km/export-wrapped-text (&optional xselect)
+  "Export the text in current buffer as wrapped text.
+
+This is useful for preparing text in emacs and then exporting to
+a wrapped buffer for pasting text (e.g., into a web form).
+
+With an active region, restrict export to this region.  If
+XSELECT is non-nil, copy the region with `x-select-text'."
+  (interactive "P")
+  (let ((wrapped-buffer (get-buffer-create "*Wrapped export*")))
+    (apply #'copy-to-buffer wrapped-buffer
+           (if (use-region-p)
+               (list (region-beginning) (region-end))
+             (list (point-min) (point-max))))
+    (with-current-buffer wrapped-buffer
+      (while (not (eobp))
+        (forward-paragraph)
+        (forward-line -1)
+        (km/unfill-paragraph)
+        (forward-line 1))
+      (when xselect
+        (x-select-text
+         (buffer-substring-no-properties (point-min) (point-max)))))
+    (pop-to-buffer wrapped-buffer)))
+
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
 

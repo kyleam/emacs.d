@@ -34,7 +34,6 @@
 (require 'init-outline)
 (require 'init-god)
 
-(require 'init-text)
 (require 'init-elisp)
 (require 'init-shell)
 (require 'init-haskell)
