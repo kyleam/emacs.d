@@ -1,31 +1,30 @@
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-(defun km/export-wrapped-text (arg)
+(defun km/export-wrapped-text (&optional xselect)
   "Export the text in current buffer as wrapped text.
 
 This is useful for preparing text in emacs and then exporting to
 a wrapped buffer for pasting text (e.g., into a web form).
 
-If region is active, restrict export to the region. If ARG is
-non-nil, copy the region with `x-select-text'."
+With an active region, restrict export to this region.  If
+XSELECT is non-nil, copy the region with `x-select-text'."
   (interactive "P")
-  (let ((wrapped-buffer (get-buffer-create "*Wrapped export*"))
-        beg end)
-    (if (use-region-p)
-        (progn (setq beg (region-beginning))
-               (setq end (region-end)))
-      (setq beg (point-min))
-      (setq end (point-max)))
-    (copy-to-buffer wrapped-buffer beg end)
-    (switch-to-buffer-other-window wrapped-buffer)
-    (while (not (eobp))
-      (forward-paragraph)
-      (forward-line -1)
-      (km/unfill-paragraph)
-      (forward-line 1))
-    (when arg
-      (x-select-text (buffer-substring-no-properties (point-min) (point-max))))))
+  (let ((wrapped-buffer (get-buffer-create "*Wrapped export*")))
+    (apply #'copy-to-buffer wrapped-buffer
+           (if (use-region-p)
+               (list (region-beginning) (region-end))
+             (list (point-min) (point-max))))
+    (with-current-buffer wrapped-buffer
+      (while (not (eobp))
+        (forward-paragraph)
+        (forward-line -1)
+        (km/unfill-paragraph)
+        (forward-line 1))
+      (when xselect
+        (x-select-text
+         (buffer-substring-no-properties (point-min) (point-max)))))
+    (pop-to-buffer wrapped-buffer)))
 
 (defun km/columnify-file (delim)
   "Separate current file on DELIM using column program.
