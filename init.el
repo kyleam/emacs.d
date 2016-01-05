@@ -35,7 +35,6 @@
 (require 'init-god)
 
 (require 'init-elisp)
-(require 'init-shell)
 (require 'init-haskell)
 (require 'init-python)
 (require 'init-ess)

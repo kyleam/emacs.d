@@ -33,6 +33,9 @@
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.*rc\\'" . conf-unix-mode))
+
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.
 (defmacro after (mode &rest body)
