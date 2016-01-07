@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: ps
+# --
+\paragraph*{$1}
+$0
