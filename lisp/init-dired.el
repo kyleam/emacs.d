@@ -65,12 +65,7 @@
 
 (defun km/dired-completing-buffer ()
   (completing-read "Dired buffer: "
-                   (-map 'buffer-name (km/dired-buffer-list))))
-
-(defun km/dired-buffer-list ()
-  (--filter (with-current-buffer it
-              (derived-mode-p 'dired-mode))
-            (buffer-list)))
+                   (mapcar #'buffer-name (km/mode-buffers 'dired-mode))))
 
 (defun km/org-open-dired-marked-files (&optional arg)
   "Open marked files (or next ARG) with `org-open-file'."

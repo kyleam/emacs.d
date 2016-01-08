@@ -139,16 +139,9 @@ for a new string."
         (setq km/python-shell-current-string (read-string "Python command: " initial))))
   (python-shell-send-string km/python-shell-current-string))
 
-(defun km/python--shell-buffers ()
-  (delq nil (mapcar (lambda (b)
-                      (with-current-buffer b
-                        (and (derived-mode-p 'inferior-python-mode)
-                             b)))
-                    (buffer-list))))
-
 (defun km/python-shell--read-buffer ()
   (let ((buf-alist (mapcar (lambda (b) (cons (buffer-name b) b))
-                           (km/python--shell-buffers))))
+                           (km/mode-buffers 'inferior-python-mode))))
     (if (= (length buf-alist) 1)
         (cdr (car buf-alist))
       (cdr (assoc-string (completing-read "Shell buffer: " buf-alist)

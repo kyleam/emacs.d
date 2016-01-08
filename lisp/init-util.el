@@ -20,6 +20,8 @@
 
 ;;; Code:
 
+(require 'dash)
+
 ;; Taken from
 ;; http://milkbox.net/note/single-file-master-emacs-configuration/.
 (defmacro after (mode &rest body)
@@ -27,6 +29,10 @@
   (declare (indent defun))
   `(eval-after-load ,mode
      '(progn ,@body)))
+
+(defun km/mode-buffers (mode)
+  (--filter (with-current-buffer it (derived-mode-p mode))
+            (buffer-list)))
 
 (provide 'init-util)
 ;;; init-util.el ends here
