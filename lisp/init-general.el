@@ -57,14 +57,6 @@
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.*rc\\'" . conf-unix-mode))
 
-;; Taken from
-;; http://milkbox.net/note/single-file-master-emacs-configuration/.
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn ,@body)))
-
 (global-set-key (kbd "C-h ;") 'find-function)
 (global-set-key (kbd "C-h 4 ;") 'find-function-other-window)
 

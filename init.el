@@ -38,6 +38,7 @@
 (require 'dash)
 (require 's)
 
+(require 'init-util)
 (require 'init-general)
 (require 'init-abbrev)
 (require 'init-diminish)
