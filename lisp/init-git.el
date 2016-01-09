@@ -569,6 +569,28 @@ show tags by default."
     (add-hook 'magit-refs-sections-hook 'magit-insert-tags t t))
   (magit-refresh-buffer))
 
+(defun km/magit-log-flip-revs ()
+  "Swap revisions in log range."
+  (interactive)
+  (let ((range (caar magit-refresh-args)))
+    (if (and range
+             (derived-mode-p 'magit-log-mode)
+             (string-match magit-range-re range))
+        (progn
+          (setf (caar magit-refresh-args)
+                (concat (match-string 3 range)
+                        (match-string 2 range)
+                        (match-string 1 range)))
+          (magit-refresh))
+      (user-error "No range to swap"))))
+
+(defun km/magit-flip-revs ()
+  (interactive)
+  (cond ((derived-mode-p 'magit-diff-mode)
+         (call-interactively #'magit-diff-flip-revs))
+        ((derived-mode-p 'magit-log-mode)
+         (call-interactively #'km/magit-log-flip-revs))))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -601,6 +623,7 @@ show tags by default."
 (define-key km/magit-map "c" 'km/magit-find-commit-file)
 (define-key km/magit-map "g" 'km/git-map)
 (define-key km/magit-map "l" 'magit-toggle-buffer-lock)
+(define-key km/magit-map "f" 'km/magit-flip-revs)
 
 (define-prefix-command 'km/magit-wip-map)
 (define-key km/git-map "w" 'km/magit-wip-map)
