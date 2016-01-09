@@ -327,12 +327,25 @@ touches."
 
 ;;; Multiple cursors
 
-(define-key km/editing-map "a" 'mc/mark-all-like-this)
-(define-key km/editing-map "b" 'mc/edit-beginnings-of-lines)
-(define-key km/editing-map "e" 'mc/edit-ends-of-lines)
-(define-key km/editing-map "l" 'mc/edit-lines)
-(define-key km/editing-map "n" 'mc/mark-next-like-this)
-(define-key km/editing-map "p" 'mc/mark-previous-like-this)
+;; Multiple cursors hydra is modified from
+;; https://github.com/abo-abo/hydra/wiki/multiple-cursors
+(define-key km/editing-map "o"
+  (defhydra hydra-multiple-cursors (:hint nil)
+    "
+  ^^Up        ^^Down
+_p_ Next    _n_ Next
+_P_ Skip    _N_ Skip
+_y_ Unmark  _u_ Unmark
+
+"
+    ("l" mc/edit-lines "edit lines" :exit t)
+    ("a" mc/mark-all-like-this "mark all" :exit t)
+    ("n" mc/mark-next-like-this)
+    ("N" mc/skip-to-next-like-this)
+    ("u" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this)
+    ("P" mc/skip-to-previous-like-this)
+    ("y" mc/unmark-previous-like-this)))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here
