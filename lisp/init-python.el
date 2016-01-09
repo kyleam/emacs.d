@@ -139,6 +139,69 @@ for a new string."
         (setq km/python-shell-current-string (read-string "Python command: " initial))))
   (python-shell-send-string km/python-shell-current-string))
 
+(defun km/python--shell-buffers ()
+  (delq nil (mapcar (lambda (b)
+                      (with-current-buffer b
+                        (and (derived-mode-p 'inferior-python-mode)
+                             b)))
+                    (buffer-list))))
+
+(defun km/python-shell--read-buffer ()
+  (let ((buf-alist (mapcar (lambda (b) (cons (buffer-name b) b))
+                           (km/python--shell-buffers))))
+    (if (= (length buf-alist) 1)
+        (cdr (car buf-alist))
+      (cdr (assoc-string (completing-read "Shell buffer: " buf-alist)
+                         buf-alist)))))
+
+(defun km/python-shell--find-prompt-start (move-func)
+  "Find first line of input prompt.
+
+`comint-forward-prompt' can end up at other points in input
+entry, like '*':
+
+    In [1]: for i in range(3):
+       ...: *   print(i)
+
+Return point at the beginning input entry."
+  (let ((beg-prompt-re "\\(In \\[[0-9]+\\]:\\|>>> \\)"))
+    (funcall move-func)
+    (while (not (save-excursion
+                  (beginning-of-line)
+                  (looking-at-p beg-prompt-re)))
+      (funcall move-func))
+    (point-at-bol)))
+
+(defun km/python-copy-last-shell-line-as-comment (&optional which-shell)
+  "Insert last input and output Python shell as comment.
+When the current buffer is not associated with a Python shell or
+WHICH-SHELL is non-nil, prompt with all Python shell buffers."
+  (interactive "P")
+  (let* ((default-shell-buffer
+           (get-buffer (format "*%s*" (python-shell-get-process-name t))))
+         (shell-buffer (if (or which-shell (not default-shell-buffer))
+                           (km/python-shell--read-buffer)
+                         default-shell-buffer))
+         (start-pos (point))
+         text)
+    (with-current-buffer shell-buffer
+      (save-excursion
+        (goto-char (point-max))
+        (let* ((inhibit-field-text-motion t)
+               (beg (km/python-shell--find-prompt-start
+                     (lambda ()
+                       (comint-previous-prompt 1))))
+               (end (km/python-shell--find-prompt-start
+                     ;; FIXME: If extra blank prompts exist at the end
+                     ;; of shell, this will grab them (because
+                     ;; `comint-next-prompt' skips over them).
+                     (lambda ()
+                       (end-of-line)
+                       (comint-next-prompt 1)))))
+          (setq text (buffer-substring-no-properties beg end)))))
+    (insert text)
+    (comment-region start-pos (point))))
+
 (defun km/python-indent-post-self-insert-function ()
   "Adjust indentation after insert of specfic characters.
 This is taken from `python-indent-post-self-insert-function'.
@@ -181,6 +244,7 @@ being turned on."
   (define-prefix-command 'km/python-prefix-map)
   (define-key python-mode-map (kbd "C-c m") 'km/python-prefix-map)
 
+  (define-key km/python-prefix-map "c" 'km/python-copy-last-shell-line-as-comment)
   (define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window))
 
 
