@@ -591,6 +591,29 @@ show tags by default."
         ((derived-mode-p 'magit-log-mode)
          (call-interactively #'km/magit-log-flip-revs))))
 
+(defun km/magit-diff-visit-file (&optional prev-rev other-window)
+  "Like `magit-diff-visit-file', but with the option to visit REV^.
+
+If prefix argument PREV-REV is non-nil, visit file for REV^
+instead of REV.  If not in `magit-revision-mode', the prefix
+argument has no effect.
+
+OTHER-WINDOW corresponds to `magit-diff-visit-file's OTHER-WINDOW
+argument.  Interactively, this can be accessed using the command
+`km/magit-diff-visit-file-other-window'."
+  (interactive "P")
+  (let ((magit-refresh-args (if (and prev-rev
+                                     (derived-mode-p 'magit-revision-mode))
+                                (cons (concat (car magit-refresh-args) "^")
+                                      (cdr magit-refresh-args))
+                              magit-refresh-args))
+        (current-prefix-arg (and other-window (list 4))))
+    (call-interactively #'magit-diff-visit-file)))
+
+(defun km/magit-diff-visit-file-other-window (&optional prev-rev)
+  (interactive "P")
+  (km/magit-diff-visit-file prev-rev t))
+
 (define-key ctl-x-4-map "g" 'magit-find-file-other-window)
 (define-key km/file-map "g" 'magit-find-file)
 
@@ -607,12 +630,19 @@ show tags by default."
 ;; `magit-diff-visit-file-worktree' is also on C-RET.
 (define-key magit-file-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
 (define-key magit-hunk-section-map (kbd "C-j") 'magit-diff-visit-file-worktree)
+(define-key magit-file-section-map (kbd "C-o") 'km/magit-diff-visit-file-other-window)
+(define-key magit-hunk-section-map (kbd "C-o") 'km/magit-diff-visit-file-other-window)
 
 (define-key magit-log-mode-map "j" 'km/magit-avy-goto-subword-1)
 (define-key magit-refs-mode-map "j" 'km/magit-avy-goto-subword-1)
 (define-key magit-cherry-mode-map "j" 'km/magit-avy-goto-subword-1)
 
 (define-key magit-refs-mode-map (kbd "C-c C-t") 'km/magit-refs-toggle-tags)
+
+(define-key magit-file-section-map [remap magit-visit-thing]
+  'km/magit-diff-visit-file)
+(define-key magit-hunk-section-map [remap magit-visit-thing]
+  'km/magit-diff-visit-file)
 
 (define-key magit-refs-mode-map (kbd "C-c C-f") 'km/magit-refs-filter-recent)
 
