@@ -39,6 +39,7 @@
 (require 'orgit)
 
 (setq magit-revert-buffers 'silent
+      magit-revert-buffers-only-for-tracked-files nil
       magit-push-always-verify nil
       magit-delete-by-moving-to-trash nil
       magit-diff-auto-show-delay 0.1
