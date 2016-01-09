@@ -44,6 +44,7 @@
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-entry)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-keys)
 (add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-author-and)
+(add-hook 'bibtex-clean-entry-hook 'km/bibtex-delete-article-fields)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -180,6 +181,24 @@ to
           (while (re-search-forward "\\bAND\\b"
                                     (bibtex-end-of-text-in-field bounds) t)
             (replace-match (downcase (match-string 0)) 'fixedcase)))))))
+
+(defvar km/bibtex-article-fields-to-delete
+  '("abstract" "issn" "pubmedid" "url" "eprint" "keywords"))
+
+(defun km/bibtex-delete-article-fields ()
+  (save-excursion
+    (when (and (bibtex-beginning-of-entry)
+               (looking-at bibtex-entry-maybe-empty-head)
+               (string= (downcase (bibtex-type-in-head)) "article"))
+      (dolist (f km/bibtex-article-fields-to-delete)
+       (let (bounds)
+         ;; Make sure field is removed even if it is repeated.
+         (while (progn (bibtex-beginning-of-entry)
+                       (setq bounds (bibtex-search-forward-field f t)))
+           (goto-char (bibtex-end-of-field bounds))
+           (skip-chars-backward " \t\n")
+           (delete-region (bibtex-start-of-field bounds)
+                          (point))))))))
 
 (defun km/browse-doi (doi)
   "Open DOI in browser.
