@@ -46,6 +46,9 @@
       magit-log-section-arguments nil
       magit-log-show-margin nil)
 
+(setq magit-uniquify-buffer-names nil
+      magit-buffer-name-format "*%M%v: %t*")
+
 (setq git-commit-finish-query-functions nil)
 
 (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
