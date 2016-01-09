@@ -347,5 +347,51 @@ _y_ Unmark  _u_ Unmark
     ("P" mc/skip-to-previous-like-this)
     ("y" mc/unmark-previous-like-this)))
 
+
+;;; Keyboard macros
+
+(define-key km/editing-map "k"
+  (defhydra hydra-kmacro (:hint nil :exit t)
+    "
+  ^^Defining                ^^Applying
+_?_ Query                 _c_ Call
+_b_ Bind to key           _o_ Call 2nd in ring
+_e_ Edit                  _r_ Apply to region lines
+_E_ Step edit
+_N_ Name last
+_l_ Use recent strokes
+_s_ Start defining
+_x_ To register
+
+  ^^Ring                    ^^Counter
+_D_ Delete ring head      _+_ Add counter
+_n_ Cycle next            _=_ Set counter
+_p_ Cycle previous        _f_ Set format
+_t_ Swap                  _i_ Insert counter
+_v_ View
+
+"
+    ("+" kmacro-add-counter)
+    ("=" kmacro-set-counter)
+    ("D" kmacro-delete-ring-head)
+    ("f" kmacro-set-format)
+    ("i" kmacro-insert-counter)
+    ("c" kmacro-end-and-call-macro :exit nil)
+    ("o" kmacro-call-ring-2nd-repeat)
+    ("e" kmacro-edit-macro)
+    ("E" kmacro-step-edit-macro)
+    ("n" kmacro-cycle-ring-next :exit nil)
+    ("p" kmacro-cycle-ring-previous :exit nil)
+    ("t" kmacro-swap-ring)
+    ("v" kmacro-view-macro-repeat)
+    ("b" kmacro-bind-to-key)
+    ("l" kmacro-edit-lossage)
+    ("N" kmacro-name-last-macro)
+    ("?" kbd-macro-query)
+    ("r" apply-macro-to-region-lines)
+    ("s" kmacro-start-macro)
+    ("x" kmacro-to-register)
+    ("q" nil "quit" :hint t)))
+
 (provide 'init-editing)
 ;;; init-editing.el ends here
