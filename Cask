@@ -54,6 +54,7 @@
 (depends-on "stan-snippets")
 (depends-on "stekene-theme")
 (depends-on "subr+")
+(depends-on "use-package")
 (depends-on "wrap-region")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
