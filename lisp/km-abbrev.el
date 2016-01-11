@@ -1,4 +1,4 @@
-;;; init-abbrev.el --- Abbrev mode configuration
+;;; km-abbrev.el --- Abbrev mode extesions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,14 +20,9 @@
 
 ;;; Code:
 
-(add-hook 'text-mode-hook 'abbrev-mode)
-(add-hook 'prog-mode-hook 'abbrev-mode)
+(require 'abbrev)
 
-(define-abbrev-table 'typo-abbrev-table nil)
-(abbrev-table-put global-abbrev-table :parents
-                  (cons typo-abbrev-table
-                        (abbrev-table-get global-abbrev-table :parents)))
-
+;;;###autoload
 (defun km/abbrev-add-case-global ()
   "Define lower abbreviation for the word before point.
 Like `add-global-abbrev', but always make the abbreviation the
@@ -44,6 +39,7 @@ lower case variant of the word before point."
                                 name (abbrev-expansion name table))))
       (define-abbrev table name exp))))
 
+;;;###autoload
 (defun km/abbrev-inverse-add-uppercase-global ()
   "Define uppercase expansion for the word before point.
 Like `inverse-add-global-abbrev', but always use the lower case
@@ -64,8 +60,5 @@ upper case version as the expansion."
         (goto-char end)
         (expand-abbrev)))))
 
-(define-key abbrev-map "c" 'km/abbrev-add-case-global)
-(define-key abbrev-map "iu" 'km/abbrev-inverse-add-uppercase-global)
-
-(provide 'init-abbrev)
-;;; init-abbrev.el ends here
+(provide 'km-abbrev)
+;;; km-abbrev.el ends here

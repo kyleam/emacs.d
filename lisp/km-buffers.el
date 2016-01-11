@@ -1,4 +1,4 @@
-;;; init-buffers.el --- Buffer-related configuration
+;;; km-buffers.el --- Buffer-related extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,20 +20,14 @@
 
 ;;; Code:
 
-(require 'uniquify)
-
-(setq uniquify-buffer-name-style 'forward)
-
-(setq ibuffer-expert t
-      ibuffer-restore-window-config-on-quit t
-      ibuffer-show-empty-filter-groups nil)
-
+;;;###autoload
 (defun km/save-and-kill-buffer ()
   "Save current buffer and then kill it."
   (interactive)
   (save-buffer)
   (kill-this-buffer))
 
+;;;###autoload
 (defun km/kill-buffer (&optional arg)
   "Kill this buffer.
 With single C-u, prompt for buffer to kill.  With double C-u,
@@ -47,6 +41,7 @@ kill this buffer and the window."
    (t
     (call-interactively #'kill-buffer))))
 
+;;;###autoload
 (defun km/save-buffers ()
   "Run `save-some-buffers', but don't ask to save the current buffer.
 `save-some-buffers' is called interactively."
@@ -61,12 +56,5 @@ kill this buffer and the window."
         (save-buffer))))
   (call-interactively #'save-some-buffers))
 
-(global-set-key (kbd "C-x k") 'km/kill-buffer)
-
-(key-chord-define-global "js" 'km/save-buffers)
-
-;; Replace `list-buffers' with ibuffer.
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(provide 'init-buffers)
-;;; init-buffers.el ends here
+(provide 'km-buffers)
+;;; km-buffers.el ends here

@@ -1,4 +1,4 @@
-;;; init-python.el --- Python configuration
+;;; km-python.el --- Python extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,39 +20,17 @@
 
 ;;; Code:
 
-(setq python-fill-docstring-style 'pep-257-nn
-      python-indent-guess-indent-offset nil)
+(require 'python)
+(require 'km-util)
 
-(setq python-shell-interpreter "ipython"
-      python-shell-prompt-detect-enabled nil)
-
-(add-to-list 'interpreter-mode-alist '("python2" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-
-(add-hook 'python-mode-hook 'km/python-set-local-vars)
-(add-hook 'python-mode-hook
-          (lambda ()
-            (add-hook
-             'post-self-insert-hook
-             #'km/python-indent-post-self-insert-function 'append 'local)))
-
-(defun km/python-set-local-vars ()
-  (setq outline-regexp "####* ")
-  (setq outline-level 'km/python-outline-level)
-  ;; Stop semantic from taking over imenu.
-  (setq imenu-create-index-function #'python-imenu-create-index)
-  (set (make-local-variable 'compile-command) "py.test"))
-
-(defun km/python-outline-level ()
-  (and (looking-at (concat "^" outline-regexp))
-       (- (match-end 0) (match-beginning 0) 3)))
-
+;;;###autoload
 (defun km/toggle-ipython-shell ()
   "Switch between using python and IPython for interactive shell."
   (interactive)
   (setq python-shell-interpreter
         (if (string= python-shell-interpreter "python") "ipython" "python")))
 
+;;;###autoload
 (defun km/find-python-test-file-other-window (arg)
   "Open test file for the current Python file in another window.
 If the file does not already exist, import the original Python
@@ -66,6 +44,7 @@ file. Unless ARG is non-nil, py.test is also imported."
       (unless arg
         (insert "import pytest\n")))))
 
+;;;###autoload
 (defun km/python-shell-send-function-or-paragraph-and-step ()
   "Send function or paragraph to Python shell.
 
@@ -87,6 +66,7 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
       (goto-char end)))
   (km/python-next-code-line 1))
 
+;;;###autoload
 (defun km/python-shell-send-buffer-up-to-line ()
   "Send beginning of buffer to the current line to Python shell."
   (interactive)
@@ -127,6 +107,8 @@ This is inspired by `ess-eval-function-or-paragraph-and-step'."
     n))
 
 (defvar km/python-shell-current-string nil)
+
+;;;###autoload
 (defun km/python-shell-send-set-string (set)
   "Send previously set string to Python shell.
 If a string has not been set previously or SET is non-nil, prompt
@@ -165,6 +147,7 @@ Return point at the beginning input entry."
       (funcall move-func))
     (point-at-bol)))
 
+;;;###autoload
 (defun km/python-copy-last-shell-line-as-comment (&optional which-shell)
   "Insert last input and output Python shell as comment.
 When the current buffer is not associated with a Python shell or
@@ -220,36 +203,10 @@ being turned on."
         (when (< (current-indentation) indentation)
           (indent-line-to indentation))))))
 
-(after 'python
-  (define-key python-mode-map (kbd "C-c C-.")
-    'km/python-shell-send-buffer-up-to-line)
-  (define-key python-mode-map (kbd "C-c C-b") 'python-shell-send-buffer)
-  ;; Rebind `python-shell-send-buffer'.
-  (define-key python-mode-map (kbd "C-c C-c")
-    'km/python-shell-send-function-or-paragraph-and-step)
-
-  (define-key python-mode-map (kbd "C-c C-d") 'km/python-shell-send-set-string)
-
-  ;; Swap `python-shell-send-defun' and `python-eldoc-at-point'.
-  (define-key python-mode-map (kbd "C-c C-f") 'python-shell-send-defun)
-  (define-key python-mode-map (kbd "C-M-x") 'python-eldoc-at-point)
-
-  (define-prefix-command 'km/python-prefix-map)
-  (define-key python-mode-map (kbd "C-c m") 'km/python-prefix-map)
-
-  (define-key km/python-prefix-map "c" 'km/python-copy-last-shell-line-as-comment)
-  (define-key km/python-prefix-map "t" 'km/find-python-test-file-other-window))
-
 
 ;;; Pydoc
 
-(defvar km/pydoc-dir "~/src/emacs/pydoc/")
-
-(when (file-exists-p km/pydoc-dir)
-  (add-to-list 'load-path km/pydoc-dir)
-  (autoload 'pydoc "pydoc" nil t))
-
-(setq pydoc-make-method-buttons nil)
+(require 'pydoc)
 
 (defvar km/pydoc-names nil
   "List of names that have been sucessfully loaded by `pydoc'.")
@@ -257,8 +214,7 @@ being turned on."
 (defvar km/pydoc-names-file "~/.emacs.d/.pydoc-names"
   "File to save `km/pydoc-names' to.")
 
-(add-hook 'pydoc-after-finish-hook #'km/pydoc-store-name)
-
+;;;###autoload
 (defun km/pydoc ()
   "Run `pydoc', prompting with `km/pydoc-names'."
   (interactive)
@@ -294,6 +250,7 @@ FILE is `km/pydoc-names-file' by default."
         (print (sort km/pydoc-names #'string-lessp)
                (current-buffer))))))
 
+;;;###autoload
 (defun km/pydoc-read-names-file (&optional file)
   "Read `km/pydoc-names-file' from FILE.
 FILE is `km/pydoc-names-file' by default."
@@ -306,14 +263,5 @@ FILE is `km/pydoc-names-file' by default."
     (insert-file-contents (or file km/pydoc-names-file))
     (setq km/pydoc-names (read (current-buffer)))))
 
-(after 'pydoc
-  ;; Don't shadow my `ace-link' binding.
-  (define-key pydoc-mode-map "o" #'ace-link-help))
-
-(when (file-exists-p km/pydoc-names-file)
-  (km/pydoc-read-names-file km/pydoc-names-file))
-
-(global-set-key (kbd "C-h y")  #'km/pydoc)
-
-(provide 'init-python)
-;;; init-python.el ends here
+(provide 'km-python)
+;;; km-python.el ends here

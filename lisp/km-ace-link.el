@@ -1,4 +1,4 @@
-;;; init-ace.el --- Configuration for AceJump-inspired friends
+;;; km-ace-link.el --- Extensions for Ace Link
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,15 +20,26 @@
 
 ;;; Code:
 
-;;; Avy
-
 (require 'avy)
+(require 'dash)
+(require 'wid-edit)
 
-(key-chord-define-global "jf" 'avy-goto-subword-1)
-(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)
+(declare-function dired-next-line "dired" (arg))
+(defun km/ali--dired-collect-references ()
+  (let ((end (window-end))
+        points)
+    (save-excursion
+      (goto-char (window-start))
+      (while (< (point) end)
+        (--when-let (dired-next-line 1)
+          (push it points)))
+      (nreverse points))))
 
-;;; Ace Link
 
+(autoload 'org-open-file "org")
+(declare-function dired-get-filename "dired"
+                  (&optional localp no-error-if-not-filep))
+;;;###autoload
 (defun km/ace-link-dired ()
   "Ace jump to files in dired buffers."
   (interactive)
@@ -41,16 +52,24 @@
      (km/ali--dired-collect-references)
      #'avy--overlay-post)))
 
-(defun km/ali--dired-collect-references ()
-  (let ((end (window-end))
-        points)
+(defun km/ali--widget-collect-references ()
+  "Collect the positions of visible widgets in buffer."
+  (let (candidates pt)
     (save-excursion
-      (goto-char (window-start))
-      (while (< (point) end)
-        (--when-let (dired-next-line 1)
-          (push it points)))
-      (nreverse points))))
+      (save-restriction
+        (narrow-to-region
+         (window-start)
+         (window-end))
+        (goto-char (point-min))
+        (setq pt (point))
+        (while (progn (ignore-errors (widget-forward 1))
+                      (> (point) pt))
+          (setq pt (point))
+          (push (point) candidates))
+        (nreverse candidates)))))
 
+(declare-function gnus-summary-widget-forward "gnus-sum" (arg))
+;;;###autoload
 (defun km/ace-link-widget ()
   "Press a widget that is visible in the current buffer.
 This can be used in place of `ace-link-gnus' and has the
@@ -69,45 +88,5 @@ property."
      (km/ali--widget-collect-references)
      #'avy--overlay-post)))
 
-(defun km/ali--widget-collect-references ()
-  "Collect the positions of visible widgets in buffer."
-  (require 'wid-edit)
-  (let (candidates pt)
-    (save-excursion
-      (save-restriction
-        (narrow-to-region
-         (window-start)
-         (window-end))
-        (goto-char (point-min))
-        (setq pt (point))
-        (while (progn (ignore-errors (widget-forward 1))
-                      (> (point) pt))
-          (setq pt (point))
-          (push (point) candidates))
-        (nreverse candidates)))))
-
-(ace-link-setup-default)
-(after 'org
- (define-key org-mode-map (kbd "C-c m o") 'ace-link-org))
-(after 'dired
-  ;; This overrides the binding for `dired-find-file-other-window'.
-  (define-key dired-mode-map "o" 'km/ace-link-dired)
-  (define-key dired-mode-map "r" 'dired-find-file-other-window))
-
-;;; Ace Window
-
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-      aw-scope 'frame)
-
-(defun km/ace-window (arg)
-  "Run `ace-window', swapping single and double C-u's."
-  (interactive "p")
-  (cl-case arg
-    (4  (setq arg 16))
-    (16 (setq arg 4)))
-  (ace-window arg))
-
-(key-chord-define-global "jw" 'km/ace-window)
-
-(provide 'init-ace)
-;;; init-ace.el ends here
+(provide 'km-ace-link)
+;;; km-ace-link.el ends here

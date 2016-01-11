@@ -1,4 +1,4 @@
-;;; init-outline.el --- Outline mode configuration
+;;; init-outline.el --- Outline mode extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -19,6 +19,8 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
+
+(require 'outline)
 
 (defun km/outline--parent-levels (n)
   "Return list of parent levels.
@@ -61,6 +63,8 @@ text is taken as everything on the line after the
         (push (cons head-level head) path-alist)))
     (nreverse index)))
 
+(declare-function helm-imenu "helm-imenu")
+;;;###autoload
 (defun km/outline-jump-to-heading ()
   "Jump to heading specified by `outline-regexp'."
   (interactive)
@@ -70,47 +74,5 @@ text is taken as everything on the line after the
         helm-cached-imenu-candidates)
     (call-interactively #'helm-imenu)))
 
-;; Modified from https://github.com/abo-abo/hydra/wiki/Emacs
-(defhydra hydra-outline-mode (:hint nil)
-  "
-  ^^Hide         ^^Show        ^^Move
-_q_ sublevels  _a_ all       _u_ up
-_t_ body       _e_ entry     _n_ next visible
-_o_ other      _i_ children  _p_ previous visible
-_c_ entry      _k_ branches  _f_ forward same level
-_h_ leaves     _s_ subtree   _b_ backward same level
-_d_ subtree
-
-"
-  ("q" hide-sublevels)
-  ("t" hide-body)
-  ("o" hide-other)
-  ("c" hide-entry)
-  ("h" hide-leaves)
-  ("d" hide-subtree)
-
-  ("a" show-all)
-  ("e" show-entry)
-  ("i" show-children)
-  ("k" show-branches)
-  ("s" show-subtree)
-
-  ("u" outline-up-heading)
-  ("n" outline-next-visible-heading)
-  ("p" outline-previous-visible-heading)
-  ("f" outline-forward-same-level)
-  ("b" outline-backward-same-level)
-
-  ("l" km/outline-jump-to-heading "jump" :color blue)
-  ("m" outline-mark-subtree "mark" :color blue))
-
-(defun km/hydra-outline-mode ()
-  (interactive)
-  (unless outline-minor-mode
-    (outline-minor-mode))
-  (hydra-outline-mode/body))
-
-(global-set-key (kbd "C-c n") 'km/hydra-outline-mode)
-
-(provide 'init-outline)
-;;; init-outline.el ends here
+(provide 'km-outline)
+;;; km-outline.el ends here

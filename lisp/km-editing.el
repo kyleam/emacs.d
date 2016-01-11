@@ -1,4 +1,4 @@
-;;; init-editing.el --- Editing-related configuration
+;;; km-editing.el --- Editing-related extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,37 +20,22 @@
 
 ;;; Code:
 
-;; http://irreal.org/blog/?p=1536
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR.")
-
-(setq hippie-expand-try-functions-list '(try-complete-file-name-partially
-                                         try-complete-file-name
-                                         try-expand-all-abbrevs
-                                         try-expand-dabbrev
-                                         try-expand-dabbrev-all-buffers
-                                         try-expand-dabbrev-from-kill
-                                         try-complete-lisp-symbol-partially
-                                         try-complete-lisp-symbol))
-
-;; This is bound separately in `km/editing-map'.
-(setq iedit-toggle-key-default nil)
-
-(setq flyspell-auto-correct-binding (kbd "C-c e ;"))
-
-(after 'flyspell
-  (define-key flyspell-mode-map (kbd "C-.") nil))
-
-(put 'fill-paragraph-function 'safe-local-variable
-     (lambda (v) (equal v (lambda (_) t))))
+(require 'dash)
+(require 'outline)
+(require 's)
+(require 'select)
+(require 'thingatpt)
+(require 'whitespace)
 
 ;; http://www.emacswiki.org/emacs/UnfillParagraph
+;;;###autoload
 (defun km/unfill-paragraph ()
   "Convert a multi-line paragraph to a single line of text."
   (interactive)
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
 
+;;;###autoload
 (defun km/fill-surrounding-indented ()
   "Fill current line with all surrounding lines of same indentation.
 This is like `fill-individual-paragraphs', but 1) it acts only on
@@ -83,6 +68,7 @@ special case.
           (setq end (point))))
       (fill-region (or beg (point-min)) (or end (point-max))))))
 
+;;;###autoload
 (defun km/reduce-to-single-spaces ()
   "Reduce consecutive blank lines to a single line."
   (interactive)
@@ -92,6 +78,7 @@ special case.
       (forward-line -1)
       (delete-blank-lines))))
 
+;;;###autoload
 (defun km/export-wrapped-text (&optional xselect)
   "Export the text in current buffer as wrapped text.
 
@@ -117,6 +104,7 @@ XSELECT is non-nil, copy the region with `x-select-text'."
          (buffer-substring-no-properties (point-min) (point-max)))))
     (pop-to-buffer wrapped-buffer)))
 
+;;;###autoload
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
 
@@ -170,6 +158,7 @@ and '<<<' mark the bounds of the narrowed region.
       (outline-mark-subtree)
       (narrow-to-region (region-beginning) (region-end)))))
 
+;;;###autoload
 (defun km/toggle-line-or-region-comment (beg end)
   "Comment or uncomment the current line or region.
 If there is an active region, act on all lines that the region
@@ -187,6 +176,7 @@ touches."
       (forward-line))))
 
 ;; Modified from http://oremacs.com/2015/01/26/occur-dwim/.
+;;;###autoload
 (defun km/occur ()
   "Call `occur' with active region or symbol at point."
   (interactive)
@@ -197,99 +187,10 @@ touches."
     (push it regexp-history))
   (call-interactively 'occur))
 
-(defun km/occur-avy-goto-subword-1 ()
-  "Like `avy-goto-subword-1', but display occurence."
-  (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (occur-mode-display-occurrence))
-
-(global-set-key (kbd "C-x \\") 'align-regexp)
-
-(global-set-key (kbd "C-.") 'er/expand-region)
-
-(global-set-key [remap kill-ring-save] 'easy-kill)
-
-;; Overrides `suspend-emacs' (which is also bound to C-x C-z).
-(global-set-key (kbd "C-z") 'zap-to-char)
-(global-set-key (kbd "M-z") 'zap-up-to-char)
-(global-set-key (kbd "C-'") 'backward-kill-word)
-
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-(key-chord-define-global "jx" 'km/toggle-line-or-region-comment)
-(key-chord-define-global "qp" 'fill-paragraph)
-
-(define-key ctl-x-4-map "nd" 'ni-narrow-to-defun-indirect-other-window)
-(define-key ctl-x-4-map "nn" 'ni-narrow-to-region-indirect-other-window)
-(define-key ctl-x-4-map "np" 'ni-narrow-to-page-indirect-other-window)
-
-(define-key narrow-map "c" 'km/narrow-to-comment-heading)
-
-(define-key occur-mode-map "n" 'next-line)
-(define-key occur-mode-map "p" 'previous-line)
-(define-key occur-mode-map "j" 'km/occur-avy-goto-subword-1)
-
-;; Override default `occur'.
-(define-key search-map "o" 'km/occur)
-(define-key search-map "s" 'query-replace)
-(define-key search-map "S" 'replace-string)
-(define-key search-map "r" 'query-replace-regexp)
-(define-key search-map "R" 'replace-regexp)
-
-(define-prefix-command 'km/editing-map)
-(global-set-key (kbd "C-c e") 'km/editing-map)
-
-(define-key km/editing-map (kbd "C-i") 'indent-relative)
-(define-key km/editing-map "f" 'km/fill-surrounding-indented)
-(define-key km/editing-map "i" 'iedit-mode)
-(define-key km/editing-map "l" 'toggle-truncate-lines)
-(define-key km/editing-map "u" 'km/unfill-paragraph)
-(define-key km/editing-map "w" 'ispell-word)
-
-(electric-indent-mode -1)
-(electric-pair-mode 1)
-
-
-;;; Buffer cleanup
-
-(setq whitespace-style '(face trailing indentation))
-
-(global-whitespace-mode 1)
-
-(add-hook 'before-save-hook 'km/cleanup-buffer)
-
-(defvar-local km/prevent-cleanup nil
-  "If set, `km/cleanup-buffer' does not perform clean up on save.")
-
-(defun km/toggle-prevent-cleanup ()
-  "Toggle state of `km/prevent-cleanup'."
-  (interactive)
-  (if km/prevent-cleanup
-      (progn
-        (message "Allowing cleanup on save")
-        (kill-local-variable 'whitespace-style)
-        (global-whitespace-mode 0)
-        (global-whitespace-mode 1))
-    (message "Preventing cleanup on save")
-    (setq-local whitespace-style
-         '(face trailing indentation
-           tab-mark space-mark newline-mark))
-    (global-whitespace-mode 0)
-    (global-whitespace-mode 1))
-  (setq km/prevent-cleanup (not km/prevent-cleanup)))
-
-(defun km/cleanup-buffer ()
-  (interactive)
-  (unless km/prevent-cleanup
-    (whitespace-cleanup)
-    (delete-trailing-whitespace)))
-
-(define-key km/editing-map "t" 'km/toggle-prevent-cleanup)
-
 
 ;;; Kill map
 
+;;;###autoload
 (defun km/kill-string-at-point ()
   (interactive)
   (let ((string-start (nth 8 (syntax-ppss))))
@@ -297,6 +198,7 @@ touches."
     (kill-sexp)))
 
 ;; Taken from prelude-core.el.
+;;;###autoload
 (defun km/join-next-line-with-space ()
   "Join current line to the next line with a space in between."
   (interactive)
@@ -314,84 +216,5 @@ touches."
 (km/make-kill-thing-at-point "sentence")
 (km/make-kill-thing-at-point "word")
 
-(define-prefix-command 'km/kill-map)
-(global-set-key (kbd "C-c k") 'km/kill-map)
-
-(define-key km/kill-map  "." 'km/kill-sentence-at-point)
-(define-key km/kill-map  "j" 'km/join-next-line-with-space)
-(define-key km/kill-map  "l" 'km/kill-line-at-point)
-(define-key km/kill-map  "p" 'km/kill-paragraph-at-point)
-(define-key km/kill-map  "s" 'km/kill-string-at-point)
-(define-key km/kill-map  "w" 'km/kill-word-at-point)
-
-
-;;; Multiple cursors
-
-;; Multiple cursors hydra is modified from
-;; https://github.com/abo-abo/hydra/wiki/multiple-cursors
-(define-key km/editing-map "o"
-  (defhydra hydra-multiple-cursors (:hint nil)
-    "
-  ^^Up        ^^Down
-_p_ Next    _n_ Next
-_P_ Skip    _N_ Skip
-_y_ Unmark  _u_ Unmark
-
-"
-    ("l" mc/edit-lines "edit lines" :exit t)
-    ("a" mc/mark-all-like-this "mark all" :exit t)
-    ("n" mc/mark-next-like-this)
-    ("N" mc/skip-to-next-like-this)
-    ("u" mc/unmark-next-like-this)
-    ("p" mc/mark-previous-like-this)
-    ("P" mc/skip-to-previous-like-this)
-    ("y" mc/unmark-previous-like-this)))
-
-
-;;; Keyboard macros
-
-(define-key km/editing-map "k"
-  (defhydra hydra-kmacro (:hint nil :exit t)
-    "
-  ^^Defining                ^^Applying
-_?_ Query                 _c_ Call
-_b_ Bind to key           _o_ Call 2nd in ring
-_e_ Edit                  _r_ Apply to region lines
-_E_ Step edit
-_N_ Name last
-_l_ Use recent strokes
-_s_ Start defining
-_x_ To register
-
-  ^^Ring                    ^^Counter
-_D_ Delete ring head      _+_ Add counter
-_n_ Cycle next            _=_ Set counter
-_p_ Cycle previous        _f_ Set format
-_t_ Swap                  _i_ Insert counter
-_v_ View
-
-"
-    ("+" kmacro-add-counter)
-    ("=" kmacro-set-counter)
-    ("D" kmacro-delete-ring-head)
-    ("f" kmacro-set-format)
-    ("i" kmacro-insert-counter)
-    ("c" kmacro-end-and-call-macro :exit nil)
-    ("o" kmacro-call-ring-2nd-repeat)
-    ("e" kmacro-edit-macro)
-    ("E" kmacro-step-edit-macro)
-    ("n" kmacro-cycle-ring-next :exit nil)
-    ("p" kmacro-cycle-ring-previous :exit nil)
-    ("t" kmacro-swap-ring)
-    ("v" kmacro-view-macro-repeat)
-    ("b" kmacro-bind-to-key)
-    ("l" kmacro-edit-lossage)
-    ("N" kmacro-name-last-macro)
-    ("?" kbd-macro-query)
-    ("r" apply-macro-to-region-lines)
-    ("s" kmacro-start-macro)
-    ("x" kmacro-to-register)
-    ("q" nil "quit" :hint t)))
-
-(provide 'init-editing)
-;;; init-editing.el ends here
+(provide 'km-editing)
+;;; km-editing.el ends here

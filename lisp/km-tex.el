@@ -1,4 +1,4 @@
-;;; init-tex.el --- TeX configuration
+;;; km-tex.el --- TeX extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,20 +20,8 @@
 
 ;;; Code:
 
-(setq reftex-default-bibliography '("refs.bib"))
-
-(setq font-latex-fontify-sectioning 'color
-      TeX-electric-math '("$" . "$"))
-
-(put 'LaTeX-narrow-to-environment 'disabled nil)
-
-(add-to-list 'auto-mode-alist '("\\.[tT]e[xX]\\'" . latex-mode))
-
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook (lambda ()
-                             (setq imenu-create-index-function
-                                   #'km/latex-imenu-create-index-function)))
+(require 'tex)
+(require 'latex)
 
 (defun km/latex-imenu-create-index-function ()
   ;; See `LaTeX-imenu-create-index-function'.
@@ -57,5 +45,5 @@
               entries)))
     (nreverse entries)))
 
-(provide 'init-tex)
-;;; init-tex.el ends here
+(provide 'km-tex)
+;;; km-tex.el ends here

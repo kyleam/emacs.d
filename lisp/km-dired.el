@@ -1,4 +1,4 @@
-;;; init-dired.el --- Dired configuration
+;;; km-dired.el --- Dired extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,45 +20,16 @@
 
 ;;; Code:
 
-(require 'dired-x)
-
-(put 'dired-find-alternate-file 'disabled nil)
-
-;; .git is present as part of `dired-omit-extensions', but this seems to
-;; only be taken into account if a non-exension part exists.
-(setq dired-omit-files
-      (concat dired-omit-files
-              "\\|^\\.git$\\|^\\.gitignore$"
-              "\\|^__pycache__$\\|^\\.snakemake$"))
-
-(defvar km/latex-omit-extensions '(".aux"
-                                   ".fdb_latexmk"
-                                   ".fls"
-                                   ".log"
-                                   ".nav"
-                                   ".out"
-                                   ".snm")
-  "Intermediate LaTeX files")
-
-(setq dired-omit-extensions
-      (append dired-omit-extensions km/latex-omit-extensions))
-
-(setq-default dired-omit-mode t)
-(setq dired-dwim-target t
-      dired-listing-switches "-alht")
-
-(setq dired-guess-shell-alist-user
-        '(("\\.pdf\\'" "zathura")))
-
-(setq dired-recursive-copies t
-      dired-recursive-deletes t)
-
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+(require 'dired)
+(require 'org)
+(require 'km-util)
+(require 'projectile)
 
 (defun km/dired-switch-to-buffer ()
   (interactive)
   (switch-to-buffer (km/dired-completing-buffer)))
 
+;;;###autoload
 (defun km/dired-switch-to-buffer-other-window ()
   (interactive)
   (pop-to-buffer (km/dired-completing-buffer)))
@@ -67,6 +38,7 @@
   (completing-read "Dired buffer: "
                    (mapcar #'buffer-name (km/mode-buffers 'dired-mode))))
 
+;;;###autoload
 (defun km/org-open-dired-marked-files (&optional arg)
   "Open marked files (or next ARG) with `org-open-file'."
   (interactive "p")
@@ -77,11 +49,13 @@
               (yes-or-no-p (format "Open %s files?" num-files)))
       (dolist (f files) (org-open-file f)))))
 
+;;;###autoload
 (defun km/dired-view-file-other-window ()
   "In Dired, view this file in another window."
   (interactive)
   (view-file-other-window (dired-get-file-for-visit)))
 
+;;;###autoload
 (defun km/dired-copy-and-edit ()
   "Copy file and enter `wdired-mode' for completing rename."
   (interactive)
@@ -101,56 +75,10 @@
                                flag))
     (replace-match "" t nil nil 1)))
 
-;; This overrides the binding for `list-directory'.
-(global-set-key (kbd "C-x C-d") 'km/dired-switch-to-buffer)
-(define-key dired-mode-map "c" 'dired-do-copy)
-(define-key dired-mode-map "C" 'km/dired-copy-and-edit)
-;; This overrides `dired-do-run-mail'.
-(define-key dired-mode-map "V" 'km/dired-view-file-other-window)
-
-(define-key ctl-x-4-map "D" 'km/dired-switch-to-buffer-other-window)
-
-(define-prefix-command 'km/dired-prefix-map)
-(define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map)
-
-(after 'org
-  ;; This overrides `dired-find-file', which is also bound to "f".
-  (define-key dired-mode-map "e" 'km/org-open-dired-marked-files))
-
-
-;;; Dired Narrow
-
-(define-key dired-mode-map "/" 'dired-narrow)
-
-(define-prefix-command 'km/dired-narrow-prefix-map)
-(define-key km/dired-prefix-map "n" 'km/dired-narrow-prefix-map)
-
-(define-key km/dired-narrow-prefix-map "f" 'dired-narrow-fuzzy)
-(define-key km/dired-narrow-prefix-map "n" 'dired-narrow)
-(define-key km/dired-narrow-prefix-map "r" 'dired-narrow-regexp)
-
-
-;;; Dired Subtree
-
-(define-prefix-command 'km/dired-subtree-prefix-map)
-(define-key km/dired-prefix-map "s" 'km/dired-subtree-prefix-map)
-
-(define-key km/dired-subtree-prefix-map "@" 'dired-subtree-mark-subtree)
-(define-key km/dired-subtree-prefix-map "." 'dired-subtree-unmark-subtree)
-(define-key km/dired-subtree-prefix-map "<" 'dired-subtree-beginning)
-(define-key km/dired-subtree-prefix-map ">" 'dired-subtree-end)
-(define-key km/dired-subtree-prefix-map "g" 'dired-subtree-revert)
-(define-key km/dired-subtree-prefix-map "d" 'dired-subtree-down)
-(define-key km/dired-subtree-prefix-map "i" 'dired-subtree-insert)
-(define-key km/dired-subtree-prefix-map "n" 'dired-subtree-next-sibling)
-(define-key km/dired-subtree-prefix-map "p" 'dired-subtree-previous-sibling)
-(define-key km/dired-subtree-prefix-map "r" 'dired-subtree-remove)
-(define-key km/dired-subtree-prefix-map "s" 'dired-subtree-narrow)
-(define-key km/dired-subtree-prefix-map "u" 'dired-subtree-up)
-
 
 ;;; Copying file names
 
+;;;###autoload
 (defun km/dired-copy-project-filename-as-kill ()
   "Copy names of marked project files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
@@ -159,6 +87,7 @@ path is always relative to `projectile-project-root'."
   (km/dired-copy-filename-relative-to-directory
    (projectile-project-root)))
 
+;;;###autoload
 (defun km/dired-copy-relative-filename-as-kill (&optional arg)
   "Copy names of marked (or next ARG) files into kill ring.
 This is similar to `dired-copy-filename-as-kill', but the leading
@@ -188,15 +117,5 @@ relative to DIRECTORY."
     (other-window 1)
     default-directory))
 
-(define-prefix-command 'km/dired-copy-filename-map)
-;; This overrides the default binding for `dired-copy-filename-as-kill'.
-(define-key dired-mode-map "w" 'km/dired-copy-filename-map)
-
-(after 'projectile
-  (define-key km/dired-copy-filename-map "p"
-    'km/dired-copy-project-filename-as-kill))
-(define-key km/dired-copy-filename-map "o" 'km/dired-copy-relative-filename-as-kill)
-(define-key km/dired-copy-filename-map "w" 'dired-copy-filename-as-kill)
-
-(provide 'init-dired)
-;;; init-dired.el ends here
+(provide 'km-dired)
+;;; km-dired.el ends here

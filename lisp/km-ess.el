@@ -1,4 +1,4 @@
-;;; init-bog.el --- Bog mode configuration
+;;; km-ess.el --- ESS extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,18 +20,27 @@
 
 ;;; Code:
 
-(add-to-list 'load-path "~/src/emacs/bog/")
-(require 'bog-autoloads)
+(require 'ess-comp)
+(require 'ess-inf)
+(require 'ess-s-l)
 
-(setq bog-subdirectory-group 2
-      bog-combined-bib-ignore-not-found t
-      bog-use-citekey-cache t)
+;;;###autoload
+(defun km/ess-eval-buffer-up-to-line ()
+  "Send up to the current line to inferior ESS process."
+  (interactive)
+  (ess-eval-region (point-min) (line-end-position) nil))
 
-(setq bog-keymap-prefix (kbd "C-c b"))
+(defvar km/ess-dplry-pipe-key "|")
 
-(add-hook 'org-mode-hook 'bog-mode)
+;;;###autoload
+(defun km/ess-insert-dplyr-pipe ()
+  "Insert `km/ess-dplry-pipe' using `ess-smart-S-assign'.
+Based on instructions in `ess-smart-S-assign-key', I didn't think
+this would work, but it seems to so far."
+  (interactive)
+  (let ((ess-S-assign " %>% ")
+        (ess-smart-S-assign-key km/ess-dplry-pipe-key))
+    (call-interactively #'ess-smart-S-assign)))
 
-(global-set-key bog-keymap-prefix bog-command-map)
-
-(provide 'init-bog)
-;;; init-bog.el ends here
+(provide 'km-ess)
+;;; km-ess.el ends here

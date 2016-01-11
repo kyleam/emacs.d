@@ -1,4 +1,4 @@
-;;; init-view.el --- View mode configuration
+;;; km-helm.el --- Helm configuration
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,14 +20,29 @@
 
 ;;; Code:
 
-(after 'view
-  (define-key view-mode-map "l" 'recenter-top-bottom)
-  (define-key view-mode-map "f" 'forward-word)
-  (define-key view-mode-map "b" 'backward-word)
-  (define-key view-mode-map "]" 'forward-paragraph)
-  (define-key view-mode-map "[" 'backward-paragraph)
-  (define-key view-mode-map "j" 'avy-goto-subword-1))
+(require 'helm)
 
-(key-chord-define-global "hq" 'view-mode)
+;;;###autoload
+(defun km/helm-display-buffer ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action #'display-buffer)))
 
-(provide 'init-view)
+;;;###autoload
+(defun km/helm-display-file ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action
+     (lambda (f)
+       (display-buffer (find-file-noselect f))))))
+
+(autoload 'org-open-file "org")
+;;;###autoload
+(defun km/helm-ff-org-open-file ()
+  "Run `org-open-file' from `helm-source-find-files'."
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action #'org-open-file)))
+
+(provide 'km-helm)
+;;; km-helm.el ends here

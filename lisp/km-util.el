@@ -1,4 +1,4 @@
-;;; init-diminish.el --- Diminish mode configuration
+;;; km-util.el --- Utilities
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,20 +20,19 @@
 
 ;;; Code:
 
-(require 'diminish)
+(require 'dash)
 
-(diminish 'abbrev-mode "Ab")
-(after 'helm-mode (diminish 'helm-mode))
-(after 'flyspell (diminish 'flyspell-mode "Fy"))
-(after 'paredit (diminish 'paredit-mode " Pe"))
-(after 'mml (diminish 'mml-mode "Ml"))
-(after 'org (diminish 'orgstruct-mode "Os"))
-(after 'org-table (diminish 'orgtbl-mode "Ot"))
-(after 'projectile (diminish 'projectile-mode))
-(after 'reftex (diminish 'reftex-mode "Rf"))
-(after 'view (diminish 'view-mode "Vw"))
-(after 'whitespace (diminish 'global-whitespace-mode))
-(after 'yasnippet (diminish 'yas-minor-mode))
+;; Taken from
+;; http://milkbox.net/note/single-file-master-emacs-configuration/.
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,mode
+     '(progn ,@body)))
 
-(provide 'init-diminish)
-;;; init-diminish.el ends here
+(defun km/mode-buffers (mode)
+  (--filter (with-current-buffer it (derived-mode-p mode))
+            (buffer-list)))
+
+(provide 'km-util)
+;;; km-util.el ends here

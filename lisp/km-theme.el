@@ -1,4 +1,4 @@
-;;; init-appearance.el --- Appearance-related configuration
+;;; km-theme.el --- Tweaks to the stekene light theme
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -19,20 +19,6 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
-
-(setq inhibit-splash-screen t
-      initial-scratch-message nil)
-
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(blink-cursor-mode -1)
-
-(line-number-mode)
-(column-number-mode)
-(size-indication-mode)
-
-;;; Theme
 
 (load-theme 'stekene-light t)
 
@@ -95,5 +81,5 @@
  '(dired-subtree-depth-3-face ((t (:background "gray95"))))
  '(whitespace-indentation ((t (:background "gray90")))))
 
-(provide 'init-appearance)
-;;; init-appearance.el ends here
+(provide 'km-theme)
+;;; km-theme.el ends here

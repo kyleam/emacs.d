@@ -1,4 +1,4 @@
-;;; init-bib.el --- Bibliography configuration
+;;; km-bib.el --- Bibliography configuration
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,31 +20,9 @@
 
 ;;; Code:
 
-;; Make cite key have form <last author last name><year><first word>.
-(setq bibtex-autokey-titlewords 1
-      bibtex-autokey-titleword-ignore '("A" "An" "On" "The"  "[0-9].*")
-      bibtex-autokey-titleword-length nil
-      bibtex-autokey-titlewords-stretch 0
-      bibtex-autokey-year-length 4
-      bibtex-autokey-year-title-separator "")
-
-(setq bibtex-align-at-equal-sign t)  ; Used by `bibtex-fill-entry'.
-
-(after 'bibtex
-  (setq bibtex-entry-format
-        (append '(realign whitespace last-comma delimiters sort-fields)
-                bibtex-entry-format)))
-
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-use-title-case)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-single-space-author-list)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-pages-use-double-hyphen)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-doi-leader)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-set-coding-system)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-remove-entry-space)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-entry)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-keys)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-downcase-author-and)
-(add-hook 'bibtex-clean-entry-hook 'km/bibtex-delete-article-fields)
+(require 'bibtex)
+(require 'dash)
+(require 'org)
 
 (defvar km/bibtex-unimportant-title-words
   '("a" "aboard" "about" "above" "absent" "across" "after" "against"
@@ -200,6 +178,7 @@ to
            (delete-region (bibtex-start-of-field bounds)
                           (point))))))))
 
+;;;###autoload
 (defun km/browse-doi (doi)
   "Open DOI in browser.
 When called interactively, take the DOI from the text under
@@ -208,6 +187,7 @@ point.  The link is opened using the settings of
   (interactive (list (km/doi-at-point)))
   (browse-url (org-link-escape-browser (concat org-doi-server-url doi))))
 
+;;;###autoload
 (defun km/copy-doi-as-kill ()
   "Copy DOI at point to kill ring."
   (interactive)
@@ -221,5 +201,5 @@ point.  The link is opened using the settings of
     (and (looking-at "\\(doi:[ \t\n]*\\)*\\([-./A-z0-9]+[A-z0-9]\\)\\b")
          (match-string-no-properties 2))))
 
-(provide 'init-bib)
-;;; init-bib.el ends here
+(provide 'km-bib)
+;;; km-bib.el ends here

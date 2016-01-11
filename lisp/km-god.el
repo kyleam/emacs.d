@@ -1,4 +1,4 @@
-;;; init-yas.el --- Yasnippet configuration
+;;; km-god.el --- God mode extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,28 +20,17 @@
 
 ;;; Code:
 
-(require 'yasnippet)
+(require 'god-mode)
 
-(setq yas-fallback-behavior nil)
+(defun km/god-update-cursor ()
+  (setq cursor-type (if god-local-mode 'bar 'box)))
 
-(defvar km/personal-snippets
-  (file-name-as-directory (expand-file-name "psnippets" user-emacs-directory)))
+(defun km/god-gnus-p ()
+  "Return non-nil if a Gnus-related mode is enabled."
+  (derived-mode-p 'gnus-group-mode
+                  'gnus-summary-mode
+                  'gnus-article-mode
+                  'message-mode))
 
-(when (file-exists-p km/personal-snippets)
-  (add-to-list 'yas-snippet-dirs km/personal-snippets))
-
-(defun km/yas-with-comment (str)
-  (concat comment-start
-          (unless (s-ends-with? " " comment-start) " ")
-          str comment-end))
-
-(define-key yas-minor-mode-map (kbd "C-c i") 'yas-expand)
-;; Remove commands with 'C-c &' prefix, which conflicts with
-;; `org-mark-ring-goto' binding'
-(define-key yas-minor-mode-map (kbd "C-c &") nil)
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-
-(yas-global-mode)
-
-(provide 'init-yas)
+(provide 'km-god)
+;;; km-god.el ends here

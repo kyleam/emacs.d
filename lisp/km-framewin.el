@@ -1,4 +1,4 @@
-;;; init-framewin.el --- Frame and window configuration
+;;; km-framewin.el --- Frame and window extensions
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -20,6 +20,7 @@
 
 ;;; Code:
 
+;;;###autoload
 (defun km/clone-indirect-buffer-other-window-and-widen ()
   "Clone as indirect buffer and then widen."
    (interactive)
@@ -27,6 +28,7 @@
    (widen))
 
 ;; From prelude
+;;;###autoload
 (defun km/swap-windows ()
   "Swap 2 windows."
   (interactive)
@@ -45,6 +47,7 @@
   (other-window 1))
 
 ;; http://www.emacswiki.org/emacs/ToggleWindowSplit
+;;;###autoload
 (defun km/switch-window-split ()
   "If the window is split vertically, split it horizontally or vice versa.
 Assumes that the window is only split into two."
@@ -58,30 +61,5 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
-(defhydra hydra-window-map (:hint nil)
-  "
-_l_: Switch split   _r_: Winner redo   _o_: Scroll other
-_s_: Swap           _u_: Winner undo   _i_: Scroll other down
-\n"
-  ("l" km/switch-window-split)
-  ("s" km/swap-windows)
-
-  ("r" winner-redo)
-  ("u" winner-undo)
-
-  ("o" scroll-other-window)
-  ("i" scroll-other-window-down)
-
-  ("f" make-frame "new frame" :color blue)
-  ("q" nil "quit"))
-
-(global-set-key (kbd "C-c w") 'hydra-window-map/body)
-
-(key-chord-define-global "lq" 'winner-undo)
-
-(define-key ctl-x-4-map "c" 'km/clone-indirect-buffer-other-window-and-widen)
-
-(winner-mode 1)
-
-(provide 'init-framewin)
-;;; init-framewin.el ends here
+(provide 'km-framewin)
+;;; km-framewin.el ends here
