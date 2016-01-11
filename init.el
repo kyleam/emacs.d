@@ -134,8 +134,10 @@
      (emacs-lisp . t)
      (latex . t)))
 
-  (defadvice org-open-file (after km/org-open-add-to-recentf activate)
-    (recentf-add-file path))
+  (advice-add
+   'org-open-file :after
+   (lambda (path &rest _) (recentf-add-file path))
+   '((name . "recentf-add")))
 
   (put 'org-goto-max-level 'safe-local-variable #'integerp)
 
@@ -874,10 +876,10 @@
   (magit-change-popup-key 'magit-branch-popup :action
                           ?s ?v)
 
-  (defadvice magit-merge-editmsg (around km/magit-merge-editmsg-no-ff activate)
-    "Set '--no-ff' flag when running `magit-merge-editmsg'."
-    (let ((args '("--no-ff")))
-      ad-do-it)))
+  (advice-add
+   'magit-merge-editmsg :around
+   (lambda (f rev &rest _) (funcall f rev "--no-ff"))
+   '((name . "no-ff"))))
 
 (use-package km-magit
   :defer t
@@ -1299,18 +1301,19 @@
              ("c" . compile)
              ("g" . recompile))
   :config
-  (defadvice compile (around prevent-duplicate-compilation-windows activate)
-    "Pop to compilation buffer only if it isn't visible.
-This is useful for using multiple frames (e.g., with a two
-monitor setup)."
-    (if (get-buffer-window (km/compilation-name-by-directory)
-                           'visible)
-        (save-window-excursion ad-do-it)
-      ad-do-it))
+  (advice-add
+   'compile :around
+   (lambda (f &rest args)
+     (if (get-buffer-window (km/compilation-name-by-directory)
+                            'visible)
+         (save-window-excursion (apply f args))
+       (apply f args)))
+   '((name . "prevent-duplicate-window")))
 
-  (defadvice recompile (around prevent-window-on-compilation activate)
-    "Prevent recompiling from spawning new windows."
-    (save-window-excursion ad-do-it)))
+  (advice-add
+   'recompile :around
+   (lambda (f &rest args) (save-window-excursion (apply f args)))
+   '((name . "prevent-window"))))
 
 (use-package km-compile
   :after compile
