@@ -25,7 +25,9 @@
 (defvar km/init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
 (add-to-list 'load-path km/init-lisp-dir)
 
-(require 'init-elpa)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
 
 (require 'cask)
 (cask-initialize)
