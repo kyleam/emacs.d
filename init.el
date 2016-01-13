@@ -437,6 +437,10 @@
              ("s" . km/kill-string-at-point)
              ("w" . km/kill-word-at-point)))
 
+(use-package outline
+  :defer t
+  :diminish outline-mode)
+
 (use-package km-outline
   :defer t)
 
@@ -1112,7 +1116,7 @@
 
 (use-package abbrev
   :commands abbrev-mode
-  :diminish (abbrev-mode . "Ab")
+  :diminish abbrev-mode
   :init
   (add-hook 'text-mode-hook #'abbrev-mode)
   (add-hook 'prog-mode-hook #'abbrev-mode)
