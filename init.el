@@ -556,8 +556,7 @@
 
 (use-package recentf
   :config
-  (setq recentf-max-menu-items 15
-        recentf-max-saved-items 200
+  (setq recentf-max-saved-items 200
         recentf-save-file "~/.emacs.d/cache/recentf")
   (recentf-mode))
 
