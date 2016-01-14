@@ -558,6 +558,7 @@
   :config
   (setq recentf-max-saved-items 50
         recentf-save-file "~/.emacs.d/cache/recentf")
+  (add-to-list 'recentf-exclude "^/tmp/scratch.*")
   (recentf-mode))
 
 (use-package nlines
