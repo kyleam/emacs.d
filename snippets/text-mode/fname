@@ -1,4 +1,5 @@
 # -*- mode: snippet -*-
 # key: fname
+# condition: 'force-in-comment
 # --
 `(insert (file-name-nondirectory (buffer-file-name)))` $0

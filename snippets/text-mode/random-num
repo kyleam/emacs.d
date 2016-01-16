@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: random number
 # key: rnum
+# condition: 'force-in-comment
 # --
 `(random 4294967295)`$0

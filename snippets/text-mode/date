@@ -1,4 +1,5 @@
 # -*- mode: snippet -*-
 # key: date
+# condition: 'force-in-comment
 # --
 `(format-time-string "%Y-%m-%d")`$0
