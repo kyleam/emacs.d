@@ -143,7 +143,7 @@ without requiring confirmation.
                                  branch)
            current-prefix-arg)))
   (unless (string= old new)
-    (magit-run-git-no-revert "branch" (if force "-M" "-m") old new)))
+    (magit-run-git "branch" (if force "-M" "-m") old new)))
 
 (defun km/magit-delete-previous-branch (&optional force)
   "Delete previous branch.
