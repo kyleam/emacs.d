@@ -88,7 +88,7 @@ branch."
   "Perform fast-forward merge of upstream branch.
 \n(git merge --no-edit --ff-only <upstream>)"
   (interactive)
-  (--if-let (magit-get-tracked-branch)
+  (--if-let (magit-get-upstream-branch)
       (magit-merge it '("--ff-only"))
     (user-error "No upstream branch")))
 
