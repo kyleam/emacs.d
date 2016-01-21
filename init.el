@@ -1543,7 +1543,16 @@
     (setq outline-regexp ";;;;* ")
     (setq outline-level #'km/elisp-outline-level))
 
-  (add-hook 'emacs-lisp-mode-hook #'km/elisp-set-outline-vars))
+  (add-hook 'emacs-lisp-mode-hook #'km/elisp-set-outline-vars)
+
+  ;; Modified from usepackage's issue #80.
+  (defun km/imenu-add-use-package ()
+    (when (string= (buffer-file-name (buffer-base-buffer))
+                   user-init-file)
+      (add-to-list
+       'imenu-generic-expression
+       '("Packages" "^\\s-*(\\(use-package\\)\\s-+\\(\\(\\sw\\|\\s_\\)+\\)" 2))))
+  (add-hook 'emacs-lisp-mode-hook #'km/imenu-add-use-package))
 
 (use-package find-function
   :bind (("C-h ;" . find-function)
