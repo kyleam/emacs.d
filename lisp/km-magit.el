@@ -500,6 +500,19 @@ function."
          'km/magit-copy-hook current-prefix-arg))
       (magit-copy-section-value)))
 
+(defun km/magit-describe (rev)
+  "Run 'git describe' on REV."
+  (interactive
+   (list (or (-when-let (section (magit-current-section))
+               (cond
+                ((memq (magit-section-type section) '(commit branch))
+                 (magit-section-value section))
+                ((derived-mode-p 'magit-revision-mode)
+                 (car magit-refresh-args))))
+             (magit-read-branch-or-commit "Revision"))))
+  (--when-let (and rev (magit-git-string "describe" rev))
+    (kill-new (message it))))
+
 (defun km/magit-rev-ancestor-p (rev-a rev-b)
   "Report whether REV-A is the ancestor of REV-B.
 Use the revision at point as REV-B.  With prefix argument or if

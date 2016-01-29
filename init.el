@@ -896,6 +896,7 @@
              ("n" . km/magit-shorten-hash-at-point)
              ("p" . km/magit-pin-file)
              ("r" . km/magit-find-recently-changed-file)
+             ("t" . km/magit-describe)
              ("u" . km/magit-auto-commit)
              ("v" . km/magit-revfile-reset))
   :config
