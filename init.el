@@ -94,6 +94,7 @@
              ("s" . org-save-all-org-buffers)
              ("w" . org-refile-goto-last-stored))
   (define-prefix-command 'km/org-prefix-map)
+  (setq org-use-extra-keys t)
   :config
   (setq org-log-done t
         org-log-into-drawer t
@@ -107,7 +108,6 @@
         org-adapt-indentation nil
         org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
   (setq org-use-speed-commands t
-        org-use-extra-keys t
         org-fast-tag-selection-single-key 'expert)
   (setq org-outline-path-complete-in-steps nil
         org-goto-interface 'outline-path-completionp
