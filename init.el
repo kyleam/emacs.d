@@ -1788,6 +1788,7 @@
   :init
   (define-prefix-command 'km/gnus-article-prefix-map)
   :config
+  (setq gnus-article-x-face-too-ugly ".*")
   (define-key gnus-article-mode-map "v" #'org-capture)
   (define-key gnus-article-mode-map (kbd "C-c m")
     'km/gnus-article-prefix-map))
