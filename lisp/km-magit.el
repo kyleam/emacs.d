@@ -642,5 +642,43 @@ With a \\[universal-argument] \\[universal-argument], do not mark them at all."
       (unless (equal arg (list 16))
         (km/git-rebase-fixup-duplicates beg end (equal arg (list 4)))))))
 
+(defun km/git-rebase--move-line (new-pos)
+  (let ((ln-beg (point-at-bol))
+        (ln-end (1+ (point-at-eol))))
+    (goto-char new-pos)
+    (let ((inhibit-read-only t))
+      (insert (delete-and-extract-region ln-beg ln-end)))
+    (forward-line -1)))
+
+(defun km/git-rebase--collect-lines ()
+  (let ((current-ln (point-at-bol))
+        pt candidates)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region (window-start) (window-end))
+        (goto-char (point-min))
+        (while (re-search-forward git-rebase-line nil t)
+          (setq pt (point-at-bol))
+          (unless (= pt current-ln)
+            (push pt candidates)))
+        ;; Offer first empty line after last commit as candidate so
+        ;; the current commit can be moved to the end.
+        (unless (> current-ln (car candidates))
+          (forward-line 1)
+          (push (point-at-bol) candidates))
+        (nreverse candidates)))))
+
+(defun km/git-rebase-move-commit ()
+  "Move commit on current line above selected line."
+  (interactive)
+  (unless (save-excursion (beginning-of-line)
+                          (looking-at-p git-rebase-line))
+    (user-error "Not on commit line"))
+  (avy-with km/git-rebase-move-commit
+    (setq avy-action #'km/git-rebase--move-line)
+    (avy--process
+     (km/git-rebase--collect-lines)
+     #'avy--overlay-post)))
+
 (provide 'km-magit)
 ;;; km-magit.el ends here

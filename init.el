@@ -932,7 +932,8 @@
   (after 'git-rebase
     (bind-keys :map git-rebase-mode-map
                ("d" . km/git-rebase-fixup-duplicates)
-               ("j" . km/git-rebase-join-repeats)))
+               ("j" . km/git-rebase-join-repeats)
+               ("m" . km/git-rebase-move-commit)))
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" #'km/magit-auto-commit)
