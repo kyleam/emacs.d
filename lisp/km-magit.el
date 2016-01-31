@@ -22,6 +22,7 @@
 
 (require 'avy)
 (require 'git-rebase)
+(require 'km-util)
 (require 'magit)
 (require 'projectile)
 
@@ -587,6 +588,59 @@ argument.  Interactively, this can be accessed using the command
 (defun km/magit-diff-visit-file-other-window (&optional prev-rev)
   (interactive "P")
   (km/magit-diff-visit-file prev-rev t))
+
+
+;;; Git Rebase mode
+
+(defun km/git-rebase--clean-subject (s)
+  (replace-regexp-in-string
+   (concat "\\`" (regexp-opt '("fixup! " "squash! "))) "" s))
+
+(defun km/git-rebase-fixup-duplicates (beg end &optional squash)
+  "Mark sequential lines with same subject as fixup commits.
+With an active region, limit to lines that the region touches.
+If prefix argument SQUASH is non-nil, mark for squashing instead
+of fixing up."
+  (interactive (nconc (km/region-or-buffer-line-bounds)
+                      (list current-prefix-arg)))
+  (save-excursion
+    (goto-char beg)
+    (let ((prefix (if squash "squash" "fixup"))
+          prev-subj subj)
+      (while (re-search-forward git-rebase-line end t)
+        (setq subj (km/git-rebase--clean-subject
+                    (match-string-no-properties 3)))
+        (when (equal subj prev-subj)
+          (let ((inhibit-read-only t))
+            (replace-match prefix 'fixedcase nil nil 1)))
+        (setq prev-subj subj)))))
+
+(defun km/git-rebase-join-repeats (beg end &optional arg)
+  "Move repeated subject lines after line of first occurrence.
+
+If region is active, limit to lines that the region touches.
+
+By default, repeated lines are marked for fixing up.
+With a \\[universal-argument], mark them for squashing instead.
+With a \\[universal-argument] \\[universal-argument], do not mark them at all."
+  (interactive (nconc (km/region-or-buffer-line-bounds)
+                      (list current-prefix-arg)))
+  (save-excursion
+    (goto-char beg)
+    (let (roots dups)
+      (while (re-search-forward git-rebase-line end t)
+        (let ((subj (km/git-rebase--clean-subject
+                     (match-string-no-properties 3))))
+          (push (list subj (match-string-no-properties 0) (point-marker))
+                (if (assoc subj roots) dups roots))))
+      (pcase-dolist (`(,subj ,line ,marker) dups)
+        (goto-char (1+ (nth 2 (assoc subj roots))))
+        (let ((inhibit-read-only t))
+          (insert (concat line "\n"))
+          (goto-char marker)
+          (delete-region (point-at-bol) (1+ (point-at-eol)))))
+      (unless (equal arg (list 16))
+        (km/git-rebase-fixup-duplicates beg end (equal arg (list 4)))))))
 
 (provide 'km-magit)
 ;;; km-magit.el ends here

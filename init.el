@@ -929,6 +929,11 @@
 
   (define-key km/magit-wip-map "w" #'km/magit-commit-wip-with-file)
 
+  (after 'git-rebase
+    (bind-keys :map git-rebase-mode-map
+               ("d" . km/git-rebase-fixup-duplicates)
+               ("j" . km/git-rebase-join-repeats)))
+
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" #'km/magit-auto-commit)
 

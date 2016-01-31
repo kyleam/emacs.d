@@ -34,5 +34,16 @@
   (--filter (with-current-buffer it (derived-mode-p mode))
             (buffer-list)))
 
+(defun km/region-or-buffer-line-bounds ()
+  "Return line bounds for region.
+If region is active, return postions that mark the beginning of
+the first line and end of the last line that the region touches.
+If there is no active region, return a the minimum and maximum
+point in the buffer."
+  (if (use-region-p)
+      (list (progn (goto-char (region-beginning)) (point-at-bol))
+            (progn (goto-char (region-end)) (1+ (point-at-eol))))
+    (list (point-min) (point-max))))
+
 (provide 'km-util)
 ;;; km-util.el ends here
