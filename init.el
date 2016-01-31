@@ -1557,7 +1557,9 @@
 
 (use-package find-function
   :bind (("C-h ;" . find-function)
-         ("C-h 4 ;" . find-function-other-window)))
+         ("C-h 4 ;" . find-function-other-window))
+  :init
+  (define-key km/file-map "e" #'find-library))
 
 (use-package paredit
   :defer t
