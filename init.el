@@ -1693,10 +1693,11 @@
 
 (use-package km-ess
   :defer t
-  :config
-  (bind-keys :map ess-mode-map
-             ("C-c C-." . km/ess-eval-buffer-up-to-line)
-             ("|" . km/ess-insert-dplyr-pipe))
+  :init
+  (after 'ess-mode
+    (bind-keys :map ess-mode-map
+               ("C-c C-." . km/ess-eval-buffer-up-to-line)
+               ("|" . km/ess-insert-dplyr-pipe)))
   (after 'ess-inf
     (define-key inferior-ess-mode-map "|" #'km/ess-insert-dplyr-pipe)))
 
