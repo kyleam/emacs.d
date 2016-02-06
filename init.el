@@ -773,6 +773,10 @@
   :config
   (setq git-annex-commit nil))
 
+(use-package with-editor
+  :load-path "~/src/emacs/with-editor/"
+  :defer t)
+
 (use-package magit
   :load-path "~/src/emacs/magit/lisp/"
   :defer t
