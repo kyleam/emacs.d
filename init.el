@@ -312,7 +312,7 @@
   (after 'org-agenda
     (setq km/org-agenda-file-directory "~/notes/agenda/"
           org-agenda-files (list km/org-agenda-file-directory))
-    (add-hook 'org-agenda-mode-hook #'km/org-agenda-cd-and-read-dir-locals)
+    (add-hook 'org-agenda-finalize-hook #'km/org-agenda-cd-and-read-dir-locals)
     (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span))
   (after 'ox-md
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string))

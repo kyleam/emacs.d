@@ -308,8 +308,9 @@ called through the speed command interface."
 
 ;;;###autoload
 (defun km/org-agenda-cd-and-read-dir-locals ()
-  (setq default-directory "~/notes/")
-  (hack-local-variables))
+  (unless (get 'org-agenda-files 'org-restrict)
+    (setq default-directory "~/notes/")
+    (hack-local-variables)))
 
 ;;;###autoload
 (defun km/org-agenda-store-current-span ()
