@@ -309,7 +309,7 @@ called through the speed command interface."
 ;;;###autoload
 (defun km/org-agenda-cd-and-read-dir-locals ()
   (unless (get 'org-agenda-files 'org-restrict)
-    (setq default-directory "~/notes/")
+    (setq default-directory (expand-file-name "~/notes/"))
     (hack-local-variables)))
 
 ;;;###autoload
