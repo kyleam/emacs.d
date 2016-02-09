@@ -790,6 +790,7 @@
   (define-prefix-command 'km/magit-map)
   (define-prefix-command 'km/magit-wip-map)
   (define-key km/git-map "w" 'km/magit-wip-map)
+  (setq magit-push-current-set-remote-if-missing nil)
   :config
   (setq magit-push-always-verify nil
         magit-delete-by-moving-to-trash nil
