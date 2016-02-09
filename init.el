@@ -523,6 +523,7 @@
 
 (use-package autorevert
   :config
+  (setq auto-revert-verbose nil)
   (global-auto-revert-mode))
 
 (use-package ibuffer
