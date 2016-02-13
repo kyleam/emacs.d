@@ -161,9 +161,9 @@ _y_ Unmark  _u_ Unmark
   "
   ^^Defining                ^^Applying
 _?_ Query                 _c_ Call
-_b_ Bind to key           _o_ Call 2nd in ring
-_e_ Edit                  _r_ Apply to region lines
-_E_ Step edit
+_b_ Bind to key           _h_ Execute with Helm
+_e_ Edit                  _o_ Call 2nd in ring
+_E_ Step edit             _r_ Apply to region lines
 _N_ Name last
 _l_ Use recent strokes
 _s_ Start defining
@@ -186,6 +186,7 @@ _v_ View
   ("o" kmacro-call-ring-2nd-repeat)
   ("e" kmacro-edit-macro)
   ("E" kmacro-step-edit-macro)
+  ("h" helm-execute-kmacro)
   ("n" kmacro-cycle-ring-next :exit nil)
   ("p" kmacro-cycle-ring-previous :exit nil)
   ("t" kmacro-swap-ring)
