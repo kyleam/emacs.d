@@ -1119,6 +1119,9 @@
   :defer t
   :init (define-key km/external-map "m" #'helm-man-woman))
 
+(use-package helm-bookmark
+  :bind ("C-x r m" . helm-bookmarks))
+
 
 ;;; Expansion
 
