@@ -1119,6 +1119,12 @@
   :defer t
   :init (define-key km/external-map "m" #'helm-man-woman))
 
+(use-package helm-ring
+  :bind (("M-y" . helm-show-kill-ring)
+         ("C-x r i" . helm-register))
+  :init
+  (define-key km/editing-map "m" #'helm-all-mark-rings))
+
 (use-package helm-bookmark
   :bind ("C-x r m" . helm-bookmarks))
 
