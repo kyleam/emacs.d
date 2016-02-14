@@ -1126,7 +1126,7 @@
   (define-key km/editing-map "m" #'helm-all-mark-rings))
 
 (use-package helm-bookmark
-  :bind ("C-x r m" . helm-bookmarks))
+  :bind ("C-x r b" . helm-bookmarks))
 
 
 ;;; Expansion
