@@ -24,6 +24,15 @@
 (require 'ediff)
 
 ;;;###autoload
+(defun km/diff-lock-buffer ()
+  "Rename current diff buffer to include new file name."
+  (interactive)
+  (rename-buffer
+   (format "*Diff: %s*"
+           (abbreviate-file-name
+            (substring-no-properties (diff-find-file-name))))))
+
+;;;###autoload
 (defun km/ediff-with-other-window ()
   "Run `ediff' on current window's file and other window's file."
   (interactive)
