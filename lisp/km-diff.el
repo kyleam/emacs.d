@@ -21,23 +21,7 @@
 ;;; Code:
 
 (require 'dash)
-(require 'diff)
 (require 'ediff)
-(require 'view)
-
-;;;###autoload
-(defun km/diff ()
-  "Run `diff' and then select buffer and turn on View mode."
-  (interactive)
-  (call-interactively #'diff)
-  (select-window (get-buffer-window "*Diff*"))
-  (view-mode 1))
-
-;;;###autoload
-(defun km/revert-buffer-and-view ()
-  (interactive)
-  (revert-buffer)
-  (view-mode 1))
 
 ;;;###autoload
 (defun km/ediff-with-other-window ()

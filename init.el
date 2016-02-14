@@ -1421,10 +1421,18 @@
 
 (use-package diff
   :defer t
+  :init
+  (define-key km/external-map "d" #'diff)
   :config
   (setq diff-command "/bin/diff"
-        diff-switches "-u")
-  (add-hook 'diff-mode-hook #'toggle-truncate-lines))
+        diff-switches "-u"))
+
+(use-package diff-mode
+  :after diff
+  :config
+  (setq diff-default-read-only t)
+  (add-hook 'diff-mode-hook #'toggle-truncate-lines)
+  (define-key diff-mode-map (kbd "C-c C-g") #'revert-buffer))
 
 (use-package ediff
   :defer t
@@ -1436,12 +1444,7 @@
 (use-package km-diff
   :defer t
   :init
-  (bind-keys :map km/external-map
-             ("o" . km/ediff-with-other-window)
-             ("d" . km/diff))
-  :config
-  (after 'diff-mode
-    (define-key diff-mode-map (kbd "C-c C-g") #'km/revert-buffer-and-view)))
+  (define-key km/external-map "o" #'km/ediff-with-other-window))
 
 
 ;;; Text modes
