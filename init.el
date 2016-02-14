@@ -1444,7 +1444,8 @@
 (use-package km-diff
   :defer t
   :init
-  (define-key km/external-map "o" #'km/ediff-with-other-window)
+  (define-key km/external-map "o" #'km/diff-with-other-window)
+  (define-key km/external-map "O" #'km/ediff-with-other-window)
   (after 'diff-mode
     (define-key diff-mode-map (kbd "C-c C-l") #'km/diff-lock-buffer)))
 

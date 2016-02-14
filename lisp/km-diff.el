@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 'diff)
 (require 'ediff)
 
 ;;;###autoload
@@ -32,10 +33,7 @@
            (abbreviate-file-name
             (substring-no-properties (diff-find-file-name))))))
 
-;;;###autoload
-(defun km/ediff-with-other-window ()
-  "Run `ediff' on current window's file and other window's file."
-  (interactive)
+(defun km/diff--with-other-window (diff-func)
   (let ((windows (window-list)))
        (unless (= (length windows) 2)
          (user-error "Function restricted to two-window frames"))
@@ -43,8 +41,20 @@
                              (window-buffer (car windows))))
                   (file-b (buffer-file-name
                            (window-buffer (cadr windows)))))
-           (ediff file-a file-b)
+           (funcall diff-func file-a file-b)
          (user-error "At least one buffer is not visiting a file"))))
+
+;;;###autoload
+(defun km/diff-with-other-window ()
+  "Run `diff' on current window's file and other window's file."
+  (interactive)
+  (km/diff--with-other-window #'diff))
+
+;;;###autoload
+(defun km/ediff-with-other-window ()
+  "Run `ediff' on current window's file and other window's file."
+  (interactive)
+  (km/diff--with-other-window #'ediff))
 
 (provide 'km-diff)
 ;;; km-diff.el ends here
