@@ -874,6 +874,7 @@
 
 (use-package magit-wip
   :defer t
+  :diminish magit-wip-after-save-local-mode
   :config
   (bind-keys :map km/magit-wip-map
              ("a" . magit-wip-after-apply-mode)
