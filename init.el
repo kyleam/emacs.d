@@ -848,6 +848,7 @@
              ("o" . magit-wip-log)
              ("s" . magit-wip-after-save-mode)
              ("S" . magit-wip-after-save-local-mode))
+  (magit-wip-after-save-mode 1)
 
   (define-key magit-popup-mode-map (kbd "SPC <t>")
     #'magit-invoke-popup-switch)
