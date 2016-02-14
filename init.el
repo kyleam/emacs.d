@@ -1423,7 +1423,8 @@
   :defer t
   :config
   (setq diff-command "/bin/diff"
-        diff-switches "-u"))
+        diff-switches "-u")
+  (add-hook 'diff-mode-hook #'toggle-truncate-lines))
 
 (use-package ediff
   :defer t
