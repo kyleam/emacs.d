@@ -1439,7 +1439,7 @@
              ("o" . km/ediff-with-other-window)
              ("d" . km/diff))
   :config
-  (after 'diff-mode-map
+  (after 'diff-mode
     (define-key diff-mode-map (kbd "C-c C-g") #'km/revert-buffer-and-view)))
 
 
