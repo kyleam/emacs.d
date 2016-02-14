@@ -839,17 +839,6 @@
   (bind-keys :map km/magit-map
              ("l" . magit-toggle-buffer-lock))
 
-  (bind-keys :map km/magit-wip-map
-             ("a" . magit-wip-after-apply-mode)
-             ("b" . magit-wip-before-change-mode)
-             ("c" . magit-wip-commit)
-             ("f" . magit-wip-commit-buffer-file)
-             ("l" . magit-wip-log-current)
-             ("o" . magit-wip-log)
-             ("s" . magit-wip-after-save-mode)
-             ("S" . magit-wip-after-save-local-mode))
-  (magit-wip-after-save-mode 1)
-
   (define-key magit-popup-mode-map (kbd "SPC <t>")
     #'magit-invoke-popup-switch)
   (define-key magit-popup-mode-map (kbd "SPC SPC <t>")
@@ -868,10 +857,6 @@
 
   (magit-define-popup-action 'magit-log-popup
     ?e "Edit options" 'magit-log-refresh-popup)
-  (magit-define-popup-action 'magit-log-popup
-    ?w "Log current WIP" 'magit-wip-log-current)
-  (magit-define-popup-action 'magit-log-popup
-    ?W "Log other WIP" 'magit-wip-log)
 
   (magit-change-popup-key 'magit-branch-popup :action
                           ?c ?o)
@@ -886,6 +871,26 @@
    'magit-merge-editmsg :around
    (lambda (f rev &rest _) (funcall f rev "--no-ff"))
    '((name . "no-ff"))))
+
+(use-package magit-wip
+  :defer t
+  :config
+  (bind-keys :map km/magit-wip-map
+             ("a" . magit-wip-after-apply-mode)
+             ("b" . magit-wip-before-change-mode)
+             ("c" . magit-wip-commit)
+             ("f" . magit-wip-commit-buffer-file)
+             ("l" . magit-wip-log-current)
+             ("o" . magit-wip-log)
+             ("s" . magit-wip-after-save-mode)
+             ("S" . magit-wip-after-save-local-mode))
+
+  (magit-define-popup-action 'magit-log-popup
+    ?w "Log current WIP" 'magit-wip-log-current)
+  (magit-define-popup-action 'magit-log-popup
+    ?W "Log other WIP" 'magit-wip-log)
+
+  (magit-wip-after-save-mode 1))
 
 (use-package km-magit
   :defer t
