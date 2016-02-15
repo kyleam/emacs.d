@@ -996,7 +996,7 @@
             (lambda ()
               (add-hook 'with-editor-pre-finish-hook
                         #'git-commit-save-message nil t)))
-  (add-hook 'git-commit-setup-hook #'git-commit-turn-on-flyspell))
+  (add-hook 'git-commit-setup-hook #'km/git-commit-turn-on-flyspell))
 
 (use-package orgit
   :load-path "~/src/emacs/orgit/"

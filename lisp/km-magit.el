@@ -589,6 +589,12 @@ argument.  Interactively, this can be accessed using the command
   (interactive "P")
   (km/magit-diff-visit-file prev-rev t))
 
+(defun km/git-commit-turn-on-flyspell ()
+  "Like `git-commit-turn-on-flyspell', but don't check buffer initially."
+  (setq flyspell-generic-check-word-predicate
+        'git-commit-flyspell-verify)
+  (turn-on-flyspell))
+
 
 ;;; Git Rebase mode
 
