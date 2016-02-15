@@ -996,7 +996,12 @@
             (lambda ()
               (add-hook 'with-editor-pre-finish-hook
                         #'git-commit-save-message nil t)))
-  (add-hook 'git-commit-setup-hook #'km/git-commit-turn-on-flyspell))
+  (add-hook 'git-commit-setup-hook #'km/git-commit-turn-on-flyspell)
+
+  (advice-add
+   'git-commit-prev-message :after
+   (lambda (&rest _) (goto-char (point-min)))
+   '((name . "go-to-bob"))))
 
 (use-package orgit
   :load-path "~/src/emacs/orgit/"
