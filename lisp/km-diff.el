@@ -56,5 +56,17 @@
   (interactive)
   (km/diff--with-other-window #'ediff))
 
+(defvar km/ediff-previous-window-config nil)
+
+;;;###autoload
+(defun km/ediff-save-window-config ()
+  (setq km/ediff-previous-window-config (current-window-configuration)))
+
+;;;###autoload
+(defun km/ediff-restore-window-config ()
+  (when km/ediff-previous-window-config
+    (set-window-configuration km/ediff-previous-window-config)
+    (setq km/ediff-previous-window-config nil)))
+
 (provide 'km-diff)
 ;;; km-diff.el ends here

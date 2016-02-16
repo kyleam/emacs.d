@@ -1460,7 +1460,10 @@
   (define-key km/external-map "o" #'km/diff-with-other-window)
   (define-key km/external-map "O" #'km/ediff-with-other-window)
   (after 'diff-mode
-    (define-key diff-mode-map (kbd "C-c C-l") #'km/diff-lock-buffer)))
+    (define-key diff-mode-map (kbd "C-c C-l") #'km/diff-lock-buffer))
+  (after 'ediff
+    (add-hook 'ediff-before-setup-hook #'km/ediff-save-window-config)
+    (add-hook 'ediff-quit-hook #'km/ediff-restore-window-config)))
 
 
 ;;; Text modes
