@@ -235,7 +235,7 @@
         org-agenda-start-on-weekday nil
         org-agenda-use-time-grid nil)
   (setq org-agenda-sorting-strategy
-        '((agenda time-up deadline-up scheduled-up priority-down category-keep)
+        '((agenda time-up priority-down category-keep)
           (todo priority-down category-keep)
           (tags priority-down category-keep)
           (search category-keep)))
