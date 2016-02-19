@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: parameters header
 # key: ph
+# condition: 'force-in-comment
 # --
 Parameters
 ----------
