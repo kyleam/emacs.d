@@ -313,7 +313,10 @@
     (setq km/org-agenda-file-directory "~/notes/agenda/"
           org-agenda-files (list km/org-agenda-file-directory))
     (add-hook 'org-agenda-finalize-hook #'km/org-agenda-cd-and-read-dir-locals)
-    (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span))
+    (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span)
+
+    (add-to-list 'org-agenda-bulk-custom-functions
+                 '(?D km/org-agenda-delete-subtree)))
   (after 'ox-md
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string))
   :config

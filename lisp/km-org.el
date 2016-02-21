@@ -360,6 +360,16 @@ displayed in the agenda."
            (org-agenda-text-search-extra-files :maxlevel . 3))))
     (org-refile '(4))))
 
+(defun km/org-delete-subtree ()
+  (org-back-to-heading t)
+  (delete-region
+   (point)
+   (org-element-property :end (org-element-at-point))))
+
+(defun km/org-agenda-delete-subtree ()
+  (interactive)
+  (org-agenda-archive-with #'km/org-delete-subtree))
+
 
 ;;; Refiling
 
