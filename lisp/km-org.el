@@ -370,6 +370,15 @@ displayed in the agenda."
   (interactive)
   (org-agenda-archive-with #'km/org-delete-subtree))
 
+;;;###autoload
+(defun km/org-agenda-set-restriction-lock (&optional type)
+  "Call `org-agenda-set-restriction-lock' with flipped C-u meaning."
+  (interactive "P")
+  (org-agenda-set-restriction-lock
+   (cond ((equal type '(4)) nil)
+         (type)
+         (t '(4)))))
+
 
 ;;; Refiling
 

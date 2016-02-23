@@ -316,7 +316,10 @@
     (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span)
 
     (add-to-list 'org-agenda-bulk-custom-functions
-                 '(?D km/org-agenda-delete-subtree)))
+                 '(?D km/org-agenda-delete-subtree))
+
+    (define-key org-mode-map [remap org-agenda-set-restriction-lock]
+      #'km/org-agenda-set-restriction-lock))
   (after 'ox-md
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string))
   :config
