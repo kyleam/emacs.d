@@ -301,6 +301,7 @@
     (define-key org-mode-map [remap org-tree-to-indirect-buffer]
       #'km/org-tree-to-indirect-buffer)
     (define-key org-mode-map [remap org-refile] #'km/org-refile-dwim)
+    (define-key org-mode-map [remap org-goto] #'km/org-goto)
 
     (add-to-list 'org-speed-commands-user '("o" . km/org-open-at-point-stay))
     (add-to-list 'org-speed-commands-user '("w" . km/org-refile-dwim))

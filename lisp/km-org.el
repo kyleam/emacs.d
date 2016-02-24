@@ -300,6 +300,19 @@ called through the speed command interface."
   (save-excursion
     (call-interactively #'org-open-at-point)))
 
+(defun km/org-goto ()
+  "Like `org-goto', but act on widened buffer.
+If point ends up outside the previously narrowed region, leave
+the buffer widened."
+  (interactive)
+  (pcase-let ((`(,beg . ,end) (and (buffer-narrowed-p)
+                                   (cons (point-min) (point-max)))))
+    (widen)
+    (unwind-protect
+        (call-interactively #'org-goto)
+      (when (and beg (<= beg (point) end))
+        (narrow-to-region beg end)))))
+
 
 ;;; Agenda
 
