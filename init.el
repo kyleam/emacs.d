@@ -1810,8 +1810,7 @@
 
   (setq gnus-auto-select-next 'quietly)
 
-  (setq gnus-thread-hide-subtree t
-        gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-number))
+  (setq gnus-thread-hide-subtree t)
   (define-key gnus-group-mode-map "e" #'gnus-group-select-group))
 
 (use-package gnus-sum
