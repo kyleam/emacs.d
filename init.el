@@ -226,8 +226,7 @@
   :init (define-key km/global-org-map "a" #'org-agenda)
   :config
   (setq org-agenda-restore-windows-after-quit t
-        org-agenda-window-setup 'only-window
-        org-agenda-sticky t)
+        org-agenda-window-setup 'only-window)
   (setq org-agenda-dim-blocked-tasks nil
         org-agenda-show-all-dates t
         org-agenda-skip-deadline-if-done t
