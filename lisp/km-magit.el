@@ -544,6 +544,11 @@ show tags by default."
     (add-hook 'magit-refs-sections-hook 'magit-insert-tags t t))
   (magit-refresh-buffer))
 
+(defun km/magit-revision-insert-related-refs ()
+  (interactive)
+  (let ((magit-revision-insert-related-refs t))
+    (magit-refresh)))
+
 (defun km/magit-log-flip-revs ()
   "Swap revisions in log range."
   (interactive)

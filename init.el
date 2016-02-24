@@ -802,6 +802,7 @@
         magit-delete-by-moving-to-trash nil
         magit-diff-auto-show-delay 0.1
         magit-revision-show-gravatars nil
+        magit-revision-insert-related-refs nil
         magit-log-section-arguments nil
         magit-log-show-margin nil)
   (setq magit-uniquify-buffer-names nil
@@ -938,6 +939,9 @@
 
   (define-key magit-refs-mode-map (kbd "C-c C-f")
     #'km/magit-refs-filter-recent)
+
+  (define-key magit-revision-mode-map (kbd "C-c C-r")
+    #'km/magit-revision-insert-related-refs)
 
   (bind-keys :map km/magit-map
              ("c" . km/magit-find-commit-file)
