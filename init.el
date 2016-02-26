@@ -1438,7 +1438,9 @@
 (use-package diff
   :defer t
   :init
-  (define-key km/external-map "d" #'diff)
+  (define-prefix-command 'km/diff-prefix-map)
+  (define-key km/external-map "d" 'km/diff-prefix-map)
+  (define-key km/diff-prefix-map "d" #'diff)
   :config
   (setq diff-command "/bin/diff"
         diff-switches "-u"))
@@ -1453,15 +1455,17 @@
 (use-package ediff
   :defer t
   :init
-  (define-key km/external-map "e" #'ediff)
+  (define-key km/diff-prefix-map "e" #'ediff)
   :config
   (setq ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (use-package km-diff
   :defer t
   :init
-  (define-key km/external-map "o" #'km/diff-with-other-window)
-  (define-key km/external-map "O" #'km/ediff-with-other-window)
+  (bind-keys :map km/diff-prefix-map
+             ("c" . km/diff-current-buffer-with-file)
+             ("o" . km/diff-with-other-window)
+             ("O" . km/ediff-with-other-window))
   (after 'diff-mode
     (define-key diff-mode-map (kbd "C-c C-l") #'km/diff-lock-buffer))
   (after 'ediff
