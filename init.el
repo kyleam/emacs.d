@@ -1329,13 +1329,6 @@
 (use-package grep
   :defer t
   :config
-  (defun km/grep-hide-header ()
-    (narrow-to-region
-     (save-excursion (goto-char (point-min))
-                     (line-beginning-position 5))
-     (point-max)))
-
-  (add-hook 'grep-setup-hook #'km/grep-hide-header)
   (add-hook 'grep-mode-hook #'toggle-truncate-lines))
 
 (use-package compile
