@@ -33,6 +33,14 @@
            (abbreviate-file-name
             (substring-no-properties (diff-find-file-name))))))
 
+;;;###autoload
+(defun km/diff-current-buffer-with-file ()
+  "Like `diff-buffer-with-file', but use current buffer without prompting."
+  (interactive)
+  (unless (buffer-file-name)
+    (user-error "Buffer isn't associated with a file"))
+  (diff-buffer-with-file (current-buffer)))
+
 (defun km/diff--with-other-window (diff-func)
   (let ((windows (window-list)))
        (unless (= (length windows) 2)
