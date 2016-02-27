@@ -48,6 +48,7 @@
 (depends-on "subr+")
 (depends-on "use-package")
 (depends-on "use-package-chords")
+(depends-on "wgrep")
 (depends-on "wrap-region")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
