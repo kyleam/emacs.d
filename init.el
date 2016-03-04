@@ -162,6 +162,11 @@
                                (when (eq major-mode 'org-mode)
                                  (org-show-context))))
 
+  (advice-add
+   'org-eval-in-calendar :around
+   (lambda (f form &rest _) (funcall f form 'keepdate))
+   '((name . "always-keepdate")))
+
   (bind-keys :map org-mode-map
              ("C-c l" . org-goto)
              ("C-c m" . km/org-prefix-map)
