@@ -1691,30 +1691,21 @@
   :load-path "~/src/emacs/snakemake-mode/"
   :defer t
   :init
-  (require 'snakemake-mode-autoloads)
-  (autoload 'snakemake-compile-command "snakemake-mode")
-  (setq snakemake-compile-command-options '("-p"))
+  (require 'snakemake-autoloads)
+  (define-key km/compile-map "s" #'snakemake-popup)
+  (after 'dired
+    (define-key dired-mode-map "b" #'snakemake-popup))
   :config
+  (setq snakemake-root-dir-function #'projectile-project-root)
+
   (defun km/snakemake-set-local-vars ()
-    (set (make-local-variable 'compile-command)
-         (snakemake-compile-command))
     (set (make-local-variable 'imenu-create-index-function)
          #'snakemake-imenu-create-index))
-
-  ;; Although `compile-command' and `imenu-create-index-function' are
-  ;; set when snakemake-mode is derived from Python mode, I need to
-  ;; define them again here because I have a Python mode hook that
-  ;; overrides the Python versions.
+  ;; Although `imenu-create-index-function' is set when snakemake-mode
+  ;; is derived from Python mode, I need to define it again here
+  ;; because I have a Python mode hook that overrides the Python
+  ;; version.
   (add-hook 'snakemake-mode-hook #'km/snakemake-set-local-vars))
-
-(use-package km-snakemake
-  :defer t
-  :init
-  (bind-keys :map km/compile-map
-             ("b" . km/snakemake-compile-project-rule)
-             ("p" . km/snakemake-compile-project-file))
-  (after 'dired
-    (define-key dired-mode-map "b" #'km/snakemake-compile-project-file)))
 
 (use-package ess-site
   :mode ("\\.[rR]\\'" . R-mode)
