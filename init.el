@@ -1703,7 +1703,7 @@
 
   ;; Although `compile-command' and `imenu-create-index-function' are
   ;; set when snakemake-mode is derived from Python mode, I need to
-  ;; define them again here because I have a Python mode hook
+  ;; define them again here because I have a Python mode hook that
   ;; overrides the Python versions.
   (add-hook 'snakemake-mode-hook #'km/snakemake-set-local-vars))
 
