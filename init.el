@@ -726,6 +726,9 @@
   (def-projectile-commander-method ?f
     "Open project file."
     (helm-projectile-find-file))
+  (def-projectile-commander-method ?l
+      "Run `helm-projectile-grep'."
+      (helm-projectile-grep))
   (def-projectile-commander-method ?p
     "Switch project."
     (helm-projectile-switch-project)))
