@@ -41,6 +41,7 @@
 (depends-on "pkgbuild-mode")
 (depends-on "poporg")
 (depends-on "projectile")
+(depends-on "rainbow-mode")
 (depends-on "s")
 (depends-on "stan-mode")
 (depends-on "stan-snippets")
