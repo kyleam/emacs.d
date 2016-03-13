@@ -253,11 +253,12 @@
             (org-agenda-overriding-header "Unscheduled TODO entries: ")))
           ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))
 
-  ;; Bind `org-agenda-follow-mode' to same key as
-  ;; `next-error-follow-minor-mode'.
-  (define-key org-agenda-mode-map (kbd "C-c C-f") #'org-agenda-follow-mode)
-  ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
-  (define-key org-agenda-mode-map (kbd "C-j") #'org-agenda-goto-date))
+  (bind-keys :map org-agenda-mode-map
+             ;; Bind `org-agenda-follow-mode' to same key as
+             ;; `next-error-follow-minor-mode'.
+             ("C-c C-f" . org-agenda-follow-mode)
+             ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
+             ("C-j" . org-agenda-goto-date)))
 
 (use-package org-contacts
   :defer t
