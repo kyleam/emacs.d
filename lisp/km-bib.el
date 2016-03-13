@@ -162,6 +162,44 @@ to
            (delete-region (bibtex-start-of-field bounds)
                           (point))))))))
 
+(defun km/bibtex-author-last-name-first ()
+  "Use last name first format for authors.
+
+Convert
+
+    name1 name2 name3 and ...
+
+to
+
+    name3, name1 name2 and ..."
+  (interactive)
+  (save-excursion
+    (bibtex-beginning-of-entry)
+    (let ((bounds (bibtex-search-forward-field "author" t)))
+      (when bounds
+        (let* ((beg (1+ (bibtex-start-of-text-in-field bounds)))
+               (end (1- (bibtex-end-of-text-in-field bounds)))
+               (author-list (buffer-substring-no-properties beg end))
+               (author-re (rx line-start
+                              (group (one-or-more not-newline))
+                              (syntax whitespace)
+                              (group (one-or-more (not (syntax whitespace))))
+                              line-end))
+               authors)
+          (with-temp-buffer
+            (insert (replace-regexp-in-string
+                     " and " "\n"
+                     (replace-regexp-in-string
+                      "[\n\t ]+" " " author-list)))
+            (goto-char (point-min))
+            (while (re-search-forward author-re nil t)
+              (push (concat (match-string 2) ", " (match-string 1))
+                    authors)))
+          (goto-char beg)
+          (delete-region beg end)
+          (insert (mapconcat #'identity (nreverse authors) " and "))
+          (fill-paragraph))))))
+
 ;;;###autoload
 (defun km/browse-doi (doi)
   "Open DOI in browser.
