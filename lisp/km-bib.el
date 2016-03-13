@@ -36,34 +36,33 @@ case, unless the word is the first word in the title.  Capitalize
 all other words unless they are protected by brackets."
   (save-excursion
     (bibtex-beginning-of-entry)
-    (let* ((bounds (bibtex-search-forward-field "title" t))
-           (beg (bibtex-start-of-text-in-field bounds)))
-      (goto-char (1- beg))
-      (while (re-search-forward "\\(\\W\\)\\(\\w+\\)\\(\\W\\)"
-                                (bibtex-end-of-text-in-field bounds) t)
-        (cond
-         ((and (string= (match-string 1) "{")
-               (string= (match-string 3) "}"))
-          ;; Go to previous character in case '}' is within the word.
-          (backward-char))
-         ;; Leave commands alone.
-         ((string= (match-string 1) "\\"))
-         ;; Capitalize the first word of the title.  This will fail if
-         ;; there is a space after '{'.
-         ((= (match-beginning 1) beg)
-          (backward-word)
-          (capitalize-word 1))
-         ;; Subword is separated by '-' or '{'.
-         ((or (string= (match-string 1) "-")
-              (string= (match-string 1) "}"))
-          (backward-word)
-          (downcase-word 1))
-         (t
-          (backward-word)
-          (if (member (downcase (match-string-no-properties 2))
-                      km/bibtex-unimportant-title-words)
-              (downcase-word 1)
-            (capitalize-word 1))))))))
+    (let ((bounds (bibtex-search-forward-field "title" t)))
+      (when bounds
+        (let* ((beg (1+ (bibtex-start-of-text-in-field bounds)))
+               (end (1- (bibtex-end-of-text-in-field bounds)))
+               (title-words (split-string
+                             (buffer-substring-no-properties beg end)))
+               (cap-if-letter
+                (lambda (word)
+                  (let ((case-fold-search nil))
+                    (if (string-match-p "\\`[a-z]" word)
+                        (capitalize word)
+                      word))))
+               (choose-case
+                (lambda (word)
+                  (funcall (if (member (downcase word)
+                                       km/bibtex-unimportant-title-words)
+                               #'downcase
+                             cap-if-letter)
+                           word))))
+          (goto-char beg)
+          (delete-region beg end)
+          (insert (mapconcat
+                   #'identity
+                   (cons (funcall cap-if-letter (car title-words))
+                         (mapcar choose-case (cdr title-words)))
+                   " "))
+          (fill-paragraph))))))
 
 (defun km/bibtex-single-space-author-list ()
   "Convert multiple spaces in author list to single space."
