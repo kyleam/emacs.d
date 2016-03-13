@@ -257,6 +257,7 @@
              ;; Bind `org-agenda-follow-mode' to same key as
              ;; `next-error-follow-minor-mode'.
              ("C-c C-f" . org-agenda-follow-mode)
+             ("C-o" . org-agenda-show-and-scroll-up)
              ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
              ("C-j" . org-agenda-goto-date)))
 
