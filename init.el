@@ -336,6 +336,7 @@
   :init
   (define-key km/global-org-map "p" #'poporg-dwim)
   :config
+  (add-hook 'poporg-mode-hook #'outline-show-all)
   (define-key poporg-mode-map (kbd "C-c C-c") #'poporg-edit-exit))
 
 (use-package org-link-edit
