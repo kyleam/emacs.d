@@ -25,24 +25,9 @@
 (require 'org)
 
 (defvar km/bibtex-unimportant-title-words
-  '("a" "aboard" "about" "above" "absent" "across" "after" "against"
-    "along" "alongside" "amid" "amidst" "among" "amongst" "an" "and"
-    "around" "as" "aslant" "astride" "at" "athwart" "atop"
-    "barring" "before" "behind" "below" "beneath" "beside" "besides" "between"
-    "beyond" "but" "by" "despite" "down" "during" "except" "failing"
-    "following" "for" "from" "in" "inside" "into" "like"
-    "mid" "minus" "near" "next" "nor" "notwithstanding" "of" "off"
-    "on" "onto" "opposite" "or" "out" "outside" "over" "past"
-    "per" "plus" "regarding" "round" "save" "since" "so" "than"
-    "the" "through" "throughout" "till" "times" "to" "toward" "towards"
-    "under" "underneath" "unlike" "until" "up" "upon" "via" "vs."
-    "when" "with" "within" "without" "worth" "yet")
-  "Words to ignore when running `km/bibtex-use-title-case'.
-These are taken from
-http://lanecc.libguides.com/content.php?pid=38483&sid=295540 and
-have only been modified to remove duplicates. This means that
-there are some unlikely words in there, but you never know when
-the next article you read will have \"athwart\" in the title.")
+  '("a" "an" "and" "as" "at" "but" "by" "for" "in" "nor"
+    "of" "on" "or" "out" "so" "the" "to" "up" "yet")
+  "Words to ignore when running `km/bibtex-use-title-case'.")
 
 (defun km/bibtex-use-title-case ()
   "Convert title of current BibTeX entry to title case.
