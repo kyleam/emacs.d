@@ -20,6 +20,7 @@
 
 ;;; Code:
 
+(require 'dash)
 (require 'dired)
 (require 'org)
 (require 'km-util)
@@ -74,6 +75,14 @@
                                (file-name-nondirectory fname)
                                flag))
     (replace-match "" t nil nil 1)))
+
+;;;###autoload
+(defun km/dired-touch-deref (&optional arg)
+  "Run 'touch -h' on makred files (or next ARG)."
+  (interactive "p")
+  (setq arg (and current-prefix-arg arg))
+  (--when-let (dired-get-marked-files nil arg)
+    (apply #'call-process "touch" nil nil nil "-h" it)))
 
 
 ;;; Copying file names
