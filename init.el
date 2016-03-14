@@ -1721,7 +1721,10 @@
   ;; is derived from Python mode, I need to define it again here
   ;; because I have a Python mode hook that overrides the Python
   ;; version.
-  (add-hook 'snakemake-mode-hook #'km/snakemake-set-local-vars))
+  (add-hook 'snakemake-mode-hook #'km/snakemake-set-local-vars)
+
+  (magit-change-popup-key 'snakemake-popup :action
+                          ?p ?o))
 
 (use-package ess-site
   :mode ("\\.[rR]\\'" . R-mode)
