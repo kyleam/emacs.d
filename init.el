@@ -178,7 +178,9 @@
              ("C-c C-x n" . org-next-item)
              ("C-c C-x s" . org-set-property)
              ("C-c C-x p" . org-previous-item)
-             ("C-c C-x w" . org-insert-drawer)))
+             ("C-c C-x w" . org-insert-drawer))
+
+  (define-key km/org-prefix-map "r" #'org-element-cache-reset))
 
 (use-package ox-latex
   :defer t
