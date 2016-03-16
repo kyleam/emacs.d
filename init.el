@@ -1498,6 +1498,37 @@
   :config
   (setq footnote-section-tag ""))
 
+(use-package boxquote
+  :defer t
+  :init
+  (defvar km/boxquote-command-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map "b" #'boxquote-insert-buffer)
+      (define-key map "B" #'boxquote-buffer)
+      (define-key map "d" #'boxquote-defun)
+      (define-key map "hf" #'boxquote-describe-function)
+      (define-key map "hk" #'boxquote-describe-key)
+      (define-key map "hv" #'boxquote-describe-variable)
+      (define-key map "hw" #'boxquote-where-is)
+      (define-key map "f" #'boxquote-insert-file)
+      (define-key map "i" #'boxquote-text)
+      (define-key map "k" #'boxquote-kill)
+      (define-key map "n" #'boxquote-narrow-to-boxquote)
+      (define-key map "N" #'boxquote-narrow-to-boxquote-content)
+      (define-key map "p" #'boxquote-paragraph)
+      (define-key map "r" #'boxquote-region)
+      (define-key map "s" #'boxquote-shell-command)
+      (define-key map "t" #'boxquote-title)
+      (define-key map "u" #'boxquote-unbox)
+      (define-key map "U" #'boxquote-unbox-region)
+      (define-key map "y" #'boxquote-yank)
+      (define-key map (kbd "M-q") #'boxquote-fill-paragraph)
+      (define-key map (kbd "M-w") #'boxquote-kill-ring-save)
+      map)
+    "Keymap for most boxquote commands.")
+  (fset 'km/boxquote-command-map km/boxquote-command-map)
+  (define-key km/editing-map "b" #'km/boxquote-command-map))
+
 (use-package ispell
   :defer t
   :init
