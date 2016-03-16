@@ -362,6 +362,15 @@
         bog-combined-bib-ignore-not-found t
         bog-use-citekey-cache t))
 
+(use-package calendar
+  :defer t
+  :config
+  (bind-keys :map calendar-mode-map
+             ("C-x [" . calendar-backward-month)
+             ("C-x ]" . calendar-forward-month)
+             ("M-{" . calendar-backward-year)
+             ("M-}" . calendar-forward-year)))
+
 
 ;;; Editing, navigation, and search
 
