@@ -542,7 +542,7 @@
 ;; Disable `suspend-frame' binding.
 (global-set-key (kbd "C-x C-z") nil)
 
-(define-key km/editing-map "R" #'revert-buffer)
+(define-key km/editing-map "r" #'revert-buffer)
 
 (use-package uniquify
   :config
