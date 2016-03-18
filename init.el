@@ -681,6 +681,8 @@
   (projectile-register-project-type 'snakemake
                                     '("Snakefile") "snakemake -p" "")
 
+  (put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
+
   (bind-keys :map projectile-command-map
              ("g" . projectile-vc)
              ("i" . projectile-ibuffer)
