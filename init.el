@@ -1301,6 +1301,8 @@
   (define-key km/dired-copy-filename-map "w"
     #'dired-copy-filename-as-kill)
 
+  (define-key km/dired-prefix-map "t" #'km/dired-copy-last-mtime-as-kill)
+
   (after 'dired
     (define-key dired-mode-map "N" #'km/dired-touch-deref)
     ;; This overrides the default binding for `dired-copy-filename-as-kill'.
