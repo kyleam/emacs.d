@@ -809,6 +809,18 @@
   :load-path "~/src/emacs/with-editor/"
   :defer t)
 
+(use-package magit-popup
+  :load-path "~/src/emacs/magit/lisp/"
+  :defer t
+  :config
+  (setq magit-popup-show-help-echo nil
+        magit-popup-show-common-commands nil
+        magit-popup-use-prefix-argument 'default)
+
+  (bind-keys :map magit-popup-mode-map
+             ("SPC <t>" . magit-invoke-popup-switch)
+             ("SPC SPC <t>" . magit-invoke-popup-option)))
+
 (use-package magit
   :load-path "~/src/emacs/magit/lisp/"
   :defer t
@@ -835,9 +847,6 @@
         magit-buffer-name-format "*%M%v: %t*")
   (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
 
-  (setq magit-popup-show-help-echo nil
-        magit-popup-show-common-commands nil
-        magit-popup-use-prefix-argument 'default)
   (setq magit-branch-arguments
         (delete "--track" magit-branch-arguments))
   (setq magit-patch-popup
@@ -872,11 +881,6 @@
   (define-key magit-mode-map "." 'km/magit-map)
   (bind-keys :map km/magit-map
              ("l" . magit-toggle-buffer-lock))
-
-  (define-key magit-popup-mode-map (kbd "SPC <t>")
-    #'magit-invoke-popup-switch)
-  (define-key magit-popup-mode-map (kbd "SPC SPC <t>")
-    #'magit-invoke-popup-option)
 
   (magit-define-popup-action 'magit-diff-popup
     ?e "Edit options" #'magit-diff-refresh-popup)
