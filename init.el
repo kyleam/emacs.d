@@ -246,7 +246,8 @@
           (tags priority-down category-keep)
           (search category-keep)))
   (setq org-agenda-custom-commands
-        '(("d" todo "DONE" nil)
+        '(("A" tags-todo "PRIORITY=\"A\"" nil)
+          ("d" todo "DONE" nil)
           ("u" "Unschedule TODO entries" alltodo ""
            ((org-agenda-skip-function
              (lambda nil
