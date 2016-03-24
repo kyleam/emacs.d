@@ -336,11 +336,12 @@ If CHECKOUT is non-nil, checkout file instead."
                    magit-buffer-refname "--" magit-buffer-file-name)))
 
 ;;;###autoload
-(defun km/magit-find-recently-changed-file (n)
+(defun km/magit-find-recently-changed-file (&optional n)
   "Find a file that changed from \"HEAD~N..HEAD\".
 N defaults to 20."
-  (interactive "p")
-  (unless current-prefix-arg (setq n 10))
+  (interactive (list (and current-prefix-arg
+                          (prefix-numeric-value current-prefix-arg))))
+  (setq n (or n 10))
   (magit-with-toplevel
     (find-file (magit-completing-read
                 "File"
