@@ -44,7 +44,7 @@
 (add-to-list 'load-path km/init-lisp-dir)
 
 (require 'km-util)
-(require 'km-emacs-autoloads)
+(require 'km-emacs-autoloads nil t)
 
 
 ;;; Appearance
@@ -347,13 +347,13 @@
 (use-package org-link-edit
   :load-path "~/src/emacs/org-link-edit/"
   :defer t
-  :init (require 'org-link-edit-autoloads))
+  :init (require 'org-link-edit-autoloads nil t))
 
 (use-package bog
   :load-path "~/src/emacs/bog/"
   :defer t
   :init
-  (require 'bog-autoloads)
+  (require 'bog-autoloads nil t)
   (after 'org
     (add-hook 'org-mode-hook #'bog-mode))
   (setq bog-keymap-prefix (kbd "C-c b"))
@@ -592,7 +592,7 @@
   :load-path "~/src/emacs/nlines/"
   :defer t
   :init
-  (require 'nlines-autoloads)
+  (require 'nlines-autoloads nil t)
   (define-key km/file-map "l" #'nlines-run-command))
 
 (use-package view
@@ -827,7 +827,7 @@
   :defer t
   :chords ("jg" . magit-status)
   :init
-  (load "magit-autoloads.el")
+  (load "magit-autoloads.el" t)
   (bind-keys :map km/git-map
              ("d" . magit-dispatch-popup)
              ("l" . magit-log-buffer-file)
@@ -1024,7 +1024,7 @@
 (use-package magit-annex
   :load-path "~/src/emacs/magit-annex/"
   :defer t
-  :init (require 'magit-annex-autoloads)
+  :init (require 'magit-annex-autoloads nil t)
   :config
   (setq magit-annex-unused-open-function #'org-open-file)
   (setq magit-annex-all-action-arguments
@@ -1050,7 +1050,7 @@
 (use-package orgit
   :load-path "~/src/emacs/orgit/"
   :defer t
-  :init (require 'orgit-autoloads))
+  :init (require 'orgit-autoloads nil t))
 
 
 ;;; Command interfaces
@@ -1758,7 +1758,7 @@
   :load-path "~/src/emacs/snakemake-mode/"
   :defer t
   :init
-  (require 'snakemake-autoloads)
+  (require 'snakemake-autoloads nil t)
   (define-key km/compile-map "s" #'snakemake-popup)
   (after 'dired
     (define-key dired-mode-map "b" #'snakemake-popup))
