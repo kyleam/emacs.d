@@ -1274,8 +1274,7 @@
 
   (setq-default dired-omit-mode t)
 
-  (setq dired-dwim-target t
-        dired-listing-switches "-alht")
+  (setq dired-dwim-target t)
 
   (setq dired-guess-shell-alist-user '(("\\.pdf\\'" "zathura")))
 
