@@ -1932,11 +1932,13 @@
 
   (after 'gnus-sum
     (bind-keys :map gnus-summary-mode-map
+               ("|" . km/gnus-pipe-to-project)
                ("c" . km/gnus-summary-catchup)
                ("l" . km/gnus-copy-message-link)
                ("o" . km/ace-link-widget)))
   (after 'gnus-art
     (bind-keys :map gnus-article-mode-map
+               ("|" . km/gnus-pipe-to-project)
                ("C-c l" . km/gnus-follow-last-message-link)
                ("e" . km/shr-browse-url-and-goto-next)
                ("o" . km/ace-link-widget)))

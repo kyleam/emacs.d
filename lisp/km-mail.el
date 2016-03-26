@@ -21,6 +21,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 'projectile)
 (require 'gnus)
 (require 'gnus-group)
 (require 'gnus-topic)
@@ -126,6 +127,17 @@ to group buffer instead of moving to next group."
   (interactive)
   (shr-browse-url)
   (shr-next-link))
+
+(defun km/gnus-pipe-to-project ()
+  "Call `gnus-summary-pipe-output' in project root."
+  (interactive)
+  (let ((default-directory (completing-read
+                            "Project: "
+                            (projectile-relevant-known-projects)))
+        (gnus-summary-pipe-output-default-command
+         (or gnus-summary-pipe-output-default-command
+             "git am")))
+    (call-interactively #'gnus-summary-pipe-output)))
 
 
 ;;; Message mode
