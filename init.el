@@ -1265,7 +1265,8 @@
   (setq dired-omit-files
         (concat dired-omit-files
                 "\\|^\\.git$\\|^\\.gitignore$"
-                "\\|^__pycache__$\\|^\\.snakemake$"))
+                "\\|^__pycache__$\\|^\\.snakemake$"
+                "\\|.Rhistory"))
 
   (setq dired-omit-extensions
         (append dired-omit-extensions
