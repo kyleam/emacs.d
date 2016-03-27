@@ -37,6 +37,7 @@
 (depends-on "narrow-indirect")
 (depends-on "package-build")
 (depends-on "pallet")
+(depends-on "pandoc-mode")
 (depends-on "paredit")
 (depends-on "pkgbuild-mode")
 (depends-on "poporg")

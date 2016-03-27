@@ -1619,6 +1619,10 @@
                km/bibtex-single-space-author-list))
     (add-hook 'bibtex-clean-entry-hook h)))
 
+(use-package pandoc-mode
+  :defer t
+  :diminish pandoc-mode)
+
 
 ;;; Language modes
 
