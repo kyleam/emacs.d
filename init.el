@@ -1048,6 +1048,7 @@
    '((name . "go-to-bob"))))
 
 (use-package orgit
+  :disabled t
   :load-path "~/src/emacs/orgit/"
   :defer t
   :init (require 'orgit-autoloads nil t))
