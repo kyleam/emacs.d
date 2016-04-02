@@ -52,5 +52,6 @@
 (depends-on "use-package-chords")
 (depends-on "wgrep")
 (depends-on "wrap-region")
+(depends-on "writeroom-mode")
 (depends-on "yaml-mode")
 (depends-on "yasnippet")

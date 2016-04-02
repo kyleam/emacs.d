@@ -1625,6 +1625,21 @@
   :defer t
   :diminish pandoc-mode)
 
+(use-package writeroom-mode
+  :bind ("C-c r" .  writeroom-mode)
+  :config
+  (setq writeroom-restore-window-config t)
+  (setq writeroom-width fill-column)
+
+  (defvar-local km/writeroom-old-truncate-lines nil)
+
+  (defun km/writeroom-setup ()
+    (if writeroom-mode
+        (setq km/writeroom-old-truncate-lines truncate-lines
+              truncate-lines nil)
+      (setq truncate-lines km/writeroom-old-truncate-lines)))
+  (add-hook 'writeroom-mode-hook #'km/writeroom-setup))
+
 
 ;;; Language modes
 
