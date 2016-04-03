@@ -1794,8 +1794,9 @@
   ;; version.
   (add-hook 'snakemake-mode-hook #'km/snakemake-set-local-vars)
 
-  (magit-change-popup-key 'snakemake-popup :action
-                          ?p ?o))
+  (after 'snakemake
+    (magit-change-popup-key 'snakemake-popup :action
+                            ?p ?o)))
 
 (use-package ess-site
   :mode ("\\.[rR]\\'" . R-mode)
