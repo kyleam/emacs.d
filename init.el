@@ -1976,6 +1976,8 @@
 
 ;;; Miscellaneous configuration
 
+(key-chord-define-global "cx" "\C-c\C-c")
+
 (setq echo-keystrokes 0.1
       use-dialog-box nil
       visible-bell t
