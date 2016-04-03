@@ -52,6 +52,8 @@
 (setq inhibit-splash-screen t
       initial-scratch-message nil)
 
+(setq frame-title-format "%b")
+
 (blink-cursor-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
