@@ -88,7 +88,6 @@
 (defun km/dired-copy-last-mtime-as-kill ()
   "Copy last modification time for file at point."
   (interactive)
-  (setq arg (and current-prefix-arg arg))
   (--when-let (dired-get-filename nil 'noerror)
     (kill-new (message "%s" (format-time-string
                              "%Y%m%d%H%M.%S"
