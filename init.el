@@ -1923,6 +1923,7 @@
   (define-prefix-command 'km/gnus-article-prefix-map)
   :config
   (setq gnus-article-x-face-too-ugly ".*")
+  (setq gnus-treat-display-smileys nil)
   (define-key gnus-article-mode-map "v" #'org-capture)
   (define-key gnus-article-mode-map (kbd "C-c m")
     'km/gnus-article-prefix-map))
