@@ -97,6 +97,8 @@
              ("w" . org-refile-goto-last-stored))
   (define-prefix-command 'km/org-prefix-map)
   (setq org-use-extra-keys t)
+
+  (setq org-export-backends '(ascii html latex))
   :config
   (setq org-log-done t
         org-log-into-drawer t
