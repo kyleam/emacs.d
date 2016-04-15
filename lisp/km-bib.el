@@ -144,6 +144,24 @@ to
                                     (bibtex-end-of-text-in-field bounds) t)
             (replace-match (downcase (match-string 0)) 'fixedcase)))))))
 
+(defun km/bibtex-sub-journal ()
+  (when (boundp 'km/bibtex-journal-substitutions)
+    (save-excursion
+      (bibtex-beginning-of-entry)
+      (let* ((bounds (bibtex-search-forward-field "journal" t))
+             (beg (1+ (bibtex-start-of-text-in-field bounds)))
+             (end (1- (bibtex-end-of-text-in-field bounds))))
+        (when bounds
+          (let* ((journ (replace-regexp-in-string
+                         "[ \n]+" " "
+                         (buffer-substring-no-properties beg end)))
+                 (sub (assoc-string journ km/bibtex-journal-substitutions)))
+            (when sub
+              (goto-char beg)
+              (delete-region beg end)
+              (insert (cdr sub))
+              (fill-paragraph))))))))
+
 (defvar km/bibtex-article-fields-to-delete
   '("abstract" "issn" "pubmedid" "url" "eprint" "keywords"))
 

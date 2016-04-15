@@ -1622,7 +1622,8 @@
                km/bibtex-remove-doi-leader
                km/bibtex-remove-entry-space
                km/bibtex-set-coding-system
-               km/bibtex-single-space-author-list))
+               km/bibtex-single-space-author-list
+               km/bibtex-sub-journal))
     (add-hook 'bibtex-clean-entry-hook h)))
 
 (use-package pandoc-mode
