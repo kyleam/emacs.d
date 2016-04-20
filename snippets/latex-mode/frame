@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# key: bf
+# --
+\begin{frame}
+  \frametitle{}
+  \begin{center}
+    $0
+  \end{center}
+\end{frame}
