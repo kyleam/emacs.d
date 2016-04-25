@@ -313,6 +313,50 @@ the buffer widened."
       (when (and beg (<= beg (point) end))
         (narrow-to-region beg end)))))
 
+(defun km/org-grep-buffer-to-list ()
+  "Convert `grep-mode' buffer to Org mode list."
+  (interactive)
+  (let ((result-re (rx line-start
+                       (group (one-or-more (not (any ":"))))
+                       ":"
+                       (group (one-or-more digit))
+                       ":"
+                       (group (one-or-more not-newline))
+                       line-end))
+        (dir default-directory)
+        results
+        cmd)
+    (save-excursion
+      (goto-char (point-min))
+      (forward-line 3)
+      (setq cmd (buffer-substring-no-properties (line-beginning-position)
+                                                (line-end-position)))
+      (forward-line 1)
+      (while (and (not (looking-at-p "\n\\s-*$"))
+                  (re-search-forward result-re nil t))
+        (push (list (match-string-no-properties 1)
+                    (match-string-no-properties 2)
+                    (match-string-no-properties 3))
+              results))
+      (with-current-buffer (get-buffer-create "*Org grep results*")
+        (setq default-directory dir)
+        (erase-buffer)
+        (insert "\n* Results [/]\n\n")
+        (insert (format "Call: %s\n\n" cmd))
+        (pcase-dolist (`(,file ,_ ,text) (nreverse results))
+          (insert (format "- [ ] %s\n"
+                          (org-make-link-string
+                           (concat "file:" file "::" text)
+                           (let ((desc (concat file ":" text)))
+                             (if (> (length desc) 72)
+                                 (substring desc 0 72)
+                               desc))))))
+        (org-mode)
+        (org-back-to-heading)
+        (org-update-checkbox-count)
+        (org-show-entry)
+        (pop-to-buffer (current-buffer))))))
+
 
 ;;; Agenda
 
