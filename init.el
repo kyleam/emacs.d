@@ -1583,6 +1583,8 @@
 (use-package km-tex
   :defer t
   :after latex
+  :init
+  (setq TeX-outline-extra '(("frametitle" 3)))
   :config
   (add-hook 'LaTeX-mode-hook
             (lambda ()
