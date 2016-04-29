@@ -27,7 +27,7 @@
   ;; See `LaTeX-imenu-create-index-function'.
   (TeX-update-style)
   (let ((sec-re (LaTeX-outline-regexp))
-        (title-re "\\*\\{0,1\\}{\\([^}]+\\)}")
+        (title-re "\\*\\{0,1\\}{\\([^}]*\\)}")
         entries)
     (goto-char (point-min))
     (while (re-search-forward sec-re nil t)
@@ -40,9 +40,10 @@
                           "\n" "" (match-string-no-properties 1))))))
         (when (> (length title) 45)
           (setf (substring title 21 -21) "..."))
-        (push (cons (if title (format "%s (%s)" title sec) sec)
-                    (save-excursion (beginning-of-line) (point-marker)))
-              entries)))
+        (when (> (length title) 0)
+          (push (cons (if title (format "%s (%s)" title sec) sec)
+                      (save-excursion (beginning-of-line) (point-marker)))
+                entries))))
     (nreverse entries)))
 
 (provide 'km-tex)
