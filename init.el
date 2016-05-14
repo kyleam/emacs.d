@@ -793,7 +793,7 @@
 
 (use-package vc
   :defer t
-  :config
+  :init
   (setq vc-follow-symlinks t))
 
 (use-package vc-git
