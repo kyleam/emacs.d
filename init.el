@@ -904,6 +904,8 @@
   (magit-change-popup-key 'magit-branch-popup :action
                           ?c ?o)
   (magit-change-popup-key 'magit-branch-popup :action
+                          ?C ?S)
+  (magit-change-popup-key 'magit-branch-popup :action
                           ?n ?C)
   (magit-change-popup-key 'magit-branch-popup :action
                           ?m ?R)
