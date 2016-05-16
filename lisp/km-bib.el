@@ -148,11 +148,11 @@ to
   (when (boundp 'km/bibtex-journal-substitutions)
     (save-excursion
       (bibtex-beginning-of-entry)
-      (let* ((bounds (bibtex-search-forward-field "journal" t))
-             (beg (1+ (bibtex-start-of-text-in-field bounds)))
-             (end (1- (bibtex-end-of-text-in-field bounds))))
+      (let ((bounds (bibtex-search-forward-field "journal" t)))
         (when bounds
-          (let* ((journ (replace-regexp-in-string
+          (let* ((beg (1+ (bibtex-start-of-text-in-field bounds)))
+                 (end (1- (bibtex-end-of-text-in-field bounds)))
+                 (journ (replace-regexp-in-string
                          "[ \n]+" " "
                          (buffer-substring-no-properties beg end)))
                  (sub (assoc-string journ km/bibtex-journal-substitutions)))
