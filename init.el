@@ -1833,6 +1833,11 @@
   (after 'ess-inf
     (define-key inferior-ess-mode-map "|" #'km/ess-insert-dplyr-pipe)))
 
+(use-package pkgbuild-mode
+  :defer t
+  :init
+  (setq pkgbuild-update-sums-on-save nil))
+
 
 ;;; Mail
 
