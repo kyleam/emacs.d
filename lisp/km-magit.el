@@ -424,7 +424,7 @@ argument."
       (goto-char (+ (point) offset))
       (user-error "No hash found at point"))))
 
-(defvar km/magit-copy-hook
+(defvar km/magit-copy-functions
   '(km/magit-copy-commit-summary-from-header
     km/magit-copy-commit-message
     km/magit-copy-region-commits
@@ -492,14 +492,14 @@ COMMIT."
                  start (magit-section-end it))))))
 
 (defun km/magit-copy-as-kill ()
-  "Try `km/magit-copy-hook' before calling `magit-copy-as-kill'.
+  "Try `km/magit-copy-functions' before calling `magit-copy-as-kill'.
 With a prefix argument of -1, always call `magit-copy-section-value'
 Otherwise, the current prefix argument is passed to each hook
 function."
   (interactive)
   (or (unless (= (prefix-numeric-value current-prefix-arg) -1)
         (run-hook-with-args-until-success
-         'km/magit-copy-hook current-prefix-arg))
+         'km/magit-copy-functions current-prefix-arg))
       (magit-copy-section-value)))
 
 (defun km/magit-describe (rev)
