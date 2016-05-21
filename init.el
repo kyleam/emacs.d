@@ -589,11 +589,13 @@
   :config
   (setq recentf-max-saved-items 50
         recentf-save-file "~/.emacs.d/cache/recentf")
-  (add-to-list 'recentf-exclude
-               (rx string-start
-                   "/tmp/scratch"
-                   (or string-end
-                       (and "." (one-or-more not-newline)))))
+  (setq recentf-exclude
+        (append (list (rx string-start
+                          "/tmp/scratch"
+                          (or string-end
+                              (and "." (one-or-more not-newline))))
+                      "/itsalltext/")
+                recentf-exclude))
   (recentf-mode))
 
 (use-package nlines
