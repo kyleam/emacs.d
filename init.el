@@ -1820,6 +1820,9 @@
   (ess-toggle-S-assign nil)
   (setq ess-use-ido nil)
 
+  (setq ess-r-package-auto-activate nil
+        ess-r-package-auto-set-evaluation-env nil)
+
   (define-abbrev-table 'ess-mode-abbrev-table
     '(("true" "TRUE")
       ("false" "FALSE"))
