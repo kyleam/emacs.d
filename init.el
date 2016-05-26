@@ -866,10 +866,8 @@
 
   (remove-hook 'magit-refs-sections-hook #'magit-insert-tags)
 
-  (add-hook 'magit-post-display-buffer-hook
-            (lambda ()
-              (when (eq major-mode 'magit-status-mode)
-                (delete-other-windows))))
+  (setq magit-display-buffer-function
+        #'magit-display-buffer-fullframe-status-v1)
 
   (define-key ctl-x-4-map "g" #'magit-find-file-other-window)
   (define-key km/file-map "g" #'magit-find-file)
