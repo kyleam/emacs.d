@@ -1725,6 +1725,15 @@
   ;; `emacs-lisp-mode-hook' or `lispy-mode-hook' doesn't work.
   (defalias 'semantic-create-imenu-index 'imenu-default-create-index-function))
 
+(use-package geiser
+  :config
+  (setq geiser-active-implementations '(guile)))
+
+(use-package geiser-mode
+  :defer t
+  :config
+  (define-key geiser-mode-map (kbd "C-.") nil))
+
 (use-package python
   :defer t
   :init

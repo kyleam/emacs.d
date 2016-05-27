@@ -15,6 +15,7 @@
 (depends-on "easy-kill")
 (depends-on "ess")
 (depends-on "expand-region")
+(depends-on "geiser")
 (depends-on "git-annex")
 (depends-on "git-timemachine")
 (depends-on "gitattributes-mode")
