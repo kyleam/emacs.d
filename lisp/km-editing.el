@@ -107,46 +107,13 @@ XSELECT is non-nil, copy the region with `x-select-text'."
 ;;;###autoload
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.
-
 Narrow the buffer from the current comment heading to the next
 comment heading of the same level or, if not found, to the end of
-the buffer.
-
-A comment is considered a heading if it is at the beginning of
-the line and if it conists of 3 or more occurences of
-`comment-start'. The number of `comment-start' characters is
+the buffer.  A comment is considered a heading if it is at the
+beginning of the line and if it conists of 3 or more occurences
+of `comment-start'. The number of `comment-start' characters is
 taken to indicate the level of the heading (with 3 being the top
-level).
-
-In the examples below, 'x' indicates the current point and '>>>'
-and '<<<' mark the bounds of the narrowed region.
-
----------------------------------------------------------------
-    >>>;;; Level one heading
-         x
-
-       ;;;; Level two heading
-
-       <<<
-       ;;; Another level one heading
-------------------------------eob------------------------------
-
----------------------------------------------------------------
-       ;;; Level one heading
-
-    >>>;;;; Level two heading
-           x
-       <<<
-       ;;;; Another level one heading
-------------------------------eob------------------------------
-
----------------------------------------------------------------
-    >>>;;; Level one heading
-         x
-
-       ;;;; Level two heading
-       <<<
-------------------------------eob------------------------------"
+level)."
   (interactive)
   (unless comment-start
     (user-error "Comment syntax is not defined for current buffer"))
