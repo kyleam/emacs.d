@@ -167,6 +167,7 @@ If there is nothing ot restore, call
   (or (km/projectile-restore-thing)
       (funcall km/projectile-switch-fallback)))
 
+;;;###autoload
 (defun km/projectile-kill-buffers ()
   "Kill all project buffers.
 Like `projectile-kill-buffers', but
