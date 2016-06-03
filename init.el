@@ -1231,12 +1231,15 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :commands km/yas-dummy
+  :defer t
   :init
+  (defun km/yas-dummy ()
+    (interactive)
+    (require 'yasnippet)
+    (yas-reload-all 'no-jit)
+    (message "Yas loaded"))
   (global-set-key (kbd "C-c i") #'km/yas-dummy)
   :config
-  (defun km/yas-dummy ()
-    (interactive))
   (global-set-key (kbd "C-c i") nil)
   (setq yas-fallback-behavior nil)
 
