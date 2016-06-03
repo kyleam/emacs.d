@@ -1822,6 +1822,11 @@
     (magit-change-popup-key 'snakemake-popup :action
                             ?p ?o)))
 
+(use-package km/snakemake
+  :defer t
+  :init
+  (define-key km/compile-map "l" #'km/snakemake-recompile-no-dryrun))
+
 (use-package ess-site
   :mode ("\\.[rR]\\'" . R-mode)
   :config
