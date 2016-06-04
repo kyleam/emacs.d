@@ -605,6 +605,14 @@
   (require 'nlines-autoloads nil t)
   (define-key km/file-map "l" #'nlines-run-command))
 
+(use-package cpinfo
+  :load-path "~/src/emacs/cpinfo/"
+  :defer t
+  :init
+  (require 'cpinfo-autoloads nil t)
+  (after 'dired
+    (define-key km/dired-prefix-map "f" #'cpinfo-copy)))
+
 (use-package view
   :diminish (view-mode . "Vw")
   :defer t
