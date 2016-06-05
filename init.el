@@ -332,6 +332,8 @@
     (add-to-list 'org-agenda-bulk-custom-functions
                  '(?D km/org-agenda-delete-subtree))
 
+    (define-key org-agenda-mode-map "D" #'km/org-agenda-delete-subtree)
+
     (define-key org-mode-map [remap org-agenda-set-restriction-lock]
       #'km/org-agenda-set-restriction-lock))
   (after 'ox-md
