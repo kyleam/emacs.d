@@ -90,5 +90,26 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (defun km/compilation-buffer-list ()
   (-filter #'km/compilation-buffer-p (buffer-list)))
 
+(defvar km/compile-pdf-re
+  (rx string-start
+      (zero-or-one "snake") "make"
+      (zero-or-more not-newline) space
+      (group (one-or-more (not space)) ".pdf")
+      (zero-or-more space)
+      string-end))
+
+(defun km/compile-check-pdf (buf exit)
+  (when (equal exit "finished\n")
+    (with-current-buffer buf
+      (let ((cmd (car compilation-arguments)))
+        (when (string-match km/compile-pdf-re cmd)
+          (call-process "xdotool" nil nil nil
+                        "search" "--all" "--class" "--name"
+                        (concat "^mupdf|" (file-name-nondirectory
+                                           (match-string 1 cmd)))
+                        "key" "--window" "%@" "r"))))))
+
+(add-to-list 'compilation-finish-functions #'km/compile-check-pdf)
+
 (provide 'km-compile)
 ;;; km-compile.el ends here
