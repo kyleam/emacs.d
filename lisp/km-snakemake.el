@@ -34,7 +34,7 @@
     (let ((command (car compilation-arguments)))
       (if (string-prefix-p snakemake-program command)
           (setf (car compilation-arguments)
-                (replace-regexp-in-string "--dryrun" "" command))
+                (replace-regexp-in-string " --dryrun" "" command))
         (user-error "Last compile was not with %s" snakemake-program)))
     (recompile)))
 
