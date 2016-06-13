@@ -927,6 +927,12 @@
   (magit-change-popup-key 'magit-branch-popup :action
                           ?s ?v)
 
+  (advice-add 'magit-git-fetch
+              :around
+              (lambda (fn &rest args)
+                (let ((magit-process-popup-time 0))
+                  (apply fn args)))
+              '((name . "magit-fetch-process")))
   (advice-add
    'magit-merge-editmsg :around
    (lambda (f rev &rest _) (funcall f rev "--no-ff"))
