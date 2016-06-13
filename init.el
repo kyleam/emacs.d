@@ -932,11 +932,7 @@
               (lambda (fn &rest args)
                 (let ((magit-process-popup-time 0))
                   (apply fn args)))
-              '((name . "magit-fetch-process")))
-  (advice-add
-   'magit-merge-editmsg :around
-   (lambda (f rev &rest _) (funcall f rev "--no-ff"))
-   '((name . "no-ff"))))
+              '((name . "magit-fetch-process"))))
 
 (use-package magit-wip
   :defer t
