@@ -871,6 +871,8 @@
 
   (setq magit-branch-arguments
         (delete "--track" magit-branch-arguments))
+  (setq magit-branch-popup-show-variables nil)
+
   (setq magit-patch-popup
         (plist-put magit-patch-popup :use-prefix 'popup))
   (setq magit-patch-arguments '("--output-directory=outgoing/"))
