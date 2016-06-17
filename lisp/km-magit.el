@@ -565,12 +565,21 @@ show tags by default."
           (magit-refresh))
       (user-error "No range to swap"))))
 
+(defun km/magit-cherry-flip-revs ()
+  (interactive)
+  (pcase-let ((`(,rev0 ,rev1) magit-refresh-args))
+    (setf (nth 0 magit-refresh-args) rev1)
+    (setf (nth 1 magit-refresh-args) rev0)
+    (magit-refresh)))
+
 (defun km/magit-flip-revs ()
   (interactive)
   (cond ((derived-mode-p 'magit-diff-mode)
          (call-interactively #'magit-diff-flip-revs))
         ((derived-mode-p 'magit-log-mode)
-         (call-interactively #'km/magit-log-flip-revs))))
+         (call-interactively #'km/magit-log-flip-revs))
+        ((derived-mode-p 'magit-cherry-mode)
+         (call-interactively #'km/magit-cherry-flip-revs))))
 
 (defun km/magit-diff-visit-file (&optional prev-rev other-window)
   "Like `magit-diff-visit-file', but with the option to visit REV^.
