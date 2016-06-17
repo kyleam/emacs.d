@@ -846,6 +846,7 @@
 (use-package magit
   :load-path "~/src/emacs/magit/lisp/"
   :defer t
+  :bind ("C-x g" . magit-status)
   :chords ("jg" . magit-status)
   :init
   (load "magit-autoloads.el" t)
