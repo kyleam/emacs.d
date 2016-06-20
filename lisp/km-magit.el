@@ -449,6 +449,7 @@ COMMIT."
                (magit-read-branch-or-commit "Commit" atpoint)))))
   (if (magit-rev-verify (concat commit "^{commit}"))
       (kill-new (message
+                 "%s"
                  ;; Using `magit-git-string' instead of
                  ;; `magit-rev-format' to pass --date flag.
                  (magit-git-string "show" "-s" "--date=short"
