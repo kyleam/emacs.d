@@ -865,7 +865,8 @@
         magit-revision-show-gravatars nil
         magit-revision-insert-related-refs nil
         magit-log-section-arguments nil
-        magit-log-show-margin nil)
+        magit-log-show-margin nil
+        magit-reflog-show-margin nil)
   (setq magit-uniquify-buffer-names nil
         magit-buffer-name-format "*%M%v: %t*")
   (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
