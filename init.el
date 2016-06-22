@@ -130,14 +130,6 @@
   (setq org-confirm-babel-evaluate nil
         org-src-fontify-natively t)
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((shell . t)
-     (python . t)
-     (R . t)
-     (emacs-lisp . t)
-     (latex . t)))
-
   (advice-add
    'org-open-file :after
    (lambda (path &rest _) (recentf-add-file path))
