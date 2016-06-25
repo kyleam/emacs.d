@@ -58,14 +58,12 @@ DIRECTORY."
          (name (or name (concat "zsh: " dir)))
          (full-name (concat "*" name "*"))
          (default-directory dir))
-    (pop-to-buffer-same-window
-     (cond
-      ((and (not (string= (km/zsh-ansi-term-directory) dir))
-            (get-buffer full-name)))
-      (t
-       (cl-letf (((symbol-function 'switch-to-buffer)
-                  (lambda (b &rest _) (get-buffer b))))
-         (ansi-term "zsh" name)))))
+    (unless (and (not (string= (km/zsh-ansi-term-directory) dir))
+                 (get-buffer full-name))
+      (cl-letf (((symbol-function 'switch-to-buffer)
+                 (lambda (&rest _) nil)))
+        (ansi-term "zsh" name)))
+    (pop-to-buffer-same-window full-name)
     (comint-goto-process-mark)))
 
 ;;;###autoload
