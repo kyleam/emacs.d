@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: tight-layout
+# key: tl
+# group: matplotlib
+# --
+fig.tight_layout(pad=0.2)
