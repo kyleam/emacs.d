@@ -26,6 +26,18 @@
 (require 'magit)
 (require 'projectile)
 
+(defun km/magit-status (&optional default-display)
+  "Like `magit-status', but change the meaning of the prefix argument.
+If DEFAULT-DISPLAY is non-nil, use
+`magit-display-buffer-traditional' as the value for
+`magit-display-buffer-function'."
+  (interactive "P")
+  (let ((magit-display-buffer-function (if default-display
+                                           #'magit-display-buffer-traditional
+                                         magit-display-buffer-function))
+        (current-prefix-arg nil))
+    (call-interactively #'magit-status)))
+
 (defun km/magit-auto-commit ()
   "Commit all changes with \"auto\" commit message.
 This can be useful for non-source code repos (e.g., Org mode note

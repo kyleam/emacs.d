@@ -838,8 +838,8 @@
 (use-package magit
   :load-path "~/src/emacs/magit/lisp/"
   :defer t
-  :bind ("C-x g" . magit-status)
-  :chords ("jg" . magit-status)
+  :bind ("C-x g" . km/magit-status)
+  :chords ("jg" . km/magit-status)
   :init
   (load "magit-autoloads.el" t)
   (bind-keys :map km/git-map
