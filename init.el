@@ -2012,11 +2012,11 @@
                ("o" . km/ace-link-widget)))
 
   (bind-keys :map km/gnus-summary-prefix-map
-             ("p" . km/gnus-open-github-patch)
-             ("l" . km/gnus-copy-gmane-link-as-kill))
+             ("l" . km/gnus-copy-gmane-link-as-kill)
+             ("p" . km/gnus-open-github-patch))
   (bind-keys :map km/gnus-article-prefix-map
-             ("p" . km/gnus-open-github-patch)
-             ("l" . km/gnus-copy-gmane-link-as-kill)))
+             ("l" . km/gnus-copy-gmane-link-as-kill)
+             ("p" . km/gnus-open-github-patch)))
 
 
 ;;; Miscellaneous configuration
