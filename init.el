@@ -871,6 +871,13 @@
         (plist-put magit-patch-popup :use-prefix 'popup))
   (setq magit-patch-arguments '("--output-directory=outgoing/"))
 
+  (setq magit-status-sections-hook
+        (let ((funcs (list #'magit-insert-unpulled-from-pushremote
+                           #'magit-insert-unpulled-from-upstream)))
+          (append (cl-remove-if (lambda (x) (memq x funcs))
+                                magit-status-sections-hook)
+                  funcs)))
+
   (remove-hook 'magit-refs-sections-hook #'magit-insert-tags)
 
   (setq magit-display-buffer-function
