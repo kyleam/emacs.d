@@ -1000,6 +1000,9 @@
   (define-key magit-revision-mode-map (kbd "C-c C-r")
     #'km/magit-revision-insert-related-refs)
 
+  (define-key magit-cherry-mode-map "u"
+    #'km/magit-cherry-toggle-upstream-section)
+
   (bind-keys :map km/magit-map
              ("c" . km/magit-find-commit-file)
              ("g" . km/git-map)

@@ -594,6 +594,25 @@ show tags by default."
         ((derived-mode-p 'magit-cherry-mode)
          (call-interactively #'km/magit-cherry-flip-revs))))
 
+(defun km/magit-cherry-insert-in-upstream ()
+  (insert ?\n)
+  (magit-insert-section (cherries)
+    (magit-insert-heading "In upstream:")
+    (magit-git-wash (apply-partially 'magit-log-wash-log 'cherry)
+      "cherry" "-v" "--abbrev"
+      (nth 1 magit-refresh-args) (nth 0 magit-refresh-args))))
+
+(defun km/magit-cherry-toggle-upstream-section ()
+  (interactive)
+  (let ((pos (point)))
+    (if (memq #'km/magit-cherry-insert-in-upstream magit-cherry-sections-hook)
+        (kill-local-variable 'magit-cherry-sections-hook)
+      (setq-local magit-cherry-sections-hook
+                  (append magit-cherry-sections-hook
+                          '(km/magit-cherry-insert-in-upstream))))
+    (magit-refresh-buffer)
+    (goto-char pos)))
+
 (defun km/magit-diff-visit-file (&optional prev-rev other-window)
   "Like `magit-diff-visit-file', but with the option to visit REV^.
 
