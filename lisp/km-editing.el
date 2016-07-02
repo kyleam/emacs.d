@@ -110,7 +110,14 @@ XSELECT is non-nil, copy the region with `x-select-text'."
     (when comment-char
       (flush-lines (concat "^" (regexp-quote comment-char) ".*$")))))
 
-(defvar km/count-words-region-filter-functions '(km/delete-comment-lines)
+(defun km/delete-hyphens (orig-buf)
+  (save-excursion
+    (while (search-forward "-" nil t)
+      (delete-char -1))))
+
+(defvar km/count-words-region-filter-functions
+  '(km/delete-comment-lines
+    km/delete-hyphens)
   "Hooks run by `km/count-words-region-filtered'.
 These will be called in a temporary buffer and should delete any
 text that should not be considered by `count-words-region'.  They
