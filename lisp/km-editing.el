@@ -104,6 +104,48 @@ XSELECT is non-nil, copy the region with `x-select-text'."
          (buffer-substring-no-properties (point-min) (point-max)))))
     (pop-to-buffer wrapped-buffer)))
 
+(defun km/delete-comment-lines (orig-buf)
+  (let ((comment-char (with-current-buffer orig-buf
+                        comment-start)))
+    (when comment-char
+      (flush-lines (concat "^" (regexp-quote comment-char) ".*$")))))
+
+(defvar km/count-words-region-filter-functions '(km/delete-comment-lines)
+  "Hooks run by `km/count-words-region-filtered'.
+These will be called in a temporary buffer and should delete any
+text that should not be considered by `count-words-region'.  They
+will be passed the original buffer.  At the start of the function
+call, the point will be at the beginning of the buffer, and these
+functions should return it there.")
+
+;;;###autoload
+(defun km/count-words-region (start end &optional arg)
+  "Call `count-words-region', possibly filtering input.
+Before counting words, `km/count-words-region-filter-functions'
+is called.  If the buffer's mode does not derive from
+`text-mode', `count-words-region' is called directly."
+  (interactive (if current-prefix-arg
+                   (list nil nil current-prefix-arg)
+                 (list (region-beginning) (region-end) nil)))
+  (if (not (derived-mode-p 'text-mode))
+      (call-interactively #'count-words-region)
+    (let ((mode major-mode)
+          (buf (current-buffer))
+          (text (apply #'buffer-substring-no-properties
+                       (if start
+                           (list start end)
+                         (list (point-min) (point-max))))))
+      (with-temp-buffer
+        (insert text)
+        (funcall mode)
+        (goto-char (point-min))
+        (run-hook-with-args 'km/count-words-region-filter-functions
+                            buf)
+        (when start
+          (set-mark (point-min))
+          (goto-char (point-max)))
+        (call-interactively #'count-words-region)))))
+
 ;;;###autoload
 (defun km/narrow-to-comment-heading ()
   "Narrow to the current comment heading subtree.

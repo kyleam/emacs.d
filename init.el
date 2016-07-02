@@ -453,6 +453,9 @@
   (bind-keys :map km/editing-map
              ("f" . km/fill-surrounding-indented)
              ("u" . km/unfill-paragraph))
+
+  (global-set-key [remap count-words-region]
+                  #'km/count-words-region)
   :config
   (bind-keys :map km/kill-map
              ("." . km/kill-sentence-at-point)
