@@ -594,6 +594,15 @@ show tags by default."
         ((derived-mode-p 'magit-cherry-mode)
          (call-interactively #'km/magit-cherry-flip-revs))))
 
+(defun km/magit-log-modify-range ()
+  "Change range for current log buffer."
+  (interactive)
+  (unless (derived-mode-p 'magit-log-mode)
+    (user-error "Not in log buffer"))
+  (setf (caar magit-refresh-args)
+        (read-string "Range: " (caar magit-refresh-args)))
+  (magit-refresh))
+
 (defun km/magit-cherry-insert-in-upstream ()
   (insert ?\n)
   (magit-insert-section (cherries)

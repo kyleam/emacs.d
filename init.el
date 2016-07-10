@@ -922,6 +922,9 @@
   (magit-define-popup-action 'magit-log-popup
     ?e "Edit options" 'magit-log-refresh-popup)
 
+  (magit-define-popup-action 'magit-log-refresh-popup
+    ?m "Modify range" 'km/magit-log-modify-range)
+
   (magit-change-popup-key 'magit-branch-popup :action
                           ?c ?o)
   (magit-change-popup-key 'magit-branch-popup :action
