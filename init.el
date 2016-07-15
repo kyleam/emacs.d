@@ -1465,6 +1465,9 @@
           ("Google Scholar" .
            [simple-query "http://scholar.google.com"
                          "http://scholar.google.com/scholar?&q=" ""])
+          ("Dictionary" .
+           [simple-query "http://www.dictionary.com/"
+                         "http://www.dictionary.com/browse/" "?s=t"])
           ("Wikipedia" .
            [simple-query "wikipedia.org"
                          "wikipedia.org/wiki/" ""]))))
