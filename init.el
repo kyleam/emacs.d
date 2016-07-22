@@ -377,6 +377,8 @@
 (setq recenter-positions '(top middle bottom))
 (setq kill-read-only-ok t)
 
+(setq history-delete-duplicates t)
+
 (setq-default indicate-empty-lines t
               indent-tabs-mode nil)
 
