@@ -125,6 +125,9 @@ will be passed the original buffer.  At the start of the function
 call, the point will be at the beginning of the buffer, and these
 functions should return it there.")
 
+(defvar km/count-words-region-modes '(text-mode latex-mode)
+  "Use `km/count-words-region-filter-functions' in modes derived from these.")
+
 ;;;###autoload
 (defun km/count-words-region (start end &optional arg)
   "Call `count-words-region', possibly filtering input.
@@ -134,7 +137,7 @@ is called.  If the buffer's mode does not derive from
   (interactive (if current-prefix-arg
                    (list nil nil current-prefix-arg)
                  (list (region-beginning) (region-end) nil)))
-  (if (not (derived-mode-p 'text-mode))
+  (if (not (apply #'derived-mode-p km/count-words-region-modes))
       (call-interactively #'count-words-region)
     (let ((mode major-mode)
           (buf (current-buffer))
