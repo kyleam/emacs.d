@@ -1764,6 +1764,8 @@
   (setq python-fill-docstring-style 'pep-257-nn
         python-indent-guess-indent-offset nil)
   (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt --pprint"
+        python-shell-completion-native-enable nil
         python-shell-prompt-detect-enabled nil)
 
   (defun km/python-outline-level ()
