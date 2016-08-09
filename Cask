@@ -13,6 +13,7 @@
 (depends-on "dired-narrow")
 (depends-on "dired-subtree")
 (depends-on "easy-kill")
+(depends-on "elfeed")
 (depends-on "ess")
 (depends-on "expand-region")
 (depends-on "geiser")
