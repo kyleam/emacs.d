@@ -2028,6 +2028,16 @@
              ("l" . km/gnus-copy-gmane-link-as-kill)
              ("p" . km/gnus-open-github-patch)))
 
+(use-package elfeed
+  :defer t
+  :config
+  (define-key elfeed-show-mode-map "v" #'org-capture)
+
+  (bind-keys :map elfeed-search-mode-map
+             ;; Swap search keys.
+             ("s" . elfeed-search-set-filter)
+             ("S" . elfeed-search-live-filter)))
+
 
 ;;; Miscellaneous configuration
 
