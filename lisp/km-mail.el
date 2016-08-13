@@ -144,8 +144,8 @@ to group buffer instead of moving to next group."
 
 (defun km/message-confirm-sender ()
   "Stop sending message from the wrong address."
-  (unless (yes-or-no-p (format "Send message from %s?"
-                               (message-field-value "From")))
+  (unless (y-or-n-p (format "Send message from %s?"
+                            (message-field-value "From")))
     (user-error "Not sending message")))
 
 
