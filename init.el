@@ -1322,6 +1322,8 @@
   (setq dired-recursive-copies t
         dired-recursive-deletes t)
 
+  (setq dired-deletion-confirmer #'y-or-n-p)
+
   (put 'dired-find-alternate-file 'disabled nil)
 
   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
