@@ -2055,8 +2055,6 @@
 
 (setq default-input-method "TeX")
 
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 (when (file-exists-p (expand-file-name "km-untracked.el" km/init-lisp-dir))
   (require 'km-untracked))
 
