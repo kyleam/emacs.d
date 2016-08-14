@@ -79,6 +79,20 @@
   (define-prefix-command map)
   (global-set-key (kbd key) map))
 
+(define-prefix-command 'km/diff-prefix-map)
+(define-prefix-command 'km/dired-copy-filename-map)
+(define-prefix-command 'km/dired-narrow-prefix-map)
+(define-prefix-command 'km/dired-prefix-map)
+(define-prefix-command 'km/dired-subtree-prefix-map)
+(define-prefix-command 'km/gnus-summary-prefix-map)
+(define-prefix-command 'km/magit-map)
+(define-prefix-command 'km/magit-wip-map)
+(define-prefix-command 'km/notmuch-show-prefix-map)
+(define-prefix-command 'km/org-prefix-map)
+(define-prefix-command 'km/projectile-ctl-x-4-map)
+(define-prefix-command 'km/python-prefix-map)
+(define-prefix-command 'km/gnus-article-prefix-map)
+
 
 ;;; Org
 
@@ -95,7 +109,6 @@
              ("o" . org-open-at-point)
              ("s" . org-save-all-org-buffers)
              ("w" . org-refile-goto-last-stored))
-  (define-prefix-command 'km/org-prefix-map)
   (setq org-use-extra-keys t)
 
   (setq org-export-backends '(ascii html latex))
@@ -679,7 +692,6 @@
   :diminish projectile-mode
   :chords ("jq" . projectile-commander)
   :init
-  (define-prefix-command 'km/projectile-ctl-x-4-map)
   (define-key ctl-x-4-map "p" 'km/projectile-ctl-x-4-map)
   (bind-keys :map km/projectile-ctl-x-4-map
              ("C-o" . projectile-display-buffer)
@@ -851,8 +863,6 @@
              ("d" . magit-dispatch-popup)
              ("l" . magit-log-buffer-file)
              ("s" . magit-stage-file))
-  (define-prefix-command 'km/magit-map)
-  (define-prefix-command 'km/magit-wip-map)
   (define-key km/git-map "w" 'km/magit-wip-map)
   (setq magit-push-current-set-remote-if-missing nil)
   :config
@@ -1295,8 +1305,6 @@
 
 (use-package dired
   :defer t
-  :init
-  (define-prefix-command 'km/dired-prefix-map)
   :config
   (require 'dired-x)
   ;; .git is present as part of `dired-omit-extensions', but this
@@ -1335,7 +1343,6 @@
 (use-package km-dired
   :bind ("C-x C-d" . km/dired-switch-to-buffer)
   :init
-  (define-prefix-command 'km/dired-copy-filename-map)
   (after 'projectile
     (define-key km/dired-copy-filename-map "p"
       #'km/dired-copy-project-filename-as-kill))
@@ -1365,7 +1372,6 @@
   :defer t
   :init
   (after 'dired
-    (define-prefix-command 'km/dired-narrow-prefix-map)
     (bind-keys :map km/dired-narrow-prefix-map
                ("f" . dired-narrow-fuzzy)
                ("n" . dired-narrow)
@@ -1377,7 +1383,6 @@
   :defer t
   :init
   (after 'dired
-    (define-prefix-command 'km/dired-subtree-prefix-map)
     (bind-keys :map km/dired-subtree-prefix-map
                ("@" . dired-subtree-mark-subtree)
                ("." . dired-subtree-unmark-subtree)
@@ -1506,7 +1511,6 @@
 (use-package diff
   :defer t
   :init
-  (define-prefix-command 'km/diff-prefix-map)
   (define-key km/external-map "d" 'km/diff-prefix-map)
   (define-key km/diff-prefix-map "d" #'diff)
   :config
@@ -1761,7 +1765,6 @@
   :init
   (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
   (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
-  (define-prefix-command 'km/python-prefix-map)
   :config
   (setq python-fill-docstring-style 'pep-257-nn
         python-indent-guess-indent-offset nil)
@@ -1894,7 +1897,6 @@
         notmuch-search-oldest-first nil)
   (add-to-list 'notmuch-saved-searches
                '(:name "today" :query "date:today.." :key "."))
-  (define-prefix-command 'km/notmuch-show-prefix-map)
   (define-key notmuch-show-mode-map (kbd "C-c m") 'km/notmuch-show-prefix-map)
 
   (define-key km/notmuch-show-prefix-map "i"
@@ -1956,8 +1958,6 @@
 
 (use-package gnus-sum
   :defer t
-  :init
-  (define-prefix-command 'km/gnus-summary-prefix-map)
   :config
   (setq gnus-sum-thread-tree-indent "  "
         gnus-sum-thread-tree-root "."
@@ -1975,8 +1975,6 @@
 
 (use-package gnus-art
   :defer t
-  :init
-  (define-prefix-command 'km/gnus-article-prefix-map)
   :config
   (setq gnus-article-x-face-too-ugly ".*")
   (setq gnus-treat-display-smileys nil)
