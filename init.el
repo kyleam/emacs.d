@@ -1355,9 +1355,10 @@
 
   (after 'dired
     (define-key dired-mode-map "N" #'km/dired-touch-deref)
-    ;; This overrides the default binding for `dired-copy-filename-as-kill'.
-    (define-key dired-mode-map "w" #'km/dired-copy-filename-map)
+
     (bind-keys :map dired-mode-map
+               ;; This overrides the default binding for
+               ;; `dired-copy-filename-as-kill'.
                ("w" . km/dired-copy-filename-map)
                ("C" . km/dired-copy-and-edit)
                ("V" . km/dired-view-file-other-window)))
