@@ -280,8 +280,8 @@ and 'squash!' titles."
       (when (not msgs)
         (user-error "No fixup or squash commits found"))
       ;; Find earliest commit.
-      (goto-char (point-min))
       (dolist (msg msgs)
+        (goto-char (point-min))
         (when (re-search-forward (concat "[a-z0-9]+ " msg "\n") nil t)
           (push (match-beginning 0) commit-pts))))
     (if commit-pts
