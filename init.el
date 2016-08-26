@@ -1626,6 +1626,9 @@
 (use-package reftex
   :diminish (reftex-mode . "Rf")
   :defer t
+  :init
+  (add-to-list 'safe-local-variable-values
+               '(reftex-cite-format . natbib))
   :config
   (setq reftex-default-bibliography '("refs.bib")))
 
