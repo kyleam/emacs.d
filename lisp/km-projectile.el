@@ -179,5 +179,15 @@ Like `projectile-kill-buffers', but
   (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest args) t)))
     (projectile-kill-buffers)))
 
+;;;###autoload
+(defun km/projectile-kill-other-buffers ()
+  "Kill all project buffers except the current one."
+  (interactive)
+  (let ((cbuf (current-buffer)))
+    (mapc #'kill-buffer
+          (cl-remove-if
+           (lambda (b) (or (buffer-base-buffer b) (eq cbuf b)))
+           (projectile-project-buffers)))))
+
 (provide 'km-projectile)
 ;;; km-projectile.el ends here
