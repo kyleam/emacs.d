@@ -39,6 +39,15 @@
          (string-prefix-p (concat "*" km/compilation-buffer-name-prefix)
                           (buffer-name)))))
 
+(defvar km/compilation-last-buffer nil
+  "Like `compilation-last-buffer' but don't set in derived modes.")
+
+(defun km/store-compilation-last-buffer (_proc)
+  (when (eq major-mode 'compilation-mode)
+    (setq km/compilation-last-buffer (current-buffer))))
+
+(add-hook 'compilation-start-hook #'km/store-compilation-last-buffer)
+
 ;;;###autoload
 (defun km/compile-in-home-dir ()
   (interactive)
@@ -48,16 +57,14 @@
 ;;;###autoload
 (defun km/compilation-recompile (&optional arg)
   "Recompile buffer.
-By default, use `compilation-last-buffer'.  If ARG is 0, get
+By default, use `km/compilation-last-buffer'.  If ARG is 0, get
 buffer with name given by `km/compilation-name-by-directory'.
 Otherwise, if ARG is non-nil, prompt with buffers from
 `km/compilation-buffer-list'."
   (interactive (list (and current-prefix-arg
                           (prefix-numeric-value current-prefix-arg))))
   (with-current-buffer (km/compilation--get-buffer arg)
-    (if (derived-mode-p 'occur-mode)
-        (revert-buffer)
-      (recompile))))
+    (recompile)))
 
 (defun km/compilation-display-buffer (&optional arg)
   "Display compilation buffer.
@@ -72,8 +79,8 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (defun km/compilation--get-buffer (&optional arg)
   (cond
    ((and (not arg)
-         (buffer-live-p compilation-last-buffer)
-         compilation-last-buffer))
+         (buffer-live-p km/compilation-last-buffer)
+         km/compilation-last-buffer))
    ((and (numberp arg)
          (= arg 0))
     (get-buffer (km/compilation-name-by-directory)))
