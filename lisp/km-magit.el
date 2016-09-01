@@ -645,6 +645,18 @@ argument.  Interactively, this can be accessed using the command
   (interactive "P")
   (km/magit-diff-visit-file prev-rev t))
 
+(defun km/magit-stash-edit-message (stash message)
+  "Change STASH's message to MESSAGE."
+  (interactive
+   (let* ((stash (magit-read-stash "Rename" t))
+          (old-msg (magit-git-string "show" "-s" "--format=%s" stash)))
+     (list stash (magit-read-string "Stash message" old-msg))))
+  (let ((commit (magit-rev-parse stash))
+        (inhibit-magit-refresh t))
+    (magit-stash-drop stash)
+    (magit-stash-store message "refs/stash" commit))
+  (magit-refresh))
+
 (defun km/git-commit-turn-on-flyspell ()
   "Like `git-commit-turn-on-flyspell', but don't check buffer initially."
   (setq flyspell-generic-check-word-predicate

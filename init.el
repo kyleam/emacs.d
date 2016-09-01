@@ -1053,6 +1053,9 @@
     ?c "Create & checkout from current"
     #'km/magit-branch-and-checkout-from-current)
 
+  (magit-define-popup-action 'magit-stash-popup
+    ?e "Edit message" #'km/magit-stash-edit-message)
+
   (magit-define-popup-action 'magit-branch-popup
     ?K "Delete previous branch" #'km/magit-delete-previous-branch)
   (magit-define-popup-action 'magit-branch-popup
