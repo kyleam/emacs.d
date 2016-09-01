@@ -607,6 +607,7 @@
                           "/tmp/scratch"
                           (or string-end
                               (and "." (one-or-more not-newline))))
+                      ".elfeed/index\\'"
                       "/itsalltext/")
                 recentf-exclude))
   (recentf-mode))
