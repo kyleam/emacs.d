@@ -414,7 +414,8 @@ displayed in the agenda."
   (interactive)
   (let ((org-refile-targets
          '((org-agenda-files :maxlevel . 3)
-           (org-agenda-text-search-extra-files :maxlevel . 3))))
+           (org-agenda-text-search-extra-files :maxlevel . 3)))
+        (org-refile-use-outline-path t))
     (org-refile '(4))))
 
 (defun km/org-delete-subtree ()
