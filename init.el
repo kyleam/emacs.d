@@ -1423,6 +1423,7 @@
   (bind-keys :map km/compile-map
              ("c" . compile)
              ("g" . recompile))
+  (setq compilation-ask-about-save nil)
   :config
   (advice-add
    'compile :around
