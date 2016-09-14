@@ -1321,7 +1321,8 @@
   (setq dired-omit-extensions
         (append dired-omit-extensions
                 (list ".aux" ".fdb_latexmk" ".fls"
-                      ".log" ".nav" ".out" ".snm")))
+                      ".log" ".nav" ".out" ".snm"
+                      ".vrb")))
 
   (setq-default dired-omit-mode t)
 
