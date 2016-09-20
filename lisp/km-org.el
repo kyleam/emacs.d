@@ -479,6 +479,7 @@ original list."
                               (lambda (f)
                                 (cons f (cons :tag km/org-refile-list-item-tag)))
                               ftargets))
+         (org-refile-use-outline-path t)
          (loc (org-refile-get-location "Bullet heading"))
          (fname (nth 1 loc))
          (heading-pos (nth 3 loc)))
