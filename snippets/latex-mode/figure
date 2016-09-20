@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: figure
+# key: fig
+# --
+\begin{figure}
+  \centering
+  \includegraphics{figs/$1}
+  \caption[$2]
+  {
+   \textbf{$2}
+   $0
+  }
+  \label{fig:$3}
+\end{figure}
