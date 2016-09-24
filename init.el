@@ -1635,6 +1635,7 @@
   (add-to-list 'safe-local-variable-values
                '(reftex-cite-format . natbib))
   :config
+  (add-to-list 'reftex-ref-style-default-list "Cleveref")
   (setq reftex-default-bibliography '("refs.bib")))
 
 (use-package bibtex
