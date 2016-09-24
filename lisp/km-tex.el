@@ -27,7 +27,8 @@
   ;; See `LaTeX-imenu-create-index-function'.
   (TeX-update-style)
   (let ((sec-re (LaTeX-outline-regexp))
-        (title-re "\\*\\{0,1\\}{\\([^}]*\\)}")
+        (title-re (rx (zero-or-one "*")
+                      "{" (group (zero-or-more (not (any "}"))))))
         entries)
     (goto-char (point-min))
     (while (re-search-forward sec-re nil t)
