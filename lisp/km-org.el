@@ -654,6 +654,14 @@ to be easily overriden.")
   (interactive)
   (org-open-file (read-file-name "Open file: " nil nil t)))
 
+;;;###autoload
+(defun km/org-open-last-pdf ()
+  (interactive)
+  (let ((file (cl-find-if (lambda (x) (string-match-p "\\.pdf\\'" x))
+                          recentf-list)))
+    (when file
+      (org-open-file file))))
+
 (autoload 'magit-annex-present-files "magit-annex")
 (autoload 'magit-completing-read "magit-utils")
 ;;;###autoload
