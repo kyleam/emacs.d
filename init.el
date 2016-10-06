@@ -1677,6 +1677,7 @@
   :bind ("C-c r" .  writeroom-mode)
   :config
   (setq writeroom-restore-window-config t)
+  (setq writeroom-fullscreen-effect 'maximized)
   (setq writeroom-width fill-column)
 
   (defvar-local km/writeroom-old-truncate-lines nil)
