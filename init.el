@@ -322,6 +322,10 @@
     (define-key org-mode-map [remap org-refile] #'km/org-refile-dwim)
     (define-key org-mode-map [remap org-goto] #'km/org-goto)
 
+    (add-to-list 'org-speed-commands-user
+                 '("m" . (progn (forward-char 1)
+                                (call-interactively
+                                 #'org-insert-todo-heading-respect-content))))
     (add-to-list 'org-speed-commands-user '("o" . km/org-open-at-point-stay))
     (add-to-list 'org-speed-commands-user '("w" . km/org-refile-dwim))
 
