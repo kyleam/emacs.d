@@ -247,6 +247,7 @@
         org-agenda-show-all-dates t
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-prewarning-if-scheduled t
         org-agenda-start-on-weekday nil
         org-agenda-use-time-grid nil)
   (setq org-agenda-sorting-strategy
