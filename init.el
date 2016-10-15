@@ -799,7 +799,7 @@
                ("." . km/projectile-copy-project-filename-as-kill)
                ("e" . km/projectile-restore-thing)
                ("k" . km/projectile-kill-buffers)
-               ("K" . km/projectile-kill-other-buffers)
+               ("K" . km/projectile-kill-nondisplayed-buffers)
                ("v" . km/projectile-view-file)
                ("w" . km/projectile-save-thing))
 

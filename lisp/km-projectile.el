@@ -180,14 +180,14 @@ Like `projectile-kill-buffers', but
     (projectile-kill-buffers)))
 
 ;;;###autoload
-(defun km/projectile-kill-other-buffers ()
-  "Kill all project buffers except the current one."
+(defun km/projectile-kill-nondisplayed-buffers ()
+  "Kill project buffers that aren't displayed in current frame"
   (interactive)
-  (let ((cbuf (current-buffer)))
-    (mapc #'kill-buffer
-          (cl-remove-if
-           (lambda (b) (or (buffer-base-buffer b) (eq cbuf b)))
-           (projectile-project-buffers)))))
+  (mapc #'kill-buffer
+        (cl-remove-if
+         (lambda (b) (or (buffer-base-buffer b)
+                         (get-buffer-window b)))
+         (projectile-project-buffers))))
 
 (provide 'km-projectile)
 ;;; km-projectile.el ends here
