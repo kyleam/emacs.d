@@ -150,6 +150,16 @@ current heading."
    (outline-up-heading arg)
    (call-interactively #'org-sort)))
 
+(defun km/org-sort-all-level-headings (level)
+  "Sort all buffer headings that are at LEVEL (default 1)."
+  (interactive "p")
+  (org-map-entries (lambda ()
+                     (when (and (= (org-current-level) level)
+                                ;; Avoid "Nothing to sort" error.
+                                (save-excursion (org-goto-first-child)))
+                       (org-sort-entries nil ?a))))
+  (message "Sorted headings at level %s" level))
+
 (defun km/org--prop-sort-args ()
   "Return `org-sort-entries' arguments based on \"SORT\" property."
   (when (save-excursion (org-goto-first-child))
