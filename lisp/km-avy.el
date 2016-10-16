@@ -66,5 +66,13 @@
     (call-interactively #'avy-goto-subword-1))
   (gnus-summary-scroll-up 0))
 
+(declare-function elfeed-search-show-entry "elfeed-search" (entry))
+;;;###autoload
+(defun km/elfeed-avy-goto-subword-1 ()
+  (interactive)
+  (let (avy-all-windows)
+    (call-interactively #'avy-goto-subword-1))
+  (call-interactively #'elfeed-search-show-entry))
+
 (provide 'km-avy)
 ;;; km-avy.el ends here

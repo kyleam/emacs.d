@@ -541,6 +541,8 @@
 (use-package km-avy
   :defer t
   :init
+  (after 'elfeed-search
+    (define-key elfeed-search-mode-map "j" #'km/elfeed-avy-goto-subword-1))
   (after 'gnus-sum
     (define-key gnus-summary-mode-map "j"
       #'km/gnus-avy-goto-subword-and-select))
