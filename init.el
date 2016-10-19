@@ -1365,20 +1365,18 @@
   (define-key km/dired-prefix-map "t" #'km/dired-copy-last-mtime-as-kill)
 
   (after 'dired
-    (define-key dired-mode-map "N" #'km/dired-touch-deref)
-
     (bind-keys :map dired-mode-map
+               ;; This overrides `dired-find-file', which is also
+               ;; bound to "f".
+               ("e" . km/org-open-dired-marked-files)
                ;; This overrides the default binding for
                ;; `dired-copy-filename-as-kill'.
                ("w" . km/dired-copy-filename-map)
                ("C" . km/dired-copy-and-edit)
+               ("N" . km/dired-touch-deref)
                ("V" . km/dired-view-file-other-window)))
 
-  (define-key ctl-x-4-map "D" #'km/dired-switch-to-buffer-other-window)
-
-  (after 'org
-    ;; This overrides `dired-find-file', which is also bound to "f".
-    (define-key dired-mode-map "e" #'km/org-open-dired-marked-files)))
+  (define-key ctl-x-4-map "D" #'km/dired-switch-to-buffer-other-window))
 
 (use-package dired-narrow
   :defer t
