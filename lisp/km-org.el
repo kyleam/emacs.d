@@ -654,6 +654,14 @@ to be easily overriden.")
                          (buffer-substring-no-properties
                           (region-beginning) (region-end)))
                     (thing-at-point 'filename))))
+      (when (and file
+                 (derived-mode-p 'latex-mode)
+                 (string-match (rx (zero-or-one "includegraphics")
+                                   "{"
+                                   (group (one-or-more not-newline))
+                                   "}")
+                               file))
+        (setq file (match-string-no-properties 1 file)))
       (if (and file (file-exists-p file))
           (org-open-file file)
         (km/org-open-file)))))
