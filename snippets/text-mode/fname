@@ -2,4 +2,4 @@
 # key: fname
 # condition: 'force-in-comment
 # --
-`(insert (file-name-nondirectory (buffer-file-name)))` $0
+`(file-name-nondirectory (buffer-file-name))` $0
