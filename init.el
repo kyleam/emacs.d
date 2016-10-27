@@ -1685,6 +1685,13 @@
   (setq writeroom-fullscreen-effect 'maximized)
   (setq writeroom-width fill-column)
 
+  (defun km/writeroom-toggle-fullscreen ()
+    (interactive)
+    (setq writeroom-fullscreen-effect
+          (if (eq writeroom-fullscreen-effect 'fullboth)
+              'maximized
+            'fullboth)))
+
   (defvar-local km/writeroom-old-truncate-lines nil)
 
   (defun km/writeroom-setup ()
