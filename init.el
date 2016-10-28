@@ -830,7 +830,9 @@
   (setq vc-follow-symlinks t))
 
 (use-package vc-git
-  :commands vc-git-grep)
+  :commands vc-git-grep
+  :init
+  (setq vc-git-resolve-conflicts nil))
 
 (use-package smerge-mode
   :defer t
