@@ -61,5 +61,22 @@ Assumes that the window is only split into two."
       (split-window-vertically))
     (switch-to-buffer nil)))
 
+(defvar km/default-font-height nil)
+
+;;;###autoload
+(defun km/change-font-height-global (height &optional this-frame)
+  (interactive
+   (let ((cur-height (face-attribute 'default :height)))
+     (unless km/default-font-height
+       (setq km/default-font-height (face-attribute 'default :height)))
+     (list (read-number (format "Current height is %s.  New value: " cur-height)
+                        (if (= cur-height km/default-font-height)
+                            (round (* 1.15 cur-height))
+                          km/default-font-height))
+           current-prefix-arg)))
+  (set-face-attribute 'default
+                      (and this-frame (window-frame))
+                      :height height))
+
 (provide 'km-framewin)
 ;;; km-framewin.el ends here
