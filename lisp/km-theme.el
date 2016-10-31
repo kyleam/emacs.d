@@ -85,6 +85,7 @@
  '(magit-section-secondary-heading ((t (:inherit default))))
  '(match ((t (:inherit default :background "PaleGreen1"))))
  '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
+ '(org-agenda-calendar-sexp ((t (:inherit font-lock-variable-name-face))))
  '(org-agenda-date ((t (:inherit default))))
  '(org-agenda-date-today ((t (:weight bold))))
  '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
