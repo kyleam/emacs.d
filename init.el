@@ -371,11 +371,11 @@
   :defer t
   :init
   (require 'bog-autoloads nil t)
-  (after 'org
-    (add-hook 'org-mode-hook #'bog-mode))
   (setq bog-keymap-prefix (kbd "C-c b"))
   (global-set-key bog-keymap-prefix bog-command-map)
   :config
+  (add-hook 'org-mode-hook #'bog-mode)
+
   (setq bog-subdirectory-group 2
         bog-combined-bib-ignore-not-found t
         bog-use-citekey-cache t))
