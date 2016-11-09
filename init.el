@@ -1085,9 +1085,7 @@
   :defer t
   :init (require 'magit-annex-autoloads nil t)
   :config
-  (setq magit-annex-unused-open-function #'org-open-file)
-  (setq magit-annex-all-action-arguments
-        (delete "--auto" magit-annex-all-action-arguments)))
+  (setq magit-annex-unused-open-function #'org-open-file))
 
 (use-package git-commit
   :load-path "~/src/emacs/magit/lisp/"
