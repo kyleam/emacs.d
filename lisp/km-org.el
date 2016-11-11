@@ -451,11 +451,6 @@ displayed in the agenda."
 
 ;;; Refiling
 
-(defvar km/org-agenda-refile-targets
-  '((nil :maxlevel . 3)
-    (org-agenda-files :maxlevel . 2)
-    (org-agenda-text-search-extra-files :maxlevel . 2)))
-
 (defun km/org-refile-verify-target ()
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))

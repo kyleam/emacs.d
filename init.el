@@ -348,10 +348,7 @@
     (define-key org-mode-map [remap org-agenda-set-restriction-lock]
       #'km/org-agenda-set-restriction-lock))
   (after 'ox-md
-    (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string))
-  :config
-  (add-to-list 'safe-local-variable-values
-               (cons 'org-refile-targets km/org-agenda-refile-targets)))
+    (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string)))
 
 (use-package poporg
   :defer t
