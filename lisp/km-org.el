@@ -521,7 +521,7 @@ A target is determined by `km/org-refile-dwim-target-file'."
     (call-interactively #'org-refile)))
 
 (defun km/org-agenda-refile-dwim ()
-  "Rebind `org-agenda-refile-targets' if next window is an Org buffer.
+  "Rebind `org-refile-targets' if next window is an Org buffer.
 A target is determined by `km/org-refile-dwim-target-file'."
   (interactive)
   (let* ((dwim-target (km/org-refile-dwim-target-file))
