@@ -2059,6 +2059,13 @@
              ("s" . elfeed-search-set-filter)
              ("S" . elfeed-search-live-filter)))
 
+(use-package km-elfeed
+  :defer t
+  :init
+  (after 'elfeed
+    (bind-keys :map elfeed-search-mode-map
+               ("t" . km/elfeed-set-tag))))
+
 
 ;;; Miscellaneous configuration
 
