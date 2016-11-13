@@ -56,5 +56,12 @@ filter to the default, respectively."
   (interactive)
   (elfeed-search-set-filter (default-value 'elfeed-search-filter)))
 
+;;;###autoload
+(defun km/elfeed-catchup ()
+  (interactive)
+  (mark-whole-buffer)
+  (elfeed-search-untag-all-unread)
+  (km/elfeed-default-filter))
+
 (provide 'km-elfeed)
 ;;; km-elfeed.el ends here
