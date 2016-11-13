@@ -51,5 +51,10 @@ filter to the default, respectively."
                     (format " +%s"
                             (cdr (assq tag-key km/elfeed-tag-keys)))))))))
 
+;;;###autoload
+(defun km/elfeed-default-filter ()
+  (interactive)
+  (elfeed-search-set-filter (default-value 'elfeed-search-filter)))
+
 (provide 'km-elfeed)
 ;;; km-elfeed.el ends here

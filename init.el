@@ -2064,6 +2064,7 @@
   :init
   (after 'elfeed
     (bind-keys :map elfeed-search-mode-map
+               ("d" . km/elfeed-default-filter)
                ("t" . km/elfeed-set-tag))))
 
 
