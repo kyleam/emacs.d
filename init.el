@@ -1319,10 +1319,13 @@
   ;; seems to only be taken into account if a non-exension part
   ;; exists.
   (setq dired-omit-files
-        (concat dired-omit-files
-                "\\|^\\.git$\\|^\\.gitignore$"
-                "\\|^__pycache__$\\|^\\.snakemake$"
-                "\\|.Rhistory"))
+        (rx (or (and bol (zero-or-one ".") "#")
+                (and bol "." (zero-or-one ".") eol)
+                (and bol ".git" eol)
+                (and bol ".gitignore" eol)
+                (and bol "__pycache__" eol)
+                (and bol ".Rhistory" eol)
+                (and bol ".snakemake" eol))))
 
   (setq dired-omit-extensions
         (append dired-omit-extensions
