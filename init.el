@@ -1325,7 +1325,8 @@
                 (and bol ".gitignore" eol)
                 (and bol "__pycache__" eol)
                 (and bol ".Rhistory" eol)
-                (and bol ".snakemake" eol))))
+                (and bol ".snakemake" eol)
+                (and bol ".tramp_history" eol))))
 
   (setq dired-omit-extensions
         (append dired-omit-extensions
