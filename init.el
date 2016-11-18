@@ -294,12 +294,7 @@
 
 (use-package km-org
   :defer t
-  :after org-agenda
   :init
-  (bind-keys :map km/global-org-map
-             ("j" . km/org-goto-agenda-heading)
-             ("m" . km/org-open-default-notes-file-inbox)
-             ("n" . km/org-agenda-add-or-remove-file))
   (bind-keys :map km/org-prefix-map
              ("c" . km/org-clone-and-shift-by-repeater)
              ("d" . km/org-link-dired-jump)
@@ -336,21 +331,32 @@
     (add-hook 'org-after-refile-insert-hook #'km/org-maybe-sort-parent)
 
     (org-add-link-type "pmid" #'km/org-pmid-open))
-  (after 'org-agenda
-    (setq km/org-agenda-file-directory "~/notes/agenda/"
-          org-agenda-files (list km/org-agenda-file-directory))
-    (add-hook 'org-agenda-finalize-hook #'km/org-agenda-cd-and-read-dir-locals)
-    (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span)
-
-    (add-to-list 'org-agenda-bulk-custom-functions
-                 '(?D km/org-agenda-delete-subtree))
-
-    (define-key org-agenda-mode-map "D" #'km/org-agenda-delete-subtree)
-
-    (define-key org-mode-map [remap org-agenda-set-restriction-lock]
-      #'km/org-agenda-set-restriction-lock))
   (after 'ox-md
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string)))
+
+(use-package km-org-agenda
+  :defer t
+  :after org-agenda
+  :init
+  (bind-keys :map km/global-org-map
+             ("j" . km/org-goto-agenda-heading)
+             ("m" . km/org-open-default-notes-file-inbox)
+             ("n" . km/org-agenda-add-or-remove-file))
+  (after 'org
+    (define-key org-mode-map [remap org-agenda-set-restriction-lock]
+      #'km/org-agenda-set-restriction-lock))
+
+  :config
+  (setq km/org-agenda-file-directory "~/notes/agenda/"
+        org-agenda-files (list km/org-agenda-file-directory))
+
+  (add-hook 'org-agenda-finalize-hook #'km/org-agenda-cd-and-read-dir-locals)
+  (add-hook 'org-agenda-finalize-hook #'km/org-agenda-store-current-span)
+
+  (add-to-list 'org-agenda-bulk-custom-functions
+               '(?D km/org-agenda-delete-subtree))
+
+  (define-key org-agenda-mode-map "D" #'km/org-agenda-delete-subtree))
 
 (use-package poporg
   :defer t

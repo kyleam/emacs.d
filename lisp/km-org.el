@@ -23,7 +23,6 @@
 (require 'cl-lib)
 (require 'dash)
 (require 'org)
-(require 'org-agenda)
 (require 'org-link-edit)
 (require 'ox-ascii)
 (require 's)
@@ -369,86 +368,6 @@ the buffer widened."
         (pop-to-buffer (current-buffer))))))
 
 
-;;; Agenda
-
-
-(defvar km/org-agenda-file-directory nil)
-
-;;;###autoload
-(defun km/org-agenda-cd-and-read-dir-locals ()
-  (unless (get 'org-agenda-files 'org-restrict)
-    (setq default-directory (expand-file-name "~/notes/"))
-    (hack-local-variables)))
-
-;;;###autoload
-(defun km/org-agenda-store-current-span ()
-    "Store the current span value in `org-agenda-span'.
-This allows the view to persist when the agenda buffer is
-killed."
-    (when org-agenda-current-span
-      (setq org-agenda-span org-agenda-current-span)))
-
-;;;###autoload
-(defun km/org-agenda-add-or-remove-file (file)
-  "Add or remove link to FILE in `km/org-agenda-file-directory'.
-If a link for FILE does not exist, create it. Otherwise, remove
-it. Like `org-agenda-file-to-front', this results in FILE being
-displayed in the agenda."
-  (interactive (list (cl-case major-mode
-                       (org-mode (buffer-file-name))
-                       (dired-mode (dired-get-filename))
-                       (org-agenda-mode (ignore-errors (save-window-excursion
-                                                         (org-agenda-goto)
-                                                         (buffer-file-name))))
-                       (t (read-file-name "Link file: ")))))
-  (let ((agenda-file (expand-file-name (file-name-nondirectory file)
-                                       km/org-agenda-file-directory)))
-    (if (file-equal-p (file-truename agenda-file) file)
-        (progn
-          (when (called-interactively-p) (message "Deleting %s" agenda-file))
-          (delete-file agenda-file))
-      (when (called-interactively-p) (message "Adding %s" agenda-file))
-      (make-symbolic-link file agenda-file))))
-
-;;;###autoload
-(defun km/org-open-default-notes-file-inbox ()
-  "Open \"Inbox\" heading of `org-default-notes-file'."
-  (interactive)
-  (find-file org-default-notes-file)
-  (goto-char (org-find-exact-headline-in-buffer "Inbox" nil t))
-  (recenter-top-bottom 0)
-  (show-children))
-
-;;;###autoload
-(defun km/org-goto-agenda-heading ()
-  "Jump to heading in agenda files."
-  (interactive)
-  (let ((org-refile-targets
-         '((org-agenda-files :maxlevel . 3)
-           (org-agenda-text-search-extra-files :maxlevel . 3)))
-        (org-refile-use-outline-path t))
-    (org-refile '(4))))
-
-(defun km/org-delete-subtree ()
-  (org-back-to-heading t)
-  (delete-region
-   (point)
-   (org-element-property :end (org-element-at-point))))
-
-(defun km/org-agenda-delete-subtree ()
-  (interactive)
-  (org-agenda-archive-with #'km/org-delete-subtree))
-
-;;;###autoload
-(defun km/org-agenda-set-restriction-lock (&optional type)
-  "Call `org-agenda-set-restriction-lock' with flipped C-u meaning."
-  (interactive "P")
-  (org-agenda-set-restriction-lock
-   (cond ((equal type '(4)) nil)
-         (type)
-         (t '(4)))))
-
-
 ;;; Refiling
 
 (defun km/org-refile-verify-target ()
@@ -519,19 +438,6 @@ A target is determined by `km/org-refile-dwim-target-file'."
                                     :maxlevel . ,km/org-refile-dwim-maxlevel))
                                org-refile-targets)))
     (call-interactively #'org-refile)))
-
-(defun km/org-agenda-refile-dwim ()
-  "Rebind `org-refile-targets' if next window is an Org buffer.
-A target is determined by `km/org-refile-dwim-target-file'."
-  (interactive)
-  (let* ((dwim-target (km/org-refile-dwim-target-file))
-         (org-refile-targets (if dwim-target
-                                 `((nil
-                                    :maxlevel . ,km/org-refile-dwim-maxlevel)
-                                   (dwim-target
-                                    :maxlevel . ,km/org-refile-dwim-maxlevel))
-                               org-refile-targets)))
-    (call-interactively #'org-agenda-refile)))
 
 (defun km/org-refile-dwim-target-file ()
   "Return next window that is an Org buffer."
