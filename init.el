@@ -239,6 +239,7 @@
 
 (use-package org-agenda
   :defer t
+  :after org-capture
   :init (define-key km/global-org-map "a" #'org-agenda)
   :config
   (setq org-agenda-restore-windows-after-quit t
@@ -278,18 +279,18 @@
 
 (use-package org-contacts
   :defer t
-  :after org
+  :after org-capture
   :init
   (setq org-contacts-files '("~/notes/contacts.org"))
-  (after 'org-capture
-    (add-to-list 'org-capture-templates
-                 '("a" "email address" entry
-                   (file+headline "~/notes/contacts.org" "Inbox")
-                   "
+  :config
+  (add-to-list 'org-capture-templates
+               '("a" "email address" entry
+                 (file+headline "~/notes/contacts.org" "Inbox")
+                 "
 ** %(org-contacts-template-name)
 :PROPERTIES:
 :EMAIL: %(org-contacts-template-email)
-:END:"))))
+:END:")))
 
 (use-package km-org
   :defer t
