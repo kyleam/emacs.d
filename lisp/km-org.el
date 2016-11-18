@@ -149,6 +149,7 @@ current heading."
    (outline-up-heading arg)
    (call-interactively #'org-sort)))
 
+;;;###autoload
 (defun km/org-sort-all-level-headings (level)
   "Sort all buffer headings that are at LEVEL (default 1)."
   (interactive "p")
@@ -370,6 +371,7 @@ the buffer widened."
 
 ;;; Refiling
 
+;;;###autoload
 (defun km/org-refile-verify-target ()
   "Exclude DONE state from refile targets."
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
@@ -377,6 +379,7 @@ the buffer widened."
 (defvar km/org-refile-list-item-tag "bref"
   "Tag marking heading with list that can be refiled to.")
 
+;;;###autoload
 (defun km/org-refile-list-item (&optional copy)
   "Refile list item to a heading.
 
@@ -426,6 +429,7 @@ original list."
 
 (defvar km/org-refile-dwim-maxlevel 2)
 
+;;;###autoload
 (defun km/org-refile-dwim ()
   "Rebind `org-refile-targets' if next window is an Org buffer.
 A target is determined by `km/org-refile-dwim-target-file'."
@@ -450,6 +454,7 @@ A target is determined by `km/org-refile-dwim-target-file'."
     (and other-win
          (buffer-file-name (window-buffer other-win)))))
 
+;;;###autoload
 (defun km/org-refile-to-other-file (file &optional maxlevel)
   "Refile with `org-refile-targets' set to FILE.
 A numeric prefix sets MAXLEVEL (defaults to 2)."
@@ -459,6 +464,7 @@ A numeric prefix sets MAXLEVEL (defaults to 2)."
          (org-refile-targets `((,file :maxlevel . ,maxlevel))))
     (org-refile)))
 
+;;;###autoload
 (defun km/org-refile-to-other-org-buffer (buffer &optional maxlevel)
   "Refile with `org-refile-targets' set to BUFFER file name.
 A numeric prefix sets MAXLEVEL (defaults to 2)."
@@ -471,6 +477,7 @@ A numeric prefix sets MAXLEVEL (defaults to 2)."
    (org-icompleting-read "Buffer: " (mapcar 'buffer-name
                                             (org-buffer-list 'files)))))
 
+;;;###autoload
 (defun km/org-set-refiling-buffer (&optional maxlevel)
   "Choose buffer to set as sole target in `org-refile-targets'.
 If `org-refile-targets' is already a local variable, restore the
@@ -495,6 +502,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
   "Search for PMID at `km/org-pmid-search-url'."
   (browse-url (format km/org-pmid-search-url path)))
 
+;;;###autoload
 (defun km/org-link-dired-jump ()
   "Open Dired for directory of file link at point."
   (interactive)
@@ -504,6 +512,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
     (dired-jump 'other-window
                 (expand-file-name (org-element-property :path el)))))
 
+;;;###autoload
 (defun km/org-link-edit-slurp-link ()
   "Slurp trailing text into link.
 
@@ -537,6 +546,7 @@ to be easily overriden.")
   (org-ascii--fill-string contents km/org-md-fill-column
                           nil))
 
+;;;###autoload
 (defun km/org-md-export-unfilled-buffer ()
   (interactive)
   (let ((km/org-md-fill-column (point-max)))
