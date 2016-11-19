@@ -44,5 +44,23 @@
   (with-helm-alive-p
     (helm-exit-and-execute-action #'org-open-file)))
 
+;;;###autoload
+(defun km/helm-display-buffer-below ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action
+     (lambda (b)
+       (display-buffer b '(display-buffer-below-selected))))))
+
+;;;###autoload
+(defun km/helm-find-file-below ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action
+     (lambda (f)
+       (select-window
+        (display-buffer (find-file-noselect f)
+                        '(display-buffer-below-selected)))))))
+
 (provide 'km-helm)
 ;;; km-helm.el ends here

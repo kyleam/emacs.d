@@ -1204,14 +1204,18 @@
   :init
   (after 'helm-files
     (bind-keys :map helm-find-files-map
+               ("C-c b" . km/helm-find-file-below)
                ("C-c x" . km/helm-ff-org-open-file)
                ("C-c C-o" . km/helm-display-file)))
   (after 'helm-locate
     (bind-keys :map helm-generic-files-map
+               ("C-c b" . km/helm-find-file-below)
                ("C-c x" . km/helm-ff-org-open-file)
                ("C-c C-o" . km/helm-display-file)))
   (after 'helm-buffers
-    (define-key helm-buffer-map (kbd "C-c C-o") #'km/helm-display-buffer)))
+    (bind-keys :map helm-buffer-map
+               ("C-c b" . km/helm-display-buffer-below)
+               ("C-c C-o" . km/helm-display-buffer))))
 
 (use-package helm-mode
   :diminish helm-mode
