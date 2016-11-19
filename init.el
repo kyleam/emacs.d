@@ -1204,11 +1204,13 @@
   :init
   (after 'helm-files
     (bind-keys :map helm-find-files-map
+               ("C-c ." . km/helm-visit-in-dired)
                ("C-c b" . km/helm-find-file-below)
                ("C-c x" . km/helm-ff-org-open-file)
                ("C-c C-o" . km/helm-display-file)))
   (after 'helm-locate
     (bind-keys :map helm-generic-files-map
+               ("C-c ." . km/helm-visit-in-dired)
                ("C-c b" . km/helm-find-file-below)
                ("C-c x" . km/helm-ff-org-open-file)
                ("C-c C-o" . km/helm-display-file)))

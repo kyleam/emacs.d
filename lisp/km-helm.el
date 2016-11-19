@@ -29,6 +29,12 @@
     (helm-exit-and-execute-action #'display-buffer)))
 
 ;;;###autoload
+(defun km/helm-visit-in-dired ()
+  (interactive)
+  (with-helm-alive-p
+    (helm-exit-and-execute-action #'helm-point-file-in-dired)))
+
+;;;###autoload
 (defun km/helm-display-file ()
   (interactive)
   (with-helm-alive-p
