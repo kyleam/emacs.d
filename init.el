@@ -1223,7 +1223,9 @@
   :diminish helm-mode
   :after helm
   :config
-  (helm-mode 1))
+  (helm-mode 1)
+
+  (add-to-list 'helm-mode-no-completion-in-region-in-modes 'message-mode))
 
 (use-package helm-command
   :defer t
