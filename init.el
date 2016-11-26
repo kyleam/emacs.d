@@ -969,6 +969,11 @@
                   (apply fn args)))
               '((name . "magit-fetch-process"))))
 
+(use-package git-rebase
+  :defer t
+  :init
+  (setq git-rebase-show-instructions nil))
+
 (use-package magit-wip
   :defer t
   :diminish magit-wip-after-save-local-mode
