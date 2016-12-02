@@ -51,16 +51,6 @@
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
-;; http://emacs-fu.blogspot.com/2013/03/editing-with-root-privileges-once-more.html
-;;;###autoload
-(defun km/find-file-as-root ()
-  "Automatically edit file with root-privileges."
-  (interactive)
-  (let ((file (read-file-name "Edit as root: ")))
-    (unless (file-writable-p file)
-      (setq file (concat "/sudo:root@localhost:" file)))
-    (find-file file)))
-
 (declare-function dired-jump (&optional other-window file-name))
 ;;;###autoload
 (defun km/dired-jump-file-at-point ()

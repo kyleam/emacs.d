@@ -659,7 +659,6 @@
   (bind-keys :map km/file-map
              ("j" . km/dired-jump-file-at-point)
              ("n" . km/rename-current-buffer-file)
-             ("R" . km/find-file-as-root)
              ("t" . km/touch-buffer-file))
   (bind-keys :map ctl-x-4-map
              ("r" . km/recentf-find-file-other-window)
