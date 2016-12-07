@@ -884,6 +884,7 @@
         magit-update-other-window-delay 0.1
         magit-revision-show-gravatars nil
         magit-revision-insert-related-refs nil
+        magit-log-show-refname-after-summary t
         magit-log-section-arguments nil)
 
   (setq magit-log-arguments
