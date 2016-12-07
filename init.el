@@ -886,6 +886,11 @@
         magit-revision-insert-related-refs nil
         magit-log-section-arguments nil)
 
+  (setq magit-log-arguments
+        (cons "-n75" (cl-remove-if
+                      (lambda (x) (string-prefix-p "-n" x))
+                      magit-log-arguments)))
+
   (dolist (margin (list magit-cherry-margin
                         magit-log-margin
                         magit-log-select-margin
