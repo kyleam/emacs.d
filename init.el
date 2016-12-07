@@ -878,6 +878,7 @@
              ("s" . magit-stage-file))
   (define-key km/git-map "w" 'km/magit-wip-map)
   (setq magit-push-current-set-remote-if-missing nil)
+  (setq magit-log-margin '(nil age magit-log-margin-width t 18))
   :config
   (setq magit-push-always-verify nil
         magit-delete-by-moving-to-trash nil
@@ -891,13 +892,6 @@
         (cons "-n75" (cl-remove-if
                       (lambda (x) (string-prefix-p "-n" x))
                       magit-log-arguments)))
-
-  (dolist (margin (list magit-cherry-margin
-                        magit-log-margin
-                        magit-log-select-margin
-                        magit-reflog-margin
-                        magit-stashes-margin))
-    (setf (nth 0 margin) nil))
 
   (setq magit-uniquify-buffer-names nil
         magit-buffer-name-format "*%M%v: %t*")
