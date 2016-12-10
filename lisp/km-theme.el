@@ -109,6 +109,7 @@
  '(term-color-yellow ((t (:inherit font-lock-doc-face)))))
 
 (custom-set-faces
+ '(cursor ((t (:background "#f08080"))))
  '(dired-subtree-depth-1-face ((t (:background "gray80"))))
  '(dired-subtree-depth-2-face ((t (:background "gray90"))))
  '(dired-subtree-depth-3-face ((t (:background "gray95"))))
