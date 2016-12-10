@@ -1014,7 +1014,7 @@
              ("p" . km/magit-pin-file)
              ("r" . km/magit-find-recently-changed-file)
              ("t" . km/magit-describe)
-             ("u" . km/magit-auto-commit)
+             ("u" . km/magit-update-or-auto-commit)
              ("v" . km/magit-revfile-reset))
   :config
   (bind-keys :map magit-mode-map
@@ -1059,7 +1059,7 @@
                ("m" . km/git-rebase-move-commit)))
 
   (magit-define-popup-action 'magit-commit-popup
-    ?u "Auto commit" #'km/magit-auto-commit)
+    ?u "Auto commit" #'km/magit-update-or-auto-commit)
 
   (magit-define-popup-action 'magit-push-popup
     ?a "Push all" #'km/magit-push-all)
