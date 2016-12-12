@@ -1036,9 +1036,6 @@
   (define-key magit-hunk-section-map [remap magit-visit-thing]
     #'km/magit-diff-visit-file)
 
-  (define-key magit-refs-mode-map (kbd "C-c C-f")
-    #'km/magit-refs-filter-recent)
-
   (define-key magit-revision-mode-map (kbd "C-c C-r")
     #'km/magit-revision-insert-related-refs)
 
