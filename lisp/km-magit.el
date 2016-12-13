@@ -655,6 +655,8 @@ If prefix argument SQUASH is non-nil, mark for squashing instead
 of fixing up."
   (interactive (nconc (km/region-or-buffer-line-bounds)
                       (list current-prefix-arg)))
+  (unless (markerp end)
+    (setq end (copy-marker end)))
   (save-excursion
     (goto-char beg)
     (let ((prefix (if squash "squash" "fixup"))
