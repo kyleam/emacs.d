@@ -42,6 +42,7 @@
 
 (defvar km/init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
 (add-to-list 'load-path km/init-lisp-dir)
+(add-to-list 'custom-theme-load-path km/init-lisp-dir)
 
 (require 'km-util)
 (require 'km-emacs-autoloads nil t)

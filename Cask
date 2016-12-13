@@ -48,7 +48,6 @@
 (depends-on "s")
 (depends-on "stan-mode")
 (depends-on "stan-snippets")
-(depends-on "stekene-theme")
 (depends-on "subr+")
 (depends-on "use-package")
 (depends-on "use-package-chords")
