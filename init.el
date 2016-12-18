@@ -210,7 +210,7 @@
 
 (use-package org-capture
   :defer t
-  :init (define-key km/global-org-map "c" #'org-capture)
+  :init (define-key km/global-org-map "v" #'org-capture)
   :config
   (setq org-capture-templates
         '(("t" "task" entry (file+headline "~/notes/tasks.org" "Inbox")
@@ -276,7 +276,10 @@
              ("C-c C-w" . km/org-agenda-refile-dwim)
              ("C-o" . org-agenda-show-and-scroll-up)
              ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
-             ("C-j" . org-agenda-goto-date)))
+             ("C-j" . org-agenda-goto-date)
+             ("d" . org-agenda-view-mode-dispatch)
+             ("k" . nil)
+             ("v" . org-agenda-capture)))
 
 (use-package org-contacts
   :defer t
