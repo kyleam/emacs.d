@@ -277,6 +277,7 @@
              ("C-o" . org-agenda-show-and-scroll-up)
              ;; Free up 'j' for `km/org-agenda-avy-goto-subword-1'.
              ("C-j" . org-agenda-goto-date)
+             ("a" . org-agenda)
              ("d" . org-agenda-view-mode-dispatch)
              ("k" . nil)
              ("v" . org-agenda-capture)))
