@@ -1261,7 +1261,7 @@
   :bind (("M-y" . helm-show-kill-ring)
          ("C-x r i" . helm-register))
   :init
-  (define-key km/editing-map "m" #'helm-all-mark-rings))
+  (define-key km/editing-map "m" #'helm-mark-ring))
 
 (use-package helm-bookmark
   :bind ("C-x r b" . helm-bookmarks))
