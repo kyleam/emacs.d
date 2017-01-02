@@ -361,8 +361,8 @@
                '(?D km/org-agenda-delete-subtree))
 
   (bind-keys :map org-agenda-mode-map
-             ("C-c C-w" . km/org-agenda-refile-dwim)
-             ("D" . km/org-agenda-delete-subtree)))
+             ("D" . km/org-agenda-delete-subtree)
+             ("w" . km/org-agenda-refile-dwim)))
 
 (use-package poporg
   :defer t
