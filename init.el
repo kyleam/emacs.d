@@ -909,6 +909,8 @@
 
   (setq magit-patch-arguments '("--output-directory=outgoing/"))
 
+  (setq magit-show-refs-arguments '("--sort=-committerdate"))
+
   (setq magit-status-sections-hook
         (let ((funcs (list #'magit-insert-unpulled-from-pushremote
                            #'magit-insert-unpulled-from-upstream)))
