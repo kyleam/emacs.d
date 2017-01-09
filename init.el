@@ -996,8 +996,8 @@
              ("f" . magit-wip-commit-buffer-file)
              ("l" . magit-wip-log-current)
              ("o" . magit-wip-log)
-             ("s" . magit-wip-after-save-mode)
-             ("S" . magit-wip-after-save-local-mode))
+             ("s" . magit-wip-after-save-local-mode)
+             ("S" . magit-wip-after-save-mode))
 
   (magit-define-popup-action 'magit-log-popup
     ?w "Log current WIP" 'magit-wip-log-current)
