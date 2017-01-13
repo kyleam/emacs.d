@@ -973,6 +973,24 @@
   (magit-change-popup-key 'magit-branch-popup :action
                           ?s ?v)
 
+  (defun km/magit-mode-kill-hidden (mode)
+    (let ((buffer (magit-mode-get-buffer mode)))
+      (unless (or (not buffer)
+                  (get-buffer-window buffer)
+                  (derived-mode-p mode))
+        (kill-buffer buffer))))
+
+  (advice-add 'magit-log-popup
+              :before
+              (lambda (&rest _)
+                (km/magit-mode-kill-hidden 'magit-log-mode))
+              '((name . "magit-log-kill-previous")))
+  (advice-add 'magit-diff-popup
+              :before
+              (lambda (&rest _)
+                (km/magit-mode-kill-hidden 'magit-diff-mode))
+              '((name . "magit-diff-kill-previous")))
+
   (advice-add 'magit-git-fetch
               :around
               (lambda (fn &rest args)
