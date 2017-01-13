@@ -2101,6 +2101,11 @@
 
 (use-package elfeed
   :defer t
+  :init
+  (define-key km/mail-map "e" (lambda ()
+                                (interactive)
+                                (elfeed)
+                                (elfeed-update)))
   :config
   (define-key elfeed-show-mode-map "v" #'org-capture)
 
