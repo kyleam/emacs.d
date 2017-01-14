@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: command args
+# key: cargs
+# --
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) != $1)
+    stop("Usage: `(file-name-nondirectory (buffer-file-name))` $2")
+
+$0 <- args[1]
