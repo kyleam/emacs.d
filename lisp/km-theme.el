@@ -25,6 +25,7 @@
 (custom-theme-set-faces
  'stekene-light
  '(default ((t (:background "white"))))
+ '(match ((t (:inherit default :background "PaleGreen1"))))
  '(compilation-info ((t (:inherit font-lock-function-name-face))))
  '(diff-added ((t (:foreground "DarkGreen" :background "grey98"))))
  '(diff-context ((t (:foreground "grey50" :background "grey98"))))
@@ -83,7 +84,6 @@
  '(magit-section-highlight ((t (:background "white"))))
  '(magit-section-heading ((t (:inherit font-lock-constant-face :weight bold))))
  '(magit-section-secondary-heading ((t (:inherit default))))
- '(match ((t (:inherit default :background "PaleGreen1"))))
  '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
  '(org-agenda-calendar-sexp ((t (:inherit font-lock-variable-name-face))))
  '(org-agenda-date ((t (:foreground "gray40"))))
