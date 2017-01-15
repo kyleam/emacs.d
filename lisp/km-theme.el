@@ -84,6 +84,7 @@
  '(magit-section-highlight ((t (:background "white"))))
  '(magit-section-heading ((t (:inherit font-lock-constant-face :weight bold))))
  '(magit-section-secondary-heading ((t (:inherit default))))
+ '(mm-uu-extract ((t (:background "gray95" ))))
  '(org-agenda-calendar-event ((t (:inherit font-lock-function-name-face))))
  '(org-agenda-calendar-sexp ((t (:inherit font-lock-variable-name-face))))
  '(org-agenda-date ((t (:foreground "gray40"))))
