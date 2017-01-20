@@ -131,12 +131,19 @@ to group buffer instead of moving to next group."
 (defun km/gnus-pipe-to-project ()
   "Call `gnus-summary-pipe-output' in project root."
   (interactive)
-  (let ((default-directory (completing-read
-                            "Project: "
-                            (projectile-relevant-known-projects)))
-        (gnus-summary-pipe-output-default-command
-         (or gnus-summary-pipe-output-default-command
-             "git am")))
+  (let ((gnus-summary-pipe-output-default-command
+         (format "cd %s && %s"
+                 (completing-read "Project: "
+                                  (projectile-relevant-known-projects))
+                 (cond
+                  ((not gnus-summary-pipe-output-default-command)
+                   "git am")
+                  ((string-match "\\`cd .* && \\(.*\\)"
+                                 gnus-summary-pipe-output-default-command)
+                   (match-string-no-properties
+                    1 gnus-summary-pipe-output-default-command))
+                  (t
+                   gnus-summary-pipe-output-default-command)))))
     (call-interactively #'gnus-summary-pipe-output)))
 
 
