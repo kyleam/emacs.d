@@ -988,6 +988,20 @@
                 (km/magit-mode-kill-hidden 'magit-diff-mode))
               '((name . "magit-diff-kill-previous")))
 
+  (advice-add
+   'magit-generate-buffer-name-default-function
+   :around
+   (lambda (fn mode &optional value)
+     (let ((rev (and (listp value) (car value))))
+       (when (and rev (stringp rev)
+                  (string-match-p (rx string-start
+                                      (= 40 (any "a-z" "0-9"))
+                                      string-end)
+                                  rev))
+         (setcar value (magit-rev-abbrev rev))))
+     (funcall fn mode value))
+   '((name . "magit-buffer-name-shorten-hash")))
+
   (advice-add 'magit-git-fetch
               :around
               (lambda (fn &rest args)
