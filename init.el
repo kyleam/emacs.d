@@ -945,6 +945,11 @@
   (magit-define-popup-action 'magit-diff-popup
     ?e "Edit options" #'magit-diff-refresh-popup)
 
+  (magit-define-popup-option 'magit-diff-popup
+    ?d "Diff filter" "--diff-filter=")
+  (magit-define-popup-option 'magit-diff-mode-refresh-popup
+    ?d "Diff filter" "--diff-filter=")
+
   (magit-change-popup-key 'magit-stash-popup :action
                           ?Z ?s)
 
