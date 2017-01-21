@@ -117,24 +117,6 @@ branch."
       (magit-merge it '("--ff-only"))
     (user-error "No upstream branch")))
 
-(defun km/magit-stage-file-intent (file)
-  "Stage FILE but not its content.
-With a prefix argument or when there is no file at point, ask for
-the file to be staged.  Otherwise, stage the file at point
-without requiring confirmation.
-\n(git add -N FILE)"
-  ;; Modified from `magit-stage-file'.
-  (interactive
-   (let* ((atpoint (magit-section-when (file)))
-          (current (magit-file-relative-name))
-          (choices (magit-untracked-files))
-          (default (car (member (or atpoint current) choices))))
-     (list (if (or current-prefix-arg (not default))
-               (magit-completing-read "Stage file" choices
-                                      nil t nil nil default)
-             default))))
-  (magit-run-git "add" "-N" file))
-
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
