@@ -1301,6 +1301,10 @@
 (use-package helm-bookmark
   :bind ("C-x r b" . helm-bookmarks))
 
+(use-package helm-misc
+  :config
+  (define-key minibuffer-local-map (kbd "M-r") #'helm-minibuffer-history))
+
 
 ;;; Expansion
 
