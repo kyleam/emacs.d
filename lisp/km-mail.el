@@ -95,6 +95,13 @@ argument FOLLOW, follow link instead of copying it."
                    (lambda (s) (kill-new (message s))))
                  it)))))
 
+;;;###autoload
+(defun km/gnus-copy-message-id-as-kill ()
+  (interactive)
+  (with-current-buffer gnus-original-article-buffer
+    (--when-let (message-field-value "Message-ID")
+      (kill-new (message "%s" it)))))
+
 (defun km/gnus-open-github-patch ()
   "Open patch from github email.
 A new buffer with the patch contents is opened in another window."

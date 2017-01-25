@@ -2113,9 +2113,11 @@
                ("o" . km/ace-link-widget)))
 
   (bind-keys :map km/gnus-summary-prefix-map
+             ("i" . km/gnus-copy-message-id-as-kill)
              ("l" . km/gnus-copy-gmane-link-as-kill)
              ("p" . km/gnus-open-github-patch))
   (bind-keys :map km/gnus-article-prefix-map
+             ("i" . km/gnus-copy-message-id-as-kill)
              ("l" . km/gnus-copy-gmane-link-as-kill)
              ("p" . km/gnus-open-github-patch)))
 
