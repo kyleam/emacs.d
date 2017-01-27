@@ -1105,6 +1105,9 @@
   (magit-change-popup-key 'magit-push-popup :action
                           ?u ?U)
 
+  (magit-define-popup-action 'magit-log-popup
+    ?d "Log dwim" #'km/magit-log-dwim)
+
   (magit-define-popup-action 'magit-merge-popup
     ?u "Merge upstream" #'km/magit-ff-merge-upstream)
 
