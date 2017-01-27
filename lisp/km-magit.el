@@ -646,6 +646,35 @@ argument.  Interactively, this can be accessed using the command
         (magit-log (list range) args files)
       (call-interactively #'magit-log))))
 
+(defun km/magit-cherry-dwim ()
+  (interactive)
+  (-let [(head . upstream)
+         (if (eq major-mode 'magit-log-mode)
+             (let ((range (caar magit-refresh-args)))
+               (and range
+                    (string-match magit-range-re range)
+                    (cons (match-string 3 range)
+                          (match-string 1 range))))
+           (let ((section (magit-current-section))
+                 (current-branch (magit-get-current-branch)))
+             (pcase (list (magit-section-type section)
+                          (magit-section-value section))
+               (`(unpushed "@{upstream}..")
+                (cons current-branch (magit-get-upstream-branch)))
+               (`(unpulled "..@{upstream}")
+                (cons (magit-get-upstream-branch) current-branch))
+               ;; Don't try to match "@{push}" because
+               ;; `magit-insert-unpulled-from-pushremote' and
+               ;; `magit-insert-unpulled-from-pushremote' avoid it to
+               ;; be compatible with all push.default settings.
+               (`(unpushed ,_)
+                (cons current-branch (magit-get-push-branch)))
+               (`(unpulled ,_)
+                (cons (magit-get-push-branch) current-branch)))))]
+    (if (and head upstream)
+        (magit-cherry head upstream)
+      (call-interactively #'magit-cherry))))
+
 (defun km/magit--insert-count-lines (rev counts)
   (-let [(n-behind n-ahead) counts]
     (when (> n-ahead 0)

@@ -1112,6 +1112,8 @@
 
   (magit-define-popup-action 'magit-log-popup
     ?d "Log dwim" #'km/magit-log-dwim)
+  (magit-define-popup-action 'magit-log-popup
+    ?y "Cherry dwim" #'km/magit-cherry-dwim)
 
   (magit-define-popup-action 'magit-merge-popup
     ?u "Merge upstream" #'km/magit-ff-merge-upstream)
