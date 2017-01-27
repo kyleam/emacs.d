@@ -908,13 +908,6 @@
 
   (setq magit-show-refs-arguments '("--sort=-committerdate"))
 
-  (setq magit-status-sections-hook
-        (let ((funcs (list #'magit-insert-unpulled-from-pushremote
-                           #'magit-insert-unpulled-from-upstream)))
-          (append (cl-remove-if (lambda (x) (memq x funcs))
-                                magit-status-sections-hook)
-                  funcs)))
-
   (remove-hook 'magit-refs-sections-hook #'magit-insert-tags)
 
   (setq magit-display-buffer-function
@@ -1069,6 +1062,8 @@
   (define-key magit-log-select-mode-map "."
     #'km/magit-log-select-guess-fixup-commit)
 
+  (define-key magit-status-mode-map "jr" #'magit-jump-to-remote-counts)
+
   (define-key magit-refs-mode-map (kbd "C-c C-t") #'km/magit-refs-toggle-tags)
 
   (define-key magit-file-section-map [remap magit-visit-thing]
@@ -1094,6 +1089,16 @@
                ("d" . km/git-rebase-fixup-duplicates)
                ("j" . km/git-rebase-join-repeats)
                ("m" . km/git-rebase-move-commit)))
+
+  (setq magit-status-sections-hook
+        (append
+         (let ((funcs (list #'magit-insert-unpushed-to-upstream
+                            #'magit-insert-unpushed-to-pushremote
+                            #'magit-insert-unpulled-from-pushremote
+                            #'magit-insert-unpulled-from-upstream)))
+           (cl-remove-if (lambda (x) (memq x funcs))
+                         magit-status-sections-hook))
+         (list #'km/magit-insert-remote-counts)))
 
   (magit-define-popup-action 'magit-commit-popup
     ?u "Auto commit" #'km/magit-update-or-auto-commit)

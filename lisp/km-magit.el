@@ -646,6 +646,64 @@ argument.  Interactively, this can be accessed using the command
         (magit-log (list range) args files)
       (call-interactively #'magit-log))))
 
+(defun km/magit--insert-count-lines (rev counts)
+  (-let [(n-behind n-ahead) counts]
+    (when (> n-ahead 0)
+      (magit-insert-section (unpushed (concat rev ".."))
+        (magit-insert-heading
+          (format "%3s ahead of %s"
+                  (propertize (number-to-string n-ahead)
+                              'face 'magit-diffstat-added)
+                  rev))))
+    (when (> n-behind 0)
+      (magit-insert-section (unpulled (concat ".." rev))
+        (magit-insert-heading
+          (format "%3s behind   %s"
+                  (propertize (number-to-string n-behind)
+                              'face 'magit-diffstat-removed)
+                  rev))))))
+
+(defun km/magit-insert-remote-counts ()
+  "Insert section showing number of unpushed and unpulled commits.
+
+This function is a lightweight replacement of four
+`magit-status-sections-hook' functions:
+`magit-insert-unpulled-from-upstream',
+`magit-insert-unpulled-from-pushremote',
+`magit-insert-unpushed-to-upstream', and
+`magit-insert-unpushed-to-pushremote'.
+
+Unlike the above functions, this function does not insert a log
+of unpulled or unpushed commits, but instead inserts a combined
+section that only reports the number of commits in each
+category."
+  (when (magit-get-current-branch)
+    (let* ((up-counts (and (magit-git-success "rev-parse" "@{upstream}")
+                           (magit-rev-diff-count "@{upstream}" "")))
+           ;; Unlike `magit-insert-unpushed-to-pushremote' and
+           ;; `magit-insert-unpulled-from-pushremote', just use
+           ;; "@{push}".  This drops support for the push-remote if
+           ;; push.default isn't set to a compatible value.  See
+           ;; Magit's 6505f4cd.
+           (pu-counts (and (magit-git-success "rev-parse" "@{push}")
+                           (magit-rev-diff-count "@{push}" "")))
+           (up-any (and up-counts (or (> (car up-counts) 0)
+                                      (> (cadr up-counts) 0))))
+           (pu-any (and pu-counts (or (> (car pu-counts) 0)
+                                      (> (cadr pu-counts) 0)))))
+      (when (or up-any pu-any)
+        (magit-insert-section (remote-counts)
+          (magit-insert-heading "Remote counts")
+          (when up-any
+            (km/magit--insert-count-lines "@{upstream}" up-counts))
+          (when (and pu-any (not (and up-any
+                                      (equal (magit-rev-name "@{upstream}")
+                                             (magit-rev-name "@{push}")))))
+            (km/magit--insert-count-lines "@{push}" pu-counts)))))))
+
+(magit-define-section-jumper magit-jump-to-remote-counts
+  "Remote counts" remote-counts)
+
 
 ;;; Git Rebase mode
 
