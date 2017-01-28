@@ -1029,9 +1029,7 @@
   (magit-define-popup-action 'magit-log-popup
     ?w "Log current WIP" 'magit-wip-log-current)
   (magit-define-popup-action 'magit-log-popup
-    ?W "Log other WIP" 'magit-wip-log)
-
-  (magit-wip-after-save-mode 1))
+    ?W "Log other WIP" 'magit-wip-log))
 
 (use-package km-magit
   :defer t
