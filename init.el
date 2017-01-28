@@ -869,7 +869,7 @@
              ("SPC SPC <t>" . magit-invoke-popup-option)))
 
 (use-package magit
-  :load-path "~/src/emacs/magit/lisp/"
+  ;; :load-path "~/src/emacs/magit/lisp/"
   :defer t
   :bind ("C-x g" . km/magit-status)
   :chords ("jg" . km/magit-status)
@@ -1146,7 +1146,7 @@
   (setq magit-annex-unused-open-function #'org-open-file))
 
 (use-package git-commit
-  :load-path "~/src/emacs/magit/lisp/"
+  ;; :load-path "~/src/emacs/magit/lisp/"
   :defer t
   :config
   (setq git-commit-finish-query-functions nil)
