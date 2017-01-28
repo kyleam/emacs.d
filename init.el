@@ -1017,8 +1017,6 @@
   :diminish magit-wip-after-save-local-mode
   :config
   (bind-keys :map km/magit-wip-map
-             ("a" . magit-wip-after-apply-mode)
-             ("b" . magit-wip-before-change-mode)
              ("c" . magit-wip-commit)
              ("f" . magit-wip-commit-buffer-file)
              ("l" . magit-wip-log-current)
