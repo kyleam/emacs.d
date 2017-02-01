@@ -403,6 +403,7 @@
 (setq set-mark-command-repeat-pop t)
 (setq recenter-positions '(top middle bottom))
 (setq kill-read-only-ok t)
+(setq delete-active-region nil)
 
 (setq history-delete-duplicates t)
 
