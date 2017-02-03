@@ -2022,7 +2022,8 @@
   (setq message-send-mail-function 'message-send-mail-with-sendmail
         message-sendmail-envelope-from 'header
         message-kill-buffer-on-exit t)
-  (add-hook 'message-mode-hook #'flyspell-mode))
+  (add-hook 'message-mode-hook #'flyspell-mode)
+  (add-hook 'message-mode-hook #'whitespace-mode))
 
 (use-package mml
   :defer t
