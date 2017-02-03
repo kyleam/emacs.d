@@ -1435,6 +1435,11 @@
 
   (define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map))
 
+(use-package wdired
+  :defer t
+  :init
+  (setq wdired-allow-to-change-permissions t))
+
 (use-package km-dired
   :bind ("C-x C-d" . km/dired-switch-to-buffer)
   :init
