@@ -467,11 +467,18 @@
   (global-set-key [remap kill-ring-save] #'easy-kill))
 
 (use-package whitespace
-  :defer 5
-  :diminish global-whitespace-mode
   :config
+  (define-key km/editing-map "t" #'whitespace-mode)
+
   (setq whitespace-style '(face trailing indentation))
-  (global-whitespace-mode))
+
+  (defun km/cleanup-buffer ()
+    (interactive)
+    (unless (or whitespace-mode global-whitespace-mode)
+      (whitespace-cleanup)
+      (delete-trailing-whitespace)))
+
+  (add-hook 'before-save-hook #'km/cleanup-buffer))
 
 (use-package km-editing
   :defer t
@@ -591,11 +598,6 @@
   (setq ibuffer-expert t
         ibuffer-restore-window-config-on-quit t
         ibuffer-show-empty-filter-groups nil))
-
-(use-package km-buffer-cleanup
-  :config
-  (add-hook 'before-save-hook #'km/cleanup-buffer)
-  (define-key km/editing-map "t" #'km/toggle-prevent-cleanup))
 
 (use-package km-buffers
   :defer t
