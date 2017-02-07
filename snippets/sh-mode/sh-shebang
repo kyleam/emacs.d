@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
-# name: bash shebang
+# name: sh shebang
 # key: sb
 # --
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 $0
