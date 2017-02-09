@@ -244,7 +244,7 @@ See `km/org-maybe-sort' for details of property value format."
   "Sort alphabetically, but ignore any leading articles."
   (let* ((ignored-words '("a" "an" "the"))
          (heading (org-no-properties
-                   (org-get-heading 'no-tags 'no-todo)))
+                   (org-get-heading 'no-tags 'no-todo 'no-priority)))
          (heading-words (split-string heading)))
     (when (member (downcase (car heading-words))
                   ignored-words)
