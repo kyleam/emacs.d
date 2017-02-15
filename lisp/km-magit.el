@@ -207,13 +207,24 @@ START-POINT set to the current branch.
   (interactive (list (magit-read-string "Branch name")))
   (magit-run-git "checkout" "-b" branch))
 
-(defun km/magit-backup-branch ()
+(defun km/magit-branch-backup-current ()
   "Create a backup branch for the current branch.
-\n(git branch b/<current-branch>)"
+\n(git branch b/<current-branch>__vN)"
   (interactive)
-  (--if-let (magit-get-current-branch)
-      (magit-run-git "branch" (concat "b/" it))
-    (user-error "No current branch")))
+  (let* ((current (or (magit-get-current-branch)
+                      (user-error "No current branch")))
+         (version-re (format "\\`b/%s__v\\([[:digit:]]+\\)\\'" current))
+         (versions (delq nil
+                         (mapcar
+                          (lambda (s)
+                            (and (string-match version-re s)
+                                 (string-to-number
+                                  (match-string-no-properties 1 s))))
+                          (magit-list-local-branch-names))))
+         (vbranch (format "b/%s__v%d"
+                          current
+                          (if (null versions) 1 (1+ (apply #'max versions))))))
+    (magit-run-git "branch" vbranch)))
 
 (defun km/magit-mode-bury-all-windows (&optional kill-buffer)
   "Run `magit-mode-quit-window' until no longer in Magit buffer."

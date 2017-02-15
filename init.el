@@ -1148,7 +1148,7 @@
   (magit-define-popup-action 'magit-branch-popup
     ?r "Rename branch" #'km/magit-branch-rename)
   (magit-define-popup-action 'magit-branch-popup
-    ?s "Backup current branch" #'km/magit-backup-branch)
+    ?s "Backup current branch" #'km/magit-branch-backup-current)
   (magit-define-popup-action 'magit-branch-popup
     ?t "Local tracking" #'km/magit-checkout-local-tracking))
 
