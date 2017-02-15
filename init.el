@@ -1117,6 +1117,8 @@
     ?h "Push HEAD" #'km/magit-push-head)
   (magit-change-popup-key 'magit-push-popup :action
                           ?u ?U)
+  (magit-change-popup-key 'magit-push-popup :action
+                          ?p ?P)
 
   (magit-define-popup-action 'magit-log-popup
     ?d "Log dwim" #'km/magit-log-dwim)
