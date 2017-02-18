@@ -97,23 +97,40 @@ Otherwise, if ARG is non-nil, prompt with buffers from
 (defun km/compilation-buffer-list ()
   (-filter #'km/compilation-buffer-p (buffer-list)))
 
-(defvar km/compile-pdf-re
-  (rx string-start
-      (zero-or-one "snake") "make"
-      (zero-or-more not-newline) space
-      (group (one-or-more (not space)) ".pdf")
-      (zero-or-more space)
-      string-end))
+(defun km/compile-make-pdf-target (command)
+  (and (string-match (rx string-start
+                         (zero-or-one "snake") "make"
+                         (zero-or-more not-newline) space
+                         (group (one-or-more (not space)) ".pdf")
+                         (zero-or-more space)
+                         string-end)
+                     command)
+       (match-string 1 command)))
+
+(defun km/compile-latexmk-pdf-target (command)
+  (and (string-match (rx string-start
+                         "latexmk"
+                         (zero-or-more not-newline) space
+                         (group (one-or-more (not space)))
+                         (zero-or-one ".tex")
+                         (zero-or-more space)
+                         string-end)
+                     command)
+       (concat (match-string 1 command) ".pdf")))
+
+(defvar km/compile-pdf-functions '(km/compile-make-pdf-target
+                                   km/compile-latexmk-pdf-target))
 
 (defun km/compile-check-pdf (buf exit)
   (when (equal exit "finished\n")
     (with-current-buffer buf
-      (let ((cmd (car compilation-arguments)))
-        (when (string-match km/compile-pdf-re cmd)
+      (let* ((cmd (car compilation-arguments))
+             (pdf-file (run-hook-with-args-until-success
+                        'km/compile-pdf-functions cmd)))
+        (when pdf-file
           (call-process "xdotool" nil nil nil
                         "search" "--all" "--class" "--name"
-                        (concat "^mupdf|" (file-name-nondirectory
-                                           (match-string 1 cmd)))
+                        (concat "^mupdf|" (file-name-nondirectory pdf-file))
                         "key" "--window" "%@" "r"))))))
 
 (add-to-list 'compilation-finish-functions #'km/compile-check-pdf)
