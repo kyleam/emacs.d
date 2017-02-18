@@ -468,6 +468,8 @@
 
 (use-package whitespace
   :config
+  :init
+  (put 'whitespace-mode 'safe-local-variable #'booleanp)
   (define-key km/editing-map "t" #'whitespace-mode)
 
   (setq whitespace-style '(face trailing indentation))
