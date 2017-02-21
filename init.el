@@ -243,6 +243,7 @@
   (setq org-agenda-restore-windows-after-quit t
         org-agenda-window-setup 'only-window)
   (setq org-agenda-dim-blocked-tasks nil
+        org-agenda-inhibit-startup t
         org-agenda-show-all-dates t
         org-agenda-skip-deadline-if-done t
         org-agenda-skip-scheduled-if-done t
