@@ -620,7 +620,7 @@
 
 (use-package recentf
   :config
-  (setq recentf-max-saved-items 50
+  (setq recentf-max-saved-items 100
         recentf-save-file "~/.emacs.d/cache/recentf")
   (setq recentf-exclude
         (append (list (rx string-start
