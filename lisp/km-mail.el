@@ -112,7 +112,7 @@ A new buffer with the patch contents is opened in another window."
     (with-current-buffer gnus-original-article-buffer
       (save-excursion
         (goto-char (point-min))
-        (if (re-search-forward "https://github.com/.*\\.patch")
+        (if (re-search-forward "https://github.com/.*\\.patch" nil t)
             (setq url (match-string-no-properties 0))
           (user-error "No patch found"))))
     (with-current-buffer (get-buffer-create bufname)
