@@ -20,166 +20,61 @@
 
 ;;; Code:
 
-(require 'dash)
-(require 'projectile)
-(require 'gnus)
-(require 'gnus-group)
-(require 'gnus-topic)
-(require 'gnus-sum)
+(require 'compile)
 (require 'notmuch)
-(require 'shr)
 
-;; http://www.emacswiki.org/emacs/GnusSync
-(defun km/gnus-grace-exit-before-kill-emacs ()
-  (if (and (fboundp 'gnus-alive-p)
-           (gnus-alive-p))
-      (let ((noninteractive t))
-        (gnus-group-exit))))
-
-
-(defun km/gnus-group-sort-by-topic (info1 info2)
-  "Sort alphabetically by group topic.
-This allows groups to be ordered by topics even when topic mode
-is off."
-  (require 'gnus-topic)
-  (string< (gnus-group-topic (gnus-info-group info1))
-           (gnus-group-topic (gnus-info-group info2))))
-
-(defun km/gnus-summary-set-current-article ()
-  (unless gnus-summary-buffer
-    (user-error "No summary buffer"))
-  (with-current-buffer gnus-summary-buffer
-    (save-window-excursion (gnus-summary-select-article))))
-
-(defun km/gnus--last-message-link ()
-  (with-current-buffer gnus-article-buffer
-    (save-excursion
-      (goto-char (point-max))
-      (widget-forward -1)
-      (--when-let (or (get-text-property (point) 'gnus-string)
-                      (get-text-property (point) 'shr-url))
-        (kill-new it)))))
-
-(defun km/gnus--gmane-link (&optional perma)
-  (with-current-buffer gnus-original-article-buffer
-    (-when-let* ((blink (message-field-value "Archived-At"))
-                 (link (or (and (string-match "\\`<\\(.*\\)>\\'" blink)
-                                (match-string 1 blink))
-                           blink)))
-      (if perma
-          link
-        (replace-regexp-in-string "\\`http://permalink\.gmane\.org/"
-                                    "http://thread.gmane.org/"
-                                    link)))))
-
-(defun km/gnus-copy-gmane-link-as-kill (&optional perma)
-  (interactive "P")
-  (km/gnus-summary-set-current-article)
-  (with-current-buffer gnus-original-article-buffer
-    (--when-let (km/gnus--gmane-link perma)
-      (kill-new (message it)))))
-
-(defun km/gnus-copy-message-link (follow)
-  "Copy link for current message.
-If it has an \"Archived-At\" header, use that.  Otherwise, get
-the link from the last widget in the buffer.  With prefix
-argument FOLLOW, follow link instead of copying it."
-  (interactive "P")
-  (km/gnus-summary-set-current-article)
-  (with-current-buffer gnus-original-article-buffer
-    (save-excursion
-      (--when-let (or (km/gnus--gmane-link)
-                      (km/gnus--last-message-link))
-        (funcall (if follow
-                     #'browse-url
-                   (lambda (s) (kill-new (message s))))
-                 it)))))
+(require 'km-util)
 
 ;;;###autoload
-(defun km/gnus-copy-message-id-as-kill ()
-  (interactive)
-  (with-current-buffer gnus-original-article-buffer
-    (--when-let (message-field-value "Message-ID")
-      (kill-new (message "%s" it)))))
-
-(defun km/open-github-patch (buffer)
-  "Find GitHub patch link in BUFFER and show it in a new buffer."
-  (let ((url
-         (with-current-buffer buffer
-           (save-excursion
-             (goto-char (point-min))
-             (if (re-search-forward "https://github.com/.*\\.patch" nil t)
-                 (match-string-no-properties 0)
-               (user-error "No patch found"))))))
-    (with-current-buffer (get-buffer-create
-                          (generate-new-buffer-name "*mail-github-patch*"))
-      (url-insert-file-contents url)
-      (diff-mode)
-      (view-mode 1)
-      (pop-to-buffer (current-buffer)))))
-
-(defun km/gnus-open-github-patch ()
-  "Open patch from GitHub email."
-  (interactive)
-  (km/gnus-summary-set-current-article)
-  (km/open-github-patch gnus-original-article-buffer))
-
 (defun km/notmuch-show-open-github-patch ()
   "Open patch from GitHub email."
   (interactive)
   (with-current-notmuch-show-message
-   (km/mail-open-github-patch (current-buffer))))
-
-(defun km/gnus-summary-catchup (&optional no-next)
-  "Mark all articles as read.
-Don't ask for confirmation.  With prefix argument NO-NEXT, exit
-to group buffer instead of moving to next group."
-  (interactive "P")
-  (let ((gnus-auto-select-next (unless no-next 'quietly)))
-    (gnus-summary-catchup-and-exit nil t)))
-
-(defun km/shr-browse-url-and-goto-next ()
-  "Run `shr-browse-url' followed by `shr-next-link'."
-  (interactive)
-  (shr-browse-url)
-  (shr-next-link))
-
-(defun km/gnus-pipe-to-project ()
-  "Call `gnus-summary-pipe-output' in project root."
-  (interactive)
-  (let ((gnus-summary-pipe-output-default-command
-         (format "cd %s && %s"
-                 (completing-read "Project: "
-                                  (projectile-relevant-known-projects))
-                 (cond
-                  ((not gnus-summary-pipe-output-default-command)
-                   "git am")
-                  ((string-match "\\`cd .* && \\(.*\\)"
-                                 gnus-summary-pipe-output-default-command)
-                   (match-string-no-properties
-                    1 gnus-summary-pipe-output-default-command))
-                  (t
-                   gnus-summary-pipe-output-default-command)))))
-    (call-interactively #'gnus-summary-pipe-output)))
+   (km/open-github-patch (current-buffer))))
 
 
-;;; Message mode
+;;; Mail sync
 
-(defun km/message-confirm-sender ()
-  "Stop sending message from the wrong address."
-  (unless (y-or-n-p (format "Send message from %s?"
-                            (message-field-value "From")))
-    (user-error "Not sending message")))
+(defun mail-sync-log-buffer (buf _)
+  (let ((bstring (with-current-buffer buf
+                   (buffer-string))))
+    (with-current-buffer (get-buffer-create "*mail-sync-log*")
+      (goto-char (point-max))
+      (insert "\n\n\n")
+      (insert bstring))))
 
-
-;;; Notmuch
-
-(require 'notmuch)
+(defvar mail-sync-calling-buffer nil)
+(defun mail-sync-refresh-caller (_ exit)
+  (when (equal exit "finished\n")
+    (when (and mail-sync-calling-buffer
+               (buffer-live-p mail-sync-calling-buffer))
+      (with-current-buffer mail-sync-calling-buffer
+        (notmuch-refresh-this-buffer))))
+  (setq mail-sync-calling-buffer nil))
 
 ;;;###autoload
-(defun km/notmuch-show-copy-message-id-as-kill ()
+(define-compilation-mode mail-sync-mode "Mail-sync"
+  "Sync mail, logging output to *mail-sync-log*."
+  (set (make-local-variable 'compilation-finish-functions)
+       '(mail-sync-log-buffer mail-sync-refresh-caller)))
+
+;;;###autoload
+(defun km/notmuch-sync-mail (&optional cmd-append)
+  (interactive (list (and current-prefix-arg
+                          (read-string "sync-mail args: "))))
+  (setq mail-sync-calling-buffer (current-buffer))
+  (let ((default-directory (expand-file-name "~/"))
+        (display-buffer-overriding-action
+         '(display-buffer-below-selected)))
+    (compilation-start (concat "sync-mail"
+                               (and cmd-append " ")
+                               cmd-append)
+                       'mail-sync-mode)))
+
+;;;###autoload
+(defun km/notmuch-sync-mail-fast ()
   (interactive)
-  (kill-new (message "%s" (notmuch-show-get-message-id))))
+  (km/notmuch-sync-mail "--fast"))
 
 (provide 'km-mail)
 ;;; km-mail.el ends here

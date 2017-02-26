@@ -44,6 +44,9 @@
 (require 'km-util)
 (require 'km-emacs-autoloads nil t)
 
+(setq user-full-name "Kyle Meyer")
+(setq user-mail-address "kyle@kyleam.com")
+
 
 ;;; Appearance
 
@@ -85,7 +88,6 @@
 (define-prefix-command 'km/gnus-summary-prefix-map)
 (define-prefix-command 'km/magit-map)
 (define-prefix-command 'km/magit-wip-map)
-(define-prefix-command 'km/notmuch-show-prefix-map)
 (define-prefix-command 'km/org-prefix-map)
 (define-prefix-command 'km/projectile-ctl-x-4-map)
 (define-prefix-command 'km/python-prefix-map)
@@ -2009,33 +2011,51 @@
 
 ;;; Mail
 
-(use-package notmuch
-  :defer t
-  :init (define-key km/mail-map "n" #'notmuch)
-  :config
-  (setq notmuch-fcc-dirs nil
-        notmuch-search-oldest-first nil)
-  (add-to-list 'notmuch-saved-searches
-               '(:name "today" :query "date:today.." :key "."))
-  (define-key notmuch-show-mode-map (kbd "C-c m") 'km/notmuch-show-prefix-map)
-
-  (define-key km/notmuch-show-prefix-map "p"
-    #'km/notmuch-show-open-github-patch)
-  (define-key km/notmuch-show-prefix-map "i"
-    #'km/notmuch-show-copy-message-id-as-kill))
-
 (use-package message
   :defer t
+  :init
+  (setq message-directory "~/.mail")
   :config
+  (load "mail-config.el")
   (setq message-send-mail-function 'message-send-mail-with-sendmail
         message-sendmail-envelope-from 'header
         message-kill-buffer-on-exit t)
+
+  (defun km/message-confirm-sender ()
+    "Stop sending messages from the wrong address."
+    (unless (y-or-n-p (format "Send message from %s?"
+                              (message-field-value "From")))
+      (user-error "Not sending message")))
+  (add-hook 'message-send-hook #'km/message-confirm-sender)
+
   (add-hook 'message-mode-hook #'flyspell-mode)
   (add-hook 'message-mode-hook #'whitespace-mode))
+
+(use-package notmuch
+  :defer t
+  :init
+  (autoload 'notmuch "notmuch" "Notmuch mail" t)
+  (define-key km/mail-map "n" #'notmuch)
+  :config
+  (setq notmuch-hello-sections '(notmuch-hello-insert-saved-searches
+                                 notmuch-hello-insert-recent-searches))
+  (setq notmuch-archive-tags '("-unread"))
+  (setq notmuch-search-oldest-first nil)
+
+  (setq notmuch-wash-citation-lines-prefix 10)
+  (setq notmuch-wash-citation-lines-suffix 10)
+
+  (define-key notmuch-common-keymap "d" #'notmuch-jump-search)
+  (define-key notmuch-message-mode-map (kbd "C-c C-s") nil)
+  (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
 
 (use-package mml
   :defer t
   :diminish (mml-mode . "ML"))
+
+(use-package org-notmuch
+  :defer t
+  :after org)
 
 (use-package mm-decode
   :defer t
@@ -2118,13 +2138,15 @@
 (use-package sendmail
   :defer t
   :config
-  (setq sendmail-program "/usr/bin/msmtp"))
+  (setq sendmail-program "/usr/bin/msmtp")
+  (setq mail-specify-envelope-from t)
+  (setq mail-envelope-from 'header))
 
-(use-package km-mail
+(use-package km-gnus
   :defer t
   :after gnus
   :config
-  (add-hook 'message-send-hook #'km/message-confirm-sender)
+
   (add-hook 'kill-emacs-hook #'km/gnus-grace-exit-before-kill-emacs)
 
   (setq gnus-group-sort-function '(gnus-group-sort-by-alphabet
@@ -2220,6 +2242,9 @@
             (cons (propertize " [Mail] " 'face 'font-lock-doc-face)
                   mode-line-misc-info))
       (key-chord-define-global "jg" 'km/mail-map)
+      (after 'notmuch-lib
+        (define-key notmuch-common-keymap "G" #'km/notmuch-sync-mail)
+        (define-key notmuch-common-keymap "g" #'km/notmuch-sync-mail-fast))
       (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
       (setq save-abbrevs nil)))))
 

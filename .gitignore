@@ -22,3 +22,4 @@ bookmarks
 /.pydoc-names
 /eww-bookmarks
 /lisp/km-emacs-autoloads.el
+/lisp/mail-config.el
