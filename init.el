@@ -2019,6 +2019,8 @@
                '(:name "today" :query "date:today.." :key "."))
   (define-key notmuch-show-mode-map (kbd "C-c m") 'km/notmuch-show-prefix-map)
 
+  (define-key km/notmuch-show-prefix-map "p"
+    #'km/notmuch-show-open-github-patch)
   (define-key km/notmuch-show-prefix-map "i"
     #'km/notmuch-show-copy-message-id-as-kill))
 

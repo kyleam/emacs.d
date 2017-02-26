@@ -124,6 +124,12 @@ argument FOLLOW, follow link instead of copying it."
   (km/gnus-summary-set-current-article)
   (km/open-github-patch gnus-original-article-buffer))
 
+(defun km/notmuch-show-open-github-patch ()
+  "Open patch from GitHub email."
+  (interactive)
+  (with-current-notmuch-show-message
+   (km/mail-open-github-patch (current-buffer))))
+
 (defun km/gnus-summary-catchup (&optional no-next)
   "Mark all articles as read.
 Don't ask for confirmation.  With prefix argument NO-NEXT, exit
