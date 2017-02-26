@@ -2048,6 +2048,7 @@
   (define-key notmuch-common-keymap "d" #'notmuch-jump-search)
   (define-key notmuch-message-mode-map (kbd "C-c C-s") nil)
   (define-key notmuch-show-mode-map "v" #'org-capture)
+  (define-key notmuch-show-mode-map "e" #'notmuch-show-open-or-close-all)
   (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
 
 (use-package mml
