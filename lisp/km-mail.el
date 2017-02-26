@@ -102,24 +102,27 @@ argument FOLLOW, follow link instead of copying it."
     (--when-let (message-field-value "Message-ID")
       (kill-new (message "%s" it)))))
 
-(defun km/gnus-open-github-patch ()
-  "Open patch from github email.
-A new buffer with the patch contents is opened in another window."
-  (interactive)
-  (km/gnus-summary-set-current-article)
-  (let ((bufname (generate-new-buffer-name "*gnus-github-patch*"))
-        url)
-    (with-current-buffer gnus-original-article-buffer
-      (save-excursion
-        (goto-char (point-min))
-        (if (re-search-forward "https://github.com/.*\\.patch" nil t)
-            (setq url (match-string-no-properties 0))
-          (user-error "No patch found"))))
-    (with-current-buffer (get-buffer-create bufname)
+(defun km/open-github-patch (buffer)
+  "Find GitHub patch link in BUFFER and show it in a new buffer."
+  (let ((url
+         (with-current-buffer buffer
+           (save-excursion
+             (goto-char (point-min))
+             (if (re-search-forward "https://github.com/.*\\.patch" nil t)
+                 (match-string-no-properties 0)
+               (user-error "No patch found"))))))
+    (with-current-buffer (get-buffer-create
+                          (generate-new-buffer-name "*mail-github-patch*"))
       (url-insert-file-contents url)
       (diff-mode)
-      (view-mode 1))
-    (pop-to-buffer bufname)))
+      (view-mode 1)
+      (pop-to-buffer (current-buffer)))))
+
+(defun km/gnus-open-github-patch ()
+  "Open patch from GitHub email."
+  (interactive)
+  (km/gnus-summary-set-current-article)
+  (km/open-github-patch gnus-original-article-buffer))
 
 (defun km/gnus-summary-catchup (&optional no-next)
   "Mark all articles as read.
