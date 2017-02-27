@@ -35,13 +35,13 @@
 
 ;;; Mail sync
 
-(defun mail-sync-log-buffer (buf _)
-  (let ((bstring (with-current-buffer buf
-                   (buffer-string))))
-    (with-current-buffer (get-buffer-create "*mail-sync-log*")
-      (goto-char (point-max))
-      (insert "\n\n\n")
-      (insert bstring))))
+(defvar mail-sync-log-file "/var/log/mail-sync/mail-sync")
+
+(defun mail-sync-log-to-file (buf _)
+  (with-temp-buffer
+    (insert "\n")
+    (insert (with-current-buffer buf (buffer-string)))
+    (write-region nil nil mail-sync-log-file 'append 'no-msg)))
 
 (defvar mail-sync-calling-buffer nil)
 (defun mail-sync-refresh-caller (_ exit)
@@ -56,7 +56,7 @@
 (define-compilation-mode mail-sync-mode "Mail-sync"
   "Sync mail, logging output to *mail-sync-log*."
   (set (make-local-variable 'compilation-finish-functions)
-       '(mail-sync-log-buffer mail-sync-refresh-caller)))
+       '(mail-sync-log-to-file mail-sync-refresh-caller)))
 
 ;;;###autoload
 (defun km/notmuch-sync-mail (&optional cmd-append)
