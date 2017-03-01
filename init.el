@@ -2052,6 +2052,17 @@
   (define-key notmuch-tree-mode-map "e" #'notmuch-tree-show-message)
   (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
 
+(use-package km-mail
+  :defer t
+  :after notmuch
+  :config
+  (define-key notmuch-show-part-map "|"
+    #'km/notmuch-show-pipe-part-to-project)
+  (define-key notmuch-show-mode-map [remap notmuch-show-pipe-message]
+    #'km/notmuch-show-pipe-message-to-project)
+  (define-key notmuch-tree-mode-map [remap notmuch-show-pipe-message]
+    #'km/notmuch-show-pipe-message-to-project))
+
 (use-package mml
   :defer t
   :diminish (mml-mode . "ML"))

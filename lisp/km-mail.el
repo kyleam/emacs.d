@@ -32,6 +32,24 @@
   (with-current-notmuch-show-message
    (km/open-github-patch (current-buffer))))
 
+;;;###autoload
+(defun km/notmuch-show-pipe-message-to-project (project)
+  (interactive
+   (list (expand-file-name
+          (completing-read "Project: "
+                           (projectile-relevant-known-projects)))))
+  (let ((default-directory project))
+    (call-interactively #'notmuch-show-pipe-message)))
+
+;;;###autoload
+(defun km/notmuch-show-pipe-part-to-project (project)
+  (interactive
+   (list (expand-file-name
+          (completing-read "Project: "
+                           (projectile-relevant-known-projects)))))
+  (let ((default-directory project))
+    (call-interactively #'notmuch-show-pipe-part)))
+
 
 ;;; Mail sync
 
