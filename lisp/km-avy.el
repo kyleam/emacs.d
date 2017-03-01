@@ -21,58 +21,58 @@
 ;;; Code:
 
 (require 'avy)
+(require 'cl-macs)
+
+(defmacro km/avy-after-goto (&rest body)
+  (declare (indent defun) (debug (body)))
+  (let ((result (cl-gensym)))
+    `(let ((,result
+            (let ((avy-all-windows nil))
+              (call-interactively #'avy-goto-subword-1))))
+       (when (integerp ,result)
+         ,@body))))
 
 (declare-function occur-mode-display-occurrence "replace")
 ;;;###autoload
 (defun km/occur-avy-goto-subword-1 ()
   "Like `avy-goto-subword-1', but display occurence."
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (occur-mode-display-occurrence))
+  (km/avy-after-goto (occur-mode-display-occurrence)))
 
 (declare-function compilation-display-error "compile")
 ;;;###autoload
 (defun km/grep-avy-goto-subword-1 ()
   "Like `avy-goto-subword-1', but call `compilation-display-error'."
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (compilation-display-error))
+  (km/avy-after-goto (compilation-display-error)))
 
 (declare-function org-agenda-do-context-action "org-agenda")
 ;;;###autoload
 (defun km/org-agenda-avy-goto-subword-1 ()
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (org-agenda-do-context-action))
+  (km/avy-after-goto (org-agenda-do-context-action)))
 
 (declare-function magit-diff-show-or-scroll-up "magit-diff")
 ;;;###autoload
 (defun km/magit-avy-goto-subword-1 ()
   "Like `km/avy-goto-subword-1', but maybe show commit and limit to window."
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (when (derived-mode-p 'magit-log-mode)
-    (magit-diff-show-or-scroll-up)))
+  (km/avy-after-goto
+    (when (derived-mode-p 'magit-log-mode)
+      (magit-diff-show-or-scroll-up))))
 
 (declare-function gnus-summary-scroll-up "gnus-sum" (lines))
 ;;;###autoload
 (defun km/gnus-avy-goto-subword-and-select ()
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (gnus-summary-scroll-up 0))
+  (km/avy-after-goto (gnus-summary-scroll-up 0)))
 
 (declare-function elfeed-search-show-entry "elfeed-search" (entry))
 ;;;###autoload
 (defun km/elfeed-avy-goto-subword-1 ()
   (interactive)
-  (let (avy-all-windows)
-    (call-interactively #'avy-goto-subword-1))
-  (call-interactively #'elfeed-search-show-entry))
+  (km/avy-after-goto
+    (call-interactively #'elfeed-search-show-entry)))
 
 (provide 'km-avy)
 ;;; km-avy.el ends here
