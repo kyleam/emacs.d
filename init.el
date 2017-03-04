@@ -2083,7 +2083,6 @@
              ("g" . gnus)
              ("p" . gnus-plugged)
              ("u" . gnus-unplugged))
-  :config
   (setq gnus-home-directory "~/.gnus.d/"
         gnus-directory gnus-home-directory
         gnus-article-save-directory (expand-file-name "saved/" gnus-directory)
@@ -2093,6 +2092,7 @@
         gnus-save-newsrc-file nil
         gnus-read-newsrc-file nil
         gnus-inhibit-startup-message t)
+  :config
   (setq gnus-summary-line-format "%U%R %&user-date;%-20= %-15,15f  %B %S \n")
   (setq gnus-gcc-mark-as-read t
         gnus-visible-headers '("^From" "^Subject" "^Date" "^To" "^Cc" "^User-Agent")
