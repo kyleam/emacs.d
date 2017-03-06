@@ -2021,6 +2021,8 @@
         message-sendmail-envelope-from 'header
         message-kill-buffer-on-exit t)
 
+  (setq message-make-forward-subject-function #'message-forward-subject-fwd)
+
   (defun km/message-confirm-sender ()
     "Stop sending messages from the wrong address."
     (unless (y-or-n-p (format "Send message from %s?"
