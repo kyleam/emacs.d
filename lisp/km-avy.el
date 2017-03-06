@@ -74,5 +74,17 @@
   (km/avy-after-goto
     (call-interactively #'elfeed-search-show-entry)))
 
+(declare-function notmuch-search-show-thread "notmuch" (&optional elide-toggle))
+(declare-function notmuch-tree-show-message "notmuch-tree" (ARG))
+;;;###autoload
+(defun km/notmuch-avy-goto-subword-1 ()
+  (interactive)
+  (km/avy-after-goto
+    (cl-case major-mode
+      (notmuch-search-mode
+       (notmuch-search-show-thread))
+      (notmuch-tree-mode
+       (call-interactively #'notmuch-tree-show-message)))))
+
 (provide 'km-avy)
 ;;; km-avy.el ends here

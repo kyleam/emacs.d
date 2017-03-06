@@ -577,6 +577,8 @@
   (after 'magit-log
     (define-key magit-log-mode-map "j" #'km/magit-avy-goto-subword-1)
     (define-key magit-cherry-mode-map "j" #'km/magit-avy-goto-subword-1))
+  (after 'notmuch
+    (define-key notmuch-common-keymap "j" #'km/notmuch-avy-goto-subword-1))
   (define-key occur-mode-map "j" #'km/occur-avy-goto-subword-1))
 
 
