@@ -50,6 +50,13 @@
   (let ((default-directory project))
     (call-interactively #'notmuch-show-pipe-part)))
 
+;;;###autoload
+(defun km/notmuch-archive-all ()
+  "Call `notmuch-search-archive-thread' with whole-buffer region."
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively #'notmuch-search-archive-thread))
+
 
 ;;; Mail sync
 

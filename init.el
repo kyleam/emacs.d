@@ -2064,6 +2064,7 @@
   :defer t
   :after notmuch
   :config
+  (define-key notmuch-search-mode-map "A" #'km/notmuch-archive-all)
   (define-key notmuch-show-part-map "|"
     #'km/notmuch-show-pipe-part-to-project)
   (define-key notmuch-show-mode-map [remap notmuch-show-pipe-message]
