@@ -2049,6 +2049,18 @@
   (setq notmuch-wash-citation-lines-prefix 10)
   (setq notmuch-wash-citation-lines-suffix 10)
 
+  (advice-add
+   'notmuch-show-forward-message :around
+   (lambda (fn &optional prompt-for-sender)
+     (funcall fn (not prompt-for-sender)))
+   '((name . "notmuch-show-forward-message--reverse-arg")))
+
+  (advice-add
+   'notmuch-show-forward-open-messages :around
+   (lambda (fn &optional prompt-for-sender)
+     (funcall fn (not prompt-for-sender)))
+   '((name . "notmuch-show-forward-open-messages--reverse-arg")))
+
   (define-key notmuch-common-keymap "d" #'notmuch-jump-search)
   (define-key notmuch-message-mode-map (kbd "C-c C-s") nil)
   (define-key notmuch-show-mode-map "v" #'org-capture)
