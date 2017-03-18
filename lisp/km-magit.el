@@ -204,7 +204,9 @@ date."
 This is equivalent to running `magit-branch-and-checkout' with
 START-POINT set to the current branch.
 \n(git checkout -b BRANCH)"
-  (interactive (list (magit-read-string "Branch name")))
+  (interactive (list (magit-read-string "Branch name" nil nil
+                                        (--when-let (magit-get-current-branch)
+                                          (concat it "-tmp")))))
   (magit-run-git "checkout" "-b" branch))
 
 (defun km/magit-branch-backup-current ()
