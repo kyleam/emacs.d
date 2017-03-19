@@ -2061,12 +2061,27 @@
      (funcall fn (not prompt-for-sender)))
    '((name . "notmuch-show-forward-open-messages--reverse-arg")))
 
+  (define-key notmuch-show-mode-map "o" #'notmuch-show-reply)
+  (define-key notmuch-show-mode-map "O" #'notmuch-show-reply-sender)
+
+  (define-key notmuch-search-mode-map "o" #'notmuch-search-reply-to-thread)
+  (define-key notmuch-search-mode-map "O" #'notmuch-search-reply-to-thread-sender)
+  (define-key notmuch-search-mode-map (kbd "C-c C-s") #'notmuch-search-toggle-order)
+
+  (define-key notmuch-tree-mode-map "o"
+    (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
+  (define-key notmuch-tree-mode-map "O"
+    (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
+
   (define-key notmuch-common-keymap "d" #'notmuch-jump-search)
   (define-key notmuch-message-mode-map (kbd "C-c C-s") nil)
   (define-key notmuch-show-mode-map "v" #'org-capture)
 
   (define-key notmuch-search-mode-map "." #'beginning-of-buffer)
   (define-key notmuch-tree-mode-map "." #'beginning-of-buffer)
+
+  (define-key notmuch-search-mode-map "r" #'notmuch-search-archive-thread)
+  (define-key notmuch-tree-mode-map "r" #'notmuch-tree-archive-message-then-next)
 
   (define-key notmuch-show-mode-map "e" #'notmuch-show-open-or-close-all)
   (define-key notmuch-tree-mode-map "e" #'notmuch-tree-show-message)
@@ -2076,7 +2091,7 @@
   :defer t
   :after notmuch
   :config
-  (define-key notmuch-search-mode-map "A" #'km/notmuch-archive-all)
+  (define-key notmuch-search-mode-map "R" #'km/notmuch-archive-all)
   (define-key notmuch-show-part-map "|"
     #'km/notmuch-show-pipe-part-to-project)
   (define-key notmuch-show-mode-map [remap notmuch-show-pipe-message]
