@@ -222,7 +222,7 @@ exist."
      "branch"
      (if choose-name
          (magit-read-string-ns "Backup name" current)
-       (let* ((version-re (format "\\`b/%s__v\\([[:digit:]]+\\)\\'" current))
+       (let* ((version-re (format "\\`%s__v\\([[:digit:]]+\\)\\'" current))
               (versions (delq nil
                               (mapcar
                                (lambda (s)
@@ -230,7 +230,7 @@ exist."
                                       (string-to-number
                                        (match-string-no-properties 1 s))))
                                (magit-list-local-branch-names)))))
-         (format "b/%s__v%d"
+         (format "%s__v%d"
                  current
                  (if (null versions) 1 (1+ (apply #'max versions)))))))))
 
