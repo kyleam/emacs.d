@@ -448,7 +448,7 @@ COMMIT."
                                    commit "--")))
     (user-error "%s does not exist" commit)))
 
-(defun km/magit-copy-commit-summary-from-header (&optional arg)
+(defun km/magit-copy-commit-summary-from-header (&optional _)
   (magit-section-when headers
     (km/magit-copy-commit-summary (car magit-refresh-args))))
 
@@ -459,7 +459,7 @@ COMMIT."
      (mapconcat #'identity it
                 (if arg (read-string "Separator: ") ", ")))))
 
-(defun km/magit-copy-commit-message (&optional arg)
+(defun km/magit-copy-commit-message (&optional _)
   (magit-section-when message
     (kill-new (replace-regexp-in-string
                     "^    " ""
@@ -476,7 +476,7 @@ COMMIT."
                       (replace-regexp-in-string "^[ \\+\\-]" "" text)
                     text))))))
 
-(defun km/magit-copy-hunk (&optional arg)
+(defun km/magit-copy-hunk (&optional _)
   (magit-section-when hunk
     (let ((start (save-excursion (goto-char (magit-section-start it))
                                  (1+ (point-at-eol)))))
