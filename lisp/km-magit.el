@@ -484,7 +484,7 @@ COMMIT."
                  start (magit-section-end it))))))
 
 (defun km/magit-copy-as-kill ()
-  "Try `km/magit-copy-functions' before calling `magit-copy-as-kill'.
+  "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
 With a prefix argument of -1, always call `magit-copy-section-value'
 Otherwise, the current prefix argument is passed to each hook
 function."
