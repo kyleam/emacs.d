@@ -452,12 +452,12 @@ COMMIT."
   (magit-section-when headers
     (km/magit-copy-commit-summary (car magit-refresh-args))))
 
-(defun km/magit-copy-region-commits (&optional arg)
+(defun km/magit-copy-region-commits (&optional read-separator)
   (--when-let (magit-region-values 'commit)
     (deactivate-mark)
     (kill-new
      (mapconcat #'identity it
-                (if arg (read-string "Separator: ") ", ")))))
+                (if read-separator (read-string "Separator: ") ", ")))))
 
 (defun km/magit-copy-commit-message (&optional _)
   (magit-section-when message
