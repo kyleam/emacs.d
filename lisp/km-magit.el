@@ -461,10 +461,9 @@ COMMIT."
 
 (defun km/magit-copy-commit-message (&optional _)
   (magit-section-when message
-    (kill-new (replace-regexp-in-string
-                    "^    " ""
-                    (buffer-substring-no-properties (magit-section-start it)
-                                                    (magit-section-end it))))))
+    (kill-new
+     (buffer-substring-no-properties (magit-section-start it)
+                                     (magit-section-end it)))))
 
 (defun km/magit-copy-region-hunk (&optional no-column)
   (when (magit-section-internal-region-p)
