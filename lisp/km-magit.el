@@ -247,22 +247,33 @@ and 'squash!' titles."
   (interactive (list (or (and current-prefix-arg
                               (prefix-numeric-value current-prefix-arg))
                          5)))
-  (let (ntop-end msgs commit-pts)
+  (let ((msg-fn (lambda ()
+                  (magit-rev-format
+                   "%s" (magit-section-value (magit-current-section)))))
+        msgs commit-pts)
     (save-excursion
-      ;; Get limit for fixup/squash search.
       (goto-char (point-min))
-      (setq ntop-end (line-end-position (1+ ntop)))
       ;; Get fixup and squash messages.
-      (while (re-search-forward "[a-z0-9]+ \\(fixup!\\|squash!\\) \\(.+\\)"
-                                ntop-end t)
-        (push (match-string-no-properties 2) msgs))
+      (while (re-search-forward (rx " " (or "fixup" "squash") "! ")
+                                (line-end-position (1+ ntop))
+                                t)
+        (let ((msg (funcall msg-fn)))
+          (and msg
+               (string-match (rx string-start (or "fixup" "squash") "! "
+                                 (group (one-or-more not-newline)))
+                             msg)
+               (push (cons (match-string-no-properties 1 msg) (line-end-position))
+                     msgs))))
       (when (not msgs)
         (user-error "No fixup or squash commits found"))
       ;; Find earliest commit.
-      (dolist (msg msgs)
-        (goto-char (point-min))
-        (when (re-search-forward (concat "[a-z0-9]+ " msg "\n") nil t)
-          (push (match-beginning 0) commit-pts))))
+      (pcase-dolist (`(,msg . ,search-beg) msgs)
+        (goto-char search-beg)
+        (catch 'found
+          (while (search-forward msg nil t)
+            (when (string= msg (funcall msg-fn))
+              (push (line-beginning-position) commit-pts)
+              (throw 'found t))))))
     (if commit-pts
         (goto-char (apply #'max commit-pts))
       (message "No matching commits found"))))
