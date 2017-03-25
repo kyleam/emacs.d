@@ -456,14 +456,25 @@ COMMIT."
   (--when-let (magit-region-values 'commit)
     (deactivate-mark)
     (kill-new
-     (mapconcat #'identity it
-                (if read-separator (read-string "Separator: ") ", ")))))
+     (message
+      "%s"
+      (mapconcat #'identity
+                 it
+                 (if read-separator (read-string "Separator: ") ", "))))))
+
+(defun km/magit-copy--truncated-message (msg)
+  (let ((msg-lines (split-string msg "[\n\r]+" 'omit-nulls)))
+    (message "%s" (cl-case (length msg-lines)
+                    (0 msg)
+                    (1 (car msg-lines))
+                    (t (concat (car msg-lines) "[...]"))))))
 
 (defun km/magit-copy-commit-message (&optional _)
   (magit-section-when message
-    (kill-new
-     (buffer-substring-no-properties (magit-section-start it)
-                                     (magit-section-end it)))))
+    (let ((msg (buffer-substring-no-properties (magit-section-start it)
+                                               (magit-section-end it))))
+      (kill-new msg)
+      (km/magit-copy--truncated-message msg))))
 
 (defun km/magit-copy-region-hunk (&optional no-column)
   (when (magit-section-internal-region-p)
@@ -471,16 +482,19 @@ COMMIT."
       (deactivate-mark)
       (let ((text (buffer-substring-no-properties
                    (region-beginning) (region-end))))
-        (kill-new (if no-column
-                      (replace-regexp-in-string "^[ \\+\\-]" "" text)
-                    text))))))
+        (setq text (if no-column
+                       (replace-regexp-in-string "^[ \\+\\-]" "" text)
+                     text))
+        (kill-new text)
+        (km/magit-copy--truncated-message text)))))
 
 (defun km/magit-copy-hunk (&optional _)
   (magit-section-when hunk
     (kill-new (buffer-substring-no-properties
                (save-excursion (goto-char (magit-section-start it))
                                (1+ (point-at-eol)))
-               (magit-section-end it)))))
+               (magit-section-end it)))
+    (message "Copied hunk: %s" (magit-section-value it))))
 
 (defun km/magit-copy-as-kill ()
   "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
