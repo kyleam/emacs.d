@@ -477,10 +477,10 @@ COMMIT."
 
 (defun km/magit-copy-hunk (&optional _)
   (magit-section-when hunk
-    (let ((start (save-excursion (goto-char (magit-section-start it))
-                                 (1+ (point-at-eol)))))
-      (kill-new (buffer-substring-no-properties
-                 start (magit-section-end it))))))
+    (kill-new (buffer-substring-no-properties
+               (save-excursion (goto-char (magit-section-start it))
+                               (1+ (point-at-eol)))
+               (magit-section-end it)))))
 
 (defun km/magit-copy-as-kill ()
   "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
