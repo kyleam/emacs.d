@@ -57,6 +57,21 @@
   (mark-whole-buffer)
   (call-interactively #'notmuch-search-archive-thread))
 
+;;;###autoload
+(defun km/notmuch-show-at-point ()
+  "Call `notmuch-show' with message or thread ID at point."
+  (interactive)
+  (let ((id (save-excursion
+              (skip-syntax-backward "^\\s-")
+              (and (looking-at
+                    (rx (group (zero-or-one (or "id:" "thread:")))
+                        (one-or-more (any "-" "_" "." "@" "/" alnum))))
+                   (concat (and (string= (match-string 1) "") "id:")
+                           (match-string-no-properties 0))))))
+    (if id
+        (notmuch-show id)
+      (call-interactively #'notmuch-show))))
+
 
 ;;; Mail sync
 

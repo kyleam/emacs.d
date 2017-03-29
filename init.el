@@ -2090,6 +2090,8 @@
 (use-package km-mail
   :defer t
   :after notmuch
+  :init
+  (define-key km/mail-map "." #'km/notmuch-show-at-point)
   :config
   (define-key notmuch-search-mode-map "R" #'km/notmuch-archive-all)
   (define-key notmuch-show-part-map "|"
@@ -2280,9 +2282,9 @@
   (let ((server (daemonp)))
     (cond
      ((string= server "default")
-      ;; Remove all mail map bindings except notmuch.
-      (global-set-key (kbd "C-x m") nil)
+      ;; Remove all mail map bindings except notmuch-related ones.
       (global-set-key (kbd "C-x m n") #'notmuch)
+      (global-set-key (kbd "C-x m .") #'km/notmuch-show-at-point)
       (after 'km-python
         (add-hook 'kill-emacs-hook #'km/pydoc-save-names-file))
       (setq save-abbrevs 'silently
