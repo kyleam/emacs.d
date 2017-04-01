@@ -104,6 +104,26 @@ XSELECT is non-nil, copy the region with `x-select-text'."
          (buffer-substring-no-properties (point-min) (point-max)))))
     (pop-to-buffer wrapped-buffer)))
 
+;;;###autoload
+(defun km/strip-comment-lines (beg end)
+  "Export text to a new buffer, removing commented lines.
+Any line starting with `comment-start' is considered a commented
+line.  Text is limited to BEG and END, as defined by the active
+region.  If there is no region, the whole buffer is used."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (let ((comment-char (or comment-start
+                          (user-error "No comment character is defined")))
+        (text (buffer-substring-no-properties beg end)))
+    (with-current-buffer (get-buffer-create
+                          (concat "*" (buffer-name) " - no comments*"))
+      (erase-buffer)
+      (insert text)
+      (goto-char (point-min))
+      (flush-lines (concat "^" (regexp-quote comment-char) ".*$"))
+      (pop-to-buffer (current-buffer)))))
+
 (defun km/delete-comment-lines (orig-buf)
   (let ((comment-char (with-current-buffer orig-buf
                         comment-start)))
