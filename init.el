@@ -297,6 +297,11 @@
 :EMAIL: %(org-contacts-template-email)
 :END:")))
 
+(use-package org-attach
+  :defer t
+  :init
+  (put 'org-attach-directory 'safe-local-variable #'stringp))
+
 (use-package km-org
   :defer t
   :init
