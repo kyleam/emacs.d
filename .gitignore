@@ -1,6 +1,8 @@
 /auto-save-list
 cache
 /bookmarks
+/history
+/history-mail
 /lisp/km-untracked.el
 /.mc-lists.el
 /projectile-bookmarks.eld

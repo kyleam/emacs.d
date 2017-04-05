@@ -2269,6 +2269,10 @@
 
 (setq bookmark-save-flag nil)
 
+(use-package savehist
+  :config
+  (setq savehist-autosave-interval nil))
+
 ;; This is intentionally not loaded.
 (setq custom-file "~/.emacs.d/.custom.el")
 
@@ -2292,6 +2296,7 @@
       (global-set-key (kbd "C-x m .") #'km/notmuch-show-at-point)
       (after 'km-python
         (add-hook 'kill-emacs-hook #'km/pydoc-save-names-file))
+      (savehist-mode 1)
       (setq save-abbrevs 'silently
             bookmark-save-flag 1))
      ((string= server "mail")
@@ -2302,6 +2307,8 @@
       (after 'notmuch-lib
         (define-key notmuch-common-keymap "G" #'km/notmuch-sync-mail)
         (define-key notmuch-common-keymap "g" #'km/notmuch-sync-mail-fast))
+      (setq savehist-file (concat savehist-file "-mail"))
+      (savehist-mode 1)
       (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
       (setq save-abbrevs nil)))))
 
