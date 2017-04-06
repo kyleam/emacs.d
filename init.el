@@ -907,6 +907,8 @@
         magit-log-show-refname-after-summary t
         magit-log-section-arguments nil)
 
+  (setq magit-list-refs-sortby "-creatordate")
+
   (setq magit-log-arguments
         (cons "-n75" (cl-remove-if
                       (lambda (x) (string-prefix-p "-n" x))
