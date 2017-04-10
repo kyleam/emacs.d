@@ -2080,6 +2080,8 @@
   (define-key notmuch-tree-mode-map "O"
     (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
 
+  (define-key notmuch-common-keymap "g" #'notmuch-refresh-this-buffer)
+
   (define-key notmuch-common-keymap "d" #'notmuch-jump-search)
   (define-key notmuch-message-mode-map (kbd "C-c C-s") nil)
   (define-key notmuch-show-mode-map "v" #'org-capture)
@@ -2307,8 +2309,8 @@
                   mode-line-misc-info))
       (key-chord-define-global "jg" 'km/mail-map)
       (after 'notmuch-lib
-        (define-key notmuch-common-keymap "G" #'km/notmuch-sync-mail)
-        (define-key notmuch-common-keymap "g" #'km/notmuch-sync-mail-fast))
+        (define-key notmuch-common-keymap ")" #'km/notmuch-sync-mail)
+        (define-key notmuch-common-keymap "0" #'km/notmuch-sync-mail-fast))
       (setq savehist-file (concat savehist-file "-mail"))
       (savehist-mode 1)
       (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
