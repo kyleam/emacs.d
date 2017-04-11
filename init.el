@@ -1880,7 +1880,13 @@
   ;; `imenu-create-index-function' from being set to
   ;; `semantic-create-imenu-index'.  Trying to set it in
   ;; `emacs-lisp-mode-hook' or `lispy-mode-hook' doesn't work.
-  (defalias 'semantic-create-imenu-index 'imenu-default-create-index-function))
+  (defalias 'semantic-create-imenu-index 'imenu-default-create-index-function)
+
+  (after 'view
+    (add-hook 'view-mode-hook
+              (lambda ()
+                (when (derived-mode-p 'emacs-lisp-mode 'scheme-mode)
+                  (funcall #'lispy-mode (if view-mode -1 1)))))))
 
 (use-package geiser
   :config
