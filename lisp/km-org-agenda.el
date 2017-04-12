@@ -110,5 +110,11 @@ A target is determined by `km/org-refile-dwim-target-file'."
                                org-refile-targets)))
     (call-interactively #'org-agenda-refile)))
 
+(defun km/org-agenda-reschedule-by-days ()
+  (interactive)
+  (org-agenda-schedule
+   nil
+   (concat "+" (read-string "Days from now: ") "d")))
+
 (provide 'km-org-agenda)
 ;;; km-org-agenda.el ends here

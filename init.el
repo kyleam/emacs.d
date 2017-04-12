@@ -279,6 +279,7 @@
              ("C-j" . org-agenda-goto-date)
              ("a" . org-agenda)
              ("d" . org-agenda-view-mode-dispatch)
+             ("i" . km/org-agenda-reschedule-by-days)
              ("k" . nil)
              ("v" . org-agenda-capture)))
 
