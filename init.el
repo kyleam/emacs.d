@@ -2251,6 +2251,7 @@
                                 (elfeed)
                                 (elfeed-update)))
   :config
+  (define-key elfeed-search-mode-map "." #'beginning-of-buffer)
   (define-key elfeed-search-mode-map "e" #'elfeed-search-show-entry)
   (define-key elfeed-show-mode-map "v" #'org-capture)
 
