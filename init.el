@@ -102,7 +102,9 @@
   :init
   (require 'org-loaddefs)
   (add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp/" t)
-  (add-to-list 'Info-directory-list "~/src/emacs/org-mode/doc/")
+  (after 'info
+    (info-initialize)
+    (add-to-list 'Info-directory-list "~/src/emacs/org-mode/doc/"))
   (bind-keys :map km/global-org-map
              ("b" . org-iswitchb)
              ("l" . org-store-link)
