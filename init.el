@@ -303,6 +303,15 @@
   :init
   (put 'org-attach-directory 'safe-local-variable #'stringp))
 
+(use-package org-board
+  :defer t
+  :config
+  (advice-add 'org-board-archive :before
+              (lambda (&rest _)
+                (unless (yes-or-no-p "Archive entry? ")
+                  (user-error "Archiving aborted")))
+              '((name . "org-board-archive-confirm"))))
+
 (use-package km-org
   :defer t
   :init
