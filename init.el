@@ -1675,6 +1675,12 @@
   :init
   (define-key km/external-map "g" #'guix))
 
+(use-package guix-prettify
+  :defer 20
+  :diminish guix-prettify-mode
+  :config
+  (global-guix-prettify-mode 1))
+
 
 ;;; Text modes
 
