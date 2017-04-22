@@ -739,7 +739,8 @@
 
   (defun km/projectile-ignore-directory-p (name)
     (or (file-remote-p name)
-        (string-prefix-p "/tmp/" name)))
+        (string-prefix-p "/tmp/" name)
+        (string-prefix-p "/gnu/store/" name)))
   (setq projectile-ignored-project-function #'km/projectile-ignore-directory-p)
 
   (projectile-register-project-type 'snakemake
