@@ -1668,6 +1668,14 @@
     (add-hook 'ediff-quit-hook #'km/ediff-restore-window-config)))
 
 
+;;; Guix
+
+(use-package guix-command
+  :defer t
+  :init
+  (define-key km/external-map "g" #'guix))
+
+
 ;;; Text modes
 
 (add-hook 'text-mode-hook #'turn-on-auto-fill)
