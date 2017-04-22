@@ -640,6 +640,7 @@
                           "/tmp/scratch"
                           (or string-end
                               (and "." (one-or-more not-newline))))
+                      "\\`/gnu/store/"
                       ".elfeed/index\\'"
                       "/itsalltext/")
                 recentf-exclude))
