@@ -14,7 +14,6 @@ cache
 /.org-id-locations
 /.python-environments
 /ac-comphist.dat
-/.cask
 /.custom.el
 /server
 /semanticdb

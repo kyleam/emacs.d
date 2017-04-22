@@ -20,14 +20,6 @@
 
 ;;; Code:
 
-
-;; (package-initialize)
-
-(require 'cask)
-(cask-initialize)
-(require 'pallet)
-(pallet-mode 1)
-
 (require 'cl-lib)
 (require 'dash)
 (require 's)
