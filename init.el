@@ -1877,6 +1877,7 @@
   :defer t
   :init
   (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
+  (add-hook 'scheme-mode-hook #'lispy-mode)
   :config
   (setq lispy-no-permanent-semantic t)
   (add-hook 'lispy-mode-hook #'km/elisp-set-outline-vars)
