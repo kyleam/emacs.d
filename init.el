@@ -299,6 +299,8 @@
 
 (use-package org-board
   :defer t
+  :init
+  (setq org-board-default-browser 'system)
   :config
   (advice-add 'org-board-archive :before
               (lambda (&rest _)
