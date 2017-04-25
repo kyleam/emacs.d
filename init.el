@@ -301,6 +301,7 @@
   :defer t
   :init
   (setq org-board-default-browser 'system)
+  (define-key km/org-prefix-map "b" #'org-board-open)
   :config
   (advice-add 'org-board-archive :before
               (lambda (&rest _)
