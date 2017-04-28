@@ -671,6 +671,15 @@
   :init
   (define-key ctl-x-4-map "v" #'view-file-other-window)
   :config
+  (add-hook 'view-mode-hook
+            (lambda ()
+              (when (and view-mode (bound-and-true-p lispy-mode))
+                (lispy-mode -1)
+                (add-hook 'view-mode-hook
+                          (lambda ()
+                            (unless view-mode (lispy-mode 1)))
+                          nil 'local))))
+
   (bind-keys :map view-mode-map
              ("l" . recenter-top-bottom)
              ("f" . forward-word)
@@ -1904,13 +1913,7 @@
   ;; `imenu-create-index-function' from being set to
   ;; `semantic-create-imenu-index'.  Trying to set it in
   ;; `emacs-lisp-mode-hook' or `lispy-mode-hook' doesn't work.
-  (defalias 'semantic-create-imenu-index 'imenu-default-create-index-function)
-
-  (after 'view
-    (add-hook 'view-mode-hook
-              (lambda ()
-                (when (derived-mode-p 'emacs-lisp-mode 'scheme-mode)
-                  (funcall #'lispy-mode (if view-mode -1 1)))))))
+  (defalias 'semantic-create-imenu-index 'imenu-default-create-index-function))
 
 (use-package geiser
   :config
