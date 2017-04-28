@@ -936,6 +936,8 @@
         magit-buffer-name-format "*%M%v: %t*")
   (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
 
+  (add-to-list 'magit-blame-disable-modes 'lispy-mode)
+
   (setq magit-branch-arguments
         (delete "--track" magit-branch-arguments))
   (setq magit-branch-popup-show-variables nil)
