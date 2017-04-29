@@ -1335,7 +1335,10 @@
 
 (use-package helm-swoop
   :defer t
-  :init (define-key search-map "k" #'helm-swoop))
+  :init
+  (setq helm-swoop-pre-input-function (lambda () nil))
+
+  (define-key search-map "k" #'helm-swoop))
 
 (use-package helm-apropos
   :bind ("C-h a" . helm-apropos))
