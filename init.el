@@ -1929,6 +1929,16 @@
   :config
   (define-key geiser-mode-map (kbd "C-.") nil))
 
+(use-package scheme
+  :defer
+  :config
+  (add-hook 'scheme-mode-hook
+            (lambda ()
+              (setq imenu-generic-expression
+                    (cons (list nil
+                                "^(define-public\\s-+\\(\\sw+\\)" 1)
+                          imenu-generic-expression)))))
+
 (use-package python
   :defer t
   :init
