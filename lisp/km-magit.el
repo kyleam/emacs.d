@@ -234,6 +234,37 @@ exist."
                  current
                  (if (null versions) 1 (1+ (apply #'max versions)))))))))
 
+(defun km/magit-branch-archive (branches)
+  "Move BRANCHES from refs/heads/ to refs/archive/."
+  (interactive
+   (list (or (magit-region-values 'branch)
+             (list
+              (magit-completing-read
+               "Branch to archive" (magit-list-refnames "refs/heads")
+               nil 'require nil nil
+               (or (magit-branch-at-point) (magit-get-previous-branch)))))))
+  (setq branches
+        (mapcar (lambda (branch)
+                  (cons
+                   (replace-regexp-in-string "refs/heads/" "" branch)
+                   (concat (and (not (string-prefix-p "refs/heads/" branch))
+                                "refs/heads/")
+                           branch)))
+                branches))
+  (pcase-dolist (`(,branch-short . ,branch-full) branches)
+    (if (magit-git-success "update-ref"
+                           (replace-regexp-in-string "refs/heads/"
+                                                     "refs/archive/"
+                                                     branch-full)
+                           branch-full)
+        (magit-run-git "branch" "-D" branch-short)
+      (error "update-ref call failed")))
+  (message (concat "Archived "
+                   (let ((num-branches (length branches)))
+                     (if (= num-branches 1)
+                         (caar branches)
+                       (format "%d branches" num-branches))))))
+
 (defun km/magit-mode-bury-all-windows (&optional kill-buffer)
   "Run `magit-mode-quit-window' until no longer in Magit buffer."
   (interactive "P")
