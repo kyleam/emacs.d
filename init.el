@@ -112,6 +112,9 @@
         org-clock-into-drawer t
         org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w@)"
                                       "|" "DONE(d)" "NA(n@)")))
+
+  (put 'org-log-done 'safe-local-variable #'booleanp)
+
   (setq org-catch-invisible-edits 'error
         org-special-ctrl-k t
         org-insert-heading-respect-content t
