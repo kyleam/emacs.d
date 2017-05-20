@@ -974,6 +974,7 @@
 
   (define-key magit-mode-map "." 'km/magit-map)
   (bind-keys :map km/magit-map
+             ("." . beginning-of-buffer)
              ("l" . magit-toggle-buffer-lock))
 
   (magit-define-popup-action 'magit-diff-popup
