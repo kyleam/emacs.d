@@ -306,6 +306,9 @@
   (setq org-board-default-browser 'system)
   (define-key km/org-prefix-map "b" #'org-board-open)
   :config
+  (setq org-board-wget-switches
+        (delete "-e robots=off" org-board-wget-switches))
+
   (advice-add 'org-board-archive :before
               (lambda (&rest _)
                 (unless (yes-or-no-p "Archive entry? ")
