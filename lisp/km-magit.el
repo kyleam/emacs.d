@@ -46,15 +46,19 @@ a proper commit."
   (interactive)
   (magit-run-git "commit" "--all" "--message=auto"))
 
-(defun km/magit-update-or-auto-commit ()
-  (interactive)
+(defun km/magit-update-or-auto-commit (&optional no-directory)
+  (interactive "P")
   (let ((files (delete-dups (nconc (magit-modified-files)
                                    (magit-staged-files)))))
     (cl-case (length files)
       (0 (user-error "No tracked files with changes"))
       (1
        (magit-run-git "commit" "--all" "--message"
-                      (concat (car files) ": Update")))
+                      (concat (funcall (if no-directory
+                                           #'file-name-nondirectory
+                                         #'identity)
+                                       (car files))
+                              ": Update")))
       (t
        (km/magit-auto-commit)))))
 
