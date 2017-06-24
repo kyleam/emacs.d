@@ -1875,6 +1875,16 @@
     (setq outline-level #'km/elisp-outline-level))
   (add-hook 'emacs-lisp-mode-hook #'km/elisp-set-outline-vars)
 
+  (defun km/elisp-use-xref-etags-inside-git ()
+    (when (and (executable-find "git")
+               (equal (with-temp-buffer
+                        (call-process "git" nil t nil
+                                      "rev-parse" "--is-inside-work-tree")
+                        (buffer-string))
+                      "true\n"))
+      (xref-etags-mode 1)))
+  (add-hook 'emacs-lisp-mode-hook #'km/elisp-use-xref-etags-inside-git)
+
   ;; Modified from usepackage's issue #80.
   (defun km/imenu-add-use-package ()
     (when (string= (buffer-file-name (buffer-base-buffer))
