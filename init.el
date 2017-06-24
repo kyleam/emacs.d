@@ -501,7 +501,6 @@
     (unless (or whitespace-mode global-whitespace-mode)
       (whitespace-cleanup)
       (delete-trailing-whitespace)))
-
   (add-hook 'before-save-hook #'km/cleanup-buffer))
 
 (use-package km-editing
@@ -1874,7 +1873,6 @@
   (defun km/elisp-set-outline-vars ()
     (setq outline-regexp ";;;;* ")
     (setq outline-level #'km/elisp-outline-level))
-
   (add-hook 'emacs-lisp-mode-hook #'km/elisp-set-outline-vars)
 
   ;; Modified from usepackage's issue #80.
