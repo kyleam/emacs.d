@@ -1901,6 +1901,9 @@
   (add-hook 'scheme-mode-hook #'lispy-mode)
   :config
   (setq lispy-no-permanent-semantic t)
+
+  (define-key lispy-mode-map (kbd "M-.") #'xref-find-definitions)
+
   (add-hook 'lispy-mode-hook #'km/elisp-set-outline-vars)
   ;; This is ugly, but I haven't found another way to stop
   ;; `imenu-create-index-function' from being set to
