@@ -1183,6 +1183,11 @@
   :config
   (setq magit-annex-unused-open-function #'org-open-file))
 
+(use-package magit-tbdiff
+  :load-path "~/src/emacs/magit-tbdiff/"
+  :defer t
+  :init (require 'magit-tbdiff-autoloads nil t))
+
 (use-package git-commit
   ;; :load-path "~/src/emacs/magit/lisp/"
   :defer t
