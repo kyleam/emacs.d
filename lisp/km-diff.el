@@ -99,9 +99,7 @@ When this mode is turned on
 
   * \":\" is set as the comment character
 
-  * typing \\<km/diff-review-mode-map>\\[km/diff-review-copy-comment] \
-will copy and the current comment,
-     minus the comment character"
+\\{km/diff-review-mode-map}"
   nil
   " DiffRev"
   km/diff-review-mode-map
