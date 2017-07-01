@@ -83,6 +83,7 @@
     (define-key map (kbd "C-w") #'km/diff-review-copy-comment)
     (define-key map (kbd "C-c C-n") #'km/diff-review-next-comment)
     (define-key map (kbd "C-c C-p") #'km/diff-review-previous-comment)
+    (define-key map (kbd "M-o") #'km/diff-review-open-line)
     map)
   "Keymap for Diff Review mode.")
 
@@ -201,6 +202,19 @@ If N is negative, move backward instead."
 If N is negative, move to forward instead."
   (interactive "p")
   (km/diff-review-next-comment (- n)))
+
+(defun km/diff-review-open-line ()
+  "Insert a comment line above point.
+If point is currently on a comment block, insert a single line.
+Otherwise, insert a block of three comment lines and position
+point at the middle line."
+  (interactive)
+  (goto-char (point-at-bol))
+  (if (eq ?: (char-after))
+      (progn (insert ": \n")
+             (backward-char))
+    (insert ": \n: \n: \n")
+    (backward-char 4)))
 
 (provide 'km-diff)
 ;;; km-diff.el ends here
