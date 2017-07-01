@@ -1,4 +1,4 @@
-;;; km-diff.el --- Diff-related extensions
+;;; km-diff.el --- Diff-related extensions  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
 
@@ -81,6 +81,8 @@
 (defvar km/diff-review-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-w") #'km/diff-review-copy-comment)
+    (define-key map (kbd "C-c C-n") #'km/diff-review-next-comment)
+    (define-key map (kbd "C-c C-p") #'km/diff-review-previous-comment)
     map)
   "Keymap for Diff Review mode.")
 
@@ -172,6 +174,33 @@ fall back to `kill-region'."
       (message-mode)
       (set-buffer-modified-p nil)
       (pop-to-buffer (current-buffer)))))
+
+(defun km/diff-review-next-comment (&optional n)
+  "Move to the Nth next comment.
+If N is negative, move backward instead."
+  (interactive "p")
+  (when (/= n 0)
+    (pcase-let ((`(,search-fn ,bound-fn ,incr-func)
+                 (if (< n 0)
+                     (list #'re-search-backward #'car #'1+)
+                   (list #'re-search-forward #'cdr #'1-))))
+      (letrec ((move
+                (lambda (n)
+                  (let ((bounds (km/diff-review--comment-bounds)))
+                    (when bounds
+                      (goto-char (funcall bound-fn bounds)))
+                    (funcall search-fn "^:" nil t)
+                    (if (= n 0)
+                        (goto-char (car bounds))
+                      (funcall move
+                               (funcall incr-func n)))))))
+        (funcall move n)))))
+
+(defun km/diff-review-previous-comment (&optional n)
+  "Move to the Nth previous comment.
+If N is negative, move to forward instead."
+  (interactive "p")
+  (km/diff-review-next-comment (- n)))
 
 (provide 'km-diff)
 ;;; km-diff.el ends here
