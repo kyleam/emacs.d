@@ -119,33 +119,38 @@ When this mode is turned on
   (when font-lock-mode
     (font-lock-flush)))
 
+(defun km/diff-review--comment-bounds ()
+  (and (eq ?: (char-after (point-at-bol)))
+       (cons
+        (save-excursion (goto-char (point-at-bol))
+                        (if (bobp)
+                            (point)
+                          (while (and (eq ?: (char-after))
+                                      (not (bobp)))
+                            (forward-line -1))
+                          (forward-line)
+                          (point)))
+        (save-excursion (goto-char (point-at-bol))
+                        (while (and (eq ?: (char-after))
+                                    (not (eobp)))
+                          (forward-line 1))
+                        (forward-line -1)
+                        (point-at-eol)))))
+
 (defun km/diff-review-copy-comment ()
   "Copy the comment at point, stripping the leading ': '.
 When there is no comment at point or when the region is active,
 fall back to `kill-region'."
   (interactive)
-  (if (or (use-region-p)
-          (not (eq ?: (char-after (point-at-bol)))))
-      (call-interactively #'kill-region)
-    (let ((beg (save-excursion (goto-char (point-at-bol))
-                               (if (bobp)
-                                   (point)
-                                 (while (and (eq ?: (char-after))
-                                             (not (bobp)))
-                                   (forward-line -1))
-                                 (forward-line)
-                                 (point))))
-          (end (save-excursion (goto-char (point-at-bol))
-                               (while (and (eq ?: (char-after))
-                                           (not (eobp)))
-                                 (forward-line 1))
-                               (forward-line -1)
-                               (point-at-eol))))
+  (let (bounds)
+    (if (or (use-region-p)
+            (not (setq bounds (km/diff-review--comment-bounds))))
+        (call-interactively #'kill-region)
       (message
        "%s"
        (kill-new
         (thread-last
-            (buffer-substring-no-properties beg end)
+            (buffer-substring-no-properties (car bounds) (cdr bounds))
           (replace-regexp-in-string "^: ?" "")
           (replace-regexp-in-string "\\`\\s-+" "")
           (replace-regexp-in-string "\\s-+\\'" "")))))))
