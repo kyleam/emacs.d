@@ -160,7 +160,7 @@ will copy and the current comment,
         (insert "> ")
         (forward-line 1))
       (goto-char (point-min))
-      (while (re-search-forward "> : ?" nil t)
+      (while (re-search-forward "^> : ?" nil t)
         (replace-match ""))
       (message-mode)
       (set-buffer-modified-p nil)
