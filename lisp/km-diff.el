@@ -122,6 +122,9 @@ will copy and the current comment,
     (font-lock-flush)))
 
 (defun km/diff-review-copy-comment ()
+  "Copy the comment at point, stripping the leading ': '.
+When there is no comment at point or when the region is active,
+fall back to `kill-region'."
   (interactive)
   (if (or (use-region-p)
           (not (eq ?: (char-after (point-at-bol)))))
@@ -150,6 +153,7 @@ will copy and the current comment,
           (replace-regexp-in-string "\\s-+\\'" "")))))))
 
 (defun km/diff-review-as-mail ()
+  "Export the current diff review buffer as a mail reply."
   (interactive)
   (let ((contents (buffer-substring-no-properties (point-min) (point-max))))
     (with-current-buffer (get-buffer-create "*Diff Review Mail*")
