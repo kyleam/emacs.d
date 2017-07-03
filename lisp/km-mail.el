@@ -58,6 +58,13 @@
   (call-interactively #'notmuch-search-archive-thread))
 
 ;;;###autoload
+(defun km/notmuch-tree-from-show-current-query (&optional ignore-context)
+  (interactive "P")
+  (let ((notmuch-show-query-context (and (not ignore-context)
+                                         notmuch-show-query-context)))
+    (call-interactively #'notmuch-tree-from-show-current-query)))
+
+;;;###autoload
 (defun km/notmuch-show-at-point ()
   "Call `notmuch-show' with message or thread ID at point."
   (interactive)

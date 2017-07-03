@@ -2171,6 +2171,9 @@
     #'km/notmuch-show-pipe-part-to-project)
   (define-key notmuch-show-mode-map [remap notmuch-show-pipe-message]
     #'km/notmuch-show-pipe-message-to-project)
+  (define-key notmuch-show-mode-map
+    [remap notmuch-tree-from-show-current-query]
+    #'km/notmuch-tree-from-show-current-query)
   (define-key notmuch-tree-mode-map [remap notmuch-show-pipe-message]
     #'km/notmuch-show-pipe-message-to-project))
 
