@@ -2146,6 +2146,16 @@
   (define-key notmuch-search-mode-map "r" #'notmuch-search-archive-thread)
   (define-key notmuch-tree-mode-map "r" #'notmuch-tree-archive-message-then-next)
 
+  (define-key notmuch-hello-mode-map "z" nil)
+  (define-key notmuch-hello-mode-map "Z" #'notmuch-tree)
+  (define-key notmuch-search-mode-map "z"
+    #'notmuch-tree-from-search-current-query)
+  (define-key notmuch-search-mode-map "Z" #'notmuch-tree)
+  (define-key notmuch-show-mode-map "z"
+    #'notmuch-tree-from-show-current-query)
+  (define-key notmuch-show-mode-map "Z" #'notmuch-tree)
+  (define-key notmuch-tree-mode-map "Z" #'notmuch-tree-to-tree)
+
   (define-key notmuch-show-mode-map "e" #'notmuch-show-open-or-close-all)
   (define-key notmuch-tree-mode-map "e" #'notmuch-tree-show-message)
   (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
