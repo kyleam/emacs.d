@@ -1050,6 +1050,7 @@
 
 (use-package magit-wip
   :defer t
+  :after magit
   :diminish magit-wip-after-save-local-mode
   :init
   (bind-keys :map km/magit-wip-map
@@ -1060,6 +1061,8 @@
              ("s" . magit-wip-after-save-local-mode)
              ("S" . magit-wip-after-save-mode))
   :config
+  (magit-wip-after-save-mode 1)
+
   (magit-define-popup-action 'magit-log-popup
     ?w "Log current WIP" 'magit-wip-log-current)
   (magit-define-popup-action 'magit-log-popup
