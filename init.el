@@ -1051,7 +1051,7 @@
 (use-package magit-wip
   :defer t
   :diminish magit-wip-after-save-local-mode
-  :config
+  :init
   (bind-keys :map km/magit-wip-map
              ("c" . magit-wip-commit)
              ("f" . magit-wip-commit-buffer-file)
@@ -1059,7 +1059,7 @@
              ("o" . magit-wip-log)
              ("s" . magit-wip-after-save-local-mode)
              ("S" . magit-wip-after-save-mode))
-
+  :config
   (magit-define-popup-action 'magit-log-popup
     ?w "Log current WIP" 'magit-wip-log-current)
   (magit-define-popup-action 'magit-log-popup
