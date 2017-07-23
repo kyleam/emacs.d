@@ -2364,7 +2364,6 @@
   :config
   (after 'magit-commit
     (remove-hook 'server-switch-hook 'magit-commit-diff))
-  (setq server-use-tcp t)
   (unless (server-running-p)
     (server-start))
   (let ((server (daemonp)))
