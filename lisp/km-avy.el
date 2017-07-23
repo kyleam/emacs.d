@@ -86,5 +86,22 @@
       (notmuch-tree-mode
        (call-interactively #'notmuch-tree-show-message)))))
 
+;;;###autoload
+(defun km/avy-action-copy-line (pt)
+  "Copy line containing PT."
+  ;; Modified from `avy-action-copy'.
+  (save-excursion
+    (let (str)
+      (goto-char pt)
+      (setq str (buffer-substring (line-beginning-position)
+                                  (line-end-position)))
+      (kill-new str)
+      (message "Copied: %s" str)))
+  (let ((dat (ring-ref avy-ring 0)))
+    (select-frame-set-input-focus
+     (window-frame (cdr dat)))
+    (select-window (cdr dat))
+    (goto-char (car dat))))
+
 (provide 'km-avy)
 ;;; km-avy.el ends here
