@@ -1409,6 +1409,10 @@
   (global-set-key (kbd "C-c i") nil)
   (setq yas-fallback-behavior nil)
 
+  (add-to-list 'yas-snippet-dirs
+               "~/.guix-profile/share/emacs/yasnippet-snippets/"
+               'append)
+
   (defun km/yas-with-comment (str)
     (concat comment-start
             (unless (s-ends-with? " " comment-start) " ")
