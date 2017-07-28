@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
 # key: kt
-# Copied over from text-mode/TODO.
 # --
 `(km/yas-with-comment "kTODO: ")`
