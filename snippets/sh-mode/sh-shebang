@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: sh shebang
 # key: sb
 # --
 #!/usr/bin/env sh

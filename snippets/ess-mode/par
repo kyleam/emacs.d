@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: par
 # key: par
 # --
 par(mfrow=c(2, 3))

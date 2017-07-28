@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: docopt args
 # key: da
 # --
 args = docopt(__doc__)

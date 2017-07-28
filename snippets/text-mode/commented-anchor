@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: commented anchor
 # key: ar
 # --
 `(km/yas-with-comment "anchor:")`

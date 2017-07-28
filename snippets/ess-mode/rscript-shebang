@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: Rscript shebang
 # key: sb
 # --
 #!/usr/bin/env Rscript

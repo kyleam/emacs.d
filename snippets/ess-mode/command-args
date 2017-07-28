@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: command args
 # key: cargs
 # --
 args <- commandArgs(trailingOnly = TRUE)

@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: figax
 # key: fax
 # --
 fig, ax = plt.subplots()

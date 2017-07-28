@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: test method
 # key: tm
 # group: testing
 # Copied from builtin deftest and given new key.

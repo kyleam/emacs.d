@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: try argv
 # key: targv
 # --
 try:

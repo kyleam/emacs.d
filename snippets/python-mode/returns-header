@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: Returns header
 # key: rh
 # condition: 'force-in-comment
 # --

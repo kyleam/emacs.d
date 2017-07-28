@@ -1,5 +1,4 @@
 # -*- mode: snippet -*-
-# name: priority-todo
 # key: cat
 # --
 `(km/yas-with-comment "[#A] TODO: ")`
