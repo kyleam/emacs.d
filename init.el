@@ -598,7 +598,8 @@
     (define-key notmuch-common-keymap "j" #'km/notmuch-avy-goto-subword-1))
   (define-key occur-mode-map "j" #'km/occur-avy-goto-subword-1)
   :config
-  (add-to-list 'avy-dispatch-alist (cons ?w #'km/avy-action-copy-line)))
+  (after 'avy
+    (add-to-list 'avy-dispatch-alist (cons ?w #'km/avy-action-copy-line))))
 
 
 ;;; Buffers and files
