@@ -1194,6 +1194,11 @@
   :defer t
   :init (require 'magit-tbdiff-autoloads nil t))
 
+(use-package magit-imerge
+  :load-path "~/src/emacs/magit-imerge/"
+  :defer t
+  :init (require 'magit-imerge-autoloads nil t))
+
 (use-package git-commit
   ;; :load-path "~/src/emacs/magit/lisp/"
   :defer t
