@@ -188,13 +188,16 @@ If N is negative, move backward instead."
       (letrec ((move
                 (lambda (n)
                   (let ((bounds (km/diff-review--comment-bounds)))
-                    (when bounds
-                      (goto-char (funcall bound-fn bounds)))
-                    (funcall search-fn "^:" nil t)
-                    (if (= n 0)
-                        (goto-char (car bounds))
-                      (funcall move
-                               (funcall incr-func n)))))))
+                    (cond ((and (= n 0) bounds)
+                           (goto-char (car bounds)))
+                          ((/= n 0)
+                           (when bounds
+                             (goto-char (funcall bound-fn bounds)))
+                           (and (funcall search-fn "^:" nil t)
+                                (funcall move
+                                         (funcall incr-func n))))
+                          (t
+                           (error "Error in movement logic")))))))
         (funcall move n)))))
 
 (defun km/diff-review-previous-comment (&optional n)
