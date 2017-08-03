@@ -2391,8 +2391,7 @@
                   mode-line-misc-info))
       (key-chord-define-global "jg" 'km/mail-map)
       (after 'notmuch-lib
-        (define-key notmuch-common-keymap ")" #'km/notmuch-sync-mail)
-        (define-key notmuch-common-keymap "0" #'km/notmuch-sync-mail-fast))
+        (define-key notmuch-common-keymap "0" #'km/notmuch-sync-mail))
       (setq savehist-file (concat savehist-file "-mail"))
       (savehist-mode 1)
       (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")

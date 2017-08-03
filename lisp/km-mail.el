@@ -107,8 +107,9 @@
 
 ;;;###autoload
 (defun km/notmuch-sync-mail (&optional cmd-append)
-  (interactive (list (and current-prefix-arg
-                          (read-string "sync-mail args: "))))
+  (interactive (list (if (fboundp 'km/read-sync-mail-args)
+                         (km/read-sync-mail-args)
+                       (read-string "sync-mail args: "))))
   (setq mail-sync-calling-buffer (current-buffer))
   (let ((default-directory (expand-file-name "~/"))
         (display-buffer-overriding-action
@@ -117,11 +118,5 @@
                                (and cmd-append " ")
                                cmd-append)
                        'mail-sync-mode)))
-
-;;;###autoload
-(defun km/notmuch-sync-mail-fast ()
-  (interactive)
-  (km/notmuch-sync-mail "--fast"))
-
 (provide 'km-mail)
 ;;; km-mail.el ends here
