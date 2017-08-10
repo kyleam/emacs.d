@@ -516,7 +516,7 @@
 
   (global-set-key [remap count-words-region]
                   #'km/count-words-region)
-  :config
+
   (bind-keys :map km/kill-map
              ("." . km/kill-sentence-at-point)
              ("j" . km/join-next-line-with-space)
