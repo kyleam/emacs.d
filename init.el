@@ -1506,6 +1506,8 @@
 
   (after 'dired
     (bind-keys :map dired-mode-map
+               ;; This overrides `dired-clean-directory'.
+               ("." . km/dired-beginning-of-buffer)
                ;; This overrides `dired-find-file', which is also
                ;; bound to "f".
                ("e" . km/org-open-dired-marked-files)

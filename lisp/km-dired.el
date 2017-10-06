@@ -93,6 +93,12 @@
                              "%Y%m%d%H%M.%S"
                              (nth 5 (file-attributes it)))))))
 
+;;;###autoload
+(defun km/dired-beginning-of-buffer ()
+  (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 1))
+
 
 ;;; Copying file names
 
