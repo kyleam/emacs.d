@@ -460,6 +460,13 @@
 (global-set-key (kbd "M-{") nil)
 (global-set-key (kbd "M-[") #'backward-paragraph)
 
+;; Swap bindings for scroll-{left,right} and
+;; {beginning,end}-of-buffer.
+(global-set-key (kbd "M-<") #'scroll-left)
+(global-set-key (kbd "C-x <") #'beginning-of-buffer)
+(global-set-key (kbd "M->") #'scroll-right)
+(global-set-key (kbd "C-x >") #'end-of-buffer)
+
 (global-set-key (kbd "C-z") #'zap-to-char)
 (use-package misc
   :bind ("M-z" . zap-up-to-char))
