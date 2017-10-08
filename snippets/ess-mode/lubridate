@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: ld
+# group: imports
+# --
+library(lubridate)
+$0

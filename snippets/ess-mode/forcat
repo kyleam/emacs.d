@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: fc
+# group: imports
+# --
+library(forcat)
+$0

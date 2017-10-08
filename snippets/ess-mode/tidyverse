@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# key: tv
+# group: imports
+# --
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+$0
