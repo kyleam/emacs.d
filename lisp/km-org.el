@@ -521,7 +521,7 @@ global value. A numeric prefix sets MAXLEVEL (defaults to 2)."
 After slurping, return the slurped text and move point to the
 beginning of the link."
   (interactive)
-  (cl-multiple-value-bind (beg end link desc) (org-link-edit--get-link-data)
+  (cl-multiple-value-bind (beg end link desc) (org-link-edit--link-data)
     (when (progn (goto-char end) (looking-at "[^ \t\n]+"))
       (let ((slurped (match-string-no-properties 0)))
         (setq link (concat link slurped)
