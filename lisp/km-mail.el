@@ -79,6 +79,59 @@
         (notmuch-show id)
       (call-interactively #'notmuch-show))))
 
+(defun km/notmuch-github-pr-number ()
+  "Return the PR number for this message."
+  (let (pr)
+    (with-current-notmuch-show-message
+      (goto-char (point-min))
+      (if (re-search-forward "https://github\\.com/.*/pull/\\([0-9]+\\)" nil t)
+          (setq pr (match-string-no-properties 1))
+        (user-error "Could not find PR number")))
+    pr))
+
+(defvar km/notmuch-github-repo-function nil
+  "Function that returns repo information from this message.
+
+If the function can determine the repository, it should return a
+list, structured as (DIRECTORY REMOTE BASE).
+
+  DIRECTORY  absolute path to the top-level of the local repo
+  REMOTE     name of the remote to fetch from
+  BASE       used to limit the log (i.e., \"BASE..PR-REF\").")
+
+;;;###autoload
+(defun km/notmuch-show-pr-in-magit (&optional force-fetch)
+  "Show the Magit log for this message's PR.
+
+With a prefix argument, fetch from the remote even if the ref
+already exists locally.  The repository information is extracted
+with `km/notmuch-github-repo-function'.
+
+This function assumes that the remote is a GitHub repo and that
+you've configured \"git fetch <remote>\" to fetch pull request
+refs.  This can be done by placing a line like
+
+        fetch = +refs/pull/*/head:refs/pull/<remote>/*
+
+in the remote's \".git/config\" entry."
+  (interactive "P")
+  (require 'magit)
+  (unless (functionp km/notmuch-github-repo-function)
+    (user-error "`km/notmuch-github-repo-function' is not specified"))
+  (let* ((info (or (funcall km/notmuch-github-repo-function)
+                   (user-error "Could not determine repository")))
+         (remote (or (nth 1 info) "origin"))
+         (base-ref (or (nth 2 info)
+                       (concat remote "/master")))
+         (local-ref (format "refs/pull/%s/%s"
+                            remote
+                            (km/notmuch-github-pr-number)))
+         (default-directory (nth 0 info)))
+    (when (or force-fetch
+              (not (magit-ref-exists-p local-ref)))
+      (magit-call-git "fetch" remote))
+    (magit-log (list (concat base-ref ".." local-ref)))))
+
 
 ;;; Mail sync
 
