@@ -2063,6 +2063,9 @@
 (use-package ess-site
   :mode ("\\.[rR]\\'" . R-mode)
   :config
+  (define-key ess-mode-map (kbd "C-c m") 'km/r-prefix-map)
+  (define-key km/r-prefix-map "," #'ess-eval-region-or-function-or-paragraph)
+
   (setq ess-smart-S-assign-key ";")
   (ess-toggle-S-assign nil)
   (ess-toggle-S-assign nil)
