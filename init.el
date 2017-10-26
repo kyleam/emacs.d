@@ -1135,7 +1135,7 @@
 
   (setq magit-status-sections-hook
         (append
-         (let ((funcs (list #'magit-insert-unpushed-to-upstream
+         (let ((funcs (list #'magit-insert-unpushed-to-upstream-or-recent
                             #'magit-insert-unpushed-to-pushremote
                             #'magit-insert-unpulled-from-pushremote
                             #'magit-insert-unpulled-from-upstream)))
