@@ -934,7 +934,6 @@
   :config
   (setq magit-delete-by-moving-to-trash nil
         magit-update-other-window-delay 0.1
-        magit-revision-show-gravatars nil
         magit-revision-insert-related-refs nil
         magit-use-sticky-arguments 'current
         magit-log-show-refname-after-summary t
