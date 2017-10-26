@@ -946,8 +946,8 @@
                       (lambda (x) (string-prefix-p "-n" x))
                       magit-log-arguments)))
 
-  (setq magit-uniquify-buffer-names nil
-        magit-buffer-name-format "*%M%v: %t*")
+  (setq magit-uniquify-buffer-names nil)
+
   (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
 
   (add-to-list 'magit-blame-disable-modes 'lispy-mode)
