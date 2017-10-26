@@ -932,8 +932,7 @@
   (setq magit-push-current-set-remote-if-missing nil)
   (setq magit-log-margin '(nil age magit-log-margin-width t 18))
   :config
-  (setq magit-push-always-verify nil
-        magit-delete-by-moving-to-trash nil
+  (setq magit-delete-by-moving-to-trash nil
         magit-update-other-window-delay 0.1
         magit-revision-show-gravatars nil
         magit-revision-insert-related-refs nil
