@@ -132,6 +132,20 @@ in the remote's \".git/config\" entry."
       (magit-call-git "fetch" remote))
     (magit-log (list (concat base-ref ".." local-ref)))))
 
+;;;###autoload
+(defun km/notmuch-search ()
+  "Call `notmuch-search', bypassing `notmuch-read-query'."
+  (interactive)
+  (notmuch-search
+   (read-string "Notmuch search: "
+                "date:20d.. "
+                'notmuch-search-history
+                (pcase major-mode
+                  (`notmuch-search-mode (notmuch-search-get-query))
+                  (`notmuch-show-mode (notmuch-show-get-query))
+                  (`notmuch-tree-mode (notmuch-tree-get-query))))
+   (default-value 'notmuch-search-oldest-first)))
+
 (defmacro km/notmuch-with-raw-message (msg-id &rest body)
   "Evaluate BODY with temporary buffer containing text for MSG-ID.
 MSG-ID is evaluated before entering the temporary buffer.  See

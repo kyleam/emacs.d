@@ -2192,6 +2192,8 @@
   :init
   (define-key km/mail-map "." #'km/notmuch-show-at-point)
   :config
+  (define-key notmuch-common-keymap [remap notmuch-search]
+    #'km/notmuch-search)
   (define-key notmuch-search-mode-map "R" #'km/notmuch-archive-all)
   (define-key notmuch-show-part-map "|"
     #'km/notmuch-show-pipe-part-to-project)
