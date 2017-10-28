@@ -1712,6 +1712,12 @@
   :config
   (global-guix-prettify-mode 1))
 
+(use-package debbugs-gnu
+  :defer t
+  :config
+  (advice-add 'debbugs-gnu-select-report :override
+              #'km/debbugs-notmuch-select-report))
+
 
 ;;; Text modes
 

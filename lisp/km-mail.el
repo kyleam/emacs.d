@@ -146,6 +146,23 @@ in the remote's \".git/config\" entry."
                   (`notmuch-tree-mode (notmuch-tree-get-query))))
    (default-value 'notmuch-search-oldest-first)))
 
+;; Taken from Nicolas Petton's emacs configuration
+;; (https://gitlab.petton.fr/nico/emacs.d/, 208407f53a)
+;;;###autoload
+(defun km/debbugs-notmuch-select-report (&rest _)
+  (let* ((status (debbugs-gnu-current-status))
+         (id (cdr (assq 'id status)))
+         (merged (cdr (assq 'mergedwith status))))
+    (setq merged (if (listp merged) merged (list merged)))
+    (unless id
+      (user-error "No bug report on the current line"))
+    (let ((address (format "%s@debbugs.gnu.org" id))
+          (merged-addresses (string-join (mapcar (lambda (id)
+                                                   (format "%s@debbugs.gnu.org" id))
+                                                 merged)
+                                         " ")))
+      (notmuch-search (format "%s %s" address merged-addresses)))))
+
 (defmacro km/notmuch-with-raw-message (msg-id &rest body)
   "Evaluate BODY with temporary buffer containing text for MSG-ID.
 MSG-ID is evaluated before entering the temporary buffer.  See
