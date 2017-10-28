@@ -83,6 +83,7 @@
 (define-prefix-command 'km/org-prefix-map)
 (define-prefix-command 'km/projectile-ctl-x-4-map)
 (define-prefix-command 'km/python-prefix-map)
+(define-prefix-command 'km/r-prefix-map)
 (define-prefix-command 'km/gnus-article-prefix-map)
 
 
