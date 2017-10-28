@@ -132,6 +132,52 @@ in the remote's \".git/config\" entry."
       (magit-call-git "fetch" remote))
     (magit-log (list (concat base-ref ".." local-ref)))))
 
+(defmacro km/notmuch-with-raw-message (msg-id &rest body)
+  "Evaluate BODY with temporary buffer containing text for MSG-ID.
+MSG-ID is evaluated before entering the temporary buffer.  See
+also `with-current-notmuch-show-message'."
+  (declare (indent 1) (debug t))
+  (let ((id (make-symbol "id")))
+    `(let ((,id ,msg-id))
+       (with-temp-buffer
+         (let ((coding-system-for-read 'no-conversion))
+           (call-process notmuch-command nil t nil "show" "--format=raw" ,id)
+           (goto-char (point-min))
+           ,@body)))))
+
+(defun km/notmuch-show-debbugs-ack-info ()
+  (km/notmuch-with-raw-message (notmuch-show-get-message-id)
+    (when (save-excursion (re-search-forward "^X-Gnu-PR-Message: ack" nil t))
+      (list
+       (and (re-search-forward "^References: <\\([^>\n]+\\)>" nil t)
+            (match-string 1))
+       (and (re-search-forward "^Reply-To: \\([0-9]+@debbugs\\.gnu\\.org\\)"
+                               nil t)
+            (match-string 1))))))
+
+;;;###autoload
+(defun km/notmuch-show-stash-git-send-email-debbugs ()
+  "Debbugs-aware variant of `notmuch-show-stash-git-send-email'.
+If the current message is an acknowledgement from the GNU bug
+Tracking System, set '--in-reply-to' to the initial report and
+'--to' to the newly assigned address.  Otherwise, call
+`notmuch-show-stash-git-send-email'."
+  (interactive)
+  (pcase-let ((`(,root-id ,bug-address) (km/notmuch-show-debbugs-ack-info)))
+    (if (not (and root-id bug-address))
+        (call-interactively #'notmuch-show-stash-git-send-email)
+      (notmuch-common-do-stash
+       (string-join
+        (list (notmuch-show-stash-git-helper (list bug-address) "--to=")
+              (notmuch-show-stash-git-helper
+               (message-tokenize-header
+                (km/notmuch-with-raw-message (concat "id:" root-id)
+                  (and (re-search-forward "^Cc: \\(.+\\)" nil t)
+                       (match-string 1))))
+               "--cc=")
+              (notmuch-show-stash-git-helper (list root-id) "--in-reply-to="))
+        " ")))))
+
 
 ;;; Mail sync
 
