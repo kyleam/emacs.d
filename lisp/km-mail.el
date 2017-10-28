@@ -146,7 +146,7 @@ in the remote's \".git/config\" entry."
                   (`notmuch-tree-mode (notmuch-tree-get-query))))
    (default-value 'notmuch-search-oldest-first)))
 
-;; Taken from Nicolas Petton's emacs configuration
+;; Modified from fucntion in Nicolas Petton's emacs configuration
 ;; (https://gitlab.petton.fr/nico/emacs.d/, 208407f53a)
 ;;;###autoload
 (defun km/debbugs-notmuch-select-report (&rest _)
@@ -161,7 +161,7 @@ in the remote's \".git/config\" entry."
                                                    (format "%s@debbugs.gnu.org" id))
                                                  merged)
                                          " ")))
-      (notmuch-search (format "%s %s" address merged-addresses)))))
+      (notmuch-tree (format "%s %s" address merged-addresses)))))
 
 (defmacro km/notmuch-with-raw-message (msg-id &rest body)
   "Evaluate BODY with temporary buffer containing text for MSG-ID.
