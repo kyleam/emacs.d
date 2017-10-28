@@ -30,13 +30,14 @@
   (interactive)
   (unless (buffer-live-p compilation-last-buffer)
     (user-error "No previous compile command found"))
-  (with-current-buffer compilation-last-buffer
-    (let ((command (car compilation-arguments)))
-      (if (string-prefix-p snakemake-program command)
-          (setf (car compilation-arguments)
-                (replace-regexp-in-string " --dryrun" "" command))
-        (user-error "Last compile was not with %s" snakemake-program)))
-    (recompile)))
+  (let ((program snakemake-program))
+    (with-current-buffer compilation-last-buffer
+      (let ((command (car compilation-arguments)))
+        (if (string-prefix-p program command)
+            (setf (car compilation-arguments)
+                  (replace-regexp-in-string " --dryrun" "" command))
+          (user-error "Last compile was not with %s" program)))
+      (recompile))))
 
 (provide 'km-snakemake)
 ;;; km-snakemake.el ends here
