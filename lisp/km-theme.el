@@ -28,7 +28,7 @@
  '(match ((t (:inherit default :background "PaleGreen1"))))
  '(compilation-info ((t (:inherit font-lock-function-name-face))))
  '(diff-added ((t (:foreground "DarkGreen" :background "grey98"))))
- '(diff-context ((t (:foreground "grey50" :background "grey98"))))
+ '(diff-context ((t (:foreground "grey10" :background "grey98"))))
  '(diff-removed ((t (:foreground "#aa2222" :background "grey98"))))
  '(dired-symlink ((t (:inherit font-lock-constant-face))))
  ;; Darken a bit (was gray40).
