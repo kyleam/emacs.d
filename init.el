@@ -2128,8 +2128,7 @@
   (autoload 'notmuch "notmuch" "Notmuch mail" t)
   (define-key km/mail-map "n" #'notmuch)
   :config
-  (setq notmuch-hello-sections '(notmuch-hello-insert-saved-searches
-                                 notmuch-hello-insert-recent-searches))
+  (setq notmuch-hello-sections '(notmuch-hello-insert-saved-searches))
   (setq notmuch-archive-tags '("-unread"))
   (setq notmuch-search-oldest-first nil)
 
