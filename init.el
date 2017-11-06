@@ -150,21 +150,6 @@
 
   (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
 
-  (setq org-structure-template-alist
-        (append '(("p" "#+property: ")
-                  ("o" "#+options: ")
-                  ("d" "#+date: ")
-                  ("t" "#+title: ")
-                  ("S" "#+setupfile: ?")
-                  ("n" "#+name: ")
-                  ("w" "#+begin_note\n  ?\n#+end_note")
-                  ("C" "#+caption: ")
-                  ("b" "#+label: ")
-                  ("r" "#+attr_latex: ")
-                  ("R" "#+attr_html: "))
-                (mapcar (lambda (i) (list (car i) (downcase (cadr i))))
-                        org-structure-template-alist)))
-
   (add-hook 'next-error-hook (lambda ()
                                (when (eq major-mode 'org-mode)
                                  (org-show-context))))
