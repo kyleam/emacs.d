@@ -1024,14 +1024,6 @@
                           ?s ?v)
 
   (advice-add
-   'magit-diff-while-committing
-   :around
-   (lambda (fn &rest args)
-     (let ((magit-display-buffer-noselect t))
-       (apply fn args)))
-   '((name . "magit-diff-while-committing-no-select")))
-
-  (advice-add
    'magit-generate-buffer-name-default-function
    :around
    (lambda (fn mode &optional value)
