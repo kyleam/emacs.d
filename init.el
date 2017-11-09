@@ -246,6 +246,10 @@
   (setq org-agenda-custom-commands
         '(("A" tags-todo "PRIORITY=\"A\"" nil)
           ("d" todo "DONE" nil)
+          ("i" tags-todo "category=\"inbox\""
+           ((org-agenda-skip-function
+             (lambda nil
+               (org-agenda-skip-entry-if 'nottimestamp)))))
           ("u" "Unschedule TODO entries" alltodo ""
            ((org-agenda-skip-function
              (lambda nil
