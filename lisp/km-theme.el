@@ -90,6 +90,7 @@
  '(org-agenda-date ((t (:foreground "gray40"))))
  '(org-agenda-date-today ((t (:weight bold))))
  '(org-agenda-date-weekend ((t (:inherit org-agenda-date))))
+ '(org-agenda-restriction-lock ((t (:background "white"))))
  '(org-agenda-structure ((t (:foreground "gray60"))))
  '(org-date ((t (:inherit font-lock-type-face))))
  '(org-done ((t (:foreground "#557755" :background "gray95"))))
