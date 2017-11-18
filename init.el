@@ -2132,6 +2132,8 @@
   (setq notmuch-archive-tags '("-unread"))
   (setq notmuch-search-oldest-first nil)
 
+  (setq notmuch-show-indent-messages-width 0)
+
   (setq notmuch-wash-citation-lines-prefix 10)
   (setq notmuch-wash-citation-lines-suffix 10)
 
