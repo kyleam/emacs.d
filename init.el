@@ -897,7 +897,7 @@
   :defer t)
 
 (use-package magit-popup
-  :load-path "~/src/emacs/magit/lisp/"
+  :load-path "~/src/emacs/magit-popup/"
   :defer t
   :config
   (setq magit-popup-show-help-echo nil
@@ -909,7 +909,7 @@
              ("SPC SPC <t>" . magit-invoke-popup-option)))
 
 (use-package magit
-  ;; :load-path "~/src/emacs/magit/lisp/"
+  :load-path "~/src/emacs/magit/lisp/"
   :defer t
   :bind ("C-x g" . km/magit-status)
   :chords ("jg" . km/magit-status)
