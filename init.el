@@ -896,6 +896,10 @@
   :load-path "~/src/emacs/with-editor/"
   :defer t)
 
+(use-package ghub
+  :load-path "~/src/emacs/ghub/"
+  :defer t)
+
 (use-package magit-popup
   :load-path "~/src/emacs/magit-popup/"
   :defer t
