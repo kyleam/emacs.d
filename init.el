@@ -68,6 +68,7 @@
                               ("C-c k" km/kill-map)
                               ("C-x m" km/mail-map)
                               ("C-c o" km/global-org-map)
+                              ("C-c x" km/eval-map)
                               ("C-c z" km/external-map)))
   (define-prefix-command map)
   (global-set-key (kbd key) map))
@@ -1849,7 +1850,11 @@
 (add-hook 'after-save-hook
           #'executable-make-buffer-file-executable-if-script-p)
 
-(global-set-key (kbd "C-c x") #'eval-expression)
+(bind-keys :map km/eval-map
+           ("b" . eval-buffer)
+           ("d" . eval-defun)
+           ("e" . eval-expression)
+           ("r" . eval-region))
 
 (use-package haskell-mode
   :defer t
