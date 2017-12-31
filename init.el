@@ -1650,7 +1650,7 @@
   (define-key km/external-map "d" 'km/diff-prefix-map)
   (define-key km/diff-prefix-map "d" #'diff)
   :config
-  (setq diff-command "/bin/diff"
+  (setq diff-command "/usr/bin/diff"
         diff-switches "-u"))
 
 (use-package diff-mode
@@ -1953,7 +1953,7 @@
   :config
   (setq python-fill-docstring-style 'pep-257-nn
         python-indent-guess-indent-offset nil)
-  (setq python-shell-interpreter "ipython"
+  (setq python-shell-interpreter "ipython3"
         python-shell-interpreter-args "--simple-prompt --pprint"
         python-shell-completion-native-enable nil
         python-shell-prompt-detect-enabled nil)
@@ -1967,7 +1967,7 @@
     (setq outline-level #'km/python-outline-level)
     ;; Stop semantic from taking over imenu.
     (setq imenu-create-index-function #'python-imenu-create-index)
-    (set (make-local-variable 'compile-command) "py.test"))
+    (set (make-local-variable 'compile-command) "pytest-3"))
   (add-hook 'python-mode-hook #'km/python-set-local-vars)
 
   (bind-keys :map python-mode-map
