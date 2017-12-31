@@ -1032,7 +1032,16 @@
               (lambda (fn &rest args)
                 (let ((magit-process-popup-time 0))
                   (apply fn args)))
-              '((name . "magit-fetch-process"))))
+              '((name . "magit-fetch-process")))
+
+  (advice-add 'magit-merge
+              :around
+              (lambda (fn rev &optional args &rest other)
+                (let ((msg (km/magit-merge-pull-message rev)))
+                  (when msg
+                    (push (format "-m%s" msg) args)))
+                (apply fn rev args other))
+              '((name . "magit-merge-check-pull"))))
 
 (use-package git-rebase
   :defer t

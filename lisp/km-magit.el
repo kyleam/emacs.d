@@ -121,6 +121,28 @@ branch."
       (magit-merge it '("--ff-only"))
     (user-error "No upstream branch")))
 
+;;;###autoload
+(defun km/magit-merge-pull-message (rev)
+  "Generate a PR merge message for REV.
+
+The PR message can take two forms:
+
+  1) Merge branch '<local>' [#<pr>]
+  2) Merge pull request #<pr> from <remote>/<branch>
+
+The first is used if REV is the name of a local branch, and the
+second if REV is the name of a remote branch.
+
+This assumes that you are pulling PRs into your 'refs/pull/'
+namespace."
+  (-when-let (pr (--when-let (magit-rev-name rev "refs/pull/*")
+                   (and (string-match "\\`pull/.+/\\([0-9]+\\)\\'" it)
+                        (match-string 1 it))))
+    (cond ((magit-local-branch-p rev)
+           (format "Merge branch '%s' [#%s]" rev pr))
+          ((magit-remote-branch-p rev)
+           (format "Merge pull request #%s from %s" pr rev)))))
+
 (defun km/magit-push-all ()
   "Push all branches."
   (interactive)
