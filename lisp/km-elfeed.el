@@ -1,6 +1,6 @@
 ;;; km-elfeed.el --- Extensions for elfeed
 
-;; Copyright (C) 2012-2016 Kyle Meyer <kyle@kyleam.com>
+;; Copyright (C) 2012-2018 Kyle Meyer <kyle@kyleam.com>
 
 ;; Author: Kyle Meyer <kyle@kyleam.com>
 ;; URL: https://github.com/kyleam/emacs.d
