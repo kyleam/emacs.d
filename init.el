@@ -1864,6 +1864,18 @@
       (setq truncate-lines km/writeroom-old-truncate-lines)))
   (add-hook 'writeroom-mode-hook #'km/writeroom-setup))
 
+(use-package ledger-mode
+  :init
+  (and (boundp 'font-lock-global-modes)
+       (pcase font-lock-global-modes
+         ('t
+          (setq font-lock-global-modes '(not ledger-mode)))
+         (`(not . ,_)
+          (add-to-list 'font-lock-global-modes 'ledger-mode t))
+         (`(,_ . ,_)
+          (setq font-lock-global-modes
+                (delq 'ledger-mode font-lock-global-modes))))))
+
 
 ;;; Language modes
 
