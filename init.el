@@ -2387,6 +2387,13 @@
       visible-bell t
       enable-recursive-minibuffers t)
 
+(advice-add
+ 'hack-dir-local-variables :around
+ (lambda (fn)
+   (let ((dir-locals-file ".dir-locals-2.el"))
+     (funcall fn)))
+ '((name . "dir-locals-2")))
+
 (setq bookmark-save-flag nil)
 
 (use-package savehist
