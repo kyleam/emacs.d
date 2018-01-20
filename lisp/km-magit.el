@@ -64,9 +64,11 @@ a proper commit."
 
 ;;;###autoload
 (defun km/magit-show-commit-at-point (&optional choose-project)
-  "Show commit point.
-If there is no current project or if the prefix argument
-CHOOSE-PROJECT is non-nil, prompt for the project name."
+  "Show the commit at point.
+Prompt for the project name in any of these cases: 1) the prefix
+argument CHOOSE-PROJECT is non-nil, 2) there is no current
+project, or 3) an commit object for the hash at point doesn't
+exist in the current project."
   (interactive "P")
   (if (save-excursion (skip-chars-backward "A-z0-9")
                       (looking-at "\\b[A-z0-9]\\{4,40\\}\\b"))
@@ -83,7 +85,7 @@ CHOOSE-PROJECT is non-nil, prompt for the project name."
 
 ;;;###autoload
 (defun km/magit-commit-extend-with-file ()
-  "Extend last commit with changes in the current file."
+  "Add the changes in the current file to the last commit."
   (interactive)
   (let ((file (or (magit-current-file)
                   (user-error "No current file"))))
@@ -114,7 +116,7 @@ branch."
            (message "No changes to %s" file)))))
 
 (defun km/magit-ff-merge-upstream ()
-  "Perform fast-forward merge of upstream branch.
+  "Perform a fast-forward merge of the upstream branch.
 \n(git merge --no-edit --ff-only <upstream>)"
   (interactive)
   (--if-let (magit-get-upstream-branch)
@@ -151,13 +153,13 @@ namespace."
                        "--all"))
 
 (defun km/magit-push-head (remote &optional args)
-  "Push current branch to same name on remote.
+  "Push the current branch to same name on REMOTE.
 \n(git push [ARGS] REMOTE HEAD)"
   (interactive (list (magit-read-remote "Remote") (magit-push-arguments)))
   (magit-run-git-async "push" "-v" args remote "HEAD"))
 
 (defun km/magit-checkout-local-tracking (remote-branch)
-  "Create and checkout a local tracking branch for REMOTE-BRANCH.
+  "Create and check out a local tracking branch for REMOTE-BRANCH.
 \n(git checkout -t REMOTE-BRANCH\)"
   (interactive
    (list (let ((branches (magit-list-remote-branch-names)))
@@ -179,27 +181,27 @@ namespace."
     (magit-run-git "branch" (if force "-M" "-m") old new)))
 
 (defun km/magit-delete-previous-branch (&optional force)
-  "Delete previous branch.
+  "Delete the previous branch.
 \n(git branch -d @{-1})"
   (interactive "P")
   (magit-run-git "branch" (if force "-D" "-d") "@{-1}"))
 
 (defun km/magit-checkout-previous-branch ()
-  "Checkout previous branch.
+  "Check out the previous branch.
 \n(git checkout -)"
   (interactive)
   (magit-run-git "checkout" "-"))
 
 (defun km/magit-list-recent-refs (n &optional remote)
-  "List N recent refs.
-If REMOTE is non-nil, limit to remote refs."
+  "List the N-most recent refs.
+If REMOTE is non-nil, limit the results to remote refs."
   (magit-git-lines
    "for-each-ref" "--sort=-committerdate" "--format=%(refname:short)"
    (format "--count=%s" n)
    (if remote "refs/remotes" "refs/heads")))
 
 (defun km/magit-checkout-recent-ref (n)
-  "Checkout branch from N recent refs.
+  "Check out branch from N-most recent refs.
 Refs are sorted by committer date."
   (interactive (list (or (and current-prefix-arg
                               (prefix-numeric-value current-prefix-arg))
@@ -209,8 +211,8 @@ Refs are sorted by committer date."
                   "Ref" (km/magit-list-recent-refs n))))
 
 (defun km/magit-checkout-track-recent-ref (n)
-  "Create and checkout a local tracking branch.
-Listed refs are limited to N most recent, sorted by committer
+  "Create and check out a local tracking branch.
+Listed refs are limited to th eN-most recent, sorted by committer
 date."
   (interactive (list (or (and current-prefix-arg
                               (prefix-numeric-value current-prefix-arg))
@@ -220,13 +222,13 @@ date."
                   "Ref" (km/magit-list-recent-refs n 'remote))))
 
 (defun km/magit-checkout-master ()
-  "Checkout master branch.
+  "Check out master branch.
 \n(git checkout master)"
   (interactive)
   (magit-run-git "checkout" "master"))
 
 (defun km/magit-branch-and-checkout-from-current (branch)
-  "Create and checkout BRANCH at current branch.
+  "Create and check out BRANCH at the current branch.
 This is equivalent to running `magit-branch-and-checkout' with
 START-POINT set to the current branch.
 \n(git checkout -b BRANCH)"
@@ -298,7 +300,7 @@ exist."
     (magit-mode-bury-buffer kill-buffer)))
 
 (defun km/magit-log-select-guess-fixup-commit (&optional ntop)
-  "Guess commit from fixup/squash commmits.
+  "Guess a commit based on fixup/squash commmits.
 Consider NTOP commits (default is 5) when searching for 'fixup!'
 and 'squash!' titles."
   (interactive (list (or (and current-prefix-arg
@@ -339,7 +341,7 @@ and 'squash!' titles."
 (defun km/magit-reset-file (rev file &optional checkout)
   "Reset FILE from revision REV.
 
-If prefix argument CHECKOUT is non-nil, checkout FILE from REV
+If prefix argument CHECKOUT is non-nil, check out FILE from REV
 instead.
 
 \(git reset REV -- FILE)
@@ -386,7 +388,7 @@ the file has changed."
 ;;;###autoload
 (defun km/magit-revfile-reset (&optional checkout)
   "Reset to revision from current revfile.
-If CHECKOUT is non-nil, checkout file instead."
+If CHECKOUT is non-nil, check out file instead."
   (interactive "P")
   (unless (and magit-buffer-refname magit-buffer-file-name)
     (user-error "Not in Magit revfile buffer"))
@@ -408,7 +410,7 @@ N defaults to 20."
                 nil t))))
 
 (defun km/magit-find-commit-file (commit)
-  "Find file changed in COMMIT."
+  "Find a file that changed in COMMIT."
   (interactive (list (or (magit-branch-or-commit-at-point)
                          (and (derived-mode-p 'magit-revision-mode)
                               (car magit-refresh-args))
@@ -421,7 +423,7 @@ N defaults to 20."
        (t (magit-completing-read "File" files nil t))))))
 
 (defun km/magit-insert-staged-file (&optional no-directory)
-  "Select staged file to insert.
+  "Select a staged file to insert.
 
 This is useful for referring to file names in commit messages.
 By default, the path for the file name is relative to the top
@@ -449,7 +451,7 @@ command will still offer the staged files)."
 
 ;;;###autoload
 (defun km/magit-shorten-hash-at-point (&optional n)
-  "Shorten hash at point to N characters.
+  "Shorten the hash at point to N characters.
 
 N defaults to `magit-abbrev-length'.  If the commit belongs to
 the current repo and the hash is ambiguous, the hash is extended
@@ -590,7 +592,7 @@ function."
 
 (defun km/magit-rev-ancestor-p (rev-a rev-b)
   "Report whether REV-A is the ancestor of REV-B.
-Use the revision at point as REV-B.  With prefix argument or if
+Use the revision at point as REV-B.  With a prefix argument or if
 there is no revision at point, prompt for the revision.  Always
 prompt for REV-A."
   (interactive
@@ -624,7 +626,7 @@ show tags by default."
     (magit-refresh)))
 
 (defun km/magit-log-flip-revs ()
-  "Swap revisions in log range."
+  "Swap the two revisions in a log's range."
   (interactive)
   (let ((range (caar magit-refresh-args)))
     (if (and range
@@ -655,7 +657,7 @@ show tags by default."
          (call-interactively #'km/magit-cherry-flip-revs))))
 
 (defun km/magit-log-modify-range ()
-  "Change range for current log buffer."
+  "Change the range for the current log buffer."
   (interactive)
   (unless (derived-mode-p 'magit-log-mode)
     (user-error "Not in log buffer"))
@@ -685,7 +687,7 @@ show tags by default."
 (defun km/magit-diff-visit-file (&optional prev-rev other-window)
   "Like `magit-diff-visit-file', but with the option to visit REV^.
 
-If prefix argument PREV-REV is non-nil, visit file for REV^
+If prefix argument PREV-REV is non-nil, visit the file for REV^
 instead of REV.  If not in `magit-revision-mode', the prefix
 argument has no effect.
 
@@ -793,7 +795,7 @@ argument.  Interactively, this can be accessed using the command
                   rev))))))
 
 (defun km/magit-insert-remote-counts ()
-  "Insert section showing number of unpushed and unpulled commits.
+  "Insert a section showing number of unpushed and unpulled commits.
 
 This function is a lightweight replacement of four
 `magit-status-sections-hook' functions:
@@ -915,7 +917,7 @@ With a \\[universal-argument] \\[universal-argument], do not mark them at all."
         (nreverse candidates)))))
 
 (defun km/git-rebase-move-commit ()
-  "Move commit on current line above selected line."
+  "Move the commit on current line above selected line."
   (interactive)
   (unless (save-excursion (beginning-of-line)
                           (looking-at-p git-rebase-line))
