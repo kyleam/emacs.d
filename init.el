@@ -2390,6 +2390,7 @@
 (advice-add
  'hack-dir-local-variables :around
  (lambda (fn)
+   (funcall fn)
    (let ((dir-locals-file ".dir-locals-2.el"))
      (funcall fn)))
  '((name . "dir-locals-2")))
