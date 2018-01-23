@@ -839,6 +839,78 @@ function."
       (magit-copy-section-value)))
 
 
+;;; GitHub links
+
+(defun km/magit-github-url ()
+  ;; `bug-reference-url-format' may be defined in an untracked
+  ;; `.dir-locals.el`, so do this from the main worktree.
+  (-when-let* ((wtree (caar (magit-list-worktrees)))
+               (url
+                (with-temp-buffer
+                  (let ((default-directory (file-name-as-directory wtree)))
+                    (hack-dir-local-variables-non-file-buffer)
+                    bug-reference-url-format))))
+    (and url
+         (string-match "\\`https://github.com/[^/]+/[^/]+" url)
+         (match-string 0 url))))
+
+(defun km/magit-github-file-link ()
+  (let ((ln (lambda (loc)
+              (save-restriction
+                (1+ (count-lines (point-min) loc))))))
+    (-when-let* ((rev (or magit-buffer-revision
+                          (magit-rev-parse "HEAD")))
+                 (fname (magit-file-relative-name))
+                 (lines (if (use-region-p)
+                            (prog1 (format "%s-L%s"
+                                           (funcall ln (region-beginning))
+                                           (1- (funcall ln (region-end))))
+                              (deactivate-mark))
+                          (funcall ln (point)))))
+      (format "%s/blob/%s/%s#L%s"
+              (or (km/magit-github-url) "")
+              rev fname lines))))
+
+(defun km/magit-github-commit-link ()
+  (--when-let (or (and (eq major-mode 'magit-revision-mode)
+                       (car magit-refresh-args))
+                  (and (derived-mode-p 'magit-mode)
+                       (let ((sec (magit-current-section)))
+                         (and (eq (magit-section-type sec) 'commit)
+                              (magit-section-value sec)))))
+    (format "%s/commit/%s"
+            (or (km/magit-github-url) "")
+            (magit-rev-parse it))))
+
+(defun km/magit-github-diff-link ()
+  (when (derived-mode-p 'magit-diff-mode)
+    (let ((range (car magit-refresh-args)))
+      (when (and range
+                 (string-match magit-range-re range))
+        ;; This always converts to commits IDs.  It could try to map
+        ;; refnames to the appropriate GitHub link (including remotes
+        ;; to forks), but I don't have much need for it at the moment.
+        (let ((rev1 (magit-rev-parse (match-string 1 range)))
+              (rev2 (magit-rev-parse (match-string 3 range))))
+          (format "%s/compare/%s...%s"
+                  (or (km/magit-github-url) "")
+                  rev1 rev2))))))
+
+(defun km/magit-copy-github-link ()
+  "Copy a GitHub link from the current file or Magit buffer.
+
+Note: There are probably a number of packages that provide more
+complete support for this sort of functionality.  This is just a
+simple solution that works for me."
+  (interactive)
+  (kill-new
+   (message "%s"
+            (or (km/magit-github-file-link)
+                (km/magit-github-commit-link)
+                (km/magit-github-diff-link)
+                (user-error "Don't know how to make a link from here")))))
+
+
 ;;; Git Rebase mode
 
 (defun km/git-rebase--clean-subject (s)
