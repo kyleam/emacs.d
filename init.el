@@ -712,6 +712,8 @@
 (use-package winner
   :defer 10
   :chords ("lq" . winner-undo)
+  :init
+  (setq winner-dont-bind-my-keys t)
   :config
   (winner-mode))
 
