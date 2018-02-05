@@ -1772,7 +1772,8 @@
   :diminish (flyspell-mode . "Fy")
   :config
   (setq flyspell-auto-correct-binding (kbd "C-c e ;"))
-  (define-key flyspell-mode-map (kbd "C-.") nil))
+  (define-key flyspell-mode-map (kbd "C-.") nil)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (use-package tex-site
   :mode ("\\.[tT]e[xX]\\'" . TeX-latex-mode)
