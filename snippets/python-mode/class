@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# key: cl
+# --
+class ${1:name}(object):
+    """
+    """
+
+    def __init__(self, $0):
