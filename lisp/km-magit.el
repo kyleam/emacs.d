@@ -377,7 +377,7 @@ the file has changed."
                        (or (magit-get-current-branch)
                            (magit-rev-parse "HEAD")))))
            (fname (file-relative-name
-                   (or buffer-file-name
+                   (or (buffer-file-name (buffer-base-buffer))
                        magit-buffer-file-name
                        (user-error "Buffer not visiting file")))))
       (if rev (magit-find-file rev fname) (find-file fname))
