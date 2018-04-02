@@ -485,98 +485,6 @@ argument."
       (goto-char (+ (point) offset))
       (user-error "No hash found at point"))))
 
-(defvar km/magit-copy-functions
-  '(km/magit-copy-commit-summary-from-header
-    km/magit-copy-commit-message
-    km/magit-copy-region-commits
-    km/magit-copy-region-hunk
-    km/magit-copy-hunk)
-  "Functions tried by `km/magit-copy-as-kill'.
-These will be given one argument (the current prefix value) and
-should succeed by copying and returning non-nil or fail by
-returning nil.")
-
-;;;###autoload
-(defun km/magit-copy-commit-summary (commit)
-  "Copy a citation for the COMMIT at point.
-Format the reference as '<hash>, (<subject>, <date>)'.  If there
-is no commit at point or with a prefix argument, prompt for
-COMMIT."
-  (interactive
-   (let ((atpoint (or (and magit-blame-mode (magit-blame-chunk-get :hash))
-                      (magit-branch-or-commit-at-point)
-                      (magit-tag-at-point))))
-     (list (or (and (not current-prefix-arg) atpoint)
-               (magit-read-branch-or-commit "Commit" atpoint)))))
-  (if (magit-rev-verify (concat commit "^{commit}"))
-      (kill-new (message
-                 "%s"
-                 ;; Using `magit-git-string' instead of
-                 ;; `magit-rev-format' to pass --date flag.
-                 (magit-git-string "show" "-s" "--date=short"
-                                   "--format=%h (%s, %ad)"
-                                   commit "--")))
-    (user-error "%s does not exist" commit)))
-
-(defun km/magit-copy-commit-summary-from-header (&optional _)
-  (magit-section-when headers
-    (km/magit-copy-commit-summary (car magit-refresh-args))))
-
-(defun km/magit-copy-region-commits (&optional read-separator)
-  (--when-let (magit-region-values 'commit)
-    (deactivate-mark)
-    (kill-new
-     (message
-      "%s"
-      (mapconcat #'identity
-                 it
-                 (if read-separator (read-string "Separator: ") ", "))))))
-
-(defun km/magit-copy--truncated-message (msg)
-  (let ((msg-lines (split-string msg "[\n\r]+" 'omit-nulls)))
-    (message "%s" (cl-case (length msg-lines)
-                    (0 msg)
-                    (1 (car msg-lines))
-                    (t (concat (car msg-lines) "[...]"))))))
-
-(defun km/magit-copy-commit-message (&optional _)
-  (magit-section-when message
-    (let ((msg (buffer-substring-no-properties (magit-section-start it)
-                                               (magit-section-end it))))
-      (kill-new msg)
-      (km/magit-copy--truncated-message msg))))
-
-(defun km/magit-copy-region-hunk (&optional no-column)
-  (when (magit-section-internal-region-p)
-    (magit-section-when hunk
-      (deactivate-mark)
-      (let ((text (buffer-substring-no-properties
-                   (region-beginning) (region-end))))
-        (setq text (if no-column
-                       (replace-regexp-in-string "^[ \\+\\-]" "" text)
-                     text))
-        (kill-new text)
-        (km/magit-copy--truncated-message text)))))
-
-(defun km/magit-copy-hunk (&optional _)
-  (magit-section-when hunk
-    (kill-new (buffer-substring-no-properties
-               (save-excursion (goto-char (magit-section-start it))
-                               (1+ (point-at-eol)))
-               (magit-section-end it)))
-    (message "Copied hunk: %s" (magit-section-value it))))
-
-(defun km/magit-copy-as-kill ()
-  "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
-With a prefix argument of -1, always call `magit-copy-section-value'
-Otherwise, the current prefix argument is passed to each hook
-function."
-  (interactive)
-  (or (unless (= (prefix-numeric-value current-prefix-arg) -1)
-        (run-hook-with-args-until-success
-         'km/magit-copy-functions current-prefix-arg))
-      (magit-copy-section-value)))
-
 (defun km/magit-describe (rev)
   "Run 'git describe' on REV."
   (interactive
@@ -834,6 +742,101 @@ category."
 
 (magit-define-section-jumper magit-jump-to-remote-counts
   "Remote counts" remote-counts)
+
+
+;;; Copy functions
+
+(defvar km/magit-copy-functions
+  '(km/magit-copy-commit-summary-from-header
+    km/magit-copy-commit-message
+    km/magit-copy-region-commits
+    km/magit-copy-region-hunk
+    km/magit-copy-hunk)
+  "Functions tried by `km/magit-copy-as-kill'.
+These will be given one argument (the current prefix value) and
+should succeed by copying and returning non-nil or fail by
+returning nil.")
+
+;;;###autoload
+(defun km/magit-copy-commit-summary (commit)
+  "Copy a citation for the COMMIT at point.
+Format the reference as '<hash>, (<subject>, <date>)'.  If there
+is no commit at point or with a prefix argument, prompt for
+COMMIT."
+  (interactive
+   (let ((atpoint (or (and magit-blame-mode (magit-blame-chunk-get :hash))
+                      (magit-branch-or-commit-at-point)
+                      (magit-tag-at-point))))
+     (list (or (and (not current-prefix-arg) atpoint)
+               (magit-read-branch-or-commit "Commit" atpoint)))))
+  (if (magit-rev-verify (concat commit "^{commit}"))
+      (kill-new (message
+                 "%s"
+                 ;; Using `magit-git-string' instead of
+                 ;; `magit-rev-format' to pass --date flag.
+                 (magit-git-string "show" "-s" "--date=short"
+                                   "--format=%h (%s, %ad)"
+                                   commit "--")))
+    (user-error "%s does not exist" commit)))
+
+(defun km/magit-copy-commit-summary-from-header (&optional _)
+  (magit-section-when headers
+    (km/magit-copy-commit-summary (car magit-refresh-args))))
+
+(defun km/magit-copy-region-commits (&optional read-separator)
+  (--when-let (magit-region-values 'commit)
+    (deactivate-mark)
+    (kill-new
+     (message
+      "%s"
+      (mapconcat #'identity
+                 it
+                 (if read-separator (read-string "Separator: ") ", "))))))
+
+(defun km/magit-copy--truncated-message (msg)
+  (let ((msg-lines (split-string msg "[\n\r]+" 'omit-nulls)))
+    (message "%s" (cl-case (length msg-lines)
+                    (0 msg)
+                    (1 (car msg-lines))
+                    (t (concat (car msg-lines) "[...]"))))))
+
+(defun km/magit-copy-commit-message (&optional _)
+  (magit-section-when message
+    (let ((msg (buffer-substring-no-properties (magit-section-start it)
+                                               (magit-section-end it))))
+      (kill-new msg)
+      (km/magit-copy--truncated-message msg))))
+
+(defun km/magit-copy-region-hunk (&optional no-column)
+  (when (magit-section-internal-region-p)
+    (magit-section-when hunk
+      (deactivate-mark)
+      (let ((text (buffer-substring-no-properties
+                   (region-beginning) (region-end))))
+        (setq text (if no-column
+                       (replace-regexp-in-string "^[ \\+\\-]" "" text)
+                     text))
+        (kill-new text)
+        (km/magit-copy--truncated-message text)))))
+
+(defun km/magit-copy-hunk (&optional _)
+  (magit-section-when hunk
+    (kill-new (buffer-substring-no-properties
+               (save-excursion (goto-char (magit-section-start it))
+                               (1+ (point-at-eol)))
+               (magit-section-end it)))
+    (message "Copied hunk: %s" (magit-section-value it))))
+
+(defun km/magit-copy-as-kill ()
+  "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
+With a prefix argument of -1, always call `magit-copy-section-value'
+Otherwise, the current prefix argument is passed to each hook
+function."
+  (interactive)
+  (or (unless (= (prefix-numeric-value current-prefix-arg) -1)
+        (run-hook-with-args-until-success
+         'km/magit-copy-functions current-prefix-arg))
+      (magit-copy-section-value)))
 
 
 ;;; Git Rebase mode
