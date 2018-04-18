@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # key: sb
 # --
-#!/usr/bin/env sh
+#!/bin/sh
 $0
