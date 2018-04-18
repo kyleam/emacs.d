@@ -28,6 +28,7 @@
     ("k" org-link-edit-forward-barf "forward barf")
     ("u" org-link-edit-backward-slurp "backward slurp")
     ("i" org-link-edit-backward-barf "backward barf")
+    ("t" org-link-edit-transport-next-link "transport next")
     ("l" km/org-link-edit-slurp-link "slurp link" :color blue)
     ("q" nil "cancel"))
 
