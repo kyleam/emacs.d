@@ -209,6 +209,20 @@ Tracking System, set '--in-reply-to' to the initial report and
               (notmuch-show-stash-git-helper (list root-id) "--in-reply-to="))
         " ")))))
 
+
+;;;###autoload
+(defun km/notmuch-visit-github-url ()
+  "Visit the GitHub link associated with this message."
+  (interactive)
+  (browse-url
+   (km/notmuch-with-raw-message (notmuch-show-get-message-id)
+     (if (re-search-forward
+          (concat "Reply to this email directly or view it on GitHub:\n"
+                  "\\(https://github\.com/[^\n]+\\)$")
+          nil t)
+         (match-string-no-properties 1)
+       (user-error "No GitHub URL found")))))
+
 
 ;;; Mail sync
 
