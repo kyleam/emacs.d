@@ -101,6 +101,10 @@
     (add-to-list 'Info-directory-list "~/src/emacs/org-mode/doc/"))
   (bind-keys :map km/global-org-map
              ("b" . org-iswitchb)
+             ("ci" . (lambda ()
+                       (interactive)
+                       (org-clock-in '(4))))
+             ("co" . org-clock-out)
              ("l" . org-store-link)
              ("o" . org-open-at-point)
              ("s" . org-save-all-org-buffers)
