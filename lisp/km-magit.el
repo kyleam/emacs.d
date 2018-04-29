@@ -636,22 +636,26 @@ argument.  Interactively, this can be accessed using the command
 (defun km/magit-log-dwim (&optional args files)
   (interactive (magit-log-arguments))
   (let ((range
-         (magit-section-case
-           ((unpushed unpulled)
-            (magit-section-value it))
-           (tag
-            (concat (magit-section-value it) ".."))
-           (branch
-            (let ((current (magit-get-current-branch))
-                  (atpoint (magit-section-value it))
-                  (upstream (magit-get-upstream-branch))
-                  (push (magit-get-push-branch)))
-              (cond ((equal atpoint current)
-                     (and upstream (concat upstream "..")))
-                    ((equal atpoint push)
-                     (concat push ".."))
-                    (t
-                     (concat ".." atpoint))))))))
+         (or (magit-section-case
+               ((unpushed unpulled)
+                (magit-section-value it))
+               (tag
+                (concat (magit-section-value it) ".."))
+               (branch
+                (let ((current (magit-get-current-branch))
+                      (atpoint (magit-section-value it))
+                      (upstream (magit-get-upstream-branch))
+                      (push (magit-get-push-branch)))
+                  (cond ((equal atpoint current)
+                         (and upstream (concat upstream "..")))
+                        ((equal atpoint push)
+                         (concat push ".."))
+                        (t
+                         (concat ".." atpoint))))))
+             (--when-let (and (derived-mode-p 'magit-revision-mode)
+                              (car magit-refresh-args))
+               (and (magit-rev-verify (concat it "^2"))
+                    (concat it "^-1"))))))
     (if range
         (magit-log (list range) args files)
       (call-interactively #'magit-log))))
