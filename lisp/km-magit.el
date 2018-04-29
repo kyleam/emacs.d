@@ -910,6 +910,18 @@ simple solution that works for me."
                 (km/magit-github-diff-link)
                 (user-error "Don't know how to make a link from here")))))
 
+(defun km/magit-open-github-pr ()
+  (interactive)
+  (browse-url
+   (format "%s/compare/master...kyleam:%s?expand=1"
+           (or (km/magit-github-url)
+               (user-error "Couldn't determine GitHub URL"))
+           (let ((current (magit-get-current-branch)))
+             (if (member (concat "kyleam/" current)
+                         (magit-list-refnames "refs/remotes/kyleam"))
+                 current
+               (magit-read-remote-branch "PR branch" "kyleam"))))))
+
 
 ;;; Git Rebase mode
 
