@@ -84,20 +84,38 @@ names separated by a space."
        (if (listp fname) fname (list fname))
        " "))))
 
+(defun km/projectile-project-filename ()
+  (or (km/project-filename-at-point)
+      (and buffer-file-name
+           (file-relative-name buffer-file-name
+                               (projectile-project-root)))))
+
 ;;;###autoload
 (defun km/projectile-copy-project-filename-as-kill ()
   "Copy name of project file.
 If point is on a file, copy this as the file name.  Otherwise,
 use the name of the current file."
   (interactive)
-  (-when-let (fname (or (km/project-filename-at-point)
-                        (and buffer-file-name
-                             (file-relative-name buffer-file-name
-                                                 (projectile-project-root)))))
+  (-when-let (fname (km/projectile-project-filename))
     (if (eq last-command 'kill-region)
         (kill-append fname nil)
       (kill-new fname))
     (message "%s" fname)))
+
+;;;###autoload
+(defun km/projectile-copy-project-module-as-kill ()
+  "Copy name of project file, transformed into a project module.
+Currently, only Python mode is supported."
+  (interactive)
+  (when (derived-mode-p 'python-mode)
+    (-when-let* ((fname (km/projectile-project-filename))
+                 (module (--> fname
+                              (replace-regexp-in-string "/" "." it nil t)
+                              (replace-regexp-in-string "\\.py" "" it t t))))
+      (if (eq last-command 'kill-region)
+          (kill-append module nil)
+        (kill-new module))
+      (message "%s" module))))
 
 (defvar km/projectile-project-saved-thing nil
   "Property list of saved thing for projects.
