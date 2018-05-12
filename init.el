@@ -116,6 +116,7 @@
   (setq org-log-done t
         org-log-into-drawer t
         org-clock-into-drawer t
+        org-clock-out-switch-to-state "WIP"
         org-todo-keywords '((sequence "TODO(t)" "WIP(i)" "WAITING(w@)"
                                       "|" "DONE(d)" "NA(n@)")))
 
