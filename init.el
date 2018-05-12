@@ -950,6 +950,7 @@
   (setq magit-uniquify-buffer-names nil)
 
   (setq magit-no-confirm '(stage-all-changes unstage-all-changes reverse))
+  (setq magit-published-branches nil)
 
   (add-to-list 'magit-blame-disable-modes 'lispy-mode)
 
