@@ -116,7 +116,7 @@
   (setq org-log-done t
         org-log-into-drawer t
         org-clock-into-drawer t
-        org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w@)"
+        org-todo-keywords '((sequence "TODO(t)" "WIP(i)" "WAITING(w@)"
                                       "|" "DONE(d)" "NA(n@)")))
 
   (put 'org-log-done 'safe-local-variable #'booleanp)
