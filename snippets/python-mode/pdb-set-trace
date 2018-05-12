@@ -1,4 +1,4 @@
 # -*- mode: snippet -*-
 # key: pst
 # --
-import pdb; pdb.set_trace()$0
+import ipdb as pdb; pdb.set_trace()$0
