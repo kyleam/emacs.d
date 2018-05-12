@@ -120,6 +120,7 @@
                                       "|" "DONE(d)" "NA(n@)")))
 
   (put 'org-log-done 'safe-local-variable #'booleanp)
+  (put 'org-archive-location 'safe-local-variable #'stringp)
 
   (setq org-catch-invisible-edits 'error
         org-special-ctrl-k t
