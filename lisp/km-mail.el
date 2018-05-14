@@ -211,10 +211,14 @@ Tracking System, set '--in-reply-to' to the initial report and
 
 
 ;;;###autoload
-(defun km/notmuch-visit-github-url ()
-  "Visit the GitHub link associated with this message."
-  (interactive)
-  (browse-url
+(defun km/notmuch-visit-github-url (&optional copy)
+  "Visit the GitHub link associated with this message.
+If COPY is non-nil, copy the URL instead of visiting it."
+  (interactive "P")
+  (funcall
+   (if copy
+       (lambda (url) (kill-new (message url)))
+     #'browse-url)
    (km/notmuch-with-raw-message (notmuch-show-get-message-id)
      (if (re-search-forward
           (concat "Reply to this email directly or view it on GitHub:\n"
