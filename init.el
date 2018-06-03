@@ -2418,8 +2418,7 @@
   (unless (server-running-p)
     (server-start))
   (let ((server (daemonp)))
-    (cond
-     ((string= server "default")
+    (when (string= server "default")
       ;; Remove all mail map bindings except notmuch-related ones.
       (global-set-key (kbd "C-x m n") #'notmuch)
       (global-set-key (kbd "C-x m .") #'km/notmuch-show-at-point)
@@ -2427,17 +2426,8 @@
         (add-hook 'kill-emacs-hook #'km/pydoc-save-names-file))
       (savehist-mode 1)
       (setq save-abbrevs 'silently
-            bookmark-save-flag 1))
-     ((string= server "mail")
-      (setq mode-line-misc-info
-            (cons (propertize " [Mail] " 'face 'font-lock-doc-face)
-                  mode-line-misc-info))
-      (key-chord-define-global "jg" 'km/mail-map)
+            bookmark-save-flag 1)
       (after 'notmuch-lib
-        (define-key notmuch-common-keymap "0" #'km/notmuch-sync-mail))
-      (setq savehist-file (concat savehist-file "-mail"))
-      (savehist-mode 1)
-      (setq recentf-save-file "~/.emacs.d/cache/recentf-mail")
-      (setq save-abbrevs nil)))))
+        (define-key notmuch-common-keymap "0" #'km/notmuch-sync-mail)))))
 
 ;;; init.el ends here
