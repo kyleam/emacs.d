@@ -48,7 +48,7 @@ a proper commit."
 
 (defun km/magit-update-or-auto-commit (&optional no-directory)
   (interactive "P")
-  (let ((files (delete-dups (nconc (magit-modified-files)
+  (let ((files (delete-dups (nconc (magit-unstaged-files)
                                    (magit-staged-files)))))
     (cl-case (length files)
       (0 (user-error "No tracked files with changes"))
@@ -92,7 +92,7 @@ exist in the current project."
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
           ((member file (nconc (magit-untracked-files)
-                               (magit-modified-files)))
+                               (magit-unstaged-files)))
            (magit-with-toplevel (magit-stage-file file))
            (magit-commit-extend))
           (t
@@ -109,7 +109,7 @@ branch."
     (cond ((magit-anything-staged-p)
            (user-error "There are already staged changes"))
           ((member file (nconc (magit-untracked-files)
-                               (magit-modified-files)))
+                               (magit-unstaged-files)))
            (magit-with-toplevel (magit-stage-file file))
            (magit-run-git "commit" (concat "--message=WIP " file)))
           (t
