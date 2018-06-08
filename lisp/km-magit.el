@@ -308,7 +308,7 @@ and 'squash!' titles."
                          5)))
   (let ((msg-fn (lambda ()
                   (magit-rev-format
-                   "%s" (magit-section-value (magit-current-section)))))
+                   "%s" (oref (magit-current-section) value))))
         msgs commit-pts)
     (save-excursion
       (goto-char (point-min))
@@ -490,8 +490,8 @@ argument."
   (interactive
    (list (or (-when-let (section (magit-current-section))
                (cond
-                ((memq (magit-section-type section) '(commit branch))
-                 (magit-section-value section))
+                ((memq (oref section type) '(commit branch))
+                 (oref section value))
                 ((derived-mode-p 'magit-revision-mode)
                  (car magit-refresh-args))))
              (magit-read-branch-or-commit "Revision"))))
@@ -638,12 +638,12 @@ argument.  Interactively, this can be accessed using the command
   (let ((range
          (or (magit-section-case
                ((unpushed unpulled)
-                (magit-section-value it))
+                (oref it value))
                (tag
-                (concat (magit-section-value it) ".."))
+                (concat (oref it value) ".."))
                (branch
                 (let ((current (magit-get-current-branch))
-                      (atpoint (magit-section-value it))
+                      (atpoint (oref it value))
                       (upstream (magit-get-upstream-branch))
                       (push (magit-get-push-branch)))
                   (cond ((equal atpoint current)
@@ -671,8 +671,8 @@ argument.  Interactively, this can be accessed using the command
                           (match-string 1 range))))
            (let ((section (magit-current-section))
                  (current-branch (magit-get-current-branch)))
-             (pcase (list (magit-section-type section)
-                          (magit-section-value section))
+             (pcase (list (oref section type)
+                          (oref section value))
                (`(unpushed "@{upstream}..")
                 (cons current-branch (magit-get-upstream-branch)))
                (`(unpulled "..@{upstream}")
@@ -806,8 +806,8 @@ COMMIT."
 
 (defun km/magit-copy-commit-message (&optional _)
   (magit-section-when message
-    (let ((msg (buffer-substring-no-properties (magit-section-start it)
-                                               (magit-section-end it))))
+    (let ((msg (buffer-substring-no-properties (oref it start)
+                                               (oref it end))))
       (kill-new msg)
       (km/magit-copy--truncated-message msg))))
 
@@ -826,10 +826,10 @@ COMMIT."
 (defun km/magit-copy-hunk (&optional _)
   (magit-section-when hunk
     (kill-new (buffer-substring-no-properties
-               (save-excursion (goto-char (magit-section-start it))
+               (save-excursion (goto-char (oref it start))
                                (1+ (point-at-eol)))
-               (magit-section-end it)))
-    (message "Copied hunk: %s" (magit-section-value it))))
+               (oref it end)))
+    (message "Copied hunk: %s" (oref it value))))
 
 (defun km/magit-copy-as-kill ()
   "Try `km/magit-copy-functions' before calling `magit-copy-section-value'.
@@ -880,8 +880,8 @@ function."
                        (car magit-refresh-args))
                   (and (derived-mode-p 'magit-mode)
                        (let ((sec (magit-current-section)))
-                         (and (eq (magit-section-type sec) 'commit)
-                              (magit-section-value sec)))))
+                         (and (eq (oref sec type) 'commit)
+                              (oref sec value)))))
     (format "%s/commit/%s"
             (or (km/magit-github-url) "")
             (magit-rev-parse it))))
