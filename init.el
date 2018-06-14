@@ -2179,6 +2179,7 @@
 
   (define-key notmuch-show-mode-map "o" #'notmuch-show-reply)
   (define-key notmuch-show-mode-map "O" #'notmuch-show-reply-sender)
+  (define-key notmuch-show-mode-map "E" #'notmuch-show-resume-message)
 
   (define-key notmuch-search-mode-map "o" #'notmuch-search-reply-to-thread)
   (define-key notmuch-search-mode-map "O" #'notmuch-search-reply-to-thread-sender)
@@ -2188,6 +2189,7 @@
     (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
   (define-key notmuch-tree-mode-map "O"
     (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
+  (define-key notmuch-tree-mode-map "E" #'notmuch-tree-resume-message)
 
   (define-key notmuch-common-keymap "g" #'notmuch-refresh-this-buffer)
 
