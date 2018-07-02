@@ -35,13 +35,13 @@
 (defhydra hydra-smerge (:hint nil)
   "
 _b_ keep base    _d_ diff     _n_ next
-_m_ keep mine    _e_ ediff    _p_ previous
-_o_ keep other   _h_ refine
+_u_ keep upper   _e_ ediff    _p_ previous
+_l_ keep lower   _h_ refine
 _a_ keep all
 \n"
   ("b" smerge-keep-base)
-  ("m" smerge-keep-mine)
-  ("o" smerge-keep-other)
+  ("u" smerge-keep-upper)
+  ("l" smerge-keep-lower)
   ("a" smerge-keep-all)
   ("n" smerge-next)
   ("p" smerge-prev)
@@ -49,13 +49,13 @@ _a_ keep all
   ("e" smerge-ediff :color blue)
   ("d" (call-interactively
         (pcase (read-char-choice
-                "< base-mine, > base-other, = mine-other"
+                "< base-upper, > base-lower, = upper-lower"
                 (list ?< ?> ?=))
-          (?< #'smerge-diff-base-mine)
-          (?> #'smerge-diff-base-other)
-          (?= #'smerge-diff-mine-other))))
-  ("l" recenter-top-bottom "recenter")
-  ("u" undo "undo")
+          (?< #'smerge-diff-base-upper)
+          (?> #'smerge-diff-base-lower)
+          (?= #'smerge-diff-upper-lower))))
+  ("r" recenter-top-bottom "recenter")
+  ("U" undo "undo")
   ("q" nil "quit"))
 
 (defhydra hydra-file-search-map (:hint nil :color blue)
