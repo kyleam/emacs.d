@@ -969,6 +969,9 @@
   (setq magit-display-buffer-function
         #'magit-display-buffer-fullframe-status-v1)
 
+  (put 'magit-edit-line-commit 'disabled nil)
+  (put 'magit-diff-edit-hunk-commit 'disabled nil)
+
   (define-key ctl-x-4-map "g" #'magit-find-file-other-window)
   (define-key km/file-map "g" #'magit-find-file)
 
