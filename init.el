@@ -929,6 +929,7 @@
   (load "magit-autoloads.el" t)
   (bind-keys :map km/git-map
              ("d" . magit-dispatch-popup)
+             ("g" . magit-file-popup)
              ("l" . magit-log-buffer-file)
              ("s" . magit-stage-file))
   (define-key km/git-map "w" 'km/magit-wip-map)
