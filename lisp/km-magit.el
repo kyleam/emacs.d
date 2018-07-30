@@ -499,19 +499,12 @@ argument."
     (kill-new (message it))))
 
 (defun km/magit-rev-ancestor-p (rev-a rev-b)
-  "Report whether REV-A is the ancestor of REV-B.
-Use the revision at point as REV-B.  With a prefix argument or if
-there is no revision at point, prompt for the revision.  Always
-prompt for REV-A."
+  "Report whether REV-A is the ancestor of REV-B."
   (interactive
-   (let* ((atpoint (or (and magit-blame-mode (magit-blame-chunk-get :hash))
-                       (magit-branch-or-commit-at-point)
-                       (magit-tag-at-point)))
-          (commit (or (and (not current-prefix-arg) atpoint)
-                      (magit-read-branch-or-commit "Descendant" atpoint))))
-     (list (magit-read-other-branch-or-commit
-            (format "Test if ancestor of %s" commit) commit)
-           commit)))
+   (let* ((rev-a (magit-read-branch-or-commit "Ancestor candidate")))
+     (list rev-a (magit-read-other-branch-or-commit
+                  (format "Is %s the ancestor of" rev-a)
+                  rev-a))))
   (message "%s is %san ancestor of %s" rev-a
            (if (magit-git-success "merge-base" "--is-ancestor"
                                   rev-a rev-b)
