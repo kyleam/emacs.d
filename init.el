@@ -1991,6 +1991,14 @@
   (add-hook 'python-mode-hook #'km/python-set-local-vars)
   (add-hook 'python-mode-hook 'flyspell-prog-mode)
 
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (when (eq major-mode 'python-mode)
+                (setq flycheck-checker 'python-flake8)
+                (setq-local flycheck-python-flake8-executable "flake8")
+                (setq-local flycheck-python-pylint-executable "pylint3")
+                (flycheck-mode 1))))
+
   (bind-keys :map python-mode-map
              ("C-c C-b" . python-shell-send-buffer)
              ("C-c C-f" . python-shell-send-defun)
