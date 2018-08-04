@@ -26,6 +26,7 @@
 (require 'magit)
 (require 'projectile)
 
+;;;###autoload
 (defun km/magit-status (&optional default-display)
   "Like `magit-status', but change the meaning of the prefix argument.
 If DEFAULT-DISPLAY is non-nil, use
