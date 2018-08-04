@@ -266,6 +266,12 @@
             (org-agenda-overriding-header "Unscheduled TODO entries: ")))
           ("p" "Past timestamps" tags "TIMESTAMP<=\"<now>\"")))
 
+  (advice-add 'org-agenda-goto-today :around
+              (lambda (fn &rest args)
+                (if (org-agenda-check-type nil 'agenda)
+                    (apply fn args)
+                  (goto-char (point-min)))))
+
   (bind-keys :map org-agenda-mode-map
              ;; Bind `org-agenda-follow-mode' to same key as
              ;; `next-error-follow-minor-mode'.
