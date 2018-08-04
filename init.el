@@ -1970,6 +1970,8 @@
   :init
   (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
   (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
+
+  (pyvenv-tracking-mode 1)
   :config
   (setq python-fill-docstring-style 'pep-257-nn
         python-indent-guess-indent-offset nil)
