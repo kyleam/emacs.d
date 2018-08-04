@@ -654,6 +654,19 @@ argument.  Interactively, this can be accessed using the command
         (magit-log (list range) args files)
       (call-interactively #'magit-log))))
 
+;;;###autoload
+(defun km/magit-log-occurrence (beg end)
+  "Run `git log -S<content (BEG..END)> HEAD'."
+  (interactive "r")
+  (magit-mode-setup-internal
+   #'magit-log-mode
+   (list (list "HEAD")
+         (cons (format "-S%s" (buffer-substring-no-properties beg end))
+               (cl-delete "-S" (car (magit-log-arguments))
+                          :test 'string-prefix-p))
+         nil))
+  (magit-log-goto-same-commit))
+
 (defun km/magit-cherry-dwim ()
   (interactive)
   (-let [(head . upstream)

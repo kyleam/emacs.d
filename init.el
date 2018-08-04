@@ -1069,6 +1069,7 @@
              ("f" . km/magit-reset-file)
              ("i" . km/magit-insert-staged-file)
              ("n" . km/magit-shorten-hash-at-point)
+             ("o" . km/magit-log-occurrence)
              ("p" . km/magit-pin-file)
              ("r" . km/magit-find-recently-changed-file)
              ("t" . km/magit-describe)
