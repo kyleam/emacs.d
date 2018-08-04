@@ -130,7 +130,9 @@ in the remote's \".git/config\" entry."
     (when (or force-fetch
               (not (magit-ref-exists-p local-ref)))
       (magit-call-git "fetch" remote))
-    (magit-log (list (concat base-ref ".." local-ref)))))
+    (apply #'magit-log
+           (list (concat base-ref ".." local-ref))
+           (magit-log-arguments))))
 
 ;;;###autoload
 (defun km/notmuch-search ()
