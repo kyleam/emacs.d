@@ -1962,6 +1962,7 @@
     (setq imenu-create-index-function #'python-imenu-create-index)
     (set (make-local-variable 'compile-command) "pytest-3"))
   (add-hook 'python-mode-hook #'km/python-set-local-vars)
+  (add-hook 'python-mode-hook 'flyspell-prog-mode)
 
   (bind-keys :map python-mode-map
              ("C-c C-b" . python-shell-send-buffer)
