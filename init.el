@@ -182,7 +182,9 @@
              ("C-c C-x p" . org-previous-item)
              ("C-c C-x w" . org-insert-drawer))
 
-  (define-key km/org-prefix-map "r" #'org-element-cache-reset))
+  (define-key km/org-prefix-map "r" #'org-element-cache-reset)
+
+  (require 'org-notmuch))
 
 (use-package ox-latex
   :config
@@ -225,10 +227,12 @@
            "* TODO %?%i\n\n%x" :prepend t)
           ("X" "bookmark clipboard" entry
            (file+headline "~/notes/bookmarks.org" "Inbox")
-           "* %?%i\n\n%x" :prepend t))))
+           "* %?%i\n\n%x" :prepend t)))
+
+  (require 'org-agenda)
+  (require 'org-contacts))
 
 (use-package org-agenda
-  :after org-capture
   :init (define-key km/global-org-map "a" #'org-agenda)
   :config
   (setq org-agenda-restore-windows-after-quit t
@@ -280,10 +284,11 @@
              ("d" . org-agenda-view-mode-dispatch)
              ("i" . km/org-agenda-reschedule-by-days)
              ("k" . nil)
-             ("v" . org-agenda-capture)))
+             ("v" . org-agenda-capture))
+
+  (require 'km-org-agenda))
 
 (use-package org-contacts
-  :after org-capture
   :init
   (setq org-contacts-files '("~/notes/contacts.org"))
   :config
@@ -356,7 +361,6 @@
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string)))
 
 (use-package km-org-agenda
-  :after org-agenda
   :init
   (bind-keys :map km/global-org-map
              ("j" . km/org-goto-agenda-heading)
@@ -794,10 +798,10 @@
     "Run grep on project."
     (call-interactively #'projectile-grep))
 
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (require 'helm-projectile))
 
 (use-package helm-projectile
-  :after projectile
   :config
   (bind-keys :map projectile-command-map
              ("b" . helm-projectile-switch-to-buffer)
@@ -871,7 +875,6 @@
   (setq smerge-diff-switches '("-d" "-b" "-u")))
 
 (use-package git-annex
-  :after dired
   :config
   (setq git-annex-commit nil))
 
@@ -1029,14 +1032,15 @@
                   (when msg
                     (push (format "-m%s" msg) args)))
                 (apply fn rev args other))
-              '((name . "magit-merge-check-pull"))))
+              '((name . "magit-merge-check-pull")))
+
+  (require 'km-magit))
 
 (use-package git-rebase
   :init
   (setq git-rebase-show-instructions nil))
 
 (use-package magit-wip
-  :after magit
   :diminish magit-wip-after-save-local-mode
   :init
   (bind-keys :map km/magit-wip-map
@@ -1057,7 +1061,6 @@
     ?W "Log other WIP" 'magit-wip-log))
 
 (use-package km-magit
-  :after magit
   :init
   (bind-keys :map km/git-map
              ("." . km/magit-show-commit-at-point)
@@ -1231,10 +1234,11 @@
                 (lispy-mode 1))))
   (bind-keys :map god-local-mode-map
              ("." . repeat)
-             ("i" . god-local-mode)))
+             ("i" . god-local-mode))
+
+  (require 'km-god))
 
 (use-package km-god
-  :after god-mode
   :config
   (add-to-list 'god-exempt-predicates #'km/god-gnus-p)
   (add-hook 'god-mode-enabled-hook #'km/god-update-cursor)
@@ -1262,7 +1266,10 @@
 
 (use-package helm
   :config
-  (setq helm-move-to-line-cycle-in-source t))
+  (setq helm-move-to-line-cycle-in-source t)
+
+  (require 'km-helm)
+  (require 'helm-mode))
 
 (use-package helm-config
   :config
@@ -1280,7 +1287,6 @@
         helm-ff-skip-boring-files t))
 
 (use-package km-helm
-  :after helm
   :init
   (after 'helm-files
     (bind-keys :map helm-find-files-map
@@ -1301,7 +1307,6 @@
 
 (use-package helm-mode
   :diminish helm-mode
-  :after helm
   :config
   (helm-mode 1)
 
@@ -1451,7 +1456,9 @@
 
   (define-key dired-mode-map "c" #'dired-do-copy)
 
-  (define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map))
+  (define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map)
+
+  (require 'git-annex))
 
 (use-package wdired
   :init
@@ -1548,10 +1555,11 @@
   (advice-add
    'recompile :around
    (lambda (f &rest args) (save-window-excursion (apply f args)))
-   '((name . "prevent-window"))))
+   '((name . "prevent-window")))
+
+  (require 'km-compile))
 
 (use-package km-compile
-  :after compile
   :chords ("hv" . km/compilation-recompile)
   :init
   (bind-keys :map km/compile-map
@@ -1592,10 +1600,11 @@
                          "http://www.dictionary.com/browse/" "?s=t"])
           ("Wikipedia" .
            [simple-query "wikipedia.org"
-                         "wikipedia.org/wiki/" ""]))))
+                         "wikipedia.org/wiki/" ""])))
+
+  (require 'km-webjump))
 
 (use-package km-webjump
-  :after webjump
   :init
   (define-key km/external-map "j" #'km/webjump))
 
@@ -1624,10 +1633,11 @@
   (define-key km/diff-prefix-map "d" #'diff)
   :config
   (setq diff-command "/usr/bin/diff"
-        diff-switches "-u"))
+        diff-switches "-u")
+
+  (require 'diff-mode))
 
 (use-package diff-mode
-  :after diff
   :config
   (setq diff-default-read-only t)
   (add-hook 'diff-mode-hook #'toggle-truncate-lines)
@@ -1733,8 +1743,12 @@
     (add-hook 'LaTeX-mode-hook #'turn-on-reftex)
     (add-hook 'LaTeX-mode-hook #'flyspell-mode)))
 
+(use-package latex
+  :defer t
+  :init
+  (require 'km-tex))
+
 (use-package km-tex
-  :after latex
   :init
   (setq TeX-outline-extra '(("frametitle" 3)))
   :config
@@ -1764,10 +1778,11 @@
   (setq bibtex-align-at-equal-sign t)   ; Used by `bibtex-fill-entry'.
   (setq bibtex-entry-format
         (append '(realign whitespace last-comma delimiters sort-fields)
-                bibtex-entry-format)))
+                bibtex-entry-format))
+
+  (require 'km-bib))
 
 (use-package km-bib
-  :after bibtex
   :config
   (dolist (h '(km/bibtex-delete-article-fields
                km/bibtex-downcase-author-and
@@ -1950,7 +1965,9 @@
   (bind-keys :map python-mode-map
              ("C-c C-b" . python-shell-send-buffer)
              ("C-c C-f" . python-shell-send-defun)
-             ("C-M-x" . python-eldoc-at-point)))
+             ("C-M-x" . python-eldoc-at-point))
+
+  (require 'km-python))
 
 (use-package pydoc
   :load-path "~/src/emacs/pydoc/"
@@ -1960,7 +1977,6 @@
   (define-key pydoc-mode-map "o" #'ace-link-help))
 
 (use-package km-python
-  :after python
   :bind ("C-h y" . km/pydoc)
   :init
   (bind-keys :map km/python-prefix-map
@@ -2135,10 +2151,11 @@
 
   (define-key notmuch-show-mode-map "e" #'notmuch-show-open-or-close-all)
   (define-key notmuch-tree-mode-map "e" #'notmuch-tree-show-message)
-  (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
+  (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread)
+
+  (require 'km-mail))
 
 (use-package km-mail
-  :after notmuch
   :init
   (define-key km/mail-map "." #'km/notmuch-show-at-point)
   :config
@@ -2159,9 +2176,6 @@
 
 (use-package mml
   :diminish (mml-mode . "ML"))
-
-(use-package org-notmuch
-  :after org)
 
 (use-package mm-decode
   :config
@@ -2201,7 +2215,9 @@
   (setq gnus-auto-select-next 'quietly)
 
   (setq gnus-thread-hide-subtree t)
-  (define-key gnus-group-mode-map "e" #'gnus-group-select-group))
+  (define-key gnus-group-mode-map "e" #'gnus-group-select-group)
+
+  (require 'km-gnus))
 
 (use-package gnus-sum
   :config
@@ -2243,7 +2259,6 @@
   (setq mail-envelope-from 'header))
 
 (use-package km-gnus
-  :after gnus
   :config
 
   (add-hook 'kill-emacs-hook #'km/gnus-grace-exit-before-kill-emacs)
