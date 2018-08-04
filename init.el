@@ -1079,6 +1079,8 @@
              ("o" . magit-wip-log)
              ("s" . magit-wip-after-save-local-mode)
              ("S" . magit-wip-after-save-mode))
+
+  (setq magit-wip-merge-branch t)
   :config
   (magit-wip-after-save-mode 1)
 
