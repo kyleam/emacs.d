@@ -169,6 +169,14 @@
    (lambda (f form &rest _) (funcall f form 'keepdate))
    '((name . "always-keepdate")))
 
+  (advice-add
+   'org-refile :around
+   (lambda (f &rest args)
+     (apply f args)
+     (when (bound-and-true-p org-capture-is-refiling)
+       (org-save-all-org-buffers)))
+   '((name . "org-save-after-capture-refile")))
+
   (bind-keys :map org-mode-map
              ("C-c l" . org-goto)
              ("C-c m" . km/org-prefix-map)
@@ -228,6 +236,8 @@
           ("X" "bookmark clipboard" entry
            (file+headline "~/notes/bookmarks.org" "Inbox")
            "* %?%i\n\n%x" :prepend t)))
+
+  (add-hook 'org-capture-before-finalize-hook #'save-buffer)
 
   (require 'org-agenda)
   (require 'org-contacts))
@@ -318,6 +328,23 @@
                 (unless (yes-or-no-p "Archive entry? ")
                   (user-error "Archiving aborted")))
               '((name . "org-board-archive-confirm"))))
+
+(use-package org-clock
+  :config
+  (advice-add
+   'org-clock-in :after
+   (lambda (&rest _) (org-save-all-org-buffers))
+   '((name . "org-clock-in-save-buffers")))
+
+  (advice-add
+   'org-clock-out :after
+   (lambda (&rest _) (org-save-all-org-buffers))
+   '((name . "org-clock-out-save-buffers")))
+
+  (advice-add
+   'org-resolve-clocks :after
+   (lambda (&rest _) (org-save-all-org-buffers))
+   '((name . "org-resolve-clocks-save-buffers"))))
 
 (use-package km-org
   :init
