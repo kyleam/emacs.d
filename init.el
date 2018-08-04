@@ -128,7 +128,7 @@
 
   (setq org-catch-invisible-edits 'error
         org-special-ctrl-k t
-        org-insert-heading-respect-content t
+        org-insert-heading-respect-content nil
         org-M-RET-may-split-line nil
         org-adapt-indentation nil
         org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
