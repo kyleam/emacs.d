@@ -899,7 +899,18 @@
 
 (use-package smerge-mode
   :config
-  (setq smerge-diff-switches '("-d" "-b" "-u")))
+  (setq smerge-diff-switches '("-d" "-b" "-u"))
+
+  (defvar-local km/smerge-restore-flycheck nil)
+  (add-hook 'smerge-mode-hook
+            (lambda ()
+              (if smerge-mode
+                  (when flycheck-mode
+                    (setq km/smerge-restore-flycheck t)
+                    (flycheck-mode -1))
+                (when km/smerge-restore-flycheck
+                  (setq km/smerge-restore-flycheck nil)
+                  (flycheck-mode 1))))))
 
 (use-package git-annex
   :config
