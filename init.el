@@ -27,6 +27,7 @@
 (require 'bind-key)
 (require 'use-package)
 (require 'use-package-chords)
+(setq use-package-always-defer t)
 (key-chord-mode 1)
 
 (defvar km/init-lisp-dir (expand-file-name "lisp/" user-emacs-directory))
@@ -184,7 +185,6 @@
   (define-key km/org-prefix-map "r" #'org-element-cache-reset))
 
 (use-package ox-latex
-  :defer t
   :config
   (add-to-list 'org-latex-classes
                '("short"
@@ -196,11 +196,9 @@
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (use-package org-table
-  :defer t
   :diminish (orgtbl-mode . "Ot"))
 
 (use-package org-capture
-  :defer t
   :init (define-key km/global-org-map "v" #'org-capture)
   :config
   (setq org-capture-templates
@@ -230,7 +228,6 @@
            "* %?%i\n\n%x" :prepend t))))
 
 (use-package org-agenda
-  :defer t
   :after org-capture
   :init (define-key km/global-org-map "a" #'org-agenda)
   :config
@@ -286,7 +283,6 @@
              ("v" . org-agenda-capture)))
 
 (use-package org-contacts
-  :defer t
   :after org-capture
   :init
   (setq org-contacts-files '("~/notes/contacts.org"))
@@ -301,12 +297,10 @@
 :END:")))
 
 (use-package org-attach
-  :defer t
   :init
   (put 'org-attach-directory 'safe-local-variable #'stringp))
 
 (use-package org-board
-  :defer t
   :init
   (setq org-board-default-browser 'system)
   (define-key km/org-prefix-map "b" #'org-board-open)
@@ -321,7 +315,6 @@
               '((name . "org-board-archive-confirm"))))
 
 (use-package km-org
-  :defer t
   :init
   (bind-keys :map km/org-prefix-map
              ("c" . km/org-clone-and-shift-by-repeater)
@@ -363,7 +356,6 @@
     (advice-add 'org-md-paragraph :filter-return #'km/org-md-fill-string)))
 
 (use-package km-org-agenda
-  :defer t
   :after org-agenda
   :init
   (bind-keys :map km/global-org-map
@@ -389,7 +381,6 @@
              ("w" . km/org-agenda-refile-dwim)))
 
 (use-package poporg
-  :defer t
   :init
   (define-key km/global-org-map "p" #'poporg-dwim)
   :config
@@ -398,12 +389,10 @@
 
 (use-package org-link-edit
   :load-path "~/src/emacs/org-link-edit/"
-  :defer t
   :init (require 'org-link-edit-autoloads nil t))
 
 (use-package bog
   :load-path "~/src/emacs/bog/"
-  :defer t
   :init
   (require 'bog-autoloads nil t)
   (setq bog-keymap-prefix (kbd "C-c b"))
@@ -416,7 +405,6 @@
         bog-use-citekey-cache t))
 
 (use-package calendar
-  :defer t
   :config
   (bind-keys :map calendar-mode-map
              ("C-x [" . calendar-backward-month)
@@ -490,13 +478,11 @@
   :bind ("C-." . er/expand-region))
 
 (use-package iedit
-  :defer t
   :init (define-key km/editing-map "i" #'iedit-mode)
   :config
   (setq iedit-toggle-key-default nil))
 
 (use-package easy-kill
-  :defer t
   :init
   (global-set-key [remap kill-ring-save] #'easy-kill))
 
@@ -516,7 +502,6 @@
   (add-hook 'before-save-hook #'km/cleanup-buffer))
 
 (use-package km-editing
-  :defer t
   :chords ("jx" . km/toggle-line-or-region-comment)
   :init
   (define-key search-map "o" #'km/occur)
@@ -538,14 +523,12 @@
              ("w" . km/kill-word-at-point)))
 
 (use-package outline
-  :defer t
   :diminish outline-mode)
 
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
 (use-package narrow-indirect
-  :defer t
   :init
   (bind-keys :map ctl-x-4-map
              ("nd" . ni-narrow-to-defun-indirect-other-window)
@@ -553,13 +536,11 @@
              ("np" . ni-narrow-to-page-indirect-other-window)))
 
 (use-package avy
-  :defer t
   :chords ("jf" . avy-goto-subword-1)
   :init
   (define-key isearch-mode-map (kbd "C-'") #'avy-isearch))
 
 (use-package ace-link
-  :defer t
   :init
   (after 'org
     (define-key org-mode-map (kbd "C-c m o") #'ace-link-org))
@@ -576,7 +557,6 @@
     (define-key eww-mode-map "o" #'ace-link-eww)))
 
 (use-package km-ace-link
-  :defer t
   :init
   (after 'dired
     ;; This overrides the binding for `dired-find-file-other-window'.
@@ -590,7 +570,6 @@
     (define-key gnus-article-mode-map "o" #'km/ace-link-widget)))
 
 (use-package km-avy
-  :defer t
   :init
   (after 'elfeed-search
     (define-key elfeed-search-mode-map "j" #'km/elfeed-avy-goto-subword-1))
@@ -640,17 +619,14 @@
         ibuffer-show-empty-filter-groups nil))
 
 (use-package km-buffers
-  :defer t
   :chords ("js" . km/save-buffers)
   :bind ("C-x k" . km/kill-buffer))
 
 (use-package ffap
-  :defer t
   :config
   (setq ffap-machine-p-known 'reject))
 
 (use-package tramp
-  :defer t
   :config
   (setq tramp-default-method "sshx"))
 
@@ -671,14 +647,12 @@
 
 (use-package nlines
   :load-path "~/src/emacs/nlines/"
-  :defer t
   :init
   (require 'nlines-autoloads nil t)
   (define-key km/file-map "l" #'nlines-run-command))
 
 (use-package cpinfo
   :load-path "~/src/emacs/cpinfo/"
-  :defer t
   :init
   (require 'cpinfo-autoloads nil t)
   (after 'dired
@@ -686,7 +660,6 @@
 
 (use-package view
   :diminish (view-mode . "Vw")
-  :defer t
   :chords ("hq" . view-mode)
   :init
   (define-key ctl-x-4-map "v" #'view-file-other-window)
@@ -732,7 +705,6 @@
   (winner-mode))
 
 (use-package km-framewin
-  :defer t
   :init
   (define-key ctl-x-4-map "c"
     #'km/clone-indirect-buffer-other-window-and-widen))
@@ -756,7 +728,6 @@
 ;;; Projectile
 
 (use-package projectile
-  :defer t
   :diminish projectile-mode
   :chords ("jq" . projectile-commander)
   :init
@@ -852,7 +823,6 @@
     (helm-projectile-switch-project)))
 
 (use-package km-projectile
-  :defer t
   :chords ("gp" . km/projectile-switch-project)
   :init
   (define-key km/projectile-ctl-x-4-map "v"
@@ -888,7 +858,6 @@
 ;;; Version control
 
 (use-package vc
-  :defer t
   :init
   (setq vc-follow-symlinks t))
 
@@ -898,27 +867,22 @@
   (setq vc-git-resolve-conflicts nil))
 
 (use-package smerge-mode
-  :defer t
   :config
   (setq smerge-diff-switches '("-d" "-b" "-u")))
 
 (use-package git-annex
-  :defer t
   :after dired
   :config
   (setq git-annex-commit nil))
 
 (use-package with-editor
-  :load-path "~/src/emacs/with-editor/"
-  :defer t)
+  :load-path "~/src/emacs/with-editor/")
 
 (use-package ghub
-  :load-path "~/src/emacs/ghub/"
-  :defer t)
+  :load-path "~/src/emacs/ghub/")
 
 (use-package magit-popup
   :load-path "~/src/emacs/magit-popup/"
-  :defer t
   :config
   (setq magit-popup-show-help-echo nil
         magit-popup-show-common-commands nil
@@ -930,7 +894,6 @@
 
 (use-package magit
   :load-path "~/src/emacs/magit/lisp/"
-  :defer t
   :bind ("C-x g" . km/magit-status)
   :chords ("jg" . km/magit-status)
   :init
@@ -1069,12 +1032,10 @@
               '((name . "magit-merge-check-pull"))))
 
 (use-package git-rebase
-  :defer t
   :init
   (setq git-rebase-show-instructions nil))
 
 (use-package magit-wip
-  :defer t
   :after magit
   :diminish magit-wip-after-save-local-mode
   :init
@@ -1096,7 +1057,6 @@
     ?W "Log other WIP" 'magit-wip-log))
 
 (use-package km-magit
-  :defer t
   :after magit
   :init
   (bind-keys :map km/git-map
@@ -1208,24 +1168,20 @@
 
 (use-package magit-annex
   :load-path "~/src/emacs/magit-annex/"
-  :defer t
   :init (require 'magit-annex-autoloads nil t)
   :config
   (setq magit-annex-unused-open-function #'org-open-file))
 
 (use-package magit-tbdiff
   :load-path "~/src/emacs/magit-tbdiff/"
-  :defer t
   :init (require 'magit-tbdiff-autoloads nil t))
 
 (use-package magit-imerge
   :load-path "~/src/emacs/magit-imerge/"
-  :defer t
   :init (require 'magit-imerge-autoloads nil t))
 
 (use-package git-commit
   ;; :load-path "~/src/emacs/magit/lisp/"
-  :defer t
   :config
   (setq git-commit-finish-query-functions nil)
 
@@ -1243,7 +1199,6 @@
 (use-package orgit
   :disabled t
   :load-path "~/src/emacs/orgit/"
-  :defer t
   :init (require 'orgit-autoloads nil t))
 
 
@@ -1279,7 +1234,6 @@
              ("i" . god-local-mode)))
 
 (use-package km-god
-  :defer t
   :after god-mode
   :config
   (add-to-list 'god-exempt-predicates #'km/god-gnus-p)
@@ -1307,22 +1261,18 @@
 ;;; Helm
 
 (use-package helm
-  :defer t
   :config
   (setq helm-move-to-line-cycle-in-source t))
 
 (use-package helm-config
-  :defer t
   :config
   (global-set-key (kbd "C-x c") nil)
   (customize-set-value 'helm-command-prefix-key "C-c h"))
 
 (use-package helm-buffers
-  :defer t
   :chords ("jt" . helm-mini))
 
 (use-package helm-files
-  :defer t
   :chords ("jc" . helm-find-files)
   :config
   (setq helm-ff-newfile-prompt-p nil
@@ -1330,7 +1280,6 @@
         helm-ff-skip-boring-files t))
 
 (use-package km-helm
-  :defer t
   :after helm
   :init
   (after 'helm-files
@@ -1359,11 +1308,9 @@
   (add-to-list 'helm-mode-no-completion-in-region-in-modes 'message-mode))
 
 (use-package helm-command
-  :defer t
   :chords ("kx" . helm-M-x))
 
 (use-package helm-swoop
-  :defer t
   :init
   (setq helm-swoop-pre-input-function (lambda () nil))
 
@@ -1376,7 +1323,6 @@
   :bind ("C-c l" . helm-imenu))
 
 (use-package helm-man
-  :defer t
   :init (define-key km/external-map "m" #'helm-man-woman))
 
 (use-package helm-ring
@@ -1408,7 +1354,6 @@
                           (abbrev-table-get global-abbrev-table :parents))))
 
 (use-package km-abbrev
-  :defer t
   :init
   (after 'abbrev
     (bind-keys :map abbrev-map
@@ -1429,7 +1374,6 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :defer t
   :init
   (defun km/yas-dummy ()
     (interactive)
@@ -1469,7 +1413,6 @@
 ;;; Dired
 
 (use-package dired
-  :defer t
   :config
   (require 'dired-x)
   ;; .git is present as part of `dired-omit-extensions', but this
@@ -1511,7 +1454,6 @@
   (define-key dired-mode-map (kbd "C-c m") 'km/dired-prefix-map))
 
 (use-package wdired
-  :defer t
   :init
   (setq wdired-allow-to-change-permissions t))
 
@@ -1545,7 +1487,6 @@
   (define-key ctl-x-4-map "D" #'km/dired-switch-to-buffer-other-window))
 
 (use-package dired-narrow
-  :defer t
   :init
   (after 'dired
     (bind-keys :map km/dired-narrow-prefix-map
@@ -1556,7 +1497,6 @@
     (define-key dired-mode-map "/" #'dired-narrow)))
 
 (use-package dired-subtree
-  :defer t
   :init
   (after 'dired
     (bind-keys :map km/dired-subtree-prefix-map
@@ -1586,12 +1526,10 @@
            ("S" . shell))
 
 (use-package grep
-  :defer t
   :config
   (add-hook 'grep-mode-hook #'toggle-truncate-lines))
 
 (use-package compile
-  :defer t
   :init
   (bind-keys :map km/compile-map
              ("c" . compile)
@@ -1634,7 +1572,6 @@
 ;;; Other external programs
 
 (use-package browse-url
-  :defer t
   :init
   (define-key km/external-map "b" #'browse-url)
   :config
@@ -1642,7 +1579,6 @@
         browse-url-generic-program "firefox"))
 
 (use-package webjump
-  :defer t
   :config
   (setq webjump-sites
         '(("DuckDuckGo" .
@@ -1660,18 +1596,15 @@
 
 (use-package km-webjump
   :after webjump
-  :defer t
   :init
   (define-key km/external-map "j" #'km/webjump))
 
 (use-package select
-  :defer t
   :config
   (setq x-select-enable-clipboard t
         x-select-enable-primary t))
 
 (use-package man
-  :defer t
   :config
   (setq Man-notify-method 'aggressive))
 
@@ -1686,7 +1619,6 @@
       (setf (cdr (assq 'test info)) (lambda (&rest _) nil)))))
 
 (use-package diff
-  :defer t
   :init
   (define-key km/external-map "d" 'km/diff-prefix-map)
   (define-key km/diff-prefix-map "d" #'diff)
@@ -1702,14 +1634,12 @@
   (define-key diff-mode-map (kbd "C-c C-g") #'revert-buffer))
 
 (use-package ediff
-  :defer t
   :init
   (define-key km/diff-prefix-map "e" #'ediff)
   :config
   (setq ediff-window-setup-function #'ediff-setup-windows-plain))
 
 (use-package km-diff
-  :defer t
   :init
   (bind-keys :map km/diff-prefix-map
              ("c" . km/diff-current-buffer-with-file)
@@ -1725,7 +1655,6 @@
 ;;; Guix
 
 (use-package guix-command
-  :defer t
   :init
   (define-key km/external-map "g" #'guix))
 
@@ -1736,7 +1665,6 @@
   (global-guix-prettify-mode 1))
 
 (use-package debbugs-gnu
-  :defer t
   :config
   (advice-add 'debbugs-gnu-select-report :override
               #'km/debbugs-notmuch-select-report))
@@ -1747,12 +1675,10 @@
 (add-hook 'text-mode-hook #'turn-on-auto-fill)
 
 (use-package footnote
-  :defer t
   :config
   (setq footnote-section-tag ""))
 
 (use-package boxquote
-  :defer t
   :init
   (defvar km/boxquote-command-map
     (let ((map (make-sparse-keymap)))
@@ -1783,7 +1709,6 @@
   (define-key km/editing-map "b" #'km/boxquote-command-map))
 
 (use-package ispell
-  :defer t
   :init
   (define-key km/external-map "i" #'ispell-buffer)
   (define-key km/editing-map "w" #'ispell-word)
@@ -1791,7 +1716,6 @@
   (setq ispell-program-name "aspell"))
 
 (use-package flyspell
-  :defer t
   :diminish (flyspell-mode . "Fy")
   :config
   (setq flyspell-auto-correct-binding (kbd "C-c e ;"))
@@ -1810,7 +1734,6 @@
     (add-hook 'LaTeX-mode-hook #'flyspell-mode)))
 
 (use-package km-tex
-  :defer t
   :after latex
   :init
   (setq TeX-outline-extra '(("frametitle" 3)))
@@ -1822,7 +1745,6 @@
 
 (use-package reftex
   :diminish (reftex-mode . "Rf")
-  :defer t
   :init
   (add-to-list 'safe-local-variable-values
                '(reftex-cite-format . natbib))
@@ -1831,7 +1753,6 @@
   (setq reftex-default-bibliography '("refs.bib")))
 
 (use-package bibtex
-  :defer t
   :config
   ;; Make cite key have form <last author last name><year><first word>.
   (setq bibtex-autokey-titlewords 1
@@ -1862,7 +1783,6 @@
     (add-hook 'bibtex-clean-entry-hook h)))
 
 (use-package pandoc-mode
-  :defer t
   :diminish pandoc-mode)
 
 (use-package writeroom-mode
@@ -1916,7 +1836,6 @@
            ("r" . eval-region))
 
 (use-package haskell-mode
-  :defer t
   :config
   (setq haskell-process-show-debug-tips nil)
   (add-hook 'haskell-mode-hook #'turn-on-haskell-indentation)
@@ -1933,7 +1852,6 @@
              ("C-c C-d" . nil)))
 
 (use-package elisp-mode
-  :defer t
   :config
   (defun km/elisp-outline-level ()
     (and (looking-at (concat "^" outline-regexp))
@@ -1970,11 +1888,9 @@
   (define-key km/file-map "e" #'find-library))
 
 (use-package paredit
-  :defer t
   :diminish (paredit-mode . "Pe"))
 
 (use-package lispy
-  :defer t
   :init
   (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
   (add-hook 'scheme-mode-hook #'lispy-mode)
@@ -1995,12 +1911,10 @@
   (setq geiser-active-implementations '(guile)))
 
 (use-package geiser-mode
-  :defer t
   :config
   (define-key geiser-mode-map (kbd "C-.") nil))
 
 (use-package scheme
-  :defer
   :config
   (add-hook 'scheme-mode-hook
             (lambda ()
@@ -2010,7 +1924,6 @@
                           imenu-generic-expression)))))
 
 (use-package python
-  :defer t
   :init
   (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
   (add-to-list 'interpreter-mode-alist '("python3" . python-mode))
@@ -2041,7 +1954,6 @@
 
 (use-package pydoc
   :load-path "~/src/emacs/pydoc/"
-  :defer t
   :config
   (setq pydoc-make-method-buttons nil)
   ;; Don't shadow my `ace-link' binding.
@@ -2073,7 +1985,6 @@
 
 (use-package snakemake-mode
   :load-path "~/src/emacs/snakemake-mode/"
-  :defer t
   :init
   (require 'snakemake-autoloads nil t)
   (define-key km/compile-map "s" #'snakemake-popup)
@@ -2096,7 +2007,6 @@
                             ?p ?o)))
 
 (use-package km/snakemake
-  :defer t
   :init
   (define-key km/compile-map "l" #'km/snakemake-recompile-no-dryrun))
 
@@ -2124,7 +2034,6 @@
     (add-hook hook #'abbrev-mode)))
 
 (use-package km-ess
-  :defer t
   :init
   (after 'ess-mode
     (bind-keys :map ess-mode-map
@@ -2134,7 +2043,6 @@
     (define-key inferior-ess-mode-map "|" #'km/ess-insert-dplyr-pipe)))
 
 (use-package pkgbuild-mode
-  :defer t
   :init
   (setq pkgbuild-update-sums-on-save nil))
 
@@ -2142,7 +2050,6 @@
 ;;; Mail
 
 (use-package message
-  :defer t
   :init
   (setq message-directory "~/.mail")
   :config
@@ -2164,7 +2071,6 @@
   (add-hook 'message-mode-hook #'whitespace-mode))
 
 (use-package notmuch
-  :defer t
   :init
   (autoload 'notmuch "notmuch" "Notmuch mail" t)
   (define-key km/mail-map "n" #'notmuch)
@@ -2232,7 +2138,6 @@
   (define-key notmuch-search-mode-map "e" #'notmuch-search-show-thread))
 
 (use-package km-mail
-  :defer t
   :after notmuch
   :init
   (define-key km/mail-map "." #'km/notmuch-show-at-point)
@@ -2253,20 +2158,16 @@
     #'km/notmuch-show-pipe-message-to-project))
 
 (use-package mml
-  :defer t
   :diminish (mml-mode . "ML"))
 
 (use-package org-notmuch
-  :defer t
   :after org)
 
 (use-package mm-decode
-  :defer t
   :config
   (setq mm-discouraged-alternatives '("text/html" "text/richtext")))
 
 (use-package gnus
-  :defer t
   :init
   (bind-keys :map km/mail-map
              ("g" . gnus)
@@ -2303,7 +2204,6 @@
   (define-key gnus-group-mode-map "e" #'gnus-group-select-group))
 
 (use-package gnus-sum
-  :defer t
   :config
   (setq gnus-sum-thread-tree-indent "  "
         gnus-sum-thread-tree-root "."
@@ -2320,7 +2220,6 @@
     'km/gnus-summary-prefix-map))
 
 (use-package gnus-art
-  :defer t
   :config
   (setq gnus-article-x-face-too-ugly ".*")
   (setq gnus-treat-display-smileys nil)
@@ -2329,7 +2228,6 @@
     'km/gnus-article-prefix-map))
 
 (use-package shr
-  :defer t
   :config
   (bind-keys :map shr-map
              ;; Allow `km/ace-link-widget' binding to work even when
@@ -2339,14 +2237,12 @@
              ("v" . nil)))
 
 (use-package sendmail
-  :defer t
   :config
   (setq sendmail-program "/usr/bin/msmtp")
   (setq mail-specify-envelope-from t)
   (setq mail-envelope-from 'header))
 
 (use-package km-gnus
-  :defer t
   :after gnus
   :config
 
@@ -2379,7 +2275,6 @@
              ("p" . km/gnus-open-github-patch)))
 
 (use-package elfeed
-  :defer t
   :init
   (define-key km/mail-map "e" (lambda ()
                                 (interactive)
@@ -2396,7 +2291,6 @@
              ("S" . elfeed-search-live-filter)))
 
 (use-package km-elfeed
-  :defer t
   :init
   (after 'elfeed
     (bind-keys :map elfeed-search-mode-map
