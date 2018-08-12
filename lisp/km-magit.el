@@ -627,6 +627,12 @@ argument.  Interactively, this can be accessed using the command
         'git-commit-flyspell-verify)
   (turn-on-flyspell))
 
+(defun km/magit-log-current (&optional args files)
+  "Like `magit-log-current', but if head is detached, use \"HEAD\"."
+  (interactive (magit-log-arguments))
+  (magit-log (list (or (magit-get-current-branch) "HEAD"))
+             args files))
+
 (defun km/magit-log-dwim (&optional args files)
   (interactive (magit-log-arguments))
   (let ((range

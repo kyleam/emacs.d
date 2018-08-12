@@ -1177,6 +1177,8 @@
                           ?p ?P)
 
   (magit-define-popup-action 'magit-log-popup
+    ?l "Log current" #'km/magit-log-current)
+  (magit-define-popup-action 'magit-log-popup
     ?d "Log dwim" #'km/magit-log-dwim)
   (magit-define-popup-action 'magit-log-popup
     ?y "Cherry dwim" #'km/magit-cherry-dwim)
