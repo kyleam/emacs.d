@@ -1327,6 +1327,15 @@
         helm-ff-file-name-history-use-recentf t
         helm-ff-skip-boring-files t))
 
+(use-package helm-tags
+  :config
+  (advice-add 'helm-etags-all-tag-files
+              :override
+              (lambda ()
+                (--when-let (helm-etags-get-tag-file)
+                  (list it)))
+              '((name . "helm-etags-just-project-tags"))))
+
 (use-package km-helm
   :init
   (after 'helm-files
