@@ -68,5 +68,18 @@
         (display-buffer (find-file-noselect f)
                         '(display-buffer-below-selected)))))))
 
+(defvar km/helm-etags-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "M-.") #'helm-etags-select)
+    map))
+
+(define-minor-mode km/helm-etags-mode
+  "Override `xref-find-definitions' with `helm-etags-select'."
+  :keymap km/helm-etags-mode-map)
+
+(defun km/helm-maybe-override-xref ()
+  (when (helm-etags-find-tag-file-directory default-directory)
+    (km/helm-etags-mode 1)))
+
 (provide 'km-helm)
 ;;; km-helm.el ends here

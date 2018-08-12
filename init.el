@@ -1357,7 +1357,12 @@
   (after 'helm-buffers
     (bind-keys :map helm-buffer-map
                ("C-c b" . km/helm-display-buffer-below)
-               ("C-c C-o" . km/helm-display-buffer))))
+               ("C-c C-o" . km/helm-display-buffer)))
+  :config
+  (after 'elisp-mode
+    (add-hook 'emacs-lisp-mode-hook #'km/helm-maybe-override-xref))
+  (after 'python
+    (add-hook 'python-mode-hook #'km/helm-maybe-override-xref)))
 
 (use-package helm-mode
   :diminish helm-mode
@@ -1930,16 +1935,6 @@
     (setq outline-regexp ";;;;* ")
     (setq outline-level #'km/elisp-outline-level))
   (add-hook 'emacs-lisp-mode-hook #'km/elisp-set-outline-vars)
-
-  (defun km/elisp-use-xref-etags-inside-git ()
-    (when (and (executable-find "git")
-               (equal (with-temp-buffer
-                        (call-process "git" nil t nil
-                                      "rev-parse" "--is-inside-work-tree")
-                        (buffer-string))
-                      "true\n"))
-      (xref-etags-mode 1)))
-  (add-hook 'emacs-lisp-mode-hook #'km/elisp-use-xref-etags-inside-git)
 
   ;; Modified from usepackage's issue #80.
   (defun km/imenu-add-use-package ()
