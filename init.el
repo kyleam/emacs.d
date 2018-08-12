@@ -835,6 +835,7 @@
              ("d" . helm-projectile-find-dir)
              ("f" . helm-projectile-find-file)
              ("F" . helm-projectile-find-file-in-known-projects)
+             ("j" . helm-etags-select)
              ("p" . helm-projectile-switch-project)
              ("r" . helm-projectile-recentf))
   (def-projectile-commander-method ?b
