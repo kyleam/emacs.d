@@ -847,6 +847,9 @@
   (def-projectile-commander-method ?f
     "Open project file."
     (helm-projectile-find-file))
+  (def-projectile-commander-method ?j
+    "Find project tag."
+    (helm-etags-select nil))
   (def-projectile-commander-method ?l
       "Run `helm-projectile-grep'."
       (helm-projectile-grep))
