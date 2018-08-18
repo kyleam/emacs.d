@@ -2375,6 +2375,10 @@
 
 (setq bookmark-save-flag nil)
 
+(use-package timer-list
+  :init
+  (put 'list-timers 'disabled nil))
+
 (use-package savehist
   :config
   (setq savehist-autosave-interval nil))
