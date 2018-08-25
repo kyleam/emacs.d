@@ -909,7 +909,7 @@
   (add-hook 'smerge-mode-hook
             (lambda ()
               (if smerge-mode
-                  (when flycheck-mode
+                  (when (bound-and-true-p flycheck-mode)
                     (setq km/smerge-restore-flycheck t)
                     (flycheck-mode -1))
                 (when km/smerge-restore-flycheck
