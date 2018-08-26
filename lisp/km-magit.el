@@ -621,12 +621,6 @@ argument.  Interactively, this can be accessed using the command
     (magit-stash-store message "refs/stash" commit))
   (magit-refresh))
 
-(defun km/git-commit-turn-on-flyspell ()
-  "Like `git-commit-turn-on-flyspell', but don't check buffer initially."
-  (setq flyspell-generic-check-word-predicate
-        'git-commit-flyspell-verify)
-  (turn-on-flyspell))
-
 (defun km/magit-log-current (&optional args files)
   "Like `magit-log-current', but if head is detached, use \"HEAD\"."
   (interactive (magit-log-arguments))
